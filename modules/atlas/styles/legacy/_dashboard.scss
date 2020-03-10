@@ -27,7 +27,6 @@ $backdrop-color: rgba(0, 0, 0, 0.5);
 }
 
 .c-dashboard__error {
-  position: fixed;
   top: $dashboard-heading-height;
   height: $dashboard-error-height;
   width: 100%;
