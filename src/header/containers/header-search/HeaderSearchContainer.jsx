@@ -11,6 +11,7 @@ import {
   toDatasetDetail,
   toDatasetSearch,
   toDataSuggestion,
+  toMapWithLegendOpen,
   toPublicationDetail,
   toPublicationSearch,
   toSearch,
@@ -131,6 +132,7 @@ const mapDispatchToProps = dispatch => ({
     type === TYPES.ARTICLE
       ? dispatch(toArticleDetail(suggestion.id, suggestion.slug))
       : dispatch(toPublicationDetail(suggestion.id, suggestion.slug)),
+  openMapSuggestion: suggestion => dispatch(toMapWithLegendOpen(suggestion.layers)),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(HeaderSearch)

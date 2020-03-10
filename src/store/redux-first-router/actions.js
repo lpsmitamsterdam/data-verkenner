@@ -98,11 +98,13 @@ export const toMap = (preserve = false, forceSaga = true) => ({
   },
 })
 
-export const toMapWithLegendOpen = () => {
+export const toMapWithLegendOpen = layers => {
   const additionalParams = {
     [PARAMETERS.VIEW]: VIEW_MODE.MAP,
     [PARAMETERS.LEGEND]: true,
+    [PARAMETERS.LAYERS]: layers,
   }
+
   return {
     type: routing.data.type,
     meta: {
