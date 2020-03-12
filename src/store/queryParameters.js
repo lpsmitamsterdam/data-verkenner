@@ -347,8 +347,15 @@ export default paramsRegistry
         defaultValue: mapInitialState.overlays,
         decode: val => decodeLayers(val),
         selector: getMapOverlays,
-        encode: selectorResult =>
-          selectorResult.map(overlay => `${overlay.id}:${overlay.isVisible ? 1 : 0}`).join('|'),
+        encode: selectorResult => {
+          if (!selectorResult) {
+            return ''
+          }
+
+          return selectorResult
+            .map(overlay => `${overlay.id}:${overlay.isVisible ? 1 : 0}`)
+            .join('|')
+        },
       },
       false,
     )
