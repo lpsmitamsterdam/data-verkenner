@@ -287,6 +287,14 @@ export const toSpecialDetail = (id, type = '', slug = '') => ({
   },
 })
 
+export const toCollectionDetail = (id, slug = '') => ({
+  type: routing.collectionDetail.type,
+  payload: {
+    id,
+    slug,
+  },
+})
+
 export const toConstructionFileViewer = (id, fileName) => ({
   type: routing.constructionFile.type,
   payload: {

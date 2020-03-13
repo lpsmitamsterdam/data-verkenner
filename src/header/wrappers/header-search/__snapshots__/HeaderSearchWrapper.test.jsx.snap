@@ -9,11 +9,12 @@ exports[`HeaderSearchWrapper should render 1`] = `
   }
   displayQuery=""
   isArticlePage={false}
+  isCollectionPage={false}
   isDataPage={false}
   isDatasetPage={false}
   isMapActive={false}
   isPublicationPage={false}
-  isSpecialsPage={false}
+  isSpecialPage={false}
   numberOfSuggestions={6}
   onArticleSearch={[Function]}
   onCleanDatasetOverview={[Function]}

@@ -21,6 +21,7 @@ const ConstructionFilesContainer = React.lazy(() =>
 const ArticleDetailPage = React.lazy(() => import('./pages/ArticleDetailPage'))
 const PublicationDetailPage = React.lazy(() => import('./pages/PublicationDetailPage'))
 const SpecialDetailPage = React.lazy(() => import('./pages/SpecialDetailPage'))
+const CollectionDetailPage = React.lazy(() => import('./pages/CollectionDetailPage'))
 const MapSplitPage = React.lazy(() => import('./pages/MapSplitPage'))
 const NotFoundPage = React.lazy(() => import('./pages/NotFoundPage'))
 const MovedPage = React.lazy(() => import('./pages/MovedPage'))
@@ -56,6 +57,7 @@ const AppBody = ({
           {currentPage === PAGES.ARTICLE_DETAIL && <ArticleDetailPage />}
           {currentPage === PAGES.SPECIAL_DETAIL && <SpecialDetailPage />}
           {currentPage === PAGES.PUBLICATION_DETAIL && <PublicationDetailPage />}
+          {currentPage === PAGES.COLLECTION_DETAIL && <CollectionDetailPage />}
           {currentPage === PAGES.ACTUALITY && <ActualityContainer />}
           {currentPage === PAGES.MOVED && <MovedPage />}
           {currentPage === PAGES.NOT_FOUND && <NotFoundPage />}

@@ -16,7 +16,7 @@ import {
   toDatasetSearch,
 } from '../../../store/redux-first-router/actions'
 import { routing } from '../../routes'
-import { TYPES as EDITORIAL_TYPES } from '../../../shared/config/cms.config'
+import { CmsType } from '../../../shared/config/cms.config'
 import EditorialResults from '../../components/EditorialResults'
 import DataSearchResults from './DataSearchResults'
 import DatasetSearchResults from './DatasetSearchResults'
@@ -67,7 +67,7 @@ export default {
     query: publicationSearchQuery,
     to: toPublicationSearch,
     label: routing.publicationSearch.title,
-    type: EDITORIAL_TYPES.PUBLICATION,
+    type: CmsType.Publication,
     component: EditorialResults,
   },
   [routing.datasetSearch.page]: {
@@ -83,7 +83,7 @@ export default {
     query: articleSearchQuery,
     to: toArticleSearch,
     label: routing.articleSearch.title,
-    type: EDITORIAL_TYPES.ARTICLE,
+    type: CmsType.Article,
     component: EditorialResults,
   },
   [routing.specialSearch.page]: {
@@ -91,7 +91,7 @@ export default {
     query: specialSearchQuery,
     to: toSpecialSearch,
     label: routing.specialSearch.title,
-    type: EDITORIAL_TYPES.SPECIAL,
+    type: CmsType.Special,
     component: EditorialResults,
   },
 }

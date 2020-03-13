@@ -3,7 +3,7 @@ import RouterLink from 'redux-first-router-link'
 import useSlug from '../../app/utils/useSlug'
 import formatDate from '../../shared/services/date-formatter/date-formatter'
 import { reformatJSONApiResults } from '../../shared/services/cms/cms-json-api-normalizer'
-import { TYPES } from '../../shared/config/cms.config'
+import { CmsType } from '../../shared/config/cms.config'
 import {
   toArticleDetail,
   toPublicationDetail,
@@ -11,9 +11,9 @@ import {
 } from '../../store/redux-first-router/actions'
 
 export const EDITORIAL_DETAIL_ACTIONS = {
-  [TYPES.ARTICLE]: toArticleDetail,
-  [TYPES.PUBLICATION]: toPublicationDetail,
-  [TYPES.SPECIAL]: toSpecialDetail,
+  [CmsType.Article]: toArticleDetail,
+  [CmsType.Publication]: toPublicationDetail,
+  [CmsType.Special]: toSpecialDetail,
 }
 
 // Logic is that we don't show metadata in an editorial detail page
@@ -47,7 +47,7 @@ const normalizeObject = data => {
   // The type SPECIALS has a different url structure
   // eslint-disable-next-line no-nested-ternary
   const to = EDITORIAL_DETAIL_ACTIONS[type]
-    ? type === TYPES.SPECIAL
+    ? type === CmsType.Special
       ? EDITORIAL_DETAIL_ACTIONS[type](uuid, field_special_type, slug)
       : EDITORIAL_DETAIL_ACTIONS[type](uuid, slug)
     : {}
@@ -81,14 +81,14 @@ const normalizeObject = data => {
     )
   }
 
-  const imageIsVertical = type === TYPES.PUBLICATION
+  const imageIsVertical = type === CmsType.Publication
 
   const teaserImage = teaser_url && teaser_url
   const coverImage = media_image_url && media_image_url
 
   // Construct the file url when the type is PUBLICATION
   let fileUrl
-  if (type === TYPES.PUBLICATION) {
+  if (type === CmsType.Publication) {
     const { url } = field_file ? field_file.field_media_file.uri : {}
     fileUrl = url
   }

@@ -87,7 +87,8 @@ class HeaderSearch extends React.Component {
       isDataPage,
       isArticlePage,
       isPublicationPage,
-      isSpecialsPage,
+      isSpecialPage,
+      isCollectionPage,
       typedQuery,
       onCleanDatasetOverview,
       onDatasetSearch,
@@ -98,7 +99,7 @@ class HeaderSearch extends React.Component {
       onSpecialsSearch,
     } = this.props
 
-    const { ARTICLES, DATASETS, PUBLICATIONS, DATA, SPECIALS } = LABELS
+    const { ARTICLES, DATASETS, PUBLICATIONS, DATA, SPECIALS, COLLECTIONS } = LABELS
 
     const searchAction = {
       [DATASETS]: onDatasetSearch,
@@ -122,8 +123,10 @@ class HeaderSearch extends React.Component {
           ? ARTICLES
           : isPublicationPage
           ? PUBLICATIONS
-          : isSpecialsPage
+          : isSpecialPage
           ? SPECIALS
+          : isCollectionPage
+          ? COLLECTIONS
           : null)
 
       const actionFn = searchAction[searchType]
@@ -185,7 +188,8 @@ HeaderSearch.defaultProps = {
   isDatasetPage: false,
   isArticlePage: false,
   isPublicationPage: false,
-  isSpecialsPage: false,
+  isSpecialPage: false,
+  isCollectionPage: false,
 }
 
 HeaderSearch.propTypes = {
@@ -201,7 +205,8 @@ HeaderSearch.propTypes = {
   isDatasetPage: PropTypes.bool,
   isArticlePage: PropTypes.bool,
   isPublicationPage: PropTypes.bool,
-  isSpecialsPage: PropTypes.bool,
+  isSpecialPage: PropTypes.bool,
+  isCollectionPage: PropTypes.bool,
   isMapActive: PropTypes.bool.isRequired,
   numberOfSuggestions: PropTypes.number,
   onCleanDatasetOverview: PropTypes.func.isRequired,

@@ -1,7 +1,7 @@
 import React from 'react'
 import { shallow } from 'enzyme'
 import EditorialResults, { IMAGE_SIZE } from './EditorialResults'
-import { TYPES } from '../../../shared/config/cms.config'
+import { CmsType } from '../../../shared/config/cms.config'
 
 describe('EditorialResults', () => {
   let component
@@ -18,27 +18,29 @@ describe('EditorialResults', () => {
   }
 
   it('should display the loading indicator', () => {
-    component = shallow(<EditorialResults type={TYPES.ARTICLE} loading results={[]} errors={[]} />)
+    component = shallow(
+      <EditorialResults type={CmsType.Article} loading results={[]} errors={[]} />,
+    )
     expect(component.find('LoadingIndicator').exists()).toBe(true)
 
     component = shallow(
-      <EditorialResults type={TYPES.ARTICLE} loading={false} results={[]} errors={[]} />,
+      <EditorialResults type={CmsType.Article} loading={false} results={[]} errors={[]} />,
     )
     expect(component.find('LoadingIndicator').exists()).toBe(false)
   })
 
   it('should render the cards', () => {
-    component = shallow(<EditorialResults type={TYPES.ARTICLE} results={[]} errors={[]} />)
+    component = shallow(<EditorialResults type={CmsType.Article} results={[]} errors={[]} />)
     expect(component.find('EditorialCard').exists()).toBe(false)
 
     // Should render two cards
-    component = shallow(<EditorialResults type={TYPES.ARTICLE} results={[{}, {}]} errors={[]} />)
+    component = shallow(<EditorialResults type={CmsType.Article} results={[{}, {}]} errors={[]} />)
     expect(component.find('EditorialCard').exists()).toBe(true)
     expect(component.find('EditorialCard')).toHaveLength(2)
   })
 
   it('should set the correct props', () => {
-    component = shallow(<EditorialResults type={TYPES.ARTICLE} results={[props]} errors={[]} />)
+    component = shallow(<EditorialResults type={CmsType.Article} results={[props]} errors={[]} />)
 
     const editorialCard = component.find('EditorialCard')
 
@@ -60,7 +62,9 @@ describe('EditorialResults', () => {
   })
 
   it('should set the correct props for publications', () => {
-    component = shallow(<EditorialResults type={TYPES.PUBLICATION} results={[props]} errors={[]} />)
+    component = shallow(
+      <EditorialResults type={CmsType.Publication} results={[props]} errors={[]} />,
+    )
 
     const editorialCard = component.find('EditorialCard')
 
@@ -74,7 +78,7 @@ describe('EditorialResults', () => {
   it('should set the correct props for specials', () => {
     component = shallow(
       <EditorialResults
-        type={TYPES.SPECIAL}
+        type={CmsType.Special}
         results={[{ ...props, specialType: 'foo' }]}
         errors={[]}
       />,
