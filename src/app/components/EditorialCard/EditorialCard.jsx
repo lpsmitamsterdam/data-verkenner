@@ -19,7 +19,7 @@ const StyledHeading = styled(Heading)`
   // By forwarding this component as h4, we need to overwrite the style rules in src/shared/styles/base/_typography.scss
   line-height: 22px;
   margin-bottom: ${({ hasMarginBottom }) => hasMarginBottom && themeSpacing(3)};
-  ${({ compact }) => compact && 'font-size: 16px;'}
+  ${({ compact }) => compact && 'font-size: 16px;'};
   width: fit-content;
   display: inline-block;
   font-weight: bold;
@@ -127,16 +127,15 @@ const getImageSize = (image, resize, imageSize) => {
 }
 
 const EditorialCard = ({
-  id,
   title,
   description = false,
   type,
   specialType = null,
   date = false,
   image,
-  linkProps,
   imageDimensions = [400, 400],
   compact = false,
+  ...otherProps
 }) => {
   const imageIsVertical = imageDimensions[0] !== imageDimensions[1] // Image dimensions indicate whether the image is square or not
 
@@ -149,7 +148,7 @@ const EditorialCard = ({
   const contentType = specialType || type
 
   return (
-    <StyledLink {...linkProps} key={id} title={title} linkType="blank">
+    <StyledLink title={title} linkType="blank" {...otherProps}>
       <StyledCard horizontal>
         <StyledCardMedia imageDimensions={imageDimensions} vertical={imageIsVertical}>
           <Image
