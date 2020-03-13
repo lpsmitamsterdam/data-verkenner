@@ -33,7 +33,7 @@ import getImageFromCms from '../../utils/getImageFromCms'
 import EditorialResults from '../../components/EditorialResults'
 import useDownload from '../../utils/useDownload'
 import { EDITORIAL_FIELD_TYPE_VALUES } from '../../../normalizations/cms/useNormalizedCMSResults'
-import { TYPES } from '../../../shared/config/cms.config'
+import { CmsType } from '../../../shared/config/cms.config'
 
 const ListItemContent = styled.div`
   display: flex;
@@ -178,7 +178,7 @@ const ArticleDetailPage = ({ id }) => {
                             <Divider />
                             <StyledEditorialResults
                               headingLevel="h2"
-                              type={TYPES.ARTICLE}
+                              type={CmsType.Article}
                               results={related}
                               errors={[]}
                               title="Verder lezen"

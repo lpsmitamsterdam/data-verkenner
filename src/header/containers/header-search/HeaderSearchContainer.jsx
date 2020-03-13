@@ -1,6 +1,6 @@
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import { TYPES } from '../../../shared/config/cms.config'
+import { CmsType } from '../../../shared/config/cms.config'
 import { emptyFilters } from '../../../shared/ducks/filters/filters'
 import { getViewMode, isMapPage } from '../../../shared/ducks/ui/ui'
 import PARAMETERS from '../../../store/parameters'
@@ -16,6 +16,7 @@ import {
   toPublicationSearch,
   toSearch,
   toSpecialSearch,
+  toCollectionDetail,
 } from '../../../store/redux-first-router/actions'
 import {
   isArticlePage,
@@ -23,6 +24,7 @@ import {
   isDatasetPage,
   isPublicationPage,
   isSpecialPage,
+  isCollectionPage,
 } from '../../../store/redux-first-router/selectors'
 import {
   getActiveSuggestions,
@@ -42,7 +44,8 @@ const mapStateToProps = state => ({
   isDatasetPage: isDatasetPage(state),
   isArticlePage: isArticlePage(state),
   isPublicationPage: isPublicationPage(state),
-  isSpecialsPage: isSpecialPage(state),
+  isSpecialPage: isSpecialPage(state),
+  isCollectionPage: isCollectionPage(state),
   view: getViewMode(state),
   isMapActive: isMapPage(state),
   numberOfSuggestions: getNumberOfSuggestions(state),
@@ -128,10 +131,18 @@ const mapDispatchToProps = dispatch => ({
     ),
   openDataSuggestion: (suggestion, view) => dispatch(toDataSuggestion(suggestion, view)),
   openDatasetSuggestion: suggestion => dispatch(toDatasetDetail(suggestion)),
-  openEditorialSuggestion: (suggestion, type) =>
-    type === TYPES.ARTICLE
-      ? dispatch(toArticleDetail(suggestion.id, suggestion.slug))
-      : dispatch(toPublicationDetail(suggestion.id, suggestion.slug)),
+  openEditorialSuggestion: (suggestion, type) => {
+    switch (type) {
+      case CmsType.Article:
+        return dispatch(toArticleDetail(suggestion.id, suggestion.slug))
+      case CmsType.Publication:
+        return dispatch(toPublicationDetail(suggestion.id, suggestion.slug))
+      case CmsType.Collection:
+        return dispatch(toCollectionDetail(suggestion.id, suggestion.slug))
+      default:
+        throw new Error(`Unable to open editorial suggestion, unknown type '${type}'.`)
+    }
+  },
   openMapSuggestion: suggestion => dispatch(toMapWithLegendOpen(suggestion.layers)),
 })
 

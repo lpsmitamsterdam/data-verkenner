@@ -1,7 +1,7 @@
 import useNormalizedCMSResults from './useNormalizedCMSResults'
 import useSlug from '../../app/utils/useSlug'
 import formatDate from '../../shared/services/date-formatter/date-formatter'
-import { TYPES } from '../../shared/config/cms.config'
+import { CmsType } from '../../shared/config/cms.config'
 
 jest.mock('../../app/utils/useSlug')
 jest.mock('../../shared/services/date-formatter/date-formatter')
@@ -59,7 +59,7 @@ describe('useNormalizedCMSResults', () => {
     expect(
       useNormalizedCMSResults({
         ...input,
-        type: TYPES.PUBLICATION,
+        type: CmsType.Publication,
         field_file: { field_media_file: { uri: { url: 'url' } } },
       }),
     ).toMatchObject({
@@ -72,7 +72,7 @@ describe('useNormalizedCMSResults', () => {
     expect(
       useNormalizedCMSResults({
         ...input,
-        type: TYPES.ARTICLE,
+        type: CmsType.Article,
       }),
     ).toMatchObject({
       to: {

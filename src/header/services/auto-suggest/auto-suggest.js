@@ -10,6 +10,7 @@ export const LABELS = {
   ARTICLES: 'Artikelen',
   DATA: 'Data',
   SPECIALS: 'In Beeld',
+  COLLECTIONS: 'Dossiers',
 }
 
 /**

@@ -3,7 +3,7 @@ import { CardContainer } from '@datapunt/asc-ui'
 import RouterLink from 'redux-first-router-link'
 import React, { memo } from 'react'
 import LoadingIndicator from '../../../shared/components/loading-indicator/LoadingIndicator'
-import { TYPES } from '../../../shared/config/cms.config'
+import { CmsType } from '../../../shared/config/cms.config'
 import {
   toArticleSearch,
   toPublicationSearch,
@@ -19,9 +19,9 @@ import MoreResultsWhenLoggedIn from '../PanelMessages/MoreResultsWhenLoggedIn'
 import { EDITORIAL_DETAIL_ACTIONS } from '../../../normalizations/cms/useNormalizedCMSResults'
 
 const EDITORIAL_OVERVIEW_ACTIONS = {
-  [TYPES.ARTICLE]: toArticleSearch,
-  [TYPES.PUBLICATION]: toPublicationSearch,
-  [TYPES.SPECIAL]: toSpecialSearch,
+  [CmsType.Article]: toArticleSearch,
+  [CmsType.Publication]: toPublicationSearch,
+  [CmsType.Special]: toSpecialSearch,
 }
 
 export const IMAGE_SIZE = 144
@@ -30,6 +30,7 @@ const EditorialCardContainer = styled(CardContainer)`
   padding: 0;
 `
 
+// TODO: Add results for 'collection' CMS content.
 const EditorialResults = ({ query, results, errors, label, loading, type, className }) => {
   const matchingErrors = getErrorsForPath(errors, ['articleSearch'])
   const hasLoadingError = getLoadingErrors(matchingErrors).length > 0
@@ -67,9 +68,9 @@ const EditorialResults = ({ query, results, errors, label, loading, type, classN
                   forwardedAs={RouterLink}
                   specialType={specialType}
                   key={id}
-                  image={type === TYPES.PUBLICATION ? coverImage : teaserImage}
+                  image={type === CmsType.Publication ? coverImage : teaserImage}
                   imageDimensions={[
-                    type === TYPES.PUBLICATION ? IMAGE_SIZE * 0.7 : IMAGE_SIZE, // Publications have different image dimensions
+                    type === CmsType.Publication ? IMAGE_SIZE * 0.7 : IMAGE_SIZE, // Publications have different image dimensions
                     IMAGE_SIZE,
                   ]}
                   to={to}

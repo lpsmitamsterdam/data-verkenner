@@ -2,10 +2,11 @@ const { HOMEPAGE: HOMEPAGE_LINKS } = require('./content-links.json')
 
 const SHARED_FIELDS = ['field_intro', 'field_cover_image.field_media_image.uri']
 
-export const TYPES = {
-  ARTICLE: 'article',
-  PUBLICATION: 'publication',
-  SPECIAL: 'special',
+export enum CmsType {
+  Article = 'article',
+  Publication = 'publication',
+  Special = 'special',
+  Collection = 'collection',
 }
 
 export const SPECIAL_TYPES = {
@@ -15,7 +16,7 @@ export const SPECIAL_TYPES = {
 
 const cmsConfig = {
   ARTICLE: {
-    endpoint: id =>
+    endpoint: (id: string) =>
       `${process.env.CMS_ROOT}jsonapi/node/article/${id}?include=field_cover_image.field_media_image,field_related.field_teaser_image.field_media_image,field_downloads.field_file.field_media_file`,
     fields: [
       'field_downloads',
@@ -47,7 +48,7 @@ const cmsConfig = {
     endpoint: () => `${process.env.API_ROOT}cms_search/search/article`,
   },
   PUBLICATION: {
-    endpoint: id =>
+    endpoint: (id: string) =>
       `${process.env.CMS_ROOT}jsonapi/node/publication/${id}?include=field_cover_image.field_media_image,field_file.field_media_file`,
     fields: [
       'field_file.field_media_file.uri',
@@ -64,7 +65,7 @@ const cmsConfig = {
     endpoint: () => `${process.env.API_ROOT}cms_search/search/publication`,
   },
   SPECIAL: {
-    endpoint: id => `${process.env.CMS_ROOT}jsonapi/node/special/${id}`,
+    endpoint: (id: string) => `${process.env.CMS_ROOT}jsonapi/node/special/${id}`,
     fields: [
       'field_content_link',
       'field_special_type',
