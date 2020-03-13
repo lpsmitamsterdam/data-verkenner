@@ -1,5 +1,6 @@
 import styled from '@datapunt/asc-core'
 import { CardContainer } from '@datapunt/asc-ui'
+import RouterLink from 'redux-first-router-link'
 import React, { memo } from 'react'
 import LoadingIndicator from '../../../shared/components/loading-indicator/LoadingIndicator'
 import { TYPES } from '../../../shared/config/cms.config'
@@ -63,6 +64,7 @@ const EditorialResults = ({ query, results, errors, label, loading, type, classN
 
               return (
                 <EditorialCard
+                  forwardedAs={RouterLink}
                   specialType={specialType}
                   key={id}
                   image={type === TYPES.PUBLICATION ? coverImage : teaserImage}

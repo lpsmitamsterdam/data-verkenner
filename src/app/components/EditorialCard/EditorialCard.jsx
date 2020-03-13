@@ -127,16 +127,15 @@ const getImageSize = (image, resize, imageSize) => {
 }
 
 const EditorialCard = ({
-  id,
   title,
   description = false,
   type,
   specialType = null,
   date = false,
   image,
-  linkProps,
   imageDimensions = [400, 400],
   compact = false,
+  ...otherProps
 }) => {
   const imageIsVertical = imageDimensions[0] !== imageDimensions[1] // Image dimensions indicate whether the image is square or not
 
@@ -149,7 +148,7 @@ const EditorialCard = ({
   const contentType = specialType || type
 
   return (
-    <StyledLink {...linkProps} key={id} title={title} linkType="blank">
+    <StyledLink title={title} linkType="blank" {...otherProps}>
       <StyledCard horizontal>
         <StyledCardMedia imageDimensions={imageDimensions} vertical={imageIsVertical}>
           <Image
