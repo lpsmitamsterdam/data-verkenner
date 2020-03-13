@@ -83,6 +83,21 @@ query specialSearchQuery(
   }
 }
 
+query collectionSearchQuery(
+  $q: String
+  $limit: Int
+  $page: Int
+  $filters: [FilterInput!]
+  $sort: CMSSortInput
+  $withPagination: Boolean!
+) {
+  collectionSearch(q: $q, input: { limit: $limit, page: $page, filters: $filters, sort: $sort }) {
+    ...CMSFields
+    ...FilterFields
+    ...PageInfoFields
+  }
+}
+
 query searchQuery($q: String!, $limit: Int, $filters: [FilterInput!]) {
   filters {
     type
@@ -109,6 +124,9 @@ query searchQuery($q: String!, $limit: Int, $filters: [FilterInput!]) {
   specialSearch(q: $q, input: { limit: $limit, filters: $filters }) {
     ...CMSFields
   }
+  collectionSearch(q: $q, input: { limit: $limit, filters: $filters }) {
+    ...CMSFields
+  }
 }
 
 query totalCountSearch($q: String!, $limit: Int) {
@@ -125,6 +143,9 @@ query totalCountSearch($q: String!, $limit: Int) {
     totalCount
   }
   specialSearch(q: $q, input: { limit: $limit }) {
+    totalCount
+  }
+  collectionSearch(q: $q, input: { limit: $limit }) {
     totalCount
   }
 }

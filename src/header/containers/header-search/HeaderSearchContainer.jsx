@@ -17,6 +17,7 @@ import {
   toSearch,
   toSpecialSearch,
   toCollectionDetail,
+  toCollectionSearch,
 } from '../../../store/redux-first-router/actions'
 import {
   isArticlePage,
@@ -119,9 +120,19 @@ const mapDispatchToProps = dispatch => ({
         true,
       ),
     ),
-  onSpecialsSearch: query =>
+  onSpecialSearch: query =>
     dispatch(
       toSpecialSearch(
+        {
+          [PARAMETERS.QUERY]: query,
+        },
+        false,
+        true,
+      ),
+    ),
+  onCollectionSearch: query =>
+    dispatch(
+      toCollectionSearch(
         {
           [PARAMETERS.QUERY]: query,
         },

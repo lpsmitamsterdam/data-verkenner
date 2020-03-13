@@ -53,6 +53,13 @@ module.exports = async () => {
             date
           }
         }
+        collectionSearch(q: $q, input: {}){
+          results {
+            id
+            slug
+            date
+          }
+        }
       }
     `,
       variables: {
@@ -64,12 +71,13 @@ module.exports = async () => {
   let result =
     '<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">'
 
-  const { articleSearch, publicationSearch, specialSearch } = data || {}
+  const { articleSearch, publicationSearch, specialSearch, collectionSearch } = data || {}
 
-  if (articleSearch && publicationSearch && specialSearch) {
+  if (articleSearch && publicationSearch && specialSearch && collectionSearch) {
     result += buildUrlPart(data.articleSearch.results, 'artikelen/artikel')
     result += buildUrlPart(data.publicationSearch.results, 'publicaties/publicatie')
     result += buildUrlPart(data.specialSearch.results, 'specials/special')
+    result += buildUrlPart(data.collectionSearch.results, 'collecties/collectie')
   }
 
   result += '</urlset>'

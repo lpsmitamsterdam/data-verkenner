@@ -5,6 +5,7 @@ import {
   articleSearchQuery,
   publicationSearchQuery,
   specialSearchQuery,
+  collectionSearchQuery,
 } from './documents.graphql'
 
 import {
@@ -14,6 +15,7 @@ import {
   toSpecialSearch,
   toDataSearch,
   toDatasetSearch,
+  toCollectionSearch,
 } from '../../../store/redux-first-router/actions'
 import { routing } from '../../routes'
 import { CmsType } from '../../../shared/config/cms.config'
@@ -38,12 +40,14 @@ export const QUERY_TYPES = {
   [routing.publicationSearch.page]: 'publicationSearch',
   [routing.datasetSearch.page]: 'datasetSearch',
   [routing.articleSearch.page]: 'articleSearch',
+  [routing.collectionSearch.page]: 'collectionSearch',
 }
 
 export const EDITORIAL_SEARCH_PAGES = [
   routing.publicationSearch.page,
   routing.specialSearch.page,
   routing.articleSearch.page,
+  routing.collectionSearch.page,
 ]
 
 export default {
@@ -92,6 +96,14 @@ export default {
     to: toSpecialSearch,
     label: routing.specialSearch.title,
     type: CmsType.Special,
+    component: EditorialResults,
+  },
+  [routing.collectionSearch.page]: {
+    resolver: QUERY_TYPES[routing.collectionSearch.page],
+    query: collectionSearchQuery,
+    to: toCollectionSearch,
+    label: routing.collectionSearch.title,
+    type: CmsType.Collection,
     component: EditorialResults,
   },
 }

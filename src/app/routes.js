@@ -158,6 +158,12 @@ export const routing = {
     type: `${ROUTER_NAMESPACE}/${PAGES.COLLECTION_DETAIL}`,
     page: PAGES.COLLECTION_DETAIL,
   },
+  collectionSearch: {
+    title: 'Dossiers',
+    path: `/${MAIN_PATHS.COLLECTIONS}/zoek/`,
+    type: `${ROUTER_NAMESPACE}/${PAGES.COLLECTION_SEARCH}`,
+    page: PAGES.COLLECTION_SEARCH,
+  },
 }
 
 /**
