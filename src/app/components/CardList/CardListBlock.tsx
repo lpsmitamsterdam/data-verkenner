@@ -3,7 +3,7 @@ import React from 'react'
 import { Row, Column, themeColor, themeSpacing, breakpoint } from '@datapunt/asc-ui'
 import styled from '@datapunt/asc-core'
 import CardList from './CardList'
-import { CMSResultItem, CMSResults } from '../../utils/useFromCMS'
+import { CMSResultItem } from '../../utils/useFromCMS'
 
 export type CMSCollectionList = { field_title: string; field_content: CMSResultItem[] }
 
@@ -39,38 +39,35 @@ const StyledColumn = styled(Column)`
   }
 `
 
-const CardListBlock: React.FC<CMSResults & { results?: CMSCollectionList[] }> = ({
-  results,
-  fetchData,
-  loading,
-  error,
-  ...otherProps
-}) =>
-  results ? (
-    <StyledRow hasMargin={false} {...otherProps}>
-      <StyledOuterColumn
-        span={{
-          small: 1,
-          medium: 2,
-          big: 6,
-          large: results.length * 3,
-          xLarge: results.length * 3,
-        }}
-      >
-        <StyledInnerRow halign="flex-start" hasMargin={false}>
-          {results &&
-            results.map(({ field_title: title, field_content }) => (
-              <StyledColumn
-                key={title}
-                wrap
-                span={{ small: 1, medium: 2, big: 3, large: 3, xLarge: 3 }}
-              >
-                <CardList {...{ title, error, loading, results: field_content, fetchData }} />
-              </StyledColumn>
-            ))}
-        </StyledInnerRow>
-      </StyledOuterColumn>
-    </StyledRow>
-  ) : null
+type Props = {
+  results: CMSCollectionList[]
+  loading: boolean
+}
+
+const CardListBlock: React.FC<Props> = ({ results, loading, ...otherProps }) => (
+  <StyledRow hasMargin={false} {...otherProps}>
+    <StyledOuterColumn
+      span={{
+        small: 1,
+        medium: 2,
+        big: 6,
+        large: results.length * 3,
+        xLarge: results.length * 3,
+      }}
+    >
+      <StyledInnerRow halign="flex-start" hasMargin={false}>
+        {results.map(({ field_title: title, field_content }) => (
+          <StyledColumn
+            key={title}
+            wrap
+            span={{ small: 1, medium: 2, big: 3, large: 3, xLarge: 3 }}
+          >
+            <CardList {...{ title, loading, results: field_content }} />
+          </StyledColumn>
+        ))}
+      </StyledInnerRow>
+    </StyledOuterColumn>
+  </StyledRow>
+)
 
 export default CardListBlock

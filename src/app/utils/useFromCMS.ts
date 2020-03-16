@@ -1,5 +1,6 @@
 /* eslint-disable camelcase */
 import React from 'react'
+import { To } from 'redux-first-router-link'
 import { getByUrl } from '../../shared/services/api/api'
 import cmsJsonApiNormalizer from '../../shared/services/cms/cms-json-api-normalizer'
 import useNormalizedCMSResults from '../../normalizations/cms/useNormalizedCMSResults'
@@ -20,31 +21,28 @@ export type CMSResultItem = {
   linkProps: Object
   teaserImage?: string
   coverImage?: string
-  to?: {
-    type: string
-    payload: object
-  }
+  to?: To
 }
 
-export type CMSResults = {
+export type CMSResults<T> = {
   loading: boolean
   fetchData: Function
   error: boolean
+  results?: T
 }
 
 function useFromCMS<T = CMSResultItem[]>(
   config: CMSConfig,
   id?: string,
   normalizeFromJSONApi = true,
-): CMSResults & {
-  results: T | undefined
-} {
+): CMSResults<T> {
   const [results, setResults] = React.useState<T>()
   const [loading, setLoading] = React.useState(true)
   const [error, setError] = React.useState(false)
 
   const fetchData = async (endpoint: string) => {
     setLoading(true)
+    setError(false)
     try {
       if (!endpoint) {
         // eslint-disable-next-line no-param-reassign

@@ -3,14 +3,6 @@ import normalize from 'json-api-normalize'
 export const getType = type => type && type.replace('node--', '')
 
 function getNormalizedItem(item, extraData = {}) {
-  const { url: teaserImageUrl } = item.field_teaser_image
-    ? item.field_teaser_image.field_media_image.uri
-    : {}
-
-  const { url: coverImageUrl } = item.field_cover_image
-    ? item.field_cover_image.field_media_image.uri
-    : {}
-
   // Make sure the correct fields have data here to be used by useNormalizedCMSResults()
   return {
     ...extraData,
@@ -19,8 +11,12 @@ function getNormalizedItem(item, extraData = {}) {
     intro: item.field_intro,
     short_title: item.field_short_title,
     uuid: item.id,
-    media_image_url: coverImageUrl,
-    teaser_url: teaserImageUrl,
+    media_image_url: item.field_cover_image
+      ? item.field_cover_image.field_media_image.uri.url
+      : item.media_image_url,
+    teaser_url: item.field_teaser_image
+      ? item.field_teaser_image.field_media_image.uri.url
+      : item.teaser_url,
   }
 }
 

@@ -2,8 +2,7 @@ import React from 'react'
 import { Card, CardContent, Heading, themeColor, themeSpacing } from '@datapunt/asc-ui'
 import styled from '@datapunt/asc-core'
 import EditorialCard from '../EditorialCard'
-import ErrorMessage from '../ErrorMessage/ErrorMessage'
-import { CMSResultItem, CMSResults } from '../../utils/useFromCMS'
+import { CMSResultItem } from '../../utils/useFromCMS'
 
 const StyledCard = styled(Card)`
   border-top: 2px solid;
@@ -30,10 +29,11 @@ const StyledHeading = styled(Heading)`
 
 type CardListProps = {
   title: string
-  results?: CMSResultItem[]
-} & CMSResults
+  results: CMSResultItem[]
+  loading: boolean
+}
 
-const CardList: React.FC<CardListProps> = ({ title, loading, error, results, fetchData }) => (
+const CardList: React.FC<CardListProps> = ({ title, loading, results }) => (
   <StyledCard isLoading={loading}>
     <StyledCardContent>
       {/*
@@ -42,26 +42,23 @@ const CardList: React.FC<CardListProps> = ({ title, loading, error, results, fet
         {title}
       </StyledHeading>
       <div>
-        {error && <ErrorMessage onClick={() => fetchData()} />}
-        {results &&
-          results.length > 0 &&
-          results.map(
-            ({ id, type, specialType, shortTitle, title: cardTitle, linkProps, teaserImage }) => (
-              <EditorialCard
-                {...{
-                  key: id,
-                  id,
-                  type,
-                  specialType,
-                  title: shortTitle || cardTitle,
-                  image: teaserImage,
-                  imageDimensions: [44, 44],
-                  compact: true, // Important: renders a simplified version of this card
-                  ...linkProps,
-                }}
-              />
-            ),
-          )}
+        {results.map(
+          ({ id, type, specialType, shortTitle, title: cardTitle, linkProps, teaserImage }) => (
+            <EditorialCard
+              {...{
+                key: id,
+                id,
+                type,
+                specialType,
+                title: shortTitle || cardTitle,
+                image: teaserImage,
+                imageDimensions: [44, 44],
+                compact: true, // Important: renders a simplified version of this card
+                ...linkProps,
+              }}
+            />
+          ),
+        )}
       </div>
     </StyledCardContent>
   </StyledCard>
