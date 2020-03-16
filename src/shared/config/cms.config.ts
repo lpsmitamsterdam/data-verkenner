@@ -1,3 +1,5 @@
+import { ENVIRONMENTS } from '../environment'
+
 const { HOMEPAGE: HOMEPAGE_LINKS } = require('./content-links.json')
 
 const SHARED_FIELDS = ['field_intro', 'field_cover_image.field_media_image.uri']
@@ -76,13 +78,63 @@ const cmsConfig = {
   SPECIALS: {
     endpoint: () => `${process.env.API_ROOT}cms_search/search/special`,
   },
+  CMS_COLLECTION_DETAIL: {
+    endpoint: (id?: string) =>
+      `${process.env.CMS_ROOT}jsonapi/node/list/${id}?fields[node--collection]=title,field_intro,field_slug,field_link,field_blocks,field_blocks.field_content,field_items&include=field_blocks,field_blocks.field_content,field_items,field_items.field_teaser_image.field_media_image`,
+    fields: [
+      'title',
+      'field_blocks.field_title',
+      'field_blocks.field_content.title',
+      'field_blocks.field_content.id',
+      'field_blocks.field_content.field_title',
+      'field_blocks.field_content.title',
+      'field_blocks.field_content.intro',
+      'field_blocks.field_content.field_link',
+      'field_blocks.field_content.field_short_title',
+      'field_blocks.field_content.field_teaser_image.field_media_image.uri',
+      'field_blocks.field_content.field_special_type',
+      'field_blocks.field_content.field_teaser',
+      'field_blocks.field_content.type',
+
+      'field_intro',
+      'field_items.id',
+      'field_items.field_title',
+      'field_items.title',
+      'field_items.intro',
+      'field_items.field_link',
+      'field_items.field_short_title',
+      'field_items.field_teaser_image.field_media_image.uri',
+      'field_items.field_special_type',
+      'field_items.field_teaser',
+      'field_items.type',
+    ],
+  },
   HOME_SPECIALS: {
     endpoint: () =>
       `${process.env.CMS_ROOT}jsonapi/node/list/${
-        HOMEPAGE_LINKS.SPECIALS.id[process.env.NODE_ENV]
+        HOMEPAGE_LINKS.SPECIALS.id[process.env.NODE_ENV || ENVIRONMENTS.PRODUCTION]
       }?include=field_items.field_teaser_image.field_media_image&sort=-created`,
     fields: [
       'field_items.id',
+      'field_items.field_title',
+      'field_items.title',
+      'field_items.intro',
+      'field_items.field_link',
+      'field_items.field_short_title',
+      'field_items.field_teaser_image.field_media_image.uri',
+      'field_items.field_special_type',
+      'field_items.field_teaser',
+      'field_items.type',
+    ],
+  },
+  HOME_CMS_COLLECTIONS: {
+    endpoint: () =>
+      `${process.env.CMS_ROOT}jsonapi/node/list/${
+        HOMEPAGE_LINKS.SPECIALS.id[process.env.NODE_ENV || ENVIRONMENTS.PRODUCTION]
+      }?include=field_items.field_teaser_image.field_media_image&sort=-created`,
+    fields: [
+      'field_items.id',
+      'field_items.field_title',
       'field_items.title',
       'field_items.intro',
       'field_items.field_link',
@@ -96,7 +148,7 @@ const cmsConfig = {
   HOME_ORGANIZATION: {
     endpoint: () =>
       `${process.env.CMS_ROOT}jsonapi/node/list/${
-        HOMEPAGE_LINKS.ORGANIZATION.id[process.env.NODE_ENV]
+        HOMEPAGE_LINKS.ORGANIZATION.id[process.env.NODE_ENV || ENVIRONMENTS.PRODUCTION]
       }?include=field_items&sort=-created`,
     fields: [
       'field_items.id',
@@ -111,7 +163,7 @@ const cmsConfig = {
   HOME_ABOUT: {
     endpoint: () =>
       `${process.env.CMS_ROOT}jsonapi/node/list/${
-        HOMEPAGE_LINKS.ABOUT.id[process.env.NODE_ENV]
+        HOMEPAGE_LINKS.ABOUT.id[process.env.NODE_ENV || ENVIRONMENTS.PRODUCTION]
       }?include=field_items&sort=-created`,
     fields: [
       'field_items.id',
@@ -125,7 +177,7 @@ const cmsConfig = {
   HOME_ABOUT_DATA: {
     endpoint: () =>
       `${process.env.CMS_ROOT}jsonapi/node/list/${
-        HOMEPAGE_LINKS.ABOUT_DATA.id[process.env.NODE_ENV]
+        HOMEPAGE_LINKS.ABOUT_DATA.id[process.env.NODE_ENV || ENVIRONMENTS.PRODUCTION]
       }?include=field_items&sort=-created`,
     fields: [
       'field_items.id',
@@ -139,7 +191,7 @@ const cmsConfig = {
   HOME_HIGHLIGHT: {
     endpoint: () =>
       `${process.env.CMS_ROOT}jsonapi/node/list/${
-        HOMEPAGE_LINKS.HIGHLIGHT.id[process.env.NODE_ENV]
+        HOMEPAGE_LINKS.HIGHLIGHT.id[process.env.NODE_ENV || ENVIRONMENTS.PRODUCTION]
       }?include=field_items.field_teaser_image.field_media_image&sort=-created`,
     fields: [
       'field_items.id',

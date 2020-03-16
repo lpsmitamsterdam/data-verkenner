@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 import React from 'react'
 import { getByUrl } from '../../shared/services/api/api'
 import cmsJsonApiNormalizer from '../../shared/services/cms/cms-json-api-normalizer'
@@ -6,13 +7,6 @@ import useNormalizedCMSResults from '../../normalizations/cms/useNormalizedCMSRe
 export type CMSConfig = {
   endpoint: (id?: string) => string
   fields?: Array<string>
-}
-
-export type CMSResults = {
-  loading: boolean
-  fetchData: Function
-  results: Array<CMSResultItem>
-  error: boolean
 }
 
 // More fields should be added to this type when other CMS content pages are migrated to TypeScript
@@ -26,10 +20,26 @@ export type CMSResultItem = {
   linkProps: Object
   teaserImage?: string
   coverImage?: string
+  to?: {
+    type: string
+    payload: object
+  }
 }
 
-function useFromCMS(config: CMSConfig, id?: string, normalizeFromJSONApi = true): CMSResults {
-  const [results, setResults] = React.useState<CMSResultItem[]>([])
+export type CMSResults = {
+  loading: boolean
+  fetchData: Function
+  error: boolean
+}
+
+function useFromCMS<T = CMSResultItem[]>(
+  config: CMSConfig,
+  id?: string,
+  normalizeFromJSONApi = true,
+): CMSResults & {
+  results: T | undefined
+} {
+  const [results, setResults] = React.useState<T>()
   const [loading, setLoading] = React.useState(true)
   const [error, setError] = React.useState(false)
 
@@ -46,10 +56,24 @@ function useFromCMS(config: CMSConfig, id?: string, normalizeFromJSONApi = true)
 
       let result = data
       if (normalizeFromJSONApi) {
-        result = await cmsJsonApiNormalizer(data, fields)
+        result = cmsJsonApiNormalizer(data, fields)
       }
 
-      result = useNormalizedCMSResults(result)
+      // Todo: Need to refactor this when we really know what types and fields to expect from the CMS
+      // This if-statement is an "exeption" for the CollectionDetail pages.
+      if (result.field_blocks && result.field_items) {
+        result = {
+          ...result,
+          // @ts-ignore
+          field_blocks: result.field_blocks.map(({ field_content, ...otherFields }) => ({
+            ...otherFields,
+            field_content: useNormalizedCMSResults(field_content),
+          })),
+          field_items: useNormalizedCMSResults(result.field_items),
+        }
+      } else {
+        result = useNormalizedCMSResults(result)
+      }
       setResults(result)
     } catch (e) {
       setError(true)

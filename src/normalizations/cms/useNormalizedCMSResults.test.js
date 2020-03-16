@@ -22,7 +22,13 @@ describe('useNormalizedCMSResults', () => {
       value: 'body',
     },
     teaser_url: 'teaser_url',
-    media_image_url: 'media_image_url',
+    field_cover_image: {
+      field_media_image: {
+        uri: {
+          url: 'media_image_url',
+        },
+      },
+    },
     short_title: 'short_title',
     field_teaser: 'field_teaser',
     intro: 'intro',
@@ -37,7 +43,7 @@ describe('useNormalizedCMSResults', () => {
     type: input.type,
     body: input.body.value,
     teaserImage: input.teaser_url,
-    coverImage: input.media_image_url,
+    coverImage: input.field_cover_image.field_media_image.uri.url,
     imageIsVertical: false,
     shortTitle: input.short_title,
     teaser: input.field_teaser,

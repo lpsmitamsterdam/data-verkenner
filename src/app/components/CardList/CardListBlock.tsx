@@ -1,16 +1,23 @@
+/* eslint-disable camelcase */
 import React from 'react'
 import { Row, Column, themeColor, themeSpacing, breakpoint } from '@datapunt/asc-ui'
 import styled from '@datapunt/asc-core'
 import CardList from './CardList'
-import { cmsConfig } from '../../../shared/config/config'
+import { CMSResultItem, CMSResults } from '../../utils/useFromCMS'
+
+export type CMSCollectionList = { field_title: string; field_content: CMSResultItem[] }
 
 const StyledRow = styled(Row)`
-  background-color: ${themeColor('tint', 'level3')};
+  width: 100%;
 `
 
 const StyledOuterColumn = styled(Column)`
   background-color: ${themeColor('tint', 'level2')};
   padding: ${themeSpacing(8, 5, 0)}; // Padding on the right is added by the last rendered child
+`
+
+const StyledInnerRow = styled(Row)`
+  flex-grow: 1;
 `
 
 const StyledColumn = styled(Column)`
@@ -32,30 +39,38 @@ const StyledColumn = styled(Column)`
   }
 `
 
-const CardListBlock: React.FC<{}> = () => {
-  const lists = ['List 1', 'Second list', 'Another List', 'List 4']
-
-  return (
-    <StyledRow hasMargin={false}>
+const CardListBlock: React.FC<CMSResults & { results?: CMSCollectionList[] }> = ({
+  results,
+  fetchData,
+  loading,
+  error,
+  ...otherProps
+}) =>
+  results ? (
+    <StyledRow hasMargin={false} {...otherProps}>
       <StyledOuterColumn
         span={{
           small: 1,
           medium: 2,
           big: 6,
-          large: lists.length * 3,
-          xLarge: lists.length * 3,
+          large: results.length * 3,
+          xLarge: results.length * 3,
         }}
       >
-        <Row halign="flex-start" hasMargin={false}>
-          {lists.map(list => (
-            <StyledColumn wrap span={{ small: 1, medium: 2, big: 3, large: 3, xLarge: 3 }}>
-              <CardList title={list} list={cmsConfig.HOME_SPECIALS} />
-            </StyledColumn>
-          ))}
-        </Row>
+        <StyledInnerRow halign="flex-start" hasMargin={false}>
+          {results &&
+            results.map(({ field_title: title, field_content }) => (
+              <StyledColumn
+                key={title}
+                wrap
+                span={{ small: 1, medium: 2, big: 3, large: 3, xLarge: 3 }}
+              >
+                <CardList {...{ title, error, loading, results: field_content, fetchData }} />
+              </StyledColumn>
+            ))}
+        </StyledInnerRow>
       </StyledOuterColumn>
     </StyledRow>
-  )
-}
+  ) : null
 
 export default CardListBlock
