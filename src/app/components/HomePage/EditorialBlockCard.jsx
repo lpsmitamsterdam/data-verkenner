@@ -76,7 +76,7 @@ const ContentType = styled(Paragraph)`
   line-height: 16px;
 `
 
-const SpecialCard = ({
+const EditorialBlockCard = ({
   loading,
   showError,
   shortTitle,
@@ -114,7 +114,7 @@ const SpecialCard = ({
   )
 }
 
-SpecialCard.defaultProps = {
+EditorialBlockCard.defaultProps = {
   loading: false,
   showError: false,
   shortTitle: '',
@@ -126,7 +126,7 @@ SpecialCard.defaultProps = {
   to: {},
 }
 
-SpecialCard.propTypes = {
+EditorialBlockCard.propTypes = {
   loading: PropTypes.bool,
   showError: PropTypes.bool,
   specialType: PropTypes.string,
@@ -138,4 +138,4 @@ SpecialCard.propTypes = {
   to: PropTypes.shape({}),
 }
 
-export default SpecialCard
+export default EditorialBlockCard

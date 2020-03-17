@@ -10,7 +10,7 @@ import {
 } from '@datapunt/asc-ui'
 import HighlightBlock from '../components/HomePage/HighlightBlock'
 import NavigationBlock from '../components/HomePage/NavigationBlock'
-import SpecialBlock from '../components/HomePage/SpecialBlock'
+import EditorialBlock from '../components/HomePage/EditorialBlock'
 import OrganizationBlock from '../components/HomePage/OrganizationBlock'
 import AboutBlock from '../components/HomePage/AboutBlock'
 import ShareBar from '../components/ShareBar/ShareBar'
@@ -58,7 +58,7 @@ const HomePage = () => (
       </StyledRow>
       <StyledRow>
         <Column span={{ small: 1, medium: 2, big: 6, large: 12, xLarge: 12 }}>
-          <SpecialBlock
+          <EditorialBlock
             title="Dossiers"
             list={cmsConfig.HOME_COLLECTIONS}
             showMoreProps={{ to: toCollectionSearch, label: 'Overzicht alle dossiers' }}
@@ -72,7 +72,7 @@ const HomePage = () => (
       </StyledRow>
       <StyledRow>
         <Column span={{ small: 1, medium: 2, big: 6, large: 12, xLarge: 12 }}>
-          <SpecialBlock title="Meer data" list={cmsConfig.HOME_SPECIALS} />
+          <EditorialBlock title="Meer data" list={cmsConfig.HOME_SPECIALS} />
         </Column>
       </StyledRow>
       <StyledRow fullWidth>

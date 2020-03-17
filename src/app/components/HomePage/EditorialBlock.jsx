@@ -6,9 +6,7 @@ import useFromCMS from '../../utils/useFromCMS'
 import BlockHeading from './BlockHeading'
 import ErrorMessage, { ErrorBackgroundCSS } from '../ErrorMessage/ErrorMessage'
 import OverviewLink from './OverviewLink'
-import SpecialCard from './SpecialCard'
-
-const StyledRow = styled(Row)``
+import SpecialCard from './EditorialBlockCard'
 
 const CardRow = styled.div`
   ${({ showError }) => showError && ErrorBackgroundCSS}
@@ -33,7 +31,7 @@ const CardRow = styled.div`
   }
 `
 
-const SpecialBlock = ({ title, list, showMoreProps = {} }) => {
+const EditorialBlock = ({ title, list, showMoreProps = {} }) => {
   const { results, fetchData, loading, error } = useFromCMS(list)
 
   React.useEffect(() => {
@@ -57,7 +55,7 @@ const SpecialBlock = ({ title, list, showMoreProps = {} }) => {
       </Row>
       <CardRow showError={error}>
         {error && <ErrorMessage absolute />}
-        <StyledRow hasMargin={false}>
+        <Row hasMargin={false}>
           {specials &&
             specials.map((special, index) => (
               <Column
@@ -68,13 +66,13 @@ const SpecialBlock = ({ title, list, showMoreProps = {} }) => {
                 <SpecialCard loading={loading} showError={error} {...special} />
               </Column>
             ))}
-        </StyledRow>
+        </Row>
       </CardRow>
       {showMoreProps.to && showMoreProps.label && (
         <Row hasMargin={false}>
           <Column wrap span={{ small: 1, medium: 2, big: 3, large: 4, xLarge: 4 }}>
             <OverviewLink
-              linkProps={{ to: showMoreProps.to, forwardedAs: RouterLink }}
+              linkProps={{ to: showMoreProps.to(), forwardedAs: RouterLink }}
               label={showMoreProps.label}
             />
           </Column>
@@ -84,4 +82,4 @@ const SpecialBlock = ({ title, list, showMoreProps = {} }) => {
   )
 }
 
-export default SpecialBlock
+export default EditorialBlock
