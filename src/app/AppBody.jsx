@@ -5,10 +5,11 @@ import Helmet from 'react-helmet'
 import { useSelector } from 'react-redux'
 import EmbedIframeComponent from './components/EmbedIframe/EmbedIframe'
 import GeneralErrorMessage from './components/PanelMessages/ErrorMessage/ErrorMessageContainer'
-import { FeedbackModal, InfoModal } from './components/Modal'
+import { FeedbackModal } from './components/Modal'
 import PAGES, { isMapSplitPage, isSearchPage } from './pages'
 import LoadingIndicator from '../shared/components/loading-indicator/LoadingIndicator'
 import { getQuery } from './pages/SearchPage/SearchPageDucks'
+import NotificationAlert from './components/NotificationAlert/NotificationAlert'
 
 const HomePage = React.lazy(() => import('./pages/HomePage'))
 const ActualityContainer = React.lazy(() => import('./containers/ActualityContainer'))
@@ -51,7 +52,7 @@ const AppBody = ({
             content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"
           />
         </Helmet>
-
+        <NotificationAlert />
         <Suspense fallback={<LoadingIndicator style={{ top: '200px' }} />}>
           {homePage && <HomePage />}
           {currentPage === PAGES.ARTICLE_DETAIL && <ArticleDetailPage />}
@@ -65,7 +66,6 @@ const AppBody = ({
         </Suspense>
       </AppContainer>
       <FeedbackModal id="feedbackModal" />
-      <InfoModal id="infoModal" open />
     </>
   ) : (
     <>
@@ -77,6 +77,7 @@ const AppBody = ({
       </Helmet>
       <Suspense fallback={<LoadingIndicator style={{ top: '200px' }} />}>
         <div className={`c-dashboard__body ${bodyClasses}`}>
+          <NotificationAlert />
           {visibilityError && (
             <GeneralErrorMessage hasMaxWidth={hasGrid} {...{ isHomePage: homePage }} />
           )}
@@ -95,7 +96,6 @@ const AppBody = ({
           )}
         </div>
         <FeedbackModal id="feedbackModal" />
-        <InfoModal id="infoModal" open />
       </Suspense>
     </>
   )
