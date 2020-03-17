@@ -96,7 +96,8 @@ class HeaderSearch extends React.Component {
       onSearch,
       onArticleSearch,
       onPublicationSearch,
-      onSpecialsSearch,
+      onSpecialSearch,
+      onCollectionSearch,
     } = this.props
 
     const { ARTICLES, DATASETS, PUBLICATIONS, DATA, SPECIALS, COLLECTIONS } = LABELS
@@ -106,7 +107,8 @@ class HeaderSearch extends React.Component {
       [ARTICLES]: onArticleSearch,
       [PUBLICATIONS]: onPublicationSearch,
       [DATA]: onDataSearch,
-      [SPECIALS]: onSpecialsSearch,
+      [SPECIALS]: onSpecialSearch,
+      [COLLECTIONS]: onCollectionSearch,
     }
 
     if (activeSuggestion.index === -1) {
@@ -214,7 +216,8 @@ HeaderSearch.propTypes = {
   onDataSearch: PropTypes.func.isRequired,
   onArticleSearch: PropTypes.func.isRequired,
   onPublicationSearch: PropTypes.func.isRequired,
-  onSpecialsSearch: PropTypes.func.isRequired,
+  onSpecialSearch: PropTypes.func.isRequired,
+  onCollectionSearch: PropTypes.func.isRequired,
   openDataSuggestion: PropTypes.func.isRequired,
   openDatasetSuggestion: PropTypes.func.isRequired,
   openEditorialSuggestion: PropTypes.func.isRequired,

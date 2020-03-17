@@ -8,12 +8,14 @@ import {
   toArticleDetail,
   toPublicationDetail,
   toSpecialDetail,
+  toCollectionDetail,
 } from '../../store/redux-first-router/actions'
 
 export const EDITORIAL_DETAIL_ACTIONS = {
   [CmsType.Article]: toArticleDetail,
   [CmsType.Publication]: toPublicationDetail,
   [CmsType.Special]: toSpecialDetail,
+  [CmsType.Collection]: toCollectionDetail,
 }
 
 // Logic is that we don't show metadata in an editorial detail page

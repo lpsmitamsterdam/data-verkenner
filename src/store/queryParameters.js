@@ -64,6 +64,7 @@ const routesWithSearch = [
   routing.articleSearch.type,
   routing.specialSearch.type,
   routing.publicationSearch.type,
+  routing.collectionSearch.type,
 ]
 
 const routesWithDataSelection = [
@@ -84,6 +85,7 @@ const routesWithCmsData = [
   routing.articleDetail.type,
   routing.publicationDetail.type,
   routing.specialDetail.type,
+  routing.collectionDetail.type,
 ]
 
 /* istanbul ignore next */

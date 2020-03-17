@@ -8,6 +8,7 @@ import {
   toArticleSearch,
   toPublicationSearch,
   toSpecialSearch,
+  toCollectionSearch,
 } from '../../../store/redux-first-router/actions'
 import getErrorsForPath from '../../utils/getErrorsForPath'
 import getLoadingErrors from '../../utils/getLoadingErrors'
@@ -22,6 +23,7 @@ const EDITORIAL_OVERVIEW_ACTIONS = {
   [CmsType.Article]: toArticleSearch,
   [CmsType.Publication]: toPublicationSearch,
   [CmsType.Special]: toSpecialSearch,
+  [CmsType.Collection]: toCollectionSearch,
 }
 
 export const IMAGE_SIZE = 144

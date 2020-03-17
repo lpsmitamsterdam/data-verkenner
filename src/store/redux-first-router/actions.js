@@ -343,3 +343,4 @@ export const toCmsSearch = type => (
 export const toPublicationSearch = toCmsSearch(routing.publicationSearch.type)
 export const toArticleSearch = toCmsSearch(routing.articleSearch.type)
 export const toSpecialSearch = toCmsSearch(routing.specialSearch.type)
+export const toCollectionSearch = toCmsSearch(routing.collectionSearch.type)
