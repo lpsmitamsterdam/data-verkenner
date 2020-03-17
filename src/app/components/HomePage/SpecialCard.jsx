@@ -8,7 +8,6 @@ import {
   Image,
   Link,
   Paragraph,
-  Tag,
   themeColor,
   themeSpacing,
 } from '@datapunt/asc-ui'
@@ -69,10 +68,12 @@ const StyledCardMedia = styled(CardMedia)`
   max-width: 80px;
   align-self: flex-start;
 `
-const StyledTag = styled(Tag)`
-  display: inline;
-  margin-right: ${themeSpacing(1)};
-  line-height: 2em;
+const ContentType = styled(Paragraph)`
+  text-transform: uppercase;
+  color: ${themeColor('support', 'valid')};
+  font-size: 12px;
+  font-weight: bold;
+  line-height: 16px;
 `
 
 const SpecialCard = ({
@@ -81,26 +82,27 @@ const SpecialCard = ({
   shortTitle,
   title,
   specialType,
+  type,
   teaser,
   intro,
   teaserImage,
   linkProps,
 }) => {
+  const contentType = specialType || type
+
   return (
     <StyledLink {...linkProps} linkType="blank">
       <StyledCard horizontal animateLoading={!showError} isLoading={loading} showError={showError}>
         <StyledCardContent>
+          {contentType && (
+            <div>
+              <ContentType data-test="contentType">{contentType}</ContentType>
+            </div>
+          )}
           <StyledHeading forwardedAs="h4" styleAs="h3">
             {shortTitle || title}
           </StyledHeading>
-          <Paragraph>
-            {specialType && (
-              <StyledTag colorType="tint" colorSubtype="level3">
-                {specialType}
-              </StyledTag>
-            )}
-            {teaser || intro}
-          </Paragraph>
+          <Paragraph>{teaser || intro}</Paragraph>
         </StyledCardContent>
         <StyledCardMedia>
           {teaserImage && (

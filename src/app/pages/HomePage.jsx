@@ -16,6 +16,8 @@ import AboutBlock from '../components/HomePage/AboutBlock'
 import ShareBar from '../components/ShareBar/ShareBar'
 import ContentContainer from '../components/ContentContainer/ContentContainer'
 import ThemesBlock from '../components/HomePage/ThemesBlock'
+import { cmsConfig } from '../../shared/config/config'
+import { toCollectionSearch } from '../../store/redux-first-router/actions'
 
 const HighlightColumn = styled(Column)`
   // aligns the HighlightsBlock with the NavigationBlock
@@ -56,12 +58,21 @@ const HomePage = () => (
       </StyledRow>
       <StyledRow>
         <Column span={{ small: 1, medium: 2, big: 6, large: 12, xLarge: 12 }}>
-          <SpecialBlock />
+          <SpecialBlock
+            title="Dossiers"
+            list={cmsConfig.HOME_COLLECTIONS}
+            showMoreProps={{ to: toCollectionSearch, label: 'Overzicht alle dossiers' }}
+          />
         </Column>
       </StyledRow>
       <StyledRow>
         <Column span={{ small: 1, medium: 2, big: 6, large: 12, xLarge: 12 }}>
           <ThemesBlock />
+        </Column>
+      </StyledRow>
+      <StyledRow>
+        <Column span={{ small: 1, medium: 2, big: 6, large: 12, xLarge: 12 }}>
+          <SpecialBlock title="Meer data" list={cmsConfig.HOME_SPECIALS} />
         </Column>
       </StyledRow>
       <StyledRow fullWidth>

@@ -93,6 +93,21 @@ const cmsConfig = {
       'field_items.type',
     ],
   },
+  HOME_COLLECTIONS: {
+    endpoint: () =>
+      `${process.env.CMS_ROOT}jsonapi/node/list/${
+        HOMEPAGE_LINKS.COLLECTIONS.id[process.env.NODE_ENV]
+      }?include=field_items.field_teaser_image.field_media_image&sort=-created`,
+    fields: [
+      'field_items.id',
+      'field_items.title',
+      'field_items.intro',
+      'field_items.field_link',
+      'field_items.field_short_title',
+      'field_items.field_teaser_image.field_media_image.uri',
+      'field_items.field_teaser',
+    ],
+  },
   HOME_ORGANIZATION: {
     endpoint: () =>
       `${process.env.CMS_ROOT}jsonapi/node/list/${

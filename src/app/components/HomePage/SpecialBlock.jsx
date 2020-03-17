@@ -2,8 +2,6 @@ import styled from '@datapunt/asc-core'
 import { breakpoint, CardContainer, Column, Row, styles, themeColor } from '@datapunt/asc-ui'
 import React from 'react'
 import RouterLink from 'redux-first-router-link'
-import { cmsConfig } from '../../../shared/config/config'
-import { toSpecialSearch } from '../../../store/redux-first-router/actions'
 import useFromCMS from '../../utils/useFromCMS'
 import BlockHeading from './BlockHeading'
 import ErrorMessage, { ErrorBackgroundCSS } from '../ErrorMessage/ErrorMessage'
@@ -35,8 +33,8 @@ const CardRow = styled.div`
   }
 `
 
-const SpecialBlock = () => {
-  const { results, fetchData, loading, error } = useFromCMS(cmsConfig.HOME_SPECIALS)
+const SpecialBlock = ({ title, list, showMoreProps = {} }) => {
+  const { results, fetchData, loading, error } = useFromCMS(list)
 
   React.useEffect(() => {
     ;(async () => {
@@ -54,7 +52,7 @@ const SpecialBlock = () => {
     <CardContainer data-test="special-block">
       <Row hasMargin={false}>
         <Column wrap span={{ small: 1, medium: 2, big: 6, large: 12, xLarge: 12 }}>
-          <BlockHeading forwardedAs="h1">In Beeld</BlockHeading>
+          <BlockHeading forwardedAs="h1">{title}</BlockHeading>
         </Column>
       </Row>
       <CardRow showError={error}>
@@ -72,14 +70,16 @@ const SpecialBlock = () => {
             ))}
         </StyledRow>
       </CardRow>
-      <Row hasMargin={false}>
-        <Column wrap span={{ small: 1, medium: 2, big: 3, large: 4, xLarge: 4 }}>
-          <OverviewLink
-            linkProps={{ to: toSpecialSearch(), forwardedAs: RouterLink }}
-            label="Bekijk overzicht"
-          />
-        </Column>
-      </Row>
+      {showMoreProps.to && showMoreProps.label && (
+        <Row hasMargin={false}>
+          <Column wrap span={{ small: 1, medium: 2, big: 3, large: 4, xLarge: 4 }}>
+            <OverviewLink
+              linkProps={{ to: showMoreProps.to, forwardedAs: RouterLink }}
+              label={showMoreProps.label}
+            />
+          </Column>
+        </Row>
+      )}
     </CardContainer>
   )
 }
