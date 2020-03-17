@@ -23,6 +23,7 @@ describe('useNormalizedCMSResults', () => {
     },
     teaser_url: 'teaser_url',
     media_image_url: 'media_image_url',
+
     short_title: 'short_title',
     field_teaser: 'field_teaser',
     intro: 'intro',

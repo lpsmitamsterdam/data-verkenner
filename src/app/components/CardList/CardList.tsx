@@ -1,9 +1,8 @@
 import React from 'react'
-import { Card, CardContent, Heading, themeSpacing, themeColor } from '@datapunt/asc-ui'
+import { Card, CardContent, Heading, themeColor, themeSpacing } from '@datapunt/asc-ui'
 import styled from '@datapunt/asc-core'
-import useFromCMS, { CMSConfig } from '../../utils/useFromCMS'
 import EditorialCard from '../EditorialCard'
-import ErrorMessage from '../ErrorMessage/ErrorMessage'
+import { CMSResultItem } from '../../utils/useFromCMS'
 
 const StyledCard = styled(Card)`
   border-top: 2px solid;
@@ -12,7 +11,7 @@ const StyledCard = styled(Card)`
   width: 100%;
   background-color: ${themeColor('tint', 'level2')}
     // Override the margin-bottom of the Card component when used in a CardContainer
-    && {
+    & {
     margin-bottom: 0px;
   }
 `
@@ -22,7 +21,6 @@ const StyledCardContent = styled(CardContent)`
   height: 100%;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
 `
 
 const StyledHeading = styled(Heading)`
@@ -31,47 +29,39 @@ const StyledHeading = styled(Heading)`
 
 type CardListProps = {
   title: string
-  list: CMSConfig
+  results: CMSResultItem[]
+  loading: boolean
 }
 
-const CardList: React.FC<CardListProps> = ({ title, list }) => {
-  const { results, fetchData, loading, error } = useFromCMS(list)
-
-  React.useEffect(() => {
-    fetchData()
-  }, [])
-
-  return (
-    <StyledCard isLoading={loading}>
-      <StyledCardContent>
-        {/* 
+const CardList: React.FC<CardListProps> = ({ title, loading, results }) => (
+  <StyledCard isLoading={loading}>
+    <StyledCardContent>
+      {/*
           // @ts-ignore */}
-        <StyledHeading forwardedAs="h4" styleAs="h3">
-          {title}
-        </StyledHeading>
-        <div>
-          {error && <ErrorMessage onClick={() => fetchData()} />}
-          {results.length > 0 &&
-            results.map(
-              ({ id, type, specialType, shortTitle, title: cardTitle, linkProps, teaserImage }) => (
-                <EditorialCard
-                  {...{
-                    id,
-                    type,
-                    linkProps,
-                    specialType,
-                    title: shortTitle || cardTitle,
-                    image: teaserImage,
-                    imageDimensions: [44, 44],
-                    compact: true, // Important: renders a simplified version of this card
-                  }}
-                />
-              ),
-            )}
-        </div>
-      </StyledCardContent>
-    </StyledCard>
-  )
-}
+      <StyledHeading forwardedAs="h4" styleAs="h3">
+        {title}
+      </StyledHeading>
+      <div>
+        {results.map(
+          ({ id, type, specialType, shortTitle, title: cardTitle, linkProps, teaserImage }) => (
+            <EditorialCard
+              {...{
+                key: id,
+                id,
+                type,
+                specialType,
+                title: shortTitle || cardTitle,
+                image: teaserImage,
+                imageDimensions: [44, 44],
+                compact: true, // Important: renders a simplified version of this card
+                ...linkProps,
+              }}
+            />
+          ),
+        )}
+      </div>
+    </StyledCardContent>
+  </StyledCard>
+)
 
 export default CardList
