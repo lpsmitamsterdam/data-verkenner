@@ -1,15 +1,17 @@
 import styled, { css } from '@datapunt/asc-core'
-import { breakpoint, perceivedLoading, themeColor, themeSpacing } from '@datapunt/asc-ui'
+import { breakpoint, perceivedLoading, themeColor, Link, themeSpacing } from '@datapunt/asc-ui'
 import { SizeOnBreakpoint } from '../TileGrid/TileGridStyle'
+import getImageFromCms from '../../utils/getImageFromCms'
 
 type TileProps = {
-  backgroundImageTemplate?: string
+  backgroundImage?: string
   isLoading?: boolean
   span?: SizeOnBreakpoint
   animateLoading?: boolean
 }
 
-const Tile = styled.div<TileProps>`
+const Tile = styled(Link)<TileProps>`
+  display: block;
   position: relative;
   width: 100%;
   overflow: hidden;
@@ -17,20 +19,22 @@ const Tile = styled.div<TileProps>`
   background-repeat: no-repeat;
   padding: ${themeSpacing(12, 5)};
   min-height: 100%;
+  color: ${themeColor('tint', 'level7')};
+  background-position: center;
 
-  ${({ backgroundImageTemplate, span }) =>
-    backgroundImageTemplate && span
+  ${({ backgroundImage, span, isLoading }) =>
+    backgroundImage && span && !isLoading
       ? css`
           ${span &&
             Object.entries(span).map(
               ([brkPoint, size]: [any, any]) => css`
-                background-image: url(${backgroundImageTemplate
-                  .replace('%w', '400')
-                  .replace('%h', '300')});
+                background-image: url(${getImageFromCms(backgroundImage, 400, 300)});
                 @media screen and ${breakpoint('min-width', brkPoint)} {
-                  background-image: url(${backgroundImageTemplate
-                    .replace('%w', size[1] === 2 ? '600' : '300')
-                    .replace('%h', size[0] === 2 ? '600' : '300')});
+                  background-image: url(${getImageFromCms(
+                    backgroundImage,
+                    size[1] === 2 ? 600 : 300,
+                    size[0] === 2 ? 600 : 300,
+                  )});
                 }
               `,
             )}
