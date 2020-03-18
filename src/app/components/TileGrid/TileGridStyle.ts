@@ -17,7 +17,6 @@ type TileGridItemProps = {
 export const TileGridItem = styled.div<TileGridItemProps>`
   // Begin IE11 rules
   display: flex;
-  height: 100%;
   flex-shrink: 0;
   flex-basis: calc(100%);
   border: ${GAP}px solid transparent;

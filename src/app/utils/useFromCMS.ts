@@ -43,6 +43,7 @@ function useFromCMS<T = CMSResultItem[]>(
   const fetchData = async (endpoint: string) => {
     setLoading(true)
     setError(false)
+    setResults(undefined)
     try {
       if (!endpoint) {
         // eslint-disable-next-line no-param-reassign
