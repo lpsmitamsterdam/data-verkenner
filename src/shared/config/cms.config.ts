@@ -95,7 +95,7 @@ const cmsConfig = {
       'field_blocks.field_content.field_special_type',
       'field_blocks.field_content.field_teaser',
       'field_blocks.field_content.type',
-
+      'field_link',
       'field_intro',
       'field_items.id',
       'field_items.field_title',
