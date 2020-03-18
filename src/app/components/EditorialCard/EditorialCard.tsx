@@ -160,6 +160,8 @@ const EditorialCard: React.FC<EditorialCardProps> = ({
     imageIsVertical ? imageDimensions[1] : imageDimensions[0],
   )
 
+  const contentTypeLabel = getContentTypeLabel(type, specialType)
+
   return (
     <StyledLink {...{ title, linkType: 'blank', compact, ...otherProps }}>
       <StyledCard horizontal>
@@ -172,11 +174,9 @@ const EditorialCard: React.FC<EditorialCardProps> = ({
           />
         </StyledCardMedia>
         <StyledCardContent>
-          {showContentType && (
+          {showContentType && contentTypeLabel && (
             <div>
-              <ContentType data-test="contentType">
-                {getContentTypeLabel(type, specialType)}
-              </ContentType>
+              <ContentType data-test="contentType">{contentTypeLabel}</ContentType>
             </div>
           )}
 
@@ -218,8 +218,12 @@ function getContentTypeLabel(type: CmsType, specialType?: SpecialType) {
         return 'Animatie'
       case SpecialType.Dashboard:
         return 'Dashboard'
+      case SpecialType.Dataset:
+        return 'Dataset'
       default:
-        throw new Error(`Unable to get content type label, unknown special type '${specialType}'.`)
+        // eslint-disable-next-line no-console
+        console.error(`Unable to get content type label, unknown special type '${specialType}'.`)
+        return null
     }
   }
 
@@ -233,6 +237,8 @@ function getContentTypeLabel(type: CmsType, specialType?: SpecialType) {
     case CmsType.Special:
       return 'In Beeld'
     default:
-      throw new Error(`Unable to get content type label, unknown type '${specialType}'.`)
+      // eslint-disable-next-line no-console
+      console.error(`Unable to get content type label, unknown type '${specialType}'.`)
+      return null
   }
 }
