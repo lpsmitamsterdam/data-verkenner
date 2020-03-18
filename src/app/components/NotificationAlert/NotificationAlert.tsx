@@ -17,7 +17,7 @@ const Content = styled.div`
 `
 
 const StyledAlertMessage = styled(AlertMessage)`
-  z-index: 2;
+  z-index: 3;
 `
 
 const NotificationAlert: React.FC = () => {
