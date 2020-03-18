@@ -14,6 +14,7 @@ export enum CmsType {
 export enum SpecialType {
   Animation = 'animatie',
   Dashboard = 'dashboard',
+  Dataset = 'dataset',
 }
 
 const cmsConfig = {
