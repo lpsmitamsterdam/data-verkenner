@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 import normalize from 'json-api-normalize'
 
 export const getType = type => type && type.replace('node--', '')
@@ -45,6 +46,25 @@ export const reformatJSONApiResults = normalizedData => {
 
 const cmsJsonApiNormalizer = (data, fields) => {
   const normalizedData = normalize(data).get(['id', 'title', 'body', 'created', 'type', ...fields])
+
+  /**
+   * Nasty hack because json-api-normalize can sometimes mess up the order of the related fields
+   * Todo: https://datapunt.atlassian.net/browse/DI-406
+   */
+  const sortedItems = data?.data?.relationships?.field_items?.data ?? []
+  if (normalizedData?.field_items?.length && sortedItems.length) {
+    const field_items = [...normalizedData.field_items].sort(
+      (a, b) =>
+        sortedItems.indexOf(sortedItems.filter(({ id }) => a.id === id)[0]) -
+        sortedItems.indexOf(sortedItems.filter(({ id }) => b.id === id)[0]),
+    )
+
+    return reformatJSONApiResults({
+      ...normalizedData,
+      field_items,
+    })
+  }
+
   return reformatJSONApiResults(normalizedData)
 }
 
