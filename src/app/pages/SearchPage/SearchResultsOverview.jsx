@@ -63,6 +63,7 @@ const SearchResultsOverview = ({ query, totalCount, results, errors, loading }) 
                     loading,
                     errors: matchingErrors,
                     compact: true, // Results in the search overview page are compact
+                    isOverviewPage: true,
                   }}
                 />
               ) : (
