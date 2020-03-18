@@ -32,7 +32,6 @@ const EditorialCardContainer = styled(CardContainer)`
   padding: 0;
 `
 
-// TODO: Add results for 'collection' CMS content.
 const EditorialResults = ({ query, results, errors, label, loading, type, className }) => {
   const matchingErrors = getErrorsForPath(errors, ['articleSearch'])
   const hasLoadingError = getLoadingErrors(matchingErrors).length > 0
@@ -65,9 +64,12 @@ const EditorialResults = ({ query, results, errors, label, loading, type, classN
                 ? EDITORIAL_DETAIL_ACTIONS[type](id, specialType, slug)
                 : EDITORIAL_DETAIL_ACTIONS[type](id, slug)
 
+              const showContentType = !!specialType || type === CmsType.Collection
+
               return (
                 <EditorialCard
                   forwardedAs={RouterLink}
+                  type={type}
                   specialType={specialType}
                   key={id}
                   image={type === CmsType.Publication ? coverImage : teaserImage}
@@ -79,6 +81,7 @@ const EditorialResults = ({ query, results, errors, label, loading, type, classN
                   title={cardLabel}
                   description={teaser}
                   date={!specialType && dateLocale}
+                  showContentType={showContentType}
                 />
               )
             })}
