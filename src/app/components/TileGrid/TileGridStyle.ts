@@ -1,5 +1,5 @@
 import styled, { css, Theme, ascDefaultTheme } from '@datapunt/asc-core'
-import { breakpoint } from '@datapunt/asc-ui'
+import { breakpoint, themeColor } from '@datapunt/asc-ui'
 
 const GAP = ascDefaultTheme.spacing * 6
 
@@ -19,15 +19,18 @@ export const TileGridItem = styled.div<TileGridItemProps>`
   display: flex;
   flex-shrink: 0;
   flex-basis: calc(100%);
-  border: ${GAP}px solid transparent;
-  border-top: none;
   position: relative;
 
-  &:nth-of-type(1n) {
+  & > * {
+    border: ${GAP}px solid ${themeColor('tint', 'level1')};
+    border-top: none;
+  }
+
+  &:nth-of-type(1n) > * {
     border-left: none;
   }
 
-  &:nth-of-type(1) {
+  &:nth-of-type(1) > * {
     border-right: none;
   }
 
@@ -38,16 +41,16 @@ export const TileGridItem = styled.div<TileGridItemProps>`
   @media screen and ${breakpoint('min-width', 'laptop')} {
     flex-basis: calc(100% / 4);
 
-    &:nth-of-type(2n) {
+    &:nth-of-type(2n) > * {
       border-right: ${GAP}px solid white;
     }
 
-    &:nth-of-type(5) {
+    &:nth-of-type(5) > * {
       border-right: 0;
     }
   }
-  // End IE11 rules
 
+  // End IE11 rules
   min-height: 250px;
 
   @supports (display: grid) {
@@ -58,7 +61,9 @@ export const TileGridItem = styled.div<TileGridItemProps>`
     margin-bottom: initial;
     height: 100%;
     flex-shrink: initial;
-    border: none !important;
+    & > * {
+      border: none !important;
+    }
 
     ${({ span }) =>
       span &&
