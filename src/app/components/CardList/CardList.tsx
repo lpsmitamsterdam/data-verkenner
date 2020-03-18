@@ -54,6 +54,7 @@ const CardList: React.FC<CardListProps> = ({ title, loading, results }) => (
                 image: teaserImage,
                 imageDimensions: [44, 44],
                 compact: true, // Important: renders a simplified version of this card
+                showContentType: true,
                 ...linkProps,
               }}
             />

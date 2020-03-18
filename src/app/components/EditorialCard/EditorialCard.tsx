@@ -12,6 +12,7 @@ import {
   themeSpacing,
 } from '@datapunt/asc-ui'
 import getImageFromCms from '../../utils/getImageFromCms'
+import { CmsType, SpecialType } from '../../../shared/config/cms.config'
 
 const notFoundImage = '/assets/images/not_found_thumbnail.jpg'
 
@@ -127,15 +128,28 @@ const getImageSize = (image, resize, imageSize) => {
   }
 }
 
-const EditorialCard = ({
+interface EditorialCardProps {
+  title: string
+  description?: string
+  type: CmsType
+  specialType?: SpecialType
+  date?: string
+  image: string
+  imageDimensions?: [number, number]
+  compact?: boolean
+  showContentType?: boolean
+}
+
+const EditorialCard: React.FC<EditorialCardProps> = ({
   title,
-  description = false,
+  description,
   type,
-  specialType = null,
-  date = false,
+  specialType,
+  date,
   image,
   imageDimensions = [400, 400],
   compact = false,
+  showContentType = false,
   ...otherProps
 }) => {
   const imageIsVertical = imageDimensions[0] !== imageDimensions[1] // Image dimensions indicate whether the image is square or not
@@ -145,8 +159,6 @@ const EditorialCard = ({
     imageIsVertical ? 'fit' : 'fill',
     imageIsVertical ? imageDimensions[1] : imageDimensions[0],
   )
-
-  const contentType = specialType || type
 
   return (
     <StyledLink {...{ title, linkType: 'blank', compact, ...otherProps }}>
@@ -160,9 +172,11 @@ const EditorialCard = ({
           />
         </StyledCardMedia>
         <StyledCardContent>
-          {contentType && (
+          {showContentType && (
             <div>
-              <ContentType data-test="contentType">{contentType}</ContentType>
+              <ContentType data-test="contentType">
+                {getContentTypeLabel(type, specialType)}
+              </ContentType>
             </div>
           )}
 
@@ -170,7 +184,7 @@ const EditorialCard = ({
             <StyledHeading
               forwardedAs={compact ? 'span' : 'h4'}
               compact={compact}
-              hasMarginBottom={description}
+              hasMarginBottom={!!description}
             >
               {title}
             </StyledHeading>
@@ -196,3 +210,29 @@ const EditorialCard = ({
 }
 
 export default EditorialCard
+
+function getContentTypeLabel(type: CmsType, specialType?: SpecialType) {
+  if (specialType) {
+    switch (specialType) {
+      case SpecialType.Animation:
+        return 'Animatie'
+      case SpecialType.Dashboard:
+        return 'Dashboard'
+      default:
+        throw new Error(`Unable to get content type label, unknown special type '${specialType}'.`)
+    }
+  }
+
+  switch (type) {
+    case CmsType.Article:
+      return 'Artikel'
+    case CmsType.Collection:
+      return 'Dossier'
+    case CmsType.Publication:
+      return 'Publicatie'
+    case CmsType.Special:
+      return 'In Beeld'
+    default:
+      throw new Error(`Unable to get content type label, unknown type '${specialType}'.`)
+  }
+}

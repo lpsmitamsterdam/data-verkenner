@@ -2,6 +2,7 @@ import React from 'react'
 import { shallow } from 'enzyme'
 import EditorialCard from './EditorialCard'
 import getImageFromCms from '../../utils/getImageFromCms'
+import { SpecialType, CmsType } from '../../../shared/config/cms.config'
 
 jest.mock('../../utils/getImageFromCms')
 
@@ -44,7 +45,7 @@ describe('EditorialCard', () => {
     expect(image.props().src).toBe('image.jpg')
   })
 
-  it("should display a type when there's one provided", () => {
+  it('should display a content type if enabled', () => {
     let component = shallow(<EditorialCard href="link" {...mockDataItem} />).dive()
 
     let contentType = component.find("[data-test='contentType']")
@@ -52,20 +53,28 @@ describe('EditorialCard', () => {
     expect(contentType.exists()).toBeFalsy()
 
     component = shallow(
-      <EditorialCard href="link" specialType="foo2" type="foo" {...mockDataItem} />,
+      <EditorialCard
+        href="link"
+        specialType={SpecialType.Animation}
+        type={CmsType.Special}
+        showContentType
+        {...mockDataItem}
+      />,
     ).dive()
 
     contentType = component.find("[data-test='contentType']")
 
     expect(contentType.exists()).toBeTruthy()
-    expect(contentType.props().children).toBe('foo2')
+    expect(contentType.props().children).toBe('Animatie')
 
-    component = shallow(<EditorialCard href="link" type="foo" {...mockDataItem} />).dive()
+    component = shallow(
+      <EditorialCard href="link" type={CmsType.Collection} showContentType {...mockDataItem} />,
+    ).dive()
 
     contentType = component.find("[data-test='contentType']")
 
     expect(contentType.exists()).toBeTruthy()
-    expect(contentType.props().children).toBe('foo')
+    expect(contentType.props().children).toBe('Dossier')
   })
 
   it("should display a date there's one provided", () => {

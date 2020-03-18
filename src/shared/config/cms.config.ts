@@ -11,9 +11,9 @@ export enum CmsType {
   Collection = 'collection',
 }
 
-export const SPECIAL_TYPES = {
-  ANIMATION: 'animatie',
-  DASHBOARD: 'dashboard',
+export enum SpecialType {
+  Animation = 'animatie',
+  Dashboard = 'dashboard',
 }
 
 const cmsConfig = {
