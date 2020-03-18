@@ -5,6 +5,7 @@ import {
   articleSearchQuery,
   publicationSearchQuery,
   specialSearchQuery,
+  collectionSearchQuery,
 } from './documents.graphql'
 
 import {
@@ -14,9 +15,10 @@ import {
   toSpecialSearch,
   toDataSearch,
   toDatasetSearch,
+  toCollectionSearch,
 } from '../../../store/redux-first-router/actions'
 import { routing } from '../../routes'
-import { TYPES as EDITORIAL_TYPES } from '../../../shared/config/cms.config'
+import { CmsType } from '../../../shared/config/cms.config'
 import EditorialResults from '../../components/EditorialResults'
 import DataSearchResults from './DataSearchResults'
 import DatasetSearchResults from './DatasetSearchResults'
@@ -38,12 +40,14 @@ export const QUERY_TYPES = {
   [routing.publicationSearch.page]: 'publicationSearch',
   [routing.datasetSearch.page]: 'datasetSearch',
   [routing.articleSearch.page]: 'articleSearch',
+  [routing.collectionSearch.page]: 'collectionSearch',
 }
 
 export const EDITORIAL_SEARCH_PAGES = [
   routing.publicationSearch.page,
   routing.specialSearch.page,
   routing.articleSearch.page,
+  routing.collectionSearch.page,
 ]
 
 export default {
@@ -67,7 +71,7 @@ export default {
     query: publicationSearchQuery,
     to: toPublicationSearch,
     label: routing.publicationSearch.title,
-    type: EDITORIAL_TYPES.PUBLICATION,
+    type: CmsType.Publication,
     component: EditorialResults,
   },
   [routing.datasetSearch.page]: {
@@ -83,7 +87,7 @@ export default {
     query: articleSearchQuery,
     to: toArticleSearch,
     label: routing.articleSearch.title,
-    type: EDITORIAL_TYPES.ARTICLE,
+    type: CmsType.Article,
     component: EditorialResults,
   },
   [routing.specialSearch.page]: {
@@ -91,7 +95,15 @@ export default {
     query: specialSearchQuery,
     to: toSpecialSearch,
     label: routing.specialSearch.title,
-    type: EDITORIAL_TYPES.SPECIAL,
+    type: CmsType.Special,
+    component: EditorialResults,
+  },
+  [routing.collectionSearch.page]: {
+    resolver: QUERY_TYPES[routing.collectionSearch.page],
+    query: collectionSearchQuery,
+    to: toCollectionSearch,
+    label: routing.collectionSearch.title,
+    type: CmsType.Collection,
     component: EditorialResults,
   },
 }

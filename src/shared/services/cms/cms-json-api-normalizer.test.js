@@ -49,6 +49,8 @@ describe('jsonApiNormalizer', () => {
 
     expect(normalizedData).toEqual({
       ...mockData,
+      short_title: mockData.field_short_title,
+      teaser_url: mockImageUrl,
       type: getType(mockData.type),
       intro: mockData.field_intro,
       uuid: mockData.id,
@@ -75,6 +77,7 @@ describe('jsonApiNormalizer', () => {
       {
         ...mockData,
         type: getType(mockData.field_items[0].type),
+        media_image_url: mockImageUrl,
         intro: mockData.field_intro,
         uuid: mockData.id,
         short_title: mockData.field_short_title,

@@ -10,6 +10,7 @@ export const LABELS = {
   ARTICLES: 'Artikelen',
   DATA: 'Data',
   SPECIALS: 'In Beeld',
+  COLLECTIONS: 'Dossiers',
 }
 
 /**
@@ -46,6 +47,7 @@ function formatData(categories) {
         index: indexInTotal,
         label: suggestion._display,
         uri: suggestion.uri,
+        type: suggestion.type,
       }
     }),
   }))

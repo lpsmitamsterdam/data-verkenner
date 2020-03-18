@@ -98,11 +98,13 @@ export const toMap = (preserve = false, forceSaga = true) => ({
   },
 })
 
-export const toMapWithLegendOpen = () => {
+export const toMapWithLegendOpen = layers => {
   const additionalParams = {
     [PARAMETERS.VIEW]: VIEW_MODE.MAP,
     [PARAMETERS.LEGEND]: true,
+    [PARAMETERS.LAYERS]: layers,
   }
+
   return {
     type: routing.data.type,
     meta: {
@@ -285,6 +287,14 @@ export const toSpecialDetail = (id, type = '', slug = '') => ({
   },
 })
 
+export const toCollectionDetail = (id, slug = '') => ({
+  type: routing.collectionDetail.type,
+  payload: {
+    id,
+    slug,
+  },
+})
+
 export const toConstructionFileViewer = (id, fileName) => ({
   type: routing.constructionFile.type,
   payload: {
@@ -333,3 +343,4 @@ export const toCmsSearch = type => (
 export const toPublicationSearch = toCmsSearch(routing.publicationSearch.type)
 export const toArticleSearch = toCmsSearch(routing.articleSearch.type)
 export const toSpecialSearch = toCmsSearch(routing.specialSearch.type)
+export const toCollectionSearch = toCmsSearch(routing.collectionSearch.type)

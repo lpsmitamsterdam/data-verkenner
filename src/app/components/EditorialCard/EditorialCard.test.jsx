@@ -2,7 +2,7 @@ import React from 'react'
 import { shallow } from 'enzyme'
 import EditorialCard from './EditorialCard'
 import getImageFromCms from '../../utils/getImageFromCms'
-import { TYPES } from '../../../shared/config/cms.config'
+import { SpecialType, CmsType } from '../../../shared/config/cms.config'
 
 jest.mock('../../utils/getImageFromCms')
 
@@ -10,10 +10,8 @@ describe('EditorialCard', () => {
   const mockDataItem = {
     id: 1,
     title: 'long title',
-    shortTitle: 'title',
-    intro: 'intro',
-    teaserImage: 'thumbnail.jpg',
-    type: TYPES.PUBLICATION,
+    description: 'intro',
+    image: 'thumbnail.jpg',
   }
 
   getImageFromCms.mockImplementation(() => 'image.jpg')
@@ -28,17 +26,9 @@ describe('EditorialCard', () => {
   })
 
   it('should display the correct title', () => {
-    let component = shallow(<EditorialCard href="link" {...mockDataItem} />).dive()
+    const component = shallow(<EditorialCard href="link" {...mockDataItem} />).dive()
 
-    let heading = component.find('Styled(Heading)')
-
-    expect(heading.exists()).toBeTruthy()
-    expect(heading.props().children).toBe(mockDataItem.shortTitle)
-
-    component = shallow(
-      <EditorialCard href="link" {...{ ...mockDataItem, shortTitle: false }} />,
-    ).dive()
-    heading = component.find('Styled(Heading)')
+    const heading = component.find('Styled(Heading)')
 
     expect(heading.exists()).toBeTruthy()
     expect(heading.props().children).toBe(mockDataItem.title)
@@ -55,41 +45,47 @@ describe('EditorialCard', () => {
     expect(image.props().src).toBe('image.jpg')
   })
 
-  it("should display a tag when there's one provided", () => {
-    const component = shallow(
-      <EditorialCard href="link" specialType="foo" {...mockDataItem} />,
-    ).dive()
+  it('should display a content type if enabled', () => {
+    let component = shallow(<EditorialCard href="link" {...mockDataItem} />).dive()
 
-    const tag = component.find('Styled(Tag)')
+    let contentType = component.find("[data-test='contentType']")
 
-    expect(tag.exists()).toBeTruthy()
-    expect(tag.props().children).toBe('foo')
-  })
-
-  it("should display a localeDate there's one provided unless it has a specialType", () => {
-    let component = shallow(
-      <EditorialCard
-        href="link"
-        localeDate="locale"
-        localeDateFormatted="formatted"
-        {...mockDataItem}
-      />,
-    ).dive()
-
-    let metaText = component.find("[data-test='metaText']")
-
-    expect(metaText.exists()).toBeTruthy()
-    expect(metaText.props().children).toBe('formatted')
+    expect(contentType.exists()).toBeFalsy()
 
     component = shallow(
       <EditorialCard
         href="link"
-        localeDate="locale"
-        localeDateFormatted="formatted"
-        specialType="foo"
+        specialType={SpecialType.Animation}
+        type={CmsType.Special}
+        showContentType
         {...mockDataItem}
       />,
     ).dive()
+
+    contentType = component.find("[data-test='contentType']")
+
+    expect(contentType.exists()).toBeTruthy()
+    expect(contentType.props().children).toBe('Animatie')
+
+    component = shallow(
+      <EditorialCard href="link" type={CmsType.Collection} showContentType {...mockDataItem} />,
+    ).dive()
+
+    contentType = component.find("[data-test='contentType']")
+
+    expect(contentType.exists()).toBeTruthy()
+    expect(contentType.props().children).toBe('Dossier')
+  })
+
+  it("should display a date there's one provided", () => {
+    let component = shallow(<EditorialCard href="link" date="date" {...mockDataItem} />).dive()
+
+    let metaText = component.find("[data-test='metaText']")
+
+    expect(metaText.exists()).toBeTruthy()
+    expect(metaText.props().children).toBe('date')
+
+    component = shallow(<EditorialCard href="link" specialType="foo" {...mockDataItem} />).dive()
 
     metaText = component.find("[data-test='metaText']")
 

@@ -6,7 +6,7 @@ function useDataFetching() {
   const [errorMessage, setErrorMessage] = React.useState(false)
   const [loading, setLoading] = React.useState(false)
 
-  async function fetchData(endpoint) {
+  async function fetchData(endpoint: string) {
     setLoading(true)
     try {
       const data = await getByUrl(endpoint)

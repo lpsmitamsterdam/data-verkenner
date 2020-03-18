@@ -75,6 +75,7 @@ delete views[routing.articleSearch.type]
 delete views[routing.dataSearch.type]
 delete views[routing.search.type]
 delete views[routing.datasetSearch.type]
+delete views[routing.collectionSearch.type]
 
 const trackViews = views
 

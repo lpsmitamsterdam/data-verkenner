@@ -1,11 +1,12 @@
 /* eslint-disable no-nested-ternary */
-import React from 'react'
 import PropTypes from 'prop-types'
-
-import AutoSuggest from '../../components/auto-suggest/AutoSuggest'
-import { extractIdEndpoint } from '../../../store/redux-first-router/actions'
+import React from 'react'
 import useSlug from '../../../app/utils/useSlug'
 import { VIEW_MODE } from '../../../shared/ducks/ui/ui'
+import PARAMETERS from '../../../store/parameters'
+import { decodeLayers } from '../../../store/queryParameters'
+import { extractIdEndpoint } from '../../../store/redux-first-router/actions'
+import AutoSuggest from '../../components/auto-suggest/AutoSuggest'
 import { LABELS } from '../../services/auto-suggest/auto-suggest'
 
 class HeaderSearch extends React.Component {
@@ -41,6 +42,7 @@ class HeaderSearch extends React.Component {
       openDataSuggestion,
       openDatasetSuggestion,
       openEditorialSuggestion,
+      openMapSuggestion,
       typedQuery,
       view,
     } = this.props
@@ -58,6 +60,14 @@ class HeaderSearch extends React.Component {
       const slug = useSlug(suggestion.label)
 
       openEditorialSuggestion({ id, slug }, type)
+    } else if (suggestion.type === 'map-layer' || suggestion.type === 'map-collection') {
+      const { searchParams } = new URL(suggestion.uri, window.location.origin)
+
+      openMapSuggestion({
+        view: searchParams.get(PARAMETERS.VIEW),
+        legend: searchParams.get(PARAMETERS.LEGEND) === 'true',
+        layers: decodeLayers(searchParams.get(PARAMETERS.LAYERS)),
+      })
     } else {
       openDataSuggestion(
         {
@@ -77,7 +87,8 @@ class HeaderSearch extends React.Component {
       isDataPage,
       isArticlePage,
       isPublicationPage,
-      isSpecialsPage,
+      isSpecialPage,
+      isCollectionPage,
       typedQuery,
       onCleanDatasetOverview,
       onDatasetSearch,
@@ -85,17 +96,19 @@ class HeaderSearch extends React.Component {
       onSearch,
       onArticleSearch,
       onPublicationSearch,
-      onSpecialsSearch,
+      onSpecialSearch,
+      onCollectionSearch,
     } = this.props
 
-    const { ARTICLES, DATASETS, PUBLICATIONS, DATA, SPECIALS } = LABELS
+    const { ARTICLES, DATASETS, PUBLICATIONS, DATA, SPECIALS, COLLECTIONS } = LABELS
 
     const searchAction = {
       [DATASETS]: onDatasetSearch,
       [ARTICLES]: onArticleSearch,
       [PUBLICATIONS]: onPublicationSearch,
       [DATA]: onDataSearch,
-      [SPECIALS]: onSpecialsSearch,
+      [SPECIALS]: onSpecialSearch,
+      [COLLECTIONS]: onCollectionSearch,
     }
 
     if (activeSuggestion.index === -1) {
@@ -112,8 +125,10 @@ class HeaderSearch extends React.Component {
           ? ARTICLES
           : isPublicationPage
           ? PUBLICATIONS
-          : isSpecialsPage
+          : isSpecialPage
           ? SPECIALS
+          : isCollectionPage
+          ? COLLECTIONS
           : null)
 
       const actionFn = searchAction[searchType]
@@ -175,7 +190,8 @@ HeaderSearch.defaultProps = {
   isDatasetPage: false,
   isArticlePage: false,
   isPublicationPage: false,
-  isSpecialsPage: false,
+  isSpecialPage: false,
+  isCollectionPage: false,
 }
 
 HeaderSearch.propTypes = {
@@ -191,7 +207,8 @@ HeaderSearch.propTypes = {
   isDatasetPage: PropTypes.bool,
   isArticlePage: PropTypes.bool,
   isPublicationPage: PropTypes.bool,
-  isSpecialsPage: PropTypes.bool,
+  isSpecialPage: PropTypes.bool,
+  isCollectionPage: PropTypes.bool,
   isMapActive: PropTypes.bool.isRequired,
   numberOfSuggestions: PropTypes.number,
   onCleanDatasetOverview: PropTypes.func.isRequired,
@@ -199,10 +216,12 @@ HeaderSearch.propTypes = {
   onDataSearch: PropTypes.func.isRequired,
   onArticleSearch: PropTypes.func.isRequired,
   onPublicationSearch: PropTypes.func.isRequired,
-  onSpecialsSearch: PropTypes.func.isRequired,
+  onSpecialSearch: PropTypes.func.isRequired,
+  onCollectionSearch: PropTypes.func.isRequired,
   openDataSuggestion: PropTypes.func.isRequired,
   openDatasetSuggestion: PropTypes.func.isRequired,
   openEditorialSuggestion: PropTypes.func.isRequired,
+  openMapSuggestion: PropTypes.func.isRequired,
   onGetSuggestions: PropTypes.func.isRequired,
   onSuggestionActivate: PropTypes.func.isRequired,
   pageName: PropTypes.string,

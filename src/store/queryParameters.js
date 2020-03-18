@@ -64,6 +64,7 @@ const routesWithSearch = [
   routing.articleSearch.type,
   routing.specialSearch.type,
   routing.publicationSearch.type,
+  routing.collectionSearch.type,
 ]
 
 const routesWithDataSelection = [
@@ -84,6 +85,7 @@ const routesWithCmsData = [
   routing.articleDetail.type,
   routing.publicationDetail.type,
   routing.specialDetail.type,
+  routing.collectionDetail.type,
 ]
 
 /* istanbul ignore next */
@@ -345,19 +347,17 @@ export default paramsRegistry
       'overlays',
       {
         defaultValue: mapInitialState.overlays,
-        decode: val =>
-          val
-            ? val.split('|').map(obj => {
-                const layerInfo = obj.split(':')
-                return {
-                  id: layerInfo[0],
-                  isVisible: !!parseInt(layerInfo[1], 0),
-                }
-              })
-            : mapInitialState.overlays,
+        decode: val => decodeLayers(val),
         selector: getMapOverlays,
-        encode: selectorResult =>
-          selectorResult.map(overlay => `${overlay.id}:${overlay.isVisible ? 1 : 0}`).join('|'),
+        encode: selectorResult => {
+          if (!selectorResult) {
+            return ''
+          }
+
+          return selectorResult
+            .map(overlay => `${overlay.id}:${overlay.isVisible ? 1 : 0}`)
+            .join('|')
+        },
       },
       false,
     )
@@ -441,3 +441,18 @@ export default paramsRegistry
       true,
     )
   })
+
+export function decodeLayers(value) {
+  if (!value) {
+    return []
+  }
+
+  return value.split('|').map(entry => {
+    const [id, visibility] = entry.split(':')
+
+    return {
+      id,
+      isVisible: visibility === '1',
+    }
+  })
+}

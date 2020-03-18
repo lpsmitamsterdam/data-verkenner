@@ -25,6 +25,8 @@ const PAGES = {
   SPECIAL_DETAIL: 'SPECIAL_DETAIL',
   PUBLICATION_DETAIL: 'PUBLICATION_DETAIL',
   PUBLICATION_SEARCH: 'PUBLICATION_SEARCH',
+  COLLECTION_DETAIL: 'COLLECTION_DETAIL',
+  COLLECTION_SEARCH: 'COLLECTION_SEARCH',
 
   // text pages
   ACTUALITY: 'ACTUALITY',
@@ -45,7 +47,8 @@ export const isContentPage = page =>
 export const isEditorialDetailPage = page =>
   page === PAGES.ARTICLE_DETAIL ||
   page === PAGES.PUBLICATION_DETAIL ||
-  page === PAGES.SPECIAL_DETAIL
+  page === PAGES.SPECIAL_DETAIL ||
+  page === PAGES.COLLECTION_DETAIL
 
 export const isMapSplitPage = page =>
   page === PAGES.DATA ||
@@ -62,6 +65,7 @@ export const isSearchPage = page =>
   page === PAGES.DATASET_SEARCH ||
   page === PAGES.ARTICLE_SEARCH ||
   page === PAGES.PUBLICATION_SEARCH ||
-  page === PAGES.SPECIAL_SEARCH
+  page === PAGES.SPECIAL_SEARCH ||
+  page === PAGES.COLLECTION_SEARCH
 
 export const isDatasetPage = page => page === PAGES.DATASET_SEARCH

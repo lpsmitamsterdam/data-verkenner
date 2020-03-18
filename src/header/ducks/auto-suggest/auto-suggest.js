@@ -23,6 +23,7 @@ export default function AutoSuggestReducer(state = initialState, action) {
       PAGES.ARTICLE_SEARCH,
       PAGES.PUBLICATION_SEARCH,
       PAGES.SPECIAL_SEARCH,
+      PAGES.COLLECTION_SEARCH,
     ])
   ) {
     return initialState
@@ -71,6 +72,7 @@ export default function AutoSuggestReducer(state = initialState, action) {
     case routing.articleSearch.type:
     case routing.publicationSearch.type:
     case routing.specialSearch.type:
+    case routing.collectionSearch.type:
       return {
         ...enrichedState,
         typedQuery: get(action, `meta.query[${PARAMETERS.QUERY}]`),

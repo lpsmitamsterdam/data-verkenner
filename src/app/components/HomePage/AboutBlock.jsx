@@ -2,7 +2,7 @@ import styled, { css } from '@datapunt/asc-core'
 import { breakpoint, Column, Heading, Row, themeColor, themeSpacing } from '@datapunt/asc-ui'
 import React from 'react'
 import AboutCard from './AboutCard'
-import ErrorMessage, { ErrorBackgroundCSS } from './ErrorMessage'
+import ErrorMessage, { ErrorBackgroundCSS } from '../ErrorMessage/ErrorMessage'
 import useFromCMS from '../../utils/useFromCMS'
 import { cmsConfig } from '../../../shared/config/config'
 
@@ -75,13 +75,13 @@ const AboutBlock = () => {
     fetchData: fetchDataAbout,
     loading: loadingAbout,
     error: errorAbout,
-  } = useFromCMS(cmsConfig.HOME_ABOUT, undefined)
+  } = useFromCMS(cmsConfig.HOME_ABOUT)
   const {
     results: resultsAboutData,
     fetchData: fetchDataAboutData,
     loading: loadingAboutData,
     error: errorAboutData,
-  } = useFromCMS(cmsConfig.HOME_ABOUT_DATA, undefined)
+  } = useFromCMS(cmsConfig.HOME_ABOUT_DATA)
 
   React.useEffect(() => {
     ;(async () => {

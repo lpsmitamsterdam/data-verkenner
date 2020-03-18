@@ -52,6 +52,11 @@ export const isSpecialPage = createSelector(
   page => page === PAGES.SPECIAL_DETAIL || page === PAGES.SPECIAL_SEARCH,
 )
 
+export const isCollectionPage = createSelector(
+  getPage,
+  page => page === PAGES.COLLECTION_DETAIL || page === PAGES.COLLECTION_SEARCH,
+)
+
 export const isDataSelectionPage = createSelector(
   getPage,
   page =>

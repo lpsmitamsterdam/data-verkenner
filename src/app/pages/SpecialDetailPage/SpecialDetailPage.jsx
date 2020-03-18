@@ -10,7 +10,7 @@ import ContentContainer from '../../components/ContentContainer/ContentContainer
 import { routing } from '../../routes'
 import Dashboard from './specials/Dashboard'
 import Animation from './specials/Animation'
-import { SPECIAL_TYPES } from '../../../shared/config/cms.config'
+import { SpecialType } from '../../../shared/config/cms.config'
 
 const SpecialDetailPage = ({ id }) => {
   const { fetchData, results, loading, error } = useFromCMS(cmsConfig.SPECIAL, id)
@@ -34,10 +34,10 @@ const SpecialDetailPage = ({ id }) => {
     <EditorialPage {...{ documentTitle, linkAction }} loading={loading}>
       <Row>
         <ContentContainer>
-          {specialType === SPECIAL_TYPES.ANIMATION && (
+          {specialType === SpecialType.Animation && (
             <Animation contentLink={contentLink} title={title} results={results} />
           )}
-          {specialType === SPECIAL_TYPES.DASHBOARD && (
+          {specialType === SpecialType.Dashboard && (
             <Dashboard contentLink={contentLink} title={title} />
           )}
         </ContentContainer>

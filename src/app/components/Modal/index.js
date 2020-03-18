@@ -1,4 +1,4 @@
 import FeedbackModal from './FeedbackModalContainer'
-import InfoModal from './InfoModalContainer'
+import InfoModal from './InfoModal'
 
 export { FeedbackModal, InfoModal }

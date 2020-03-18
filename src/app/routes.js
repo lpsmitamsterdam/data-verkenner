@@ -9,6 +9,7 @@ export const MAIN_PATHS = {
   CONTENT: 'content',
   PUBLICATIONS: 'publicaties',
   SPECIALS: 'specials',
+  COLLECTIONS: 'dossiers',
 }
 
 export const routing = {
@@ -150,6 +151,18 @@ export const routing = {
     path: `/${MAIN_PATHS.SPECIALS}/:type/:slug/:id/`,
     type: `${ROUTER_NAMESPACE}/${PAGES.SPECIAL_DETAIL}`,
     page: PAGES.SPECIAL_DETAIL,
+  },
+  collectionDetail: {
+    title: 'Dossier',
+    path: `/${MAIN_PATHS.COLLECTIONS}/dossier/:slug/:id/`,
+    type: `${ROUTER_NAMESPACE}/${PAGES.COLLECTION_DETAIL}`,
+    page: PAGES.COLLECTION_DETAIL,
+  },
+  collectionSearch: {
+    title: 'Dossiers',
+    path: `/${MAIN_PATHS.COLLECTIONS}/zoek/`,
+    type: `${ROUTER_NAMESPACE}/${PAGES.COLLECTION_SEARCH}`,
+    page: PAGES.COLLECTION_SEARCH,
   },
 }
 

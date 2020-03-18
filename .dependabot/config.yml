@@ -22,3 +22,5 @@ update_configs:
           dependency_name: "escape-string-regexp"
       - match:
           dependency_name: "marked"
+      - match:
+          dependency_name: "body-scroll-lock"
