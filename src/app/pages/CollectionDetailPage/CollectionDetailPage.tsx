@@ -45,33 +45,33 @@ const CollectionDetailPage: React.FC = () => {
   const tileResults = results?.field_items ?? []
   return (
     <ContentContainer>
-      <StyledRow>
-        {error ? (
+      {error ? (
+        <StyledRow>
           <ErrorMessage onClick={() => fetchData()} />
-        ) : (
-          <>
-            <CollectionTileGrid
-              {...{
-                results: tileResults,
-                loading,
-                title: results?.title,
-                description: results?.field_intro,
-              }}
-            />
-            <StyledCardListBlock {...{ results: listResults, loading }} />
-            {results && (
-              <Link
-                variant="with-chevron"
-                as={RouterLink}
-                to={toSearch({ [PARAMETERS.QUERY]: results?.title })}
-                title={results?.title}
-              >
-                Meer over {results?.title}
-              </Link>
-            )}
-          </>
-        )}
-      </StyledRow>
+        </StyledRow>
+      ) : (
+        <Row>
+          <CollectionTileGrid
+            {...{
+              results: tileResults,
+              loading,
+              title: results?.title,
+              description: results?.field_intro,
+            }}
+          />
+          <StyledCardListBlock {...{ results: listResults, loading }} />
+          {results && (
+            <Link
+              variant="with-chevron"
+              as={RouterLink}
+              to={toSearch({ [PARAMETERS.QUERY]: results?.title })}
+              title={results?.title}
+            >
+              Meer over {results?.title}
+            </Link>
+          )}
+        </Row>
+      )}
     </ContentContainer>
   )
 }
