@@ -42,7 +42,7 @@
     "angular-i18n": "~1.7.9",
     "angular-sanitize": "~1.7.9",
     "bbga_visualisatie_d3": "git+https://github.com/Amsterdam/bbga_visualisatie_d3.git#master",
-    "body-scroll-lock": "^2.7.0",
+    "body-scroll-lock": "^3.0.1",
     "classnames": "2.2.6",
     "core-js": "3.6.4",
     "d3": "3.5.17",
