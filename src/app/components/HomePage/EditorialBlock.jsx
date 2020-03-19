@@ -2,32 +2,28 @@ import styled from '@datapunt/asc-core'
 import { breakpoint, CardContainer, Column, Row, styles, themeColor } from '@datapunt/asc-ui'
 import React from 'react'
 import RouterLink from 'redux-first-router-link'
-import { cmsConfig } from '../../../shared/config/config'
-import { toSpecialSearch } from '../../../store/redux-first-router/actions'
 import useFromCMS from '../../utils/useFromCMS'
 import BlockHeading from './BlockHeading'
 import ErrorMessage, { ErrorBackgroundCSS } from '../ErrorMessage/ErrorMessage'
 import OverviewLink from './OverviewLink'
-import SpecialCard from './SpecialCard'
-
-const StyledRow = styled(Row)``
+import EditorialBlockCard from './EditorialBlockCard'
 
 const CardRow = styled.div`
   ${({ showError }) => showError && ErrorBackgroundCSS}
 
-  /* Add border-top to first row of cards when three SpecialCards are shown */
+  /* Add border-top to first row of cards when three Cards are shown */
   ${/* sc-selector */ styles.ColumnStyle}:nth-child(-n+3) > ${styles.LinkStyle} {
     border-top: ${themeColor('tint', 'level3')} 1px solid;
   }
 
-  /* Add border-top to first row of cards when two SpecialCards are shown */
+  /* Add border-top to first row of cards when two Cards are shown */
   @media screen and ${breakpoint('max-width', 'laptop')} {
     ${/* sc-selector */ styles.ColumnStyle}:nth-child(3) > ${styles.LinkStyle} {
       border-top: none;
     }
   }
 
-  /* Add border-top to first row of cards when one SpecialCard is shown */
+  /* Add border-top to first row of cards when one Card is shown */
   @media screen and ${breakpoint('max-width', 'tabletM')} {
     ${/* sc-selector */ styles.ColumnStyle}:nth-child(n+2) > ${styles.LinkStyle} {
       border-top: none;
@@ -35,8 +31,8 @@ const CardRow = styled.div`
   }
 `
 
-const SpecialBlock = () => {
-  const { results, fetchData, loading, error } = useFromCMS(cmsConfig.HOME_SPECIALS)
+const EditorialBlock = ({ title, list, showMoreProps = {} }) => {
+  const { results, fetchData, loading, error } = useFromCMS(list)
 
   React.useEffect(() => {
     ;(async () => {
@@ -54,12 +50,12 @@ const SpecialBlock = () => {
     <CardContainer data-test="special-block">
       <Row hasMargin={false}>
         <Column wrap span={{ small: 1, medium: 2, big: 6, large: 12, xLarge: 12 }}>
-          <BlockHeading forwardedAs="h1">In Beeld</BlockHeading>
+          <BlockHeading forwardedAs="h1">{title}</BlockHeading>
         </Column>
       </Row>
       <CardRow showError={error}>
         {error && <ErrorMessage absolute />}
-        <StyledRow hasMargin={false}>
+        <Row hasMargin={false}>
           {specials &&
             specials.map((special, index) => (
               <Column
@@ -67,21 +63,23 @@ const SpecialBlock = () => {
                 wrap
                 span={{ small: 1, medium: 2, big: 3, large: 4, xLarge: 4 }}
               >
-                <SpecialCard loading={loading} showError={error} {...special} />
+                <EditorialBlockCard loading={loading} showError={error} {...special} />
               </Column>
             ))}
-        </StyledRow>
+        </Row>
       </CardRow>
-      <Row hasMargin={false}>
-        <Column wrap span={{ small: 1, medium: 2, big: 3, large: 4, xLarge: 4 }}>
-          <OverviewLink
-            linkProps={{ to: toSpecialSearch(), forwardedAs: RouterLink }}
-            label="Bekijk overzicht"
-          />
-        </Column>
-      </Row>
+      {showMoreProps.to && showMoreProps.label && (
+        <Row hasMargin={false}>
+          <Column wrap span={{ small: 1, medium: 2, big: 3, large: 4, xLarge: 4 }}>
+            <OverviewLink
+              linkProps={{ to: showMoreProps.to(), forwardedAs: RouterLink }}
+              label={showMoreProps.label}
+            />
+          </Column>
+        </Row>
+      )}
     </CardContainer>
   )
 }
 
-export default SpecialBlock
+export default EditorialBlock
