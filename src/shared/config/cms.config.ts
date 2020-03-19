@@ -156,7 +156,7 @@ const cmsConfig = {
       'field_items.id',
       'field_items.title',
       'field_items.intro',
-      'field_items.field_link',
+      'field_items.type',
       'field_items.field_short_title',
       'field_items.field_teaser_image.field_media_image.uri',
       'field_items.field_teaser',
