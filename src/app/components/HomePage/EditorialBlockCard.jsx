@@ -88,6 +88,7 @@ const EditorialBlockCard = ({
   intro,
   teaserImage,
   linkProps,
+  showContentType,
 }) => {
   const contentTypeLabel = type ? getContentTypeLabel(type, specialType) : null
 
@@ -95,7 +96,7 @@ const EditorialBlockCard = ({
     <StyledLink {...linkProps} linkType="blank">
       <StyledCard horizontal animateLoading={!showError} isLoading={loading} showError={showError}>
         <StyledCardContent>
-          {contentTypeLabel && (
+          {showContentType && contentTypeLabel && (
             <div>
               <ContentType data-test="contentType">{contentTypeLabel}</ContentType>
             </div>

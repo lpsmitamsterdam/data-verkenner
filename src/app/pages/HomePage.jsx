@@ -72,7 +72,7 @@ const HomePage = () => (
       </StyledRow>
       <StyledRow>
         <Column span={{ small: 1, medium: 2, big: 6, large: 12, xLarge: 12 }}>
-          <EditorialBlock title="Meer data" list={cmsConfig.HOME_SPECIALS} />
+          <EditorialBlock title="Meer data" list={cmsConfig.HOME_SPECIALS} showContentType />
         </Column>
       </StyledRow>
       <StyledRow fullWidth>

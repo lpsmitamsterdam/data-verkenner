@@ -31,7 +31,7 @@ const CardRow = styled.div`
   }
 `
 
-const EditorialBlock = ({ title, list, showMoreProps = {} }) => {
+const EditorialBlock = ({ title, list, showMoreProps = {}, showContentType = false }) => {
   const { results, fetchData, loading, error } = useFromCMS(list)
 
   React.useEffect(() => {
@@ -63,7 +63,12 @@ const EditorialBlock = ({ title, list, showMoreProps = {} }) => {
                 wrap
                 span={{ small: 1, medium: 2, big: 3, large: 4, xLarge: 4 }}
               >
-                <EditorialBlockCard loading={loading} showError={error} {...special} />
+                <EditorialBlockCard
+                  loading={loading}
+                  showError={error}
+                  {...special}
+                  showContentType={showContentType}
+                />
               </Column>
             ))}
         </Row>
