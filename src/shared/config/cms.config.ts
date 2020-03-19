@@ -9,6 +9,7 @@ export enum CmsType {
   Publication = 'publication',
   Special = 'special',
   Collection = 'collection',
+  Link = 'link',
 }
 
 export enum SpecialType {
