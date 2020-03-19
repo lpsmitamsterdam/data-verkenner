@@ -1,5 +1,5 @@
 import React from 'react'
-import styled, { ascDefaultTheme } from '@datapunt/asc-core'
+import styled, { ascDefaultTheme, css } from '@datapunt/asc-core'
 import {
   Card,
   CardContent,
@@ -39,9 +39,14 @@ const StyledCardContent = styled(CardContent)`
   flex-direction: column;
   padding: 0;
   margin-left: ${themeSpacing(4)};
-  border-bottom: 1px solid ${themeColor('tint', 'level3')};
   position: relative;
   min-height: 100%;
+
+  ${({ highlighted }) =>
+    !highlighted &&
+    css`
+      border-bottom: 1px solid ${themeColor('tint', 'level3')};
+    `}
 `
 
 const StyledLink = styled(Link)`
@@ -72,17 +77,29 @@ const StyledCard = styled(Card)`
   align-items: stretch;
   background-color: inherit;
 
+  ${({ highlighted }) =>
+    highlighted &&
+    css`
+      padding: ${themeSpacing(2)};
+      border: ${themeColor('tint', 'level3')} 1px solid;
+    `}
+
   &:last-child {
     margin-bottom: 0;
   }
 `
 
 const StyledCardMedia = styled(CardMedia)`
-  ${({ vertical, imageDimensions }) => `
-  flex: 1 0 auto;
-    border: 1px solid ${themeColor('tint', 'level3')};
+  ${({ vertical, imageDimensions }) => css`
+    flex: 1 0 auto;
     max-width: ${imageDimensions[0]}px;
     max-height: ${imageDimensions[1]}px;
+
+    ${({ highlighted }) =>
+      !highlighted &&
+      css`
+        border: 1px solid ${themeColor('tint', 'level3')};
+      `}
 
     &::before {
       padding-top: ${vertical ? '145%' : '100%'};
@@ -138,6 +155,7 @@ interface EditorialCardProps {
   imageDimensions?: [number, number]
   compact?: boolean
   showContentType?: boolean
+  highlighted?: boolean
 }
 
 const EditorialCard: React.FC<EditorialCardProps> = ({
@@ -150,6 +168,7 @@ const EditorialCard: React.FC<EditorialCardProps> = ({
   imageDimensions = [400, 400],
   compact = false,
   showContentType = false,
+  highlighted = false,
   ...otherProps
 }) => {
   const imageIsVertical = imageDimensions[0] !== imageDimensions[1] // Image dimensions indicate whether the image is square or not
@@ -164,8 +183,12 @@ const EditorialCard: React.FC<EditorialCardProps> = ({
 
   return (
     <StyledLink {...{ title, linkType: 'blank', compact, ...otherProps }}>
-      <StyledCard horizontal>
-        <StyledCardMedia imageDimensions={imageDimensions} vertical={imageIsVertical}>
+      <StyledCard horizontal highlighted={highlighted}>
+        <StyledCardMedia
+          imageDimensions={imageDimensions}
+          vertical={imageIsVertical}
+          highlighted={highlighted}
+        >
           <Image
             {...(image ? { ...srcSet, ...sizes } : {})}
             src={getImageFromCms(image, imageDimensions[0], imageDimensions[1]) || notFoundImage}
@@ -173,7 +196,7 @@ const EditorialCard: React.FC<EditorialCardProps> = ({
             square
           />
         </StyledCardMedia>
-        <StyledCardContent>
+        <StyledCardContent highlighted={highlighted}>
           {showContentType && contentTypeLabel && (
             <div>
               <ContentType data-test="contentType">{contentTypeLabel}</ContentType>
