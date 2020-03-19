@@ -15,6 +15,7 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import getImageFromCms from '../../utils/getImageFromCms'
 import focusOutline from '../shared/focusOutline'
+import getContentTypeLabel from '../../utils/getContentTypeLabel'
 
 const StyledHeading = styled(Heading)`
   margin-bottom: ${themeSpacing(2)};
@@ -88,15 +89,15 @@ const EditorialBlockCard = ({
   teaserImage,
   linkProps,
 }) => {
-  const contentType = specialType || type
+  const contentTypeLabel = type ? getContentTypeLabel(type, specialType) : null
 
   return (
     <StyledLink {...linkProps} linkType="blank">
       <StyledCard horizontal animateLoading={!showError} isLoading={loading} showError={showError}>
         <StyledCardContent>
-          {contentType && (
+          {contentTypeLabel && (
             <div>
-              <ContentType data-test="contentType">{contentType}</ContentType>
+              <ContentType data-test="contentType">{contentTypeLabel}</ContentType>
             </div>
           )}
           <StyledHeading forwardedAs="h4" styleAs="h3">
