@@ -1,21 +1,12 @@
 import { CmsType, SpecialType } from '../../shared/config/cms.config'
 
 export default function getContentTypeLabel(type: CmsType, specialType?: SpecialType) {
+  // specialType is always a "translated" value that can be used as label directly
   if (specialType) {
-    switch (specialType) {
-      case SpecialType.Animation:
-        return 'Animatie'
-      case SpecialType.Dashboard:
-        return 'Dashboard'
-      case SpecialType.Dataset:
-        return 'Dataset'
-      default:
-        // eslint-disable-next-line no-console
-        console.error(`Unable to get content type label, unknown special type '${specialType}'.`)
-        return null
-    }
+    return specialType
   }
 
+  // Some values for type need to be translated, others can be used as label directly
   switch (type) {
     case CmsType.Article:
       return 'Artikel'
@@ -23,13 +14,7 @@ export default function getContentTypeLabel(type: CmsType, specialType?: Special
       return 'Dossier'
     case CmsType.Publication:
       return 'Publicatie'
-    case CmsType.Special:
-      return 'In Beeld'
-    case CmsType.Link:
-      return 'Link'
     default:
-      // eslint-disable-next-line no-console
-      console.error(`Unable to get content type label, unknown type '${type}'.`)
-      return null
+      return type
   }
 }

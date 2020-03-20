@@ -65,7 +65,7 @@ describe('EditorialCard', () => {
     contentType = component.find("[data-test='contentType']")
 
     expect(contentType.exists()).toBeTruthy()
-    expect(contentType.props().children).toBe('Animatie')
+    expect(contentType.props().children).toBe(SpecialType.Animation)
 
     component = shallow(
       <EditorialCard href="link" type={CmsType.Collection} showContentType {...mockDataItem} />,
