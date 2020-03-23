@@ -45,13 +45,15 @@ export const reformatJSONApiResults = normalizedData => {
 }
 
 const cmsJsonApiNormalizer = (data, fields) => {
-  const normalizedData = normalize(data).get(['id', 'title', 'body', 'created', 'type', ...fields])
-
+  const normalizedData = removeEmptyContent(
+    normalize(data).get(['id', 'title', 'body', 'created', 'type', ...fields]),
+  )
   /**
    * Nasty hack because json-api-normalize can sometimes mess up the order of the related fields
    * Todo: https://datapunt.atlassian.net/browse/DI-406
    */
   const sortedItems = data?.data?.relationships?.field_items?.data ?? []
+
   if (normalizedData?.field_items?.length && sortedItems.length) {
     const field_items = [...normalizedData.field_items].sort(
       (a, b) =>
@@ -66,6 +68,15 @@ const cmsJsonApiNormalizer = (data, fields) => {
   }
 
   return reformatJSONApiResults(normalizedData)
+}
+
+function removeEmptyContent(data) {
+  return {
+    ...data,
+    ...(data.field_blocks
+      ? { field_blocks: data.field_blocks.filter(block => !!block.field_content) }
+      : {}),
+  }
 }
 
 export default cmsJsonApiNormalizer
