@@ -11,15 +11,43 @@ export const LABELS = {
   DATA: 'Data',
   SPECIALS: 'In Beeld',
   COLLECTIONS: 'Dossiers',
+  MAPLAYERS: 'Kaartlagen',
+  MAPCOLLECTIONS: 'Kaartcollecties',
 }
 
+// Sort order of the data results. These strings correspond to the labels defined in the typeahead API.
+export const SORT_ORDER_DATA = [
+  'Straatnamen',
+  'Adressen',
+  'Openbare ruimtes',
+  'Panden',
+  'Gebieden',
+  'Vestigingen',
+  'Maatschappelijke activiteiten',
+  'Kadastrale objecten',
+  'Kadastrale subjecten',
+  'Meetbouten',
+  'Monumenten',
+]
+
+// Sort order of the autosuggest results
+export const SORT_ORDER = [
+  LABELS.COLLECTIONS,
+  LABELS.MAPLAYERS,
+  LABELS.MAPCOLLECTIONS,
+  ...SORT_ORDER_DATA,
+  LABELS.DATASETS,
+  LABELS.PUBLICATIONS,
+  LABELS.ARTICLES,
+]
+
 /**
- * Orders the array by the object's labels in the order defined the LABELS const
+ * Orders the array by the object's labels in the order defined the SORT_ORDER const
  * @param {Array} results
  * @returns {*[]}
  */
 export const orderAutoSuggestResults = (results) => {
-  const order = Object.values(LABELS)
+  const order = Object.values(SORT_ORDER)
 
   const dataPart = results.filter((category) => !order.includes(category.label))
   const orderedPart = order.reduce((acc, label) => {

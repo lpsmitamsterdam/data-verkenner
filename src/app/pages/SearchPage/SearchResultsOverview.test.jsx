@@ -7,15 +7,13 @@ jest.mock('./config', () => ({
     label: 'This is foo',
     to: jest.fn(),
     resolver: 'foo',
+    type: 'foo',
   },
   foo2: {
     label: 'This is foo2',
     to: jest.fn(),
     resolver: 'foo2',
-  },
-  QUERY_TYPES: {
-    foo: 'foo',
-    foo2: 'foo2',
+    type: 'foo2',
   },
 }))
 
