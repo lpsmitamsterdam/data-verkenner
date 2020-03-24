@@ -169,7 +169,7 @@ export const routing = {
 /**
  * We need to check if the route paths have a trailing slash
  */
-Object.values(routing).forEach(value => {
+Object.values(routing).forEach((value) => {
   if (value.path.substring(value.path.length - 1) !== '/') {
     // eslint-disable-next-line no-console
     console.warn(`Route for "${value.title}" doesn't have trailing slash`)

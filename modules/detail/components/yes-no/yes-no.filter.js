@@ -1,8 +1,8 @@
-;(function() {
+;(function () {
   angular.module('dpDetail').filter('yesNo', yesNoFilter)
 
   function yesNoFilter() {
-    return function(input) {
+    return function (input) {
       if (input === true) {
         return 'Ja'
       }

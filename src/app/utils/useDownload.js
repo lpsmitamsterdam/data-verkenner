@@ -10,8 +10,8 @@ function useDownload() {
     const fileName = url.split('/').pop()
 
     fetch(url)
-      .then(response => response.blob())
-      .then(blob => {
+      .then((response) => response.blob())
+      .then((blob) => {
         fileSaver(blob, fileName)
         setLoading(false)
       })

@@ -29,7 +29,7 @@ export default memo(({ currentPage, query }) => {
 
   let totalCount
 
-  const FILTERS = AVAILABLE_FILTERS.map(filterPage => {
+  const FILTERS = AVAILABLE_FILTERS.map((filterPage) => {
     let count
 
     if (data) {

@@ -48,13 +48,13 @@ export default function userReducer(state = initialState, action) {
   }
 }
 
-export const getUser = state => state[REDUCER_KEY]
+export const getUser = (state) => state[REDUCER_KEY]
 export const userCheckedAuthentication = createSelector(
   getUser,
-  user => user.hasCheckedAuthentication,
+  (user) => user.hasCheckedAuthentication,
 )
-export const userIsAuthenticated = createSelector(getUser, user => user.authenticated)
-export const getUserScopes = createSelector(getUser, user => user.scopes)
+export const userIsAuthenticated = createSelector(getUser, (user) => user.authenticated)
+export const getUserScopes = createSelector(getUser, (user) => user.scopes)
 export const authenticateUserSuccess = (accessToken, name, scopes, reload) => {
   const meta = !reload ? { tracking: scopes } : null
 
@@ -64,7 +64,7 @@ export const authenticateUserSuccess = (accessToken, name, scopes, reload) => {
     ...meta,
   }
 }
-export const authenticateRequest = payload => ({
+export const authenticateRequest = (payload) => ({
   type: AUTHENTICATE_USER_REQUEST,
   meta: {
     tracking: payload,

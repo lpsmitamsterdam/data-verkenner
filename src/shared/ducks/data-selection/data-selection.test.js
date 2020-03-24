@@ -70,7 +70,7 @@ describe('Data Selection Reducer', () => {
     ...getExpectations(actionCreators.downloadDataSelection.name, [], []),
   }
 
-  Object.keys(actionCreators).forEach(actionCreator => {
+  Object.keys(actionCreators).forEach((actionCreator) => {
     const { payload, expectedKeysToChange, initialState = {} } = expectations[actionCreator]
     it(`should set ${expectedKeysToChange.join(
       ', ',
@@ -80,11 +80,7 @@ describe('Data Selection Reducer', () => {
       expect(result).toMatchSnapshot()
 
       // Check if every key is changed, not more or less than the expected keys to change
-      expect(expectedKeysToChange.sort().toString()).toEqual(
-        Object.keys(result)
-          .sort()
-          .toString(),
-      )
+      expect(expectedKeysToChange.sort().toString()).toEqual(Object.keys(result).sort().toString())
     })
   })
 
@@ -101,11 +97,7 @@ describe('Data Selection Reducer', () => {
         },
       )
       expect(result).toMatchSnapshot()
-      expect(expectedKeysToChange.sort().toString()).toEqual(
-        Object.keys(result)
-          .sort()
-          .toString(),
-      )
+      expect(expectedKeysToChange.sort().toString()).toEqual(Object.keys(result).sort().toString())
     })
 
     it('should set the dataset and view if meta.query is not set', () => {
@@ -117,11 +109,7 @@ describe('Data Selection Reducer', () => {
         },
       )
       expect(result).toMatchSnapshot()
-      expect(expectedKeysToChange.sort().toString()).toEqual(
-        Object.keys(result)
-          .sort()
-          .toString(),
-      )
+      expect(expectedKeysToChange.sort().toString()).toEqual(Object.keys(result).sort().toString())
     })
   })
 })

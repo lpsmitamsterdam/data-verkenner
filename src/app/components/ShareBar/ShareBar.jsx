@@ -29,7 +29,7 @@ const ShareBar = ({
   printMode,
   ...otherProps
 }) => {
-  const handlePageShare = target => {
+  const handlePageShare = (target) => {
     openSharePage(target)
 
     const link = getShareUrl(target, window)
@@ -81,12 +81,12 @@ ShareBar.propTypes = {
   openPrintMode: PropTypes.func.isRequired,
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   hasPrintButton: hasPrintMode(state),
   printMode: isPrintMode(state),
 })
 
-const mapDispatchToProps = dispatch =>
+const mapDispatchToProps = (dispatch) =>
   bindActionCreators(
     {
       openSharePage: sharePage,

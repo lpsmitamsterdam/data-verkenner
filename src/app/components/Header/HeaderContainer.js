@@ -10,7 +10,7 @@ import Header from './Header'
 import { getUser } from '../../../shared/ducks/user/user'
 
 /* istanbul ignore next */
-const mapDispatchToProps = dispatch =>
+const mapDispatchToProps = (dispatch) =>
   bindActionCreators(
     {
       hidePrintMode,
@@ -19,7 +19,7 @@ const mapDispatchToProps = dispatch =>
     dispatch,
   )
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   user: getUser(state),
   hasPrintButton: hasPrintMode(state),
   hasEmbedButton: isMapActive(state),

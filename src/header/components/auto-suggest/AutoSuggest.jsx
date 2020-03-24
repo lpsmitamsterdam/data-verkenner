@@ -7,7 +7,7 @@ import Search from './Search'
 const getSuggestionByIndex = (searchResults, suggestionIndex) =>
   searchResults
     .reduce((flatResults, category) => [...flatResults, ...category.content], [])
-    .find(flatSuggestion => flatSuggestion.index === suggestionIndex)
+    .find((flatSuggestion) => flatSuggestion.index === suggestionIndex)
 
 class AutoSuggest extends React.Component {
   constructor(props) {
@@ -217,7 +217,7 @@ class AutoSuggest extends React.Component {
             {showAutoSuggest && (
               <div className="auto-suggest__dropdown">
                 <h3 className="auto-suggest__tip">Enkele suggesties</h3>
-                {suggestions.map(category => (
+                {suggestions.map((category) => (
                   <AutoSuggestCategory
                     activeSuggestion={activeSuggestion}
                     category={category}

@@ -104,7 +104,7 @@ const shortUrls = [
   },
 ]
 
-const articleUrls = CONTENT_REDIRECT_LINKS.ARTICLES.map(item => ({
+const articleUrls = CONTENT_REDIRECT_LINKS.ARTICLES.map((item) => ({
   from: item.from,
   to: routing.articleDetail.path
     .replace(':slug', item.to.slug)
@@ -118,7 +118,7 @@ const overviewPaths = [
   MAIN_PATHS.DATASETS,
 ]
 
-const overviewUrls = overviewPaths.map(pathName => ({
+const overviewUrls = overviewPaths.map((pathName) => ({
   from: `/${pathName}/`,
   to: `/${pathName}/zoek/`,
 }))

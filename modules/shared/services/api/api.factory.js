@@ -1,6 +1,6 @@
 import { encodeQueryParams } from '../../../../src/shared/services/query-string-parser/query-string-parser'
 import SHARED_CONFIG from '../../../../src/shared/services/shared-config/shared-config'
-;(function() {
+;(function () {
   angular.module('dpShared').factory('api', apiFactory)
 
   apiFactory.$inject = ['$injector', '$interval', '$q', '$http']
@@ -52,8 +52,8 @@ import SHARED_CONFIG from '../../../../src/shared/services/shared-config/shared-
       function recursiveRequest(attempt) {
         $http(options)
           .then(
-            response => deferred.resolve(response.data),
-            rejection => {
+            (response) => deferred.resolve(response.data),
+            (rejection) => {
               if (attempt < maxAttempts && (rejection.status < 200 || rejection.status >= 300)) {
                 rejection.errorHandled = true
                 $interval(

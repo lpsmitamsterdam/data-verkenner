@@ -1,6 +1,6 @@
 import get from 'lodash.get'
 import { setGlobalError } from '../../../../src/shared/ducks/error/error-message'
-;(function() {
+;(function () {
   angular.module('dpShared').factory('httpStatus', httpStatusFactory)
 
   httpStatusFactory.$inject = ['$window']

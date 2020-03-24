@@ -14,30 +14,15 @@ describe('homepage module', () => {
 
   describe('user should be able to navigate to the content from the homepage', () => {
     it('should render all the frontpage elements', () => {
-      cy.get(HOMEPAGE.highlightBlock)
-        .should('exist')
-        .scrollIntoView()
-        .and('be.visible')
+      cy.get(HOMEPAGE.highlightBlock).should('exist').scrollIntoView().and('be.visible')
 
-      cy.get(HOMEPAGE.navigationBlock)
-        .should('exist')
-        .scrollIntoView()
-        .and('be.visible')
+      cy.get(HOMEPAGE.navigationBlock).should('exist').scrollIntoView().and('be.visible')
 
-      cy.get(HOMEPAGE.specialBlock)
-        .should('exist')
-        .scrollIntoView()
-        .and('be.visible')
+      cy.get(HOMEPAGE.specialBlock).should('exist').scrollIntoView().and('be.visible')
 
-      cy.get(HOMEPAGE.organizationBlock)
-        .should('exist')
-        .scrollIntoView()
-        .and('be.visible')
+      cy.get(HOMEPAGE.organizationBlock).should('exist').scrollIntoView().and('be.visible')
 
-      cy.get(HOMEPAGE.aboutBlock)
-        .should('exist')
-        .scrollIntoView()
-        .and('be.visible')
+      cy.get(HOMEPAGE.aboutBlock).should('exist').scrollIntoView().and('be.visible')
     })
   })
 })

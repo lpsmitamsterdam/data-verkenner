@@ -61,7 +61,7 @@ const DataSelectionFormatter = ({ variables, formatter, template, useInline }) =
     }
   } else {
     // If there is no formatter; concatenate all values
-    formattedValue = variables.map(variable => variable.value).join(' ')
+    formattedValue = variables.map((variable) => variable.value).join(' ')
   }
 
   if (template) {

@@ -1,7 +1,7 @@
 import { getByUrl } from '../../../shared/services/api/api'
 import mapFetch from '../map-fetch/map-fetch'
 
-const normalize = async result => {
+const normalize = async (result) => {
   let societalActivities
 
   if (result.maatschappelijke_activiteit) {
@@ -11,7 +11,7 @@ const normalize = async result => {
   const additionalFields = {
     ...(societalActivities ? { kvkNumber: societalActivities.kvk_nummer } : {}),
     activities: (result.activiteiten || [])
-      .map(item => `${item.sbi_code}${item.sbi_omschrijving ? `: ${item.sbi_omschrijving}` : ''}`)
+      .map((item) => `${item.sbi_code}${item.sbi_omschrijving ? `: ${item.sbi_omschrijving}` : ''}`)
       .join('\n'),
     type: result.hoofdvestiging ? 'Hoofdvestiging' : 'Nevenvestiging',
     ...(result._bijzondere_rechts_toestand.faillissement ||
@@ -36,11 +36,11 @@ export function fetchByPandId(pandId) {
   }
 
   const queryString = Object.keys(searchParams)
-    .map(key => `${encodeURIComponent(key)}=${encodeURIComponent(searchParams[key])}`)
+    .map((key) => `${encodeURIComponent(key)}=${encodeURIComponent(searchParams[key])}`)
     .join('&')
 
   return getByUrl(`${process.env.API_ROOT}handelsregister/vestiging/?${queryString}`).then(
-    data => data.results,
+    (data) => data.results,
   )
 }
 
@@ -50,11 +50,11 @@ export function fetchByAddressId(addressId) {
   }
 
   const queryString = Object.keys(searchParams)
-    .map(key => `${encodeURIComponent(key)}=${encodeURIComponent(searchParams[key])}`)
+    .map((key) => `${encodeURIComponent(key)}=${encodeURIComponent(searchParams[key])}`)
     .join('&')
 
   return getByUrl(`${process.env.API_ROOT}handelsregister/vestiging/?${queryString}`).then(
-    data => data.results,
+    (data) => data.results,
   )
 }
 

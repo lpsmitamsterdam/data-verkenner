@@ -39,7 +39,7 @@ class Video extends React.Component {
     const { src, poster, type, showControls } = this.props
     return (
       <video
-        ref={c => {
+        ref={(c) => {
           this.videoPlayer = c
         }}
         data-object-fit

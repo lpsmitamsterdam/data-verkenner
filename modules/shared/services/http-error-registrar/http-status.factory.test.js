@@ -1,13 +1,13 @@
 import { setGlobalError } from '../../../../src/shared/ducks/error/error-message'
 
-describe('The http-status component', function() {
+describe('The http-status component', function () {
   let httpStatus
   let $window
 
-  beforeEach(function() {
+  beforeEach(function () {
     angular.mock.module('dpShared', {})
 
-    angular.mock.inject(function(_$window_, _httpStatus_) {
+    angular.mock.inject(function (_$window_, _httpStatus_) {
       $window = _$window_
       httpStatus = _httpStatus_
     })

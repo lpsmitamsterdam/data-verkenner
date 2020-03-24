@@ -5,13 +5,13 @@ import { getNumberOfResults } from '../../../shared/ducks/data-search/selectors'
 import DataSearch from './DataSearch'
 import { toDetailFromEndpoint } from '../../../store/redux-first-router/actions'
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   userAuthenticated: userIsAuthenticated(state),
   userScopes: getUserScopes(state),
   numberOfResults: getNumberOfResults(state),
 })
 
-const mapDispatchToProps = dispatch =>
+const mapDispatchToProps = (dispatch) =>
   bindActionCreators(
     {
       toDetail: toDetailFromEndpoint,

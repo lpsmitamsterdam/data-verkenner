@@ -11,7 +11,7 @@ jest.mock('../../../shared/services/api/api')
 
 describe('The Panorama Api', () => {
   beforeEach(() => {
-    getByUrl.mockImplementation(url => {
+    getByUrl.mockImplementation((url) => {
       if (url.includes('near=999,999') || url.includes('###')) {
         return Promise.reject()
       }
@@ -129,7 +129,7 @@ describe('The Panorama Api', () => {
     it('and returns error if failing for id', () => {
       let response
       getImageDataById('###', {})
-        .then(_response_ => {
+        .then((_response_) => {
           response = _response_
         })
         .catch(() => {})
@@ -175,7 +175,7 @@ describe('The Panorama Api', () => {
     it('and returns error if failing for location', () => {
       let response
       getImageDataByLocation([999, 999], {})
-        .then(_response_ => {
+        .then((_response_) => {
           response = _response_
         })
         .catch(() => {})
@@ -189,7 +189,7 @@ describe('The Panorama Api', () => {
     let response
 
     beforeEach(() => {
-      getImageDataById('ABC', {}).then(_response_ => {
+      getImageDataById('ABC', {}).then((_response_) => {
         response = _response_
       })
     })

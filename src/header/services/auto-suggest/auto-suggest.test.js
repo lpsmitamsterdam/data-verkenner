@@ -47,7 +47,7 @@ describe('The auto-suggest service', () => {
 
   it('can search and format data', () => {
     fetch.mockResponseOnce(JSON.stringify(mockedResults))
-    autoSuggestSearch('linnae').then(suggestions => {
+    autoSuggestSearch('linnae').then((suggestions) => {
       expect(suggestions.count).toBe(3)
       expect(suggestions.data.length).toBe(2)
 

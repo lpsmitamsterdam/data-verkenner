@@ -1,4 +1,4 @@
-describe('The dp-bbga-graphs directive', function() {
+describe('The dp-bbga-graphs directive', function () {
   let $compile
   let $rootScope
   let $q
@@ -7,14 +7,14 @@ describe('The dp-bbga-graphs directive', function() {
   let fakeBbgaPersonenGraph
   let fakeBbgaHuizenGraph
 
-  beforeEach(function() {
-    angular.mock.module('dpDetail', function($provide) {
-      $provide.factory('dpBbgaTevredenheidDirective', function() {
+  beforeEach(function () {
+    angular.mock.module('dpDetail', function ($provide) {
+      $provide.factory('dpBbgaTevredenheidDirective', function () {
         return {}
       })
     })
 
-    angular.mock.inject(function(_$compile_, _$rootScope_, _$q_, _BBGA_, _bbgaDataService_) {
+    angular.mock.inject(function (_$compile_, _$rootScope_, _$q_, _BBGA_, _bbgaDataService_) {
       $compile = _$compile_
       $rootScope = _$rootScope_
       $q = _$q_
@@ -30,7 +30,7 @@ describe('The dp-bbga-graphs directive', function() {
       create() {},
     }
 
-    spyOn(bbgaDataService, 'getGraphData').and.callFake(function(graphName) {
+    spyOn(bbgaDataService, 'getGraphData').and.callFake(function (graphName) {
       const q = $q.defer()
 
       if (graphName === 'PERSONEN') {
@@ -62,7 +62,7 @@ describe('The dp-bbga-graphs directive', function() {
     return directive
   }
 
-  it('loads two third party visualisations', function() {
+  it('loads two third party visualisations', function () {
     const directive = getDirective('Haveneiland Noordoost', 'M35f')
     const personenDomElement = directive[0].querySelector('.js-personen-graph')
     const huizenDomElement = directive[0].querySelector('.js-huizen-graph')
@@ -74,7 +74,7 @@ describe('The dp-bbga-graphs directive', function() {
     expect(fakeBbgaHuizenGraph.create).toHaveBeenCalledWith(huizenDomElement, 'fakeHuizenData')
   })
 
-  it('retrieves data for each visualisation based on the gebied-heading and gebied-code', function() {
+  it('retrieves data for each visualisation based on the gebied-heading and gebied-code', function () {
     getDirective('Haveneiland Noordoost', 'M35f')
 
     expect(bbgaDataService.getGraphData).toHaveBeenCalledTimes(2)

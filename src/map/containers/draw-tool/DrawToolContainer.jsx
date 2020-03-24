@@ -24,7 +24,7 @@ import {
 import { endDataSelection, setGeometryFilter } from '../../../shared/ducks/data-selection/actions'
 import { getDataSelection } from '../../../shared/ducks/data-selection/selectors'
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   drawingMode: getDrawingMode(state),
   drawingEnabled: isDrawingEnabled(state),
   shapeMarkers: getShapeMarkers(state),
@@ -33,7 +33,7 @@ const mapStateToProps = state => ({
   geometry: getGeometry(state),
 })
 
-const mapDispatchToProps = dispatch =>
+const mapDispatchToProps = (dispatch) =>
   bindActionCreators(
     {
       onClearDrawing: mapEmptyGeometry,
@@ -173,7 +173,7 @@ DrawToolContainer.defaultProps = {
 export default connect(
   mapStateToProps,
   mapDispatchToProps,
-)(props => (
+)((props) => (
   <DrawToolContainer
     currentShape={currentShape}
     initialize={initialize}

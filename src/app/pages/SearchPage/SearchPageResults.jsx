@@ -180,7 +180,7 @@ const SearchPageResults = ({
               page={page}
               pageSize={Math.ceil(totalCount / pageInfo.totalPages)}
               collectionSize={totalCount}
-              onPageChange={pageNumber => {
+              onPageChange={(pageNumber) => {
                 dispatch(
                   SEARCH_PAGE_CONFIG[currentPage].to(
                     {

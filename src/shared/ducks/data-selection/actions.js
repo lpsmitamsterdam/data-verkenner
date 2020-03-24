@@ -16,39 +16,39 @@ import {
   FETCH_MARKERS_FAILURE,
 } from './constants'
 
-export const fetchDataSelection = payload => ({
+export const fetchDataSelection = (payload) => ({
   type: FETCH_DATA_SELECTION_REQUEST,
   payload,
 })
 export const fetchMarkersRequest = () => ({ type: FETCH_MARKERS_REQUEST })
-export const fetchMarkersSuccess = payload => ({
+export const fetchMarkersSuccess = (payload) => ({
   type: FETCH_MARKERS_SUCCESS,
   payload,
 })
-export const fetchMarkersFailure = payload => ({
+export const fetchMarkersFailure = (payload) => ({
   type: FETCH_MARKERS_FAILURE,
   payload,
   error: true,
 })
 
-export const setPage = payload => ({ type: SET_PAGE, payload })
-export const setDataset = payload => ({ type: SET_DATASET, payload })
+export const setPage = (payload) => ({ type: SET_PAGE, payload })
+export const setDataset = (payload) => ({ type: SET_DATASET, payload })
 export const removeGeometryFilter = () => ({ type: REMOVE_GEOMETRY_FILTER })
-export const receiveDataSelectionSuccess = payload => ({
+export const receiveDataSelectionSuccess = (payload) => ({
   type: FETCH_DATA_SELECTION_SUCCESS,
   payload,
 })
-export const receiveDataSelectionFailure = payload => ({
+export const receiveDataSelectionFailure = (payload) => ({
   type: FETCH_DATA_SELECTION_FAILURE,
   payload,
 })
-export const downloadDataSelection = payload => ({
+export const downloadDataSelection = (payload) => ({
   type: DOWNLOAD_DATA_SELECTION,
   meta: {
     tracking: payload,
   },
 })
-export const setGeometryFilter = payload => ({
+export const setGeometryFilter = (payload) => ({
   type: SET_GEOMETRY_FILTER,
   payload,
   meta: {

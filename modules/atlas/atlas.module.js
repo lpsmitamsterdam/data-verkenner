@@ -2,7 +2,7 @@ import 'angular'
 import 'angular-aria'
 import 'angular-i18n/nl-nl'
 import 'angular-sanitize'
-;(function() {
+;(function () {
   const moduleDependencies = [
     // Main modules
     'dpDetail',
@@ -21,9 +21,9 @@ import 'angular-sanitize'
   function urlChangeProvider($provide) {
     $provide.decorator('$browser', [
       '$delegate',
-      function($delegate) {
-        $delegate.onUrlChange = function() {}
-        $delegate.url = function() {
+      function ($delegate) {
+        $delegate.onUrlChange = function () {}
+        $delegate.url = function () {
           return ''
         }
         return $delegate

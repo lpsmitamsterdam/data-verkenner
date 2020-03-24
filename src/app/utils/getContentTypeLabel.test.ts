@@ -15,6 +15,6 @@ describe('getContentTypeLabel', () => {
   it('should not return the actual value for some types', () => {
     const types = [CmsType.Article, CmsType.Collection, CmsType.Publication]
 
-    types.forEach(type => expect(getContentTypeLabel(type)).not.toEqual(type))
+    types.forEach((type) => expect(getContentTypeLabel(type)).not.toEqual(type))
   })
 })

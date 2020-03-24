@@ -46,7 +46,7 @@ DataSelectionList.propTypes = {
   navigateToDetail: PropTypes.func.isRequired,
 }
 
-const mapDispatchToProps = dispatch =>
+const mapDispatchToProps = (dispatch) =>
   bindActionCreators(
     {
       navigateToDetail: toDetailFromEndpoint,

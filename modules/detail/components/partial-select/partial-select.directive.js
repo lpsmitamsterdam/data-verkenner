@@ -1,4 +1,4 @@
-;(function() {
+;(function () {
   angular.module('dpDetail').directive('dpPartialSelect', dpPartialSelectDirective)
 
   dpPartialSelectDirective.$inject = ['partialCompiler']
@@ -21,7 +21,7 @@
       scope.apiUrl = process.env.API_ROOT
       const templateUrl = `modules/detail/components/partial-select/partials/${scope.partial}.html`
 
-      partialCompiler.getHtml(templateUrl, scope).then(function(partial) {
+      partialCompiler.getHtml(templateUrl, scope).then(function (partial) {
         scope.loadMore = scope.loadMoreFn
         element.append(partial)
       })

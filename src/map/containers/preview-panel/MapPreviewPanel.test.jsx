@@ -107,7 +107,7 @@ describe('MapPreviewPanelContainer', () => {
       type: FETCH_PANORAMA_PREVIEW_REQUEST,
     }))
     selectNotClickableVisibleMapLayers.mockImplementation(() => [])
-    isGeoSearch.mockImplementation(state => !(state.detail && state.detail.endpoint))
+    isGeoSearch.mockImplementation((state) => !(state.detail && state.detail.endpoint))
     isSearchLoading.mockReturnValue(false)
   })
 
@@ -124,10 +124,7 @@ describe('MapPreviewPanelContainer', () => {
     const wrapper = shallow(<MapPreviewPanelContainer store={store} />)
       .dive()
       .dive()
-    wrapper
-      .find('.map-preview-panel__button')
-      .at(0)
-      .simulate('click')
+    wrapper.find('.map-preview-panel__button').at(0).simulate('click')
 
     // TODO: refactor, add expectations
   })
@@ -138,10 +135,7 @@ describe('MapPreviewPanelContainer', () => {
     const wrapper = shallow(<MapPreviewPanelContainer store={store} />)
       .dive()
       .dive()
-    wrapper
-      .find('.map-preview-panel__button')
-      .at(1)
-      .simulate('click')
+    wrapper.find('.map-preview-panel__button').at(1).simulate('click')
 
     expect(store.dispatch).toHaveBeenCalledWith(toMapAndPreserveQuery())
   })

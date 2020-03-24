@@ -12,7 +12,7 @@ const normalize = (result, additionalFields) => {
   }
 }
 
-export const oplaadpunten = result => {
+export const oplaadpunten = (result) => {
   const CHARGER_TYPES = {
     REGULAR: 'Gewoon laadpunt',
     FAST: 'Snellaadpunt',
@@ -48,7 +48,7 @@ export const oplaadpunten = result => {
   return normalize(result, additionalFields)
 }
 
-export const meetbout = result => {
+export const meetbout = (result) => {
   const additionalFields = {
     speed: result.zakkingssnelheid ? formatNumber(result.zakkingssnelheid) : '',
   }
@@ -56,7 +56,7 @@ export const meetbout = result => {
   return normalize(result, additionalFields)
 }
 
-export const napPeilmerk = result => {
+export const napPeilmerk = (result) => {
   const additionalFields = {
     wallCoordinates:
       (result.x_muurvlak || result.x_muurvlak === 0) &&
@@ -70,7 +70,7 @@ export const napPeilmerk = result => {
   return normalize(result, additionalFields)
 }
 
-export const adressenPand = result => {
+export const adressenPand = (result) => {
   const additionalFields = {
     statusLevel:
       // eslint-disable-next-line no-nested-ternary
@@ -85,7 +85,7 @@ export const adressenPand = result => {
   return normalize(result, additionalFields)
 }
 
-export const adressenVerblijfsobject = result => {
+export const adressenVerblijfsobject = (result) => {
   const additionalFields = {
     statusLevel:
       // eslint-disable-next-line no-nested-ternary
@@ -97,7 +97,7 @@ export const adressenVerblijfsobject = result => {
     isNevenadres: !result.hoofdadres,
     typeAdres: result.hoofdadres ? result.hoofdadres.type_adres : 'Nevenadres',
     gebruiksdoelen: ((result.gebruiksdoel && result.gebruiksdoel.slice(0, 5)) || [])
-      .map(item => item)
+      .map((item) => item)
       .join('\n'),
     size:
       result.oppervlakte > 1
@@ -108,7 +108,7 @@ export const adressenVerblijfsobject = result => {
   return normalize(result, additionalFields)
 }
 
-export const kadastraalObject = result => {
+export const kadastraalObject = (result) => {
   const additionalFields = {
     size:
       result.grootte || result.grootte === 0
@@ -121,7 +121,7 @@ export const kadastraalObject = result => {
   return normalize(result, additionalFields)
 }
 
-export const bekendmakingen = result => {
+export const bekendmakingen = (result) => {
   const additionalFields = {
     date: formatDate(new Date(result.datum)),
     geometry: result.wkb_geometry,
@@ -130,7 +130,7 @@ export const bekendmakingen = result => {
   return normalize(result, additionalFields)
 }
 
-export const explosieven = result => {
+export const explosieven = (result) => {
   const additionalFields = {
     date: formatDate(new Date(result.datum)),
   }
@@ -138,7 +138,7 @@ export const explosieven = result => {
   return normalize(result, additionalFields)
 }
 
-export const evenementen = result => {
+export const evenementen = (result) => {
   const additionalFields = {
     startDate: formatDate(new Date(result.startdatum)),
     endDate: result.einddatum ? formatDate(new Date(result.einddatum)) : false,
@@ -147,7 +147,7 @@ export const evenementen = result => {
   return normalize(result, additionalFields)
 }
 
-export const vastgoed = result => {
+export const vastgoed = (result) => {
   const additionalFields = {
     geometry: result.bag_pand_geometrie,
     construction_year:
@@ -158,7 +158,7 @@ export const vastgoed = result => {
   return { ...result, ...additionalFields }
 }
 
-export const vestiging = result => {
+export const vestiging = (result) => {
   const additionalFields = {
     geometry: (result.bezoekadres && result.bezoekadres.geometrie) || result.geometrie,
   }
@@ -166,9 +166,9 @@ export const vestiging = result => {
   return { ...result, ...additionalFields }
 }
 
-export const societalActivities = result => {
+export const societalActivities = (result) => {
   const additionalFields = {
-    activities: (result.activiteiten || []).map(activity => activity),
+    activities: (result.activiteiten || []).map((activity) => activity),
     bijzondereRechtstoestand: {
       ...(result._bijzondere_rechts_toestand || {}),
       surseanceVanBetaling:
@@ -182,7 +182,7 @@ export const societalActivities = result => {
   return normalize(result, additionalFields)
 }
 
-export const winkelgebied = result => {
+export const winkelgebied = (result) => {
   const additionalFields = {
     geometry: result.wkb_geometry,
   }
@@ -190,7 +190,7 @@ export const winkelgebied = result => {
   return { ...result, ...additionalFields }
 }
 
-export const parkeerzones = result => {
+export const parkeerzones = (result) => {
   const additionalFields = {
     geometry: result.wkb_geometry,
   }
@@ -198,7 +198,7 @@ export const parkeerzones = result => {
   return { ...result, ...additionalFields }
 }
 
-export const monument = result => {
+export const monument = (result) => {
   const additionalFields = {
     geometry: result.monumentcoordinaten,
   }
@@ -206,7 +206,7 @@ export const monument = result => {
   return { ...result, ...additionalFields }
 }
 
-export const reclamebelasting = result => {
+export const reclamebelasting = (result) => {
   const additionalFields = {
     geometry: result.wkb_geometry,
     localeDate: '1 januari 2020',

@@ -5,7 +5,7 @@ describe('The optionLabel filter', () => {
   beforeEach(() => {
     angular.mock.module('dpDetail')
 
-    angular.mock.inject(_optionLabelFilter_ => {
+    angular.mock.inject((_optionLabelFilter_) => {
       optionLabelFilter = _optionLabelFilter_
     })
 

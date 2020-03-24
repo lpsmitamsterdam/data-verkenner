@@ -23,7 +23,7 @@ import {
 } from '../../../shared/ducks/data-search/selectors'
 import { getPanoramaPreview } from '../../../panorama/ducks/preview/panorama-preview'
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   panoPreview: getPanoramaPreview(state),
   searchResults: getMapPanelResults(state),
   dataSearch: getDataSearch(state),
@@ -32,7 +32,7 @@ const mapStateToProps = state => ({
   searchLocationId: getLocationId(state),
   isSearchLoaded: !isSearchLoading(state) && getMapPanelResults(state),
   missingLayers: selectNotClickableVisibleMapLayers(state)
-    .map(mapLayer => mapLayer.title)
+    .map((mapLayer) => mapLayer.title)
     .join(', '),
   detail: getDetail(state),
   mapDetail: state.mapDetail,
@@ -42,7 +42,7 @@ const mapStateToProps = state => ({
   isSearchPreview: isGeoSearch(state),
 })
 
-const mapDispatchToProps = dispatch => ({
+const mapDispatchToProps = (dispatch) => ({
   ...bindActionCreators(
     {
       closePanel: toMapAndPreserveQuery,
@@ -51,8 +51,8 @@ const mapDispatchToProps = dispatch => ({
     },
     dispatch,
   ),
-  openPreviewDetail: detail => dispatch(toDetailFromEndpoint(detail, VIEW_MODE.MAP)),
-  openDetail: detail => dispatch(toDataDetailPage(detail, VIEW_MODE.SPLIT)),
+  openPreviewDetail: (detail) => dispatch(toDetailFromEndpoint(detail, VIEW_MODE.MAP)),
+  openDetail: (detail) => dispatch(toDataDetailPage(detail, VIEW_MODE.SPLIT)),
 })
 
 /* eslint-enable react/no-unused-prop-types */

@@ -100,7 +100,7 @@ const HighlightBlock = () => {
             {results &&
               results
                 .slice(1)
-                .map(result => (
+                .map((result) => (
                   <HighlightCard
                     key={result.id}
                     loading={loading}

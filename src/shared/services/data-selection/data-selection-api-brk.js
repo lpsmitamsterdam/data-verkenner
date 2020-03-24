@@ -23,7 +23,7 @@ export function getMarkers(config, activeFilters, zoomLevel, boundingBox) {
     }),
   }
   return boundingBox
-    ? getByUrl(process.env.API_ROOT + config.ENDPOINT_MARKERS, params).then(data => ({
+    ? getByUrl(process.env.API_ROOT + config.ENDPOINT_MARKERS, params).then((data) => ({
         geoJsons: [
           data.eigenpercelen && {
             geoJson: data.eigenpercelen,
@@ -49,7 +49,7 @@ export function getMarkers(config, activeFilters, zoomLevel, boundingBox) {
             type: 'dataSelectionBounds',
           },
         ].filter(identity),
-        markers: data.appartementen.map(appartement => ({
+        markers: data.appartementen.map((appartement) => ({
           iconData: {
             zoomLevel,
             count: appartement.aantal,

@@ -1,12 +1,12 @@
-describe('The dp-loading-indicator', function() {
+describe('The dp-loading-indicator', function () {
   let $compile
   let $rootScope
   let $interval
 
-  beforeEach(function() {
+  beforeEach(function () {
     angular.mock.module('dpShared')
 
-    angular.mock.inject(function(_$compile_, _$rootScope_, _$interval_) {
+    angular.mock.inject(function (_$compile_, _$rootScope_, _$interval_) {
       $compile = _$compile_
       $rootScope = _$rootScope_
       $interval = _$interval_
@@ -30,7 +30,7 @@ describe('The dp-loading-indicator', function() {
     return component
   }
 
-  it("shows a spinner when it's loading", function() {
+  it("shows a spinner when it's loading", function () {
     const isLoading = true
     const component = getComponent(isLoading, false, true)
     $interval.flush(0)
@@ -40,7 +40,7 @@ describe('The dp-loading-indicator', function() {
     expect(component.find('.qa-loading-indicator').text()).toContain('Laden')
   })
 
-  it('has an option to delay the showing of the spinner (prevent unnecessary screen flickering)', function() {
+  it('has an option to delay the showing of the spinner (prevent unnecessary screen flickering)', function () {
     const isLoading = true
     const component = getComponent(isLoading, true, true)
 
@@ -53,7 +53,7 @@ describe('The dp-loading-indicator', function() {
     expect(component.find('.qa-loading-indicator').length).toBe(1)
   })
 
-  it('the delayed showing of the spinner will be cancelled when the loading is finished', function() {
+  it('the delayed showing of the spinner will be cancelled when the loading is finished', function () {
     const component = getComponent(true, true, true)
     const scope = component.isolateScope()
 
@@ -70,15 +70,15 @@ describe('The dp-loading-indicator', function() {
     expect(component.find('.qa-loading-indicator').length).toBe(0)
   })
 
-  describe('it has two display variants:', function() {
+  describe('it has two display variants:', function () {
     let component
     let isLoading
 
-    beforeEach(function() {
+    beforeEach(function () {
       isLoading = true
     })
 
-    it('as a box in the top left corner', function() {
+    it('as a box in the top left corner', function () {
       component = getComponent(isLoading, false, true)
       $interval.flush(0)
 
@@ -87,7 +87,7 @@ describe('The dp-loading-indicator', function() {
       )
     })
 
-    it('inline', function() {
+    it('inline', function () {
       component = getComponent(isLoading, false, false)
       $interval.flush(0)
 

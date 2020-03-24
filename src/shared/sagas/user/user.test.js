@@ -37,9 +37,7 @@ describe('authenticateUser', () => {
 
   it('should dispatch succes when the user is authorized ', () => {
     auth.getAccessToken.mockImplementation(() => null)
-    expectSaga(authenticateUser)
-      .put(authenticateFailed())
-      .run()
+    expectSaga(authenticateUser).put(authenticateFailed()).run()
   })
 })
 

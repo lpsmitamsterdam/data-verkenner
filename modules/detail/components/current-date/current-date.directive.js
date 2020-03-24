@@ -1,4 +1,4 @@
-;(function() {
+;(function () {
   angular.module('dpDetail').directive('dpCurrentDate', dpCurrentDateDirective)
 
   function dpCurrentDateDirective() {

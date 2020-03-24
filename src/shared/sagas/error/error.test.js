@@ -45,18 +45,12 @@ describe('excludeUnauthorizedErrorEffect', () => {
 
   it('should do nothing when not authorized', () => {
     const mockAction = { payload: '401' }
-    testSaga(excludeUnauthorizedErrorEffect, mockAction)
-      .next()
-      .isDone()
+    testSaga(excludeUnauthorizedErrorEffect, mockAction).next().isDone()
   })
 })
 
 describe('setErrorsEffect', () => {
   it('should dispatch the global error', () => {
-    testSaga(setErrorsEffect)
-      .next()
-      .put(setGlobalError(ERROR_TYPES.GENERAL_ERROR))
-      .next()
-      .isDone()
+    testSaga(setErrorsEffect).next().put(setGlobalError(ERROR_TYPES.GENERAL_ERROR)).next().isDone()
   })
 })

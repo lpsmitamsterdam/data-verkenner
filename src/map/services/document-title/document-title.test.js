@@ -12,7 +12,7 @@ describe('Draw-tool service', () => {
     mockState = { map: { zoom: 0 } }
     getActiveMapLayersWithinZoom.mockImplementation(() => [{}])
     const promise = documentTitle.getTitle(mockState)
-    promise.then(value => {
+    promise.then((value) => {
       expect(value).toBe('Grote kaart')
     })
   })
@@ -21,7 +21,7 @@ describe('Draw-tool service', () => {
     mockState = { map: { zoom: 0 } }
     getActiveMapLayersWithinZoom.mockImplementation(() => [{ title: 'Geselecteerde laag' }])
     const promise = documentTitle.getTitle(mockState)
-    promise.then(value => {
+    promise.then((value) => {
       expect(value).toBe('Geselecteerde laag | Grote kaart')
     })
   })
@@ -33,7 +33,7 @@ describe('Draw-tool service', () => {
       { title: 'Tweede laag' },
     ])
     const promise = documentTitle.getTitle(mockState)
-    promise.then(value => {
+    promise.then((value) => {
       expect(value).toBe('Geselecteerde laag, Tweede laag | Grote kaart')
     })
   })

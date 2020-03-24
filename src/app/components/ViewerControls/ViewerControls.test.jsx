@@ -34,31 +34,19 @@ describe('ViewerControls', () => {
       />,
     )
 
-    expect(
-      component
-        .find('.viewer-controls-item--top-left')
-        .at(0)
-        .props().children,
-    ).toBe(topLeftComponent)
-    expect(
-      component
-        .find('.viewer-controls-item--bottom-left')
-        .at(0)
-        .props().children,
-    ).toBe(bottomLeftComponent)
-    expect(
-      component
-        .find('.viewer-controls-item--top-right')
-        .at(0)
-        .props().children,
-    ).toBe(topRightComponent)
+    expect(component.find('.viewer-controls-item--top-left').at(0).props().children).toBe(
+      topLeftComponent,
+    )
+    expect(component.find('.viewer-controls-item--bottom-left').at(0).props().children).toBe(
+      bottomLeftComponent,
+    )
+    expect(component.find('.viewer-controls-item--top-right').at(0).props().children).toBe(
+      topRightComponent,
+    )
 
     // This should also render the meta data
-    expect(
-      component
-        .find('.viewer-controls-item--bottom-right')
-        .at(0)
-        .props().children,
-    ).toContain(bottomRightComponent)
+    expect(component.find('.viewer-controls-item--bottom-right').at(0).props().children).toContain(
+      bottomRightComponent,
+    )
   })
 })

@@ -4,28 +4,28 @@ import { createSelector } from 'reselect'
 import { REDUCER_KEY } from './constants'
 import { detailPointType } from '../../../map/components/leaflet/services/icons.constant'
 
-export const getDataSelection = state => state[REDUCER_KEY]
+export const getDataSelection = (state) => state[REDUCER_KEY]
 export const getDataSelectionPage = createSelector(
   getDataSelection,
-  dataSelection => dataSelection.page,
+  (dataSelection) => dataSelection.page,
 )
 
 export const getGeometryFilter = createSelector(
   getDataSelection,
-  dataSelection => dataSelection.geometryFilter,
+  (dataSelection) => dataSelection.geometryFilter,
 )
 export const getGeometryFiltersMarkers = createSelector(
   getGeometryFilter,
-  filters => (filters && filters.markers) || [],
+  (filters) => (filters && filters.markers) || [],
 )
 
-export const getDataset = createSelector(getDataSelection, dataSelection => dataSelection.dataset)
+export const getDataset = createSelector(getDataSelection, (dataSelection) => dataSelection.dataset)
 
 export const getDataSelectionResult = createSelector(
   getDataSelection,
-  dataSelection => dataSelection.result || {},
+  (dataSelection) => dataSelection.result || {},
 )
-const generateMarkers = markers =>
+const generateMarkers = (markers) =>
   markers.map((markerLocation, index) => ({
     position: markerLocation,
     type: detailPointType,
@@ -33,23 +33,23 @@ const generateMarkers = markers =>
   }))
 const getMapMarkers = createSelector(
   [getDataSelection],
-  dataSelection => dataSelection.markers || [],
+  (dataSelection) => dataSelection.markers || [],
 )
 
-export const getClusterMarkers = createSelector([getMapMarkers], markers =>
+export const getClusterMarkers = createSelector([getMapMarkers], (markers) =>
   markers && markers.clusterMarkers && markers.clusterMarkers.length
     ? generateMarkers(markers.clusterMarkers)
     : [],
 )
 
-export const getBrkMarkers = createSelector([getMapMarkers], markers =>
+export const getBrkMarkers = createSelector([getMapMarkers], (markers) =>
   markers && markers.markers && markers.markers.length ? markers.markers : [],
 )
-export const getGeoJsons = createSelector([getMapMarkers], markers =>
+export const getGeoJsons = createSelector([getMapMarkers], (markers) =>
   markers && markers.geoJsons && markers.geoJsons.length ? markers.geoJsons : [],
 )
 
-export const getShapeFilter = createSelector(getDataSelection, dataSelection => {
+export const getShapeFilter = createSelector(getDataSelection, (dataSelection) => {
   const markers = get(dataSelection, 'geometryFilter.markers')
   const description = get(dataSelection, 'geometryFilter.description')
   return markers && description
@@ -63,11 +63,11 @@ export const getShapeFilter = createSelector(getDataSelection, dataSelection => 
     : {}
 })
 
-export const getFilters = createSelector(getDataSelectionResult, result => result.filters || [])
-export const getGeomarkersShape = createSelector(getGeometryFiltersMarkers, markers =>
+export const getFilters = createSelector(getDataSelectionResult, (result) => result.filters || [])
+export const getGeomarkersShape = createSelector(getGeometryFiltersMarkers, (markers) =>
   JSON.stringify(markers.map(([lat, lng]) => [lng, lat])),
 )
 export const areMarkersLoading = createSelector(
   getDataSelection,
-  dataSelection => dataSelection.loadingMarkers,
+  (dataSelection) => dataSelection.loadingMarkers,
 )

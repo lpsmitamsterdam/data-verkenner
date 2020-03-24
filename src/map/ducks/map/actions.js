@@ -20,27 +20,27 @@ import {
 
 // Actions
 export const mapEmptyGeometry = () => ({ type: MAP_EMPTY_GEOMETRY })
-export const mapUpdateShape = payload => ({ type: MAP_UPDATE_SHAPE, payload })
-export const mapSetDrawingMode = payload => ({
+export const mapUpdateShape = (payload) => ({ type: MAP_UPDATE_SHAPE, payload })
+export const mapSetDrawingMode = (payload) => ({
   type: MAP_SET_DRAWING_MODE,
   payload,
   meta: {
     tracking: payload.drawingMode,
   },
 })
-export const mapEndDrawing = payload => ({ type: MAP_END_DRAWING, payload })
+export const mapEndDrawing = (payload) => ({ type: MAP_END_DRAWING, payload })
 export const mapClear = () => ({ type: MAP_CLEAR })
-export const updateZoom = payload => ({ type: MAP_ZOOM, payload })
+export const updateZoom = (payload) => ({ type: MAP_ZOOM, payload })
 export const toggleMapPanel = () => ({ type: TOGGLE_MAP_PANEL })
 export const closeMapPanel = () => ({ type: CLOSE_MAP_PANEL })
-export const setMapBaseLayer = payload => ({
+export const setMapBaseLayer = (payload) => ({
   type: SET_MAP_BASE_LAYER,
   payload,
   meta: {
     tracking: payload,
   },
 })
-export const toggleMapOverlay = payload => ({
+export const toggleMapOverlay = (payload) => ({
   type: TOGGLE_MAP_OVERLAY,
   payload: {
     mapLayers:
@@ -61,14 +61,14 @@ export const toggleMapOverlayVisibility = (mapLayerId, isVisible) => ({
   isVisible: !isVisible,
 })
 
-export const updatePan = payload => ({
+export const updatePan = (payload) => ({
   type: MAP_PAN,
   payload: {
     latitude: normalizeCoordinate(payload.lat, 7),
     longitude: normalizeCoordinate(payload.lng, 7),
   },
 })
-export const setSelectedLocation = payload => ({
+export const setSelectedLocation = (payload) => ({
   type: SET_MAP_CLICK_LOCATION,
   payload: {
     location: {
@@ -80,12 +80,12 @@ export const setSelectedLocation = payload => ({
     tracking: true,
   },
 })
-export const updateBoundingBox = payload => ({
+export const updateBoundingBox = (payload) => ({
   type: MAP_BOUNDING_BOX,
   payload,
 })
 
-export const mapLoadingAction = payload => ({ type: MAP_LOADING, payload })
+export const mapLoadingAction = (payload) => ({ type: MAP_LOADING, payload })
 
 export const toggleEmbedButtonAction = () => ({
   type: TOGGLE_MAP_EMBED,

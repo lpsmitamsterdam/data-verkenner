@@ -1,4 +1,4 @@
-;(function() {
+;(function () {
   angular.module('dpDetail').component('dpWkpbDownloadLink', {
     bindings: {
       url: '<',
@@ -15,8 +15,8 @@
     const vm = this
 
     /* istanbul ignore next */
-    this.$onInit = function() {
-      api.createUrlWithToken(vm.url).then(tokenUrl => (vm.downloadUrl = tokenUrl))
+    this.$onInit = function () {
+      api.createUrlWithToken(vm.url).then((tokenUrl) => (vm.downloadUrl = tokenUrl))
     }
   }
 })()

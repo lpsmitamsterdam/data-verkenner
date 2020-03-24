@@ -1,6 +1,6 @@
 import getState from '../redux/get-state'
 
-const findLayer = (mapLayers, id) => mapLayers.find(mapLayer => mapLayer.id === id)
+const findLayer = (mapLayers, id) => mapLayers.find((mapLayer) => mapLayer.id === id)
 
 export class ActiveOverlays {
   constructor() {
@@ -8,7 +8,7 @@ export class ActiveOverlays {
   }
 
   getOverlays() {
-    return this.allOverlays.filter(overlay => ActiveOverlays.isAuthorised(overlay))
+    return this.allOverlays.filter((overlay) => ActiveOverlays.isAuthorised(overlay))
   }
 
   // Todo: this always returns false: look into mapLayers, since it doesn't have a minZoom / maxZoom
@@ -29,11 +29,11 @@ export class ActiveOverlays {
     const { items: mapLayerItems } = mapLayers.layers
 
     const layer = mapLayerItems.find(
-      item =>
+      (item) =>
         (item.id && item.id === overlay.id) ||
         (item.legendItems &&
           item.legendItems.length &&
-          item.legendItems.some(legendItem => legendItem.id === overlay.id)),
+          item.legendItems.some((legendItem) => legendItem.id === overlay.id)),
     )
     const authScope = layer && layer.authScope
 
@@ -46,8 +46,8 @@ export class ActiveOverlays {
 
   getOverlaysWarning(zoom) {
     return this.getVisibleSources(zoom)
-      .filter(source => source.noDetail)
-      .map(a => a.label_short)
+      .filter((source) => source.noDetail)
+      .map((a) => a.label_short)
       .join(', ')
   }
 
@@ -57,12 +57,12 @@ export class ActiveOverlays {
 
     return this.allOverlays
       .filter(
-        source =>
+        (source) =>
           source.isVisible &&
           ActiveOverlays.isAuthorised(source) &&
           ActiveOverlays.isVisibleAtCurrentZoom(source.id, zoom),
       )
-      .map(source => findLayer(mapLayerItems, source.id))
+      .map((source) => findLayer(mapLayerItems, source.id))
   }
 }
 

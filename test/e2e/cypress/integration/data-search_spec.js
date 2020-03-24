@@ -18,14 +18,10 @@ describe('data search module', () => {
     cy.route('/bag/openbareruimte/*').as('getItem')
 
     cy.visit('/')
-    cy.get('#auto-suggest__input')
-      .focus()
-      .type('Dam')
+    cy.get('#auto-suggest__input').focus().type('Dam')
 
     cy.wait('@getResults')
-    cy.get('.auto-suggest')
-      .should('exist')
-      .and('be.visible')
+    cy.get('.auto-suggest').should('exist').and('be.visible')
     cy.get(queries.autoSuggestHeader)
       .contains('Straatnamen')
       .siblings('ul')
@@ -33,19 +29,11 @@ describe('data search module', () => {
       .first()
       .children()
       .first()
-      .then($el => {
+      .then(($el) => {
         const firstValue = $el[0].innerText
-        cy.get('h4')
-          .contains('Straatnamen')
-          .siblings('ul')
-          .children('li')
-          .first()
-          .click()
+        cy.get('h4').contains('Straatnamen').siblings('ul').children('li').first().click()
         cy.wait('@getItem')
-        cy.get('.o-header__title')
-          .contains(firstValue)
-          .should('exist')
-          .and('be.visible')
+        cy.get('.o-header__title').contains(firstValue).should('exist').and('be.visible')
       })
   })
 
@@ -66,30 +54,22 @@ describe('data search module', () => {
     cy.viewport(1000, 660)
     cy.visit('/')
     // type in search and click on autosuggest item
-    cy.get('#auto-suggest__input')
-      .focus()
-      .type('Ad Windighof 2')
+    cy.get('#auto-suggest__input').focus().type('Ad Windighof 2')
 
     cy.wait('@getResults')
-    cy.get('.auto-suggest')
-      .contains('Ad Windighof 2')
-      .click()
+    cy.get('.auto-suggest').contains('Ad Windighof 2').click()
 
     // check that the large right column is visible and shows the correct data
     cy.wait('@getVerblijfsobject')
     // Rendering after this request takes some time on server
     cy.wait(500)
-    cy.get('.qa-dashboard__column--right')
-      .should('exist')
-      .and('be.visible')
+    cy.get('.qa-dashboard__column--right').should('exist').and('be.visible')
     cy.get('.qa-dashboard__column--right')
       .get('.qa-title span')
       .contains('Ad Windighof 2')
       .and('have.css', 'font-style')
       .and('match', /normal/)
-    cy.get('.qa-dashboard__column--right')
-      .get('dl')
-      .contains('1087HE')
+    cy.get('.qa-dashboard__column--right').get('dl').contains('1087HE')
 
     cy.wait('@getPanoThumbnail')
     cy.get('.qa-dashboard__column--right')
@@ -102,10 +82,7 @@ describe('data search module', () => {
 
     // check that the address is open in right column
     cy.waitForGeoSearch()
-    cy.get('.qa-list-item-link')
-      .contains('Ad Windighof 2')
-      .should('exist')
-      .and('be.visible')
+    cy.get('.qa-list-item-link').contains('Ad Windighof 2').should('exist').and('be.visible')
   })
 
   describe('user should be able to submit', () => {
@@ -120,9 +97,7 @@ describe('data search module', () => {
       cy.get(SEARCH.input).type('Park')
       cy.get(SEARCH.form).submit()
       cy.waitForSearch()
-      cy.get('.o-list')
-        .should('exist')
-        .and('be.visible')
+      cy.get('.o-list').should('exist').and('be.visible')
     })
 
     it('should submit the search and give no results', () => {

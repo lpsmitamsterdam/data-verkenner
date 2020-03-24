@@ -7,7 +7,7 @@ import { routing } from '../../../routes'
 import { getDetailPageData } from '../../../../store/redux-first-router/actions'
 
 const DataSelectionTable = ({ content }) => {
-  const buildLink = row => {
+  const buildLink = (row) => {
     const { id, type, subtype } = getDetailPageData(row.detailEndpoint)
     return {
       type: routing.dataDetail.type,

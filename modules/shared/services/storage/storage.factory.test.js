@@ -1,4 +1,4 @@
-describe('the storage factory', function() {
+describe('the storage factory', function () {
   let storage
   const keys = {}
   const $windowWithoutStorage = {
@@ -28,18 +28,18 @@ describe('the storage factory', function() {
     },
   }
 
-  describe('the general behaviour of the storage factory', function() {
-    beforeEach(function() {
+  describe('the general behaviour of the storage factory', function () {
+    beforeEach(function () {
       angular.mock.module('dpShared', {
         $window: $windowWithStorage,
       })
-      angular.mock.inject(function(_storage_) {
+      angular.mock.inject(function (_storage_) {
         storage = _storage_
       })
     })
 
-    it('accepts only string key values', function() {
-      ;[5, true, {}].forEach(key => {
+    it('accepts only string key values', function () {
+      ;[5, true, {}].forEach((key) => {
         storage.instance.setItem(key, 'value')
         const data = storage.instance.getItem(key)
         expect(data).toBeUndefined()
@@ -48,8 +48,8 @@ describe('the storage factory', function() {
       })
     })
 
-    it('accepts only string values', function() {
-      ;[5, true, {}].forEach(value => {
+    it('accepts only string values', function () {
+      ;[5, true, {}].forEach((value) => {
         storage.instance.setItem('key', value)
         const data = storage.instance.getItem('key')
         expect(data).toBeNull()
@@ -59,18 +59,18 @@ describe('the storage factory', function() {
     })
   })
 
-  describe('with access to sessionStorage', function() {
-    beforeEach(function() {
+  describe('with access to sessionStorage', function () {
+    beforeEach(function () {
       angular.mock.module('dpShared', {
         $window: $windowWithStorage,
       })
-      angular.mock.inject(function(_storage_) {
+      angular.mock.inject(function (_storage_) {
         storage = _storage_
       })
     })
 
-    it('can set and get an item from the storage', function() {
-      ;['instance', 'session', 'local'].forEach(s => {
+    it('can set and get an item from the storage', function () {
+      ;['instance', 'session', 'local'].forEach((s) => {
         storage[s].setItem('key', 'value')
         const data = storage[s].getItem('key')
 
@@ -78,8 +78,8 @@ describe('the storage factory', function() {
       })
     })
 
-    it('can delete an item from the storage', function() {
-      ;['instance', 'session', 'local'].forEach(s => {
+    it('can delete an item from the storage', function () {
+      ;['instance', 'session', 'local'].forEach((s) => {
         storage[s].setItem('key', 'value')
         storage[s].removeItem('key')
         const data = storage[s].getItem('key')
@@ -89,18 +89,18 @@ describe('the storage factory', function() {
     })
   })
 
-  describe('without access to sessionStorage', function() {
-    beforeEach(function() {
+  describe('without access to sessionStorage', function () {
+    beforeEach(function () {
       angular.mock.module('dpShared', {
         $window: $windowWithoutStorage,
       })
-      angular.mock.inject(function(_storage_) {
+      angular.mock.inject(function (_storage_) {
         storage = _storage_
       })
     })
 
-    it('can set and get an item from the storage', function() {
-      ;['instance', 'session', 'local'].forEach(s => {
+    it('can set and get an item from the storage', function () {
+      ;['instance', 'session', 'local'].forEach((s) => {
         storage[s].setItem('key', 'value')
         const data = storage[s].getItem('key')
 
@@ -108,8 +108,8 @@ describe('the storage factory', function() {
       })
     })
 
-    it('can delete an item from the storage', function() {
-      ;['instance', 'session', 'local'].forEach(s => {
+    it('can delete an item from the storage', function () {
+      ;['instance', 'session', 'local'].forEach((s) => {
         storage[s].setItem('key', 'value')
         storage[s].removeItem('key')
         const data = storage[s].getItem('key')
@@ -118,7 +118,7 @@ describe('the storage factory', function() {
       })
     })
 
-    it('can store variable with same names with own values in each store', function() {
+    it('can store variable with same names with own values in each store', function () {
       storage.session.setItem('aap', 'noot')
       storage.instance.setItem('aap', 'mies')
       storage.local.setItem('aap', 'teun')

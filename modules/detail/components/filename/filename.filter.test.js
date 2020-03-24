@@ -4,7 +4,7 @@ describe('The filename filter', () => {
   beforeEach(() => {
     angular.mock.module('dpDetail')
 
-    angular.mock.inject(_filenameFilter_ => {
+    angular.mock.inject((_filenameFilter_) => {
       filenameFilter = _filenameFilter_
     })
   })

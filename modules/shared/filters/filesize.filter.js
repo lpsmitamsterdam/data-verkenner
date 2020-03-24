@@ -8,13 +8,13 @@ const units = ['bytes', 'KB', 'MB', 'GB', 'TB'] // bytes and KB units not used
 const smallestUnit = 2 // index of units, === 'MB'
 const largestUnit = units.length - 1 // index of units, === 'TB'
 
-;(function() {
+;(function () {
   angular.module('dpShared').filter('filesize', filesizeFilter)
 
   filesizeFilter.$inject = ['localization']
 
   function filesizeFilter(localization) {
-    return bytes => {
+    return (bytes) => {
       if (isNaN(parseFloat(bytes)) || !isFinite(bytes)) return '-'
       if (bytes < cutOff) {
         return '< 0,1 MB'

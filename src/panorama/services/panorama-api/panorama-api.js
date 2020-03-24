@@ -52,9 +52,9 @@ export const getLocationHistoryParams = (location, tags) => {
   }
 }
 
-const imageData = response => {
+const imageData = (response) => {
   const panorama = response[0]
-  const adjacencies = response.filter(adjacency => adjacency !== response[0])
+  const adjacencies = response.filter((adjacency) => adjacency !== response[0])
 
   const formattedGeometry = {
     coordinates: [panorama.geometry.coordinates[1], panorama.geometry.coordinates[0]],
@@ -67,7 +67,7 @@ const imageData = response => {
     date: new Date(panorama.timestamp),
     id: panorama.pano_id,
     hotspots: Array.isArray(adjacencies)
-      ? adjacencies.map(adjacency => ({
+      ? adjacencies.map((adjacency) => ({
           id: adjacency.pano_id,
           heading: adjacency.direction,
           distance: adjacency.distance,
@@ -86,11 +86,11 @@ const imageData = response => {
 function fetchPanorama(url) {
   const promise = new Promise((resolve, reject) => {
     getByUrl(url)
-      .then(json => json._embedded.adjacencies)
-      .then(data => {
+      .then((json) => json._embedded.adjacencies)
+      .then((data) => {
         resolve(imageData(data))
       })
-      .catch(error => reject(error))
+      .catch((error) => reject(error))
   })
 
   return promise
@@ -119,8 +119,8 @@ export function getImageDataByLocation(location, tags) {
 
   const promise = new Promise((resolve, reject) => {
     getByUrl(`${getLocationUrl}&${standardRadius}&${newestInRange}&${limitResults}`)
-      .then(json => json._embedded.panoramas[0])
-      .then(data => {
+      .then((json) => json._embedded.panoramas[0])
+      .then((data) => {
         if (data) {
           // we found a pano nearby go to it
           resolve(getAdjacencies(data._links.adjacencies.href, adjacenciesParams))
@@ -128,12 +128,12 @@ export function getImageDataByLocation(location, tags) {
           // there is no pano nearby search with a large radius and go to it
           resolve(
             getByUrl(`${getLocationUrl}&${largeRadius}&${limitResults}`)
-              .then(json => json._embedded.panoramas[0])
-              .then(_data => getAdjacencies(_data._links.adjacencies.href, adjacenciesParams)),
+              .then((json) => json._embedded.panoramas[0])
+              .then((_data) => getAdjacencies(_data._links.adjacencies.href, adjacenciesParams)),
           )
         }
       })
-      .catch(error => reject(error))
+      .catch((error) => reject(error))
   })
 
   return promise

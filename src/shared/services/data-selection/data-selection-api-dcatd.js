@@ -13,9 +13,9 @@ const getDetailEndpoint = (config, rawDataRow) =>
   `${process.env.API_ROOT}${config.ENDPOINT_DETAIL}/${rawDataRow[config.PRIMARY_KEY]}`
 
 const getFacetOptions = (facet, filterCatalog, namespace) =>
-  Object.keys(facet).map(option => {
+  Object.keys(facet).map((option) => {
     const id = namespace ? option.replace(`${namespace}:`, '') : option
-    const catalogOption = filterCatalog && filterCatalog.filter(item => item.id === id)[0]
+    const catalogOption = filterCatalog && filterCatalog.filter((item) => item.id === id)[0]
     return {
       id,
       label: catalogOption ? catalogOption.label : id,
@@ -67,7 +67,7 @@ function formatFilters(filters, catalogFilters) {
   }
 
   return Object.keys(resultFilters)
-    .filter(key => resultFilters[key].numberOfOptions > 0)
+    .filter((key) => resultFilters[key].numberOfOptions > 0)
     .reduce(
       (result, key) => ({
         ...result,
@@ -78,7 +78,7 @@ function formatFilters(filters, catalogFilters) {
 }
 
 function formatData(config, rawData) {
-  return rawData.map(rawDataRow => {
+  return rawData.map((rawDataRow) => {
     const newDataRow = { ...rawDataRow }
     newDataRow._links = {
       self: {
@@ -147,7 +147,7 @@ export function query(
   searchParams.offset = (page - 1) * config.MAX_ITEMS_PER_PAGE
   searchParams.limit = config.MAX_ITEMS_PER_PAGE
 
-  return getByUrl(process.env.API_ROOT + config.ENDPOINT_PREVIEW, searchParams).then(data => ({
+  return getByUrl(process.env.API_ROOT + config.ENDPOINT_PREVIEW, searchParams).then((data) => ({
     numberOfPages: Math.ceil(data['void:documents'] / config.MAX_ITEMS_PER_PAGE),
     numberOfRecords: data['void:documents'],
     filters:

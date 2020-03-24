@@ -46,7 +46,7 @@ const DataSearchResults: React.FC<DataSearchResultsProps> = ({
 
   return totalCount > 0 ? (
     <>
-      {results.map(result => {
+      {results.map((result) => {
         const hasLoadingError = loadingErrors.some(
           ({ extensions }) => extensions?.type === result.type,
         )

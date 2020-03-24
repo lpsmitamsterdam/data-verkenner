@@ -86,12 +86,12 @@ Map.propTypes = {
   openEmbedPreview: PropTypes.func.isRequired,
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   hasPrintButton: hasPrintMode(state),
   hasEmbedButton: hasEmbedMode(state),
 })
 
-const mapDispatchToProps = dispatch =>
+const mapDispatchToProps = (dispatch) =>
   bindActionCreators(
     {
       openSharePage: sharePage,

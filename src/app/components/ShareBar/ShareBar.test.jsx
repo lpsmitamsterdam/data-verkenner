@@ -31,28 +31,16 @@ describe('ShareBar', () => {
   })
 
   it('should handle onClick event on buttons', () => {
-    component
-      .find('ShareButton')
-      .at(0)
-      .simulate('click')
+    component.find('ShareButton').at(0).simulate('click')
     expect(sharePage).toHaveBeenCalledWith('facebook')
 
-    component
-      .find('ShareButton')
-      .at(1)
-      .simulate('click')
+    component.find('ShareButton').at(1).simulate('click')
     expect(sharePage).toHaveBeenCalledWith('twitter')
 
-    component
-      .find('ShareButton')
-      .at(2)
-      .simulate('click')
+    component.find('ShareButton').at(2).simulate('click')
     expect(sharePage).toHaveBeenCalledWith('linkedin')
 
-    component
-      .find('ShareButton')
-      .at(3)
-      .simulate('click')
+    component.find('ShareButton').at(3).simulate('click')
     expect(sharePage).toHaveBeenCalledWith('email')
   })
 
@@ -63,10 +51,7 @@ describe('ShareBar', () => {
       component.setProps({ hasPrintButton: true })
       expect(component.find('ShareButton').length).toBe(5)
 
-      component
-        .find('ShareButton')
-        .at(4)
-        .simulate('click')
+      component.find('ShareButton').at(4).simulate('click')
       expect(showPrintMode).toHaveBeenCalled()
     })
   })

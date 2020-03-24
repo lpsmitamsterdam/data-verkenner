@@ -1,4 +1,4 @@
-;(function() {
+;(function () {
   angular.module('dpDetail').directive('dpMeetboutGraph', dpMeetboutGraphDirective)
 
   dpMeetboutGraphDirective.$inject = ['api', 'd3', 'dateConverter', 'dateFormatter']
@@ -21,7 +21,7 @@
 
       // parse url om alle metingen te krijgen voor de meetbout
       const href = `${scope.href}&page_size=${scope.pageSize}`
-      api.getByUrl(href).then(function(response) {
+      api.getByUrl(href).then(function (response) {
         // data laden
         scope.objects = response.results
 
@@ -35,7 +35,7 @@
         const xAs = d3.time
           .scale()
           .domain(
-            d3.extent(scope.objects, function(d) {
+            d3.extent(scope.objects, function (d) {
               return dateConverter.ymdToDate(d.datum)
             }),
           )
@@ -52,7 +52,7 @@
         const yZakkingCum = d3.scale
           .linear()
           .domain(
-            d3.extent(scope.objects, function(d) {
+            d3.extent(scope.objects, function (d) {
               // d3 does not seem to handle rounding errors well
               // values like -4.9999999999998 leaves us with a y
               // axis ranging from 0 to -1 strange enough.
@@ -65,18 +65,15 @@
           .range([0, height])
           .nice()
 
-        const yZakkingCumAxis = d3.svg
-          .axis()
-          .scale(yZakkingCum)
-          .orient('left')
+        const yZakkingCumAxis = d3.svg.axis().scale(yZakkingCum).orient('left')
 
         // definieren grafiek lijnen
         const zakkingCumLine = d3.svg
           .line()
-          .x(function(d) {
+          .x(function (d) {
             return xAs(dateConverter.ymdToDate(d.datum))
           })
-          .y(function(d) {
+          .y(function (d) {
             return yZakkingCum(d.zakking_cumulatief)
           })
 
@@ -107,15 +104,12 @@
           .call(xAxis)
 
         // set class in whole years only
-        svg.selectAll('.c-meetbout__axis-x .tick').attr('class', d => {
+        svg.selectAll('.c-meetbout__axis-x .tick').attr('class', (d) => {
           return d.getMonth() === 0 ? 'tick c-meetbout__axis-x-year' : 'tick'
         })
 
         // intekenen y as zakking
-        svg
-          .append('g')
-          .attr('class', 'c-meetbout__axis c-meetbout__axis-y')
-          .call(yZakkingCumAxis)
+        svg.append('g').attr('class', 'c-meetbout__axis c-meetbout__axis-y').call(yZakkingCumAxis)
 
         // set y axis lines to full width of chart
         svg.selectAll('.c-meetbout__axis-y .tick line').attr('x2', width)

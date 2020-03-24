@@ -285,7 +285,7 @@ describe('Filters', () => {
     })
 
     it('only works on strings, other input is returned unchanged', () => {
-      ;[5, true, { aap: 'noot' }].forEach(e => {
+      ;[5, true, { aap: 'noot' }].forEach((e) => {
         expect(truncateHtmlAsTextFilter(e)).toEqual(e)
       })
     })

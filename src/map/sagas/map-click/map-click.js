@@ -10,7 +10,7 @@ import PARAMETERS from '../../../store/parameters'
 import { requestNearestDetails } from '../../../shared/ducks/data-search/actions'
 import { getViewMode, isEmbedded, VIEW_MODE } from '../../../shared/ducks/ui/ui'
 
-const latitudeLongitudeToArray = location => [location.latitude, location.longitude]
+const latitudeLongitudeToArray = (location) => [location.latitude, location.longitude]
 
 export function* goToGeoSearch(location) {
   const viewMode = yield select(getViewMode)

@@ -50,10 +50,7 @@ describe('AutoSuggestCategory', () => {
     const wrapper = shallow(<AutoSuggestCategory {...props} />)
 
     const mockEvent = { event: 'event' }
-    const itemWrapper = wrapper
-      .find('AutoSuggestItem')
-      .at(3)
-      .dive()
+    const itemWrapper = wrapper.find('AutoSuggestItem').at(3).dive()
     itemWrapper.find('button').simulate('click', mockEvent)
     expect(props.onSuggestionSelection).toHaveBeenCalledWith(
       {

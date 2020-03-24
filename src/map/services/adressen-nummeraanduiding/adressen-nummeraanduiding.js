@@ -2,7 +2,7 @@ import { getByUrl } from '../../../shared/services/api/api'
 import mapFetch from '../map-fetch/map-fetch'
 import { adressenVerblijfsobject } from '../normalize/normalize'
 
-const normalize = async result => {
+const normalize = async (result) => {
   let verblijfsobject
   if (result.verblijfsobject) {
     verblijfsobject = await mapFetch(result.verblijfsobject, false, adressenVerblijfsobject)
@@ -34,11 +34,11 @@ export function fetchByPandId(pandId) {
   }
 
   const queryString = Object.keys(searchParams)
-    .map(key => `${encodeURIComponent(key)}=${encodeURIComponent(searchParams[key])}`)
+    .map((key) => `${encodeURIComponent(key)}=${encodeURIComponent(searchParams[key])}`)
     .join('&')
 
   return getByUrl(`${process.env.API_ROOT}bag/v1.1/nummeraanduiding/?${queryString}`).then(
-    data => data.results,
+    (data) => data.results,
   )
 }
 
@@ -48,11 +48,11 @@ export function fetchByLigplaatsId(ligplaatsId) {
   }
 
   const queryString = Object.keys(searchParams)
-    .map(key => `${encodeURIComponent(key)}=${encodeURIComponent(searchParams[key])}`)
+    .map((key) => `${encodeURIComponent(key)}=${encodeURIComponent(searchParams[key])}`)
     .join('&')
 
-  return getByUrl(`${process.env.API_ROOT}bag/v1.1/nummeraanduiding/?${queryString}`).then(data =>
-    data.results.map(result => ({
+  return getByUrl(`${process.env.API_ROOT}bag/v1.1/nummeraanduiding/?${queryString}`).then((data) =>
+    data.results.map((result) => ({
       ...result,
       id: result.landelijk_id,
     })),
@@ -60,7 +60,9 @@ export function fetchByLigplaatsId(ligplaatsId) {
 }
 
 export function fetchHoofdadresByLigplaatsId(ligplaatsId) {
-  return fetchByLigplaatsId(ligplaatsId).then(results => results.find(result => result.hoofdadres))
+  return fetchByLigplaatsId(ligplaatsId).then((results) =>
+    results.find((result) => result.hoofdadres),
+  )
 }
 
 export function fetchByStandplaatsId(standplaatsId) {
@@ -69,11 +71,11 @@ export function fetchByStandplaatsId(standplaatsId) {
   }
 
   const queryString = Object.keys(searchParams)
-    .map(key => `${encodeURIComponent(key)}=${encodeURIComponent(searchParams[key])}`)
+    .map((key) => `${encodeURIComponent(key)}=${encodeURIComponent(searchParams[key])}`)
     .join('&')
 
-  return getByUrl(`${process.env.API_ROOT}bag/v1.1/nummeraanduiding/?${queryString}`).then(data =>
-    data.results.map(result => ({
+  return getByUrl(`${process.env.API_ROOT}bag/v1.1/nummeraanduiding/?${queryString}`).then((data) =>
+    data.results.map((result) => ({
       ...result,
       id: result.landelijk_id,
     })),
@@ -81,8 +83,8 @@ export function fetchByStandplaatsId(standplaatsId) {
 }
 
 export function fetchHoofdadresByStandplaatsId(standplaatsId) {
-  return fetchByStandplaatsId(standplaatsId).then(results =>
-    results.find(result => result.hoofdadres),
+  return fetchByStandplaatsId(standplaatsId).then((results) =>
+    results.find((result) => result.hoofdadres),
   )
 }
 

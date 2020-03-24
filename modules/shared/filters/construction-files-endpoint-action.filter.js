@@ -1,5 +1,5 @@
 import { toConstructionFilesFromEndpoint } from '../../../src/store/redux-first-router/actions'
-;(function() {
+;(function () {
   'use strict'
 
   angular
@@ -7,7 +7,7 @@ import { toConstructionFilesFromEndpoint } from '../../../src/store/redux-first-
     .filter('constructionFilesEndpointAction', constructionFilesEndpointAction)
 
   function constructionFilesEndpointAction() {
-    return endpoint => {
+    return (endpoint) => {
       if (!endpoint) {
         return
       }

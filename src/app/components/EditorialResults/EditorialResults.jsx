@@ -56,7 +56,7 @@ const EditorialResults = ({
         <>
           {!hasLoadingError &&
             results.length > 0 &&
-            results.map(result => {
+            results.map((result) => {
               const {
                 id,
                 specialType,

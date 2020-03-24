@@ -1,5 +1,5 @@
 import isDefined from '../../../../../src/shared/services/is-defined'
-;(function() {
+;(function () {
   angular.module('dpDetail').directive('dpGlossaryHeader', dpGlossaryHeaderDirective)
 
   function dpGlossaryHeaderDirective() {
@@ -26,13 +26,13 @@ import isDefined from '../../../../../src/shared/services/is-defined'
   function DpGlossaryHeaderController($scope, $sce, GLOSSARY) {
     const vm = this
 
-    this.$onInit = function() {
+    this.$onInit = function () {
       vm.isVisible = {
         help: false,
         meta: false,
       }
 
-      $scope.$watch('vm.heading', function(heading) {
+      $scope.$watch('vm.heading', function (heading) {
         vm.htmlHeading = $sce.trustAsHtml(heading)
         vm.hasMetaData = isDefined(vm.metaData)
       })
@@ -50,7 +50,7 @@ import isDefined from '../../../../../src/shared/services/is-defined'
       vm.helpTitle = 'Uitleg tonen'
       vm.metaDataTitle = 'Informatie (metadata) tonen'
 
-      vm.toggle = function(item) {
+      vm.toggle = function (item) {
         vm.isVisible[item] = !vm.isVisible[item]
 
         if (item === 'help') {

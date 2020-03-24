@@ -17,99 +17,61 @@ describe('datasets module', () => {
       // the homepage should be visible
       cy.get(homepage).should('be.visible')
       // check if the link is in the dom and visible
-      cy.get('.c-homepage__block--datasets')
-        .should('exist')
-        .and('be.visible')
+      cy.get('.c-homepage__block--datasets').should('exist').and('be.visible')
       // the datasets component should not exist yet
       cy.get(dataSelection).should('not.exist')
     })
 
     it('should open the datasets catalogus without a filter and see results', () => {
       // click on the link to go to the datasets without a specified catalogus theme
-      cy.get('.c-homepage__block--datasets')
-        .find('.qa-button-datasets')
-        .click()
+      cy.get('.c-homepage__block--datasets').find('.qa-button-datasets').click()
       cy.wait('@getResults')
 
       // the homepage should not be visible anymore
       cy.get(homepage).should('not.be.visible')
       // the data selection should be visible
-      cy.get(dataSelection)
-        .should('exist')
-        .and('be.visible')
+      cy.get(dataSelection).should('exist').and('be.visible')
       // the title should contain Datasets
-      cy.get(HEADINGS.dataSelectionHeading)
-        .contains('Datasets')
-        .should('exist')
-        .and('be.visible')
+      cy.get(HEADINGS.dataSelectionHeading).contains('Datasets').should('exist').and('be.visible')
       // the datasets filters should not exist
-      cy.get(activeFilters)
-        .should('not.exist')
-        .and('not.be.visible')
+      cy.get(activeFilters).should('not.exist').and('not.be.visible')
       // at least one results should exist
-      cy.get('.c-data-selection-catalog__item')
-        .should('exist')
-        .and('be.visible')
+      cy.get('.c-data-selection-catalog__item').should('exist').and('be.visible')
     })
 
     it('should open a dataset', () => {
       // click on the link to go to the datasets without a specified catalogus theme
-      cy.get('.c-homepage__block--datasets')
-        .get('.qa-theme-link')
-        .first()
-        .click()
+      cy.get('.c-homepage__block--datasets').get('.qa-theme-link').first().click()
       cy.wait('@getResultsWithFilter')
 
       // the homepage should not be visible anymore
       cy.get(homepage).should('not.be.visible')
       // the data selection should be visible
-      cy.get(dataSelection)
-        .should('exist')
-        .and('be.visible')
+      cy.get(dataSelection).should('exist').and('be.visible')
       // the title should contain Datasets
-      cy.get(HEADINGS.dataSelectionHeading)
-        .contains('Datasets')
-        .should('exist')
-        .and('be.visible')
-      cy.get('.c-data-selection-catalog__item')
-        .first()
-        .find('h2')
-        .click()
+      cy.get(HEADINGS.dataSelectionHeading).contains('Datasets').should('exist').and('be.visible')
+      cy.get('.c-data-selection-catalog__item').first().find('h2').click()
       cy.wait('@getResultsDetail')
 
       // as downloading is not testable, we check for the presence of href
-      cy.get('.resources-item')
-        .should('exist')
-        .and('be.visible')
-        .and('have.attr', 'href')
+      cy.get('.resources-item').should('exist').and('be.visible').and('have.attr', 'href')
     })
 
     it('should open the datasets catalogus with a filter and see filtered results', () => {
       // click on the link to go to the datasets without a specified catalogus theme
-      cy.get(HOMEPAGE_THEMES_BLOCK.link)
-        .eq(3)
-        .click()
+      cy.get(HOMEPAGE_THEMES_BLOCK.link).eq(3).click()
       cy.wait('@getResultsWithFilter')
 
       // the homepage should not be visible anymore
       cy.get(homepage).should('not.be.visible')
       // the datasets component should be visible
-      cy.get(dataSelection)
-        .should('exist')
-        .and('be.visible')
+      cy.get(dataSelection).should('exist').and('be.visible')
       // the title should contain Datasets
-      cy.get(HEADINGS.dataSelectionHeading)
-        .contains('Datasets')
-        .should('exist')
-        .and('be.visible')
+      cy.get(HEADINGS.dataSelectionHeading).contains('Datasets').should('exist').and('be.visible')
       // the datasets filters should exist
-      cy.get(activeFilters)
-        .should('exist')
-        .and('be.visible')
+      cy.get(activeFilters).should('exist').and('be.visible')
       // at least one results should exist
-      cy.get('.c-data-selection-catalog__item')
-        .should('exist')
-        .and('be.visible')
+      cy.get('.c-data-selection-catalog__item').should('exist').and('be.visible')
     })
   })
 })

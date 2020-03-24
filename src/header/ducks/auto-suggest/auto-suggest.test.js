@@ -98,7 +98,7 @@ describe('AutoSuggestReducer Reducer', () => {
       routing.collectionSearch.type,
     ]
 
-    tabRoutes.forEach(route => {
+    tabRoutes.forEach((route) => {
       expect(
         reducer(initialState, {
           type: route,

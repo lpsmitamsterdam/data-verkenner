@@ -9,13 +9,13 @@ import {
 } from '../../../shared/ducks/data-selection/actions'
 import ToggleDrawing from './ToggleDrawing'
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   isEnabled: isDrawingEnabled(state),
   shapeMarkers: getShapeMarkers(state),
   shapeDistance: getShapeDistanceTxt(state),
 })
 
-const mapDispatchToProps = dispatch =>
+const mapDispatchToProps = (dispatch) =>
   bindActionCreators(
     {
       onStart: startDrawing,

@@ -1,9 +1,9 @@
-const isZakelijkRecht = someUriParts =>
+const isZakelijkRecht = (someUriParts) =>
   someUriParts[0] === 'brk' &&
   someUriParts[1] === 'zakelijk-recht' &&
   someUriParts[someUriParts.length - 1] === 'subject'
 
-export const getParts = endpoint => {
+export const getParts = (endpoint) => {
   const anchor = document.createElement('a')
   anchor.href = endpoint
 
@@ -23,7 +23,7 @@ export const getParts = endpoint => {
   return uriParts.slice(-2)
 }
 
-export const getTemplateUrl = endpoint => {
+export const getTemplateUrl = (endpoint) => {
   const [category, subject] = getParts(endpoint)
   return `modules/detail/components/detail/templates/${category}/${subject}.html`
 }

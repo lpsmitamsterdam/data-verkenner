@@ -5,9 +5,9 @@ import { logout } from '../auth/auth'
 
 export const getAccessToken = () => getState().user.accessToken
 
-export const generateParams = data =>
+export const generateParams = (data) =>
   Object.entries(data)
-    .map(pair => pair.map(encodeURIComponent).join('='))
+    .map((pair) => pair.map(encodeURIComponent).join('='))
     .join('&')
 
 // Todo: DP-6393
@@ -21,7 +21,7 @@ const handleErrors = (response, reloadOnUnauthorized) => {
   return response
 }
 
-export const getByUri = uri => fetch(uri).then(response => response.json())
+export const getByUri = (uri) => fetch(uri).then((response) => response.json())
 
 export const getWithToken = (url, params, cancel, token, reloadOnUnauthorized = false) => {
   const headers = {}
@@ -41,8 +41,8 @@ export const getWithToken = (url, params, cancel, token, reloadOnUnauthorized = 
 
   const fullUrl = `${url}${params ? `?${generateParams(params)}` : ''}`
   return fetch(fullUrl, options)
-    .then(response => handleErrors(response, reloadOnUnauthorized))
-    .then(response => response.json())
+    .then((response) => handleErrors(response, reloadOnUnauthorized))
+    .then((response) => response.json())
 }
 
 export const getByUrl = async (url, params, cancel, reloadOnUnauthorized) => {

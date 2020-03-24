@@ -1,7 +1,7 @@
 /* eslint-disable camelcase */
 import normalize from 'json-api-normalize'
 
-export const getType = type => type && type.replace('node--', '')
+export const getType = (type) => type && type.replace('node--', '')
 
 function getNormalizedItem(item, extraData = {}) {
   // Make sure the correct fields have data here to be used by useNormalizedCMSResults()
@@ -21,10 +21,10 @@ function getNormalizedItem(item, extraData = {}) {
   }
 }
 
-export const reformatJSONApiResults = normalizedData => {
+export const reformatJSONApiResults = (normalizedData) => {
   // In case of a Drupal collection resource the returned data will include several objects that need to be normalized
   if (normalizedData.field_items && !normalizedData.field_blocks) {
-    return normalizedData.field_items.map(item => getNormalizedItem(item, normalizedData))
+    return normalizedData.field_items.map((item) => getNormalizedItem(item, normalizedData))
   }
 
   // Todo: Need to refactor this when we really know what types and fields to expect from the CMS
@@ -32,11 +32,11 @@ export const reformatJSONApiResults = normalizedData => {
   if (normalizedData.field_items && normalizedData.field_blocks) {
     return {
       ...normalizedData,
-      field_blocks: normalizedData.field_blocks.map(fieldBlock => ({
+      field_blocks: normalizedData.field_blocks.map((fieldBlock) => ({
         ...fieldBlock,
-        field_content: fieldBlock.field_content.map(item => getNormalizedItem(item)),
+        field_content: fieldBlock.field_content.map((item) => getNormalizedItem(item)),
       })),
-      field_items: normalizedData.field_items.map(item => getNormalizedItem(item)),
+      field_items: normalizedData.field_items.map((item) => getNormalizedItem(item)),
     }
   }
 
@@ -74,7 +74,7 @@ function removeEmptyContent(data) {
   return {
     ...data,
     ...(data.field_blocks
-      ? { field_blocks: data.field_blocks.filter(block => !!block.field_content) }
+      ? { field_blocks: data.field_blocks.filter((block) => !!block.field_content) }
       : {}),
   }
 }

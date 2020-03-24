@@ -129,12 +129,12 @@ const App = ({
 
   // Adding/removing multiple classes as string doesn't seem to work in IE11.
   // Add/remove them one by one.
-  printAndEmbedClasses.forEach(element => {
+  printAndEmbedClasses.forEach((element) => {
     document.documentElement.classList.remove(element)
   })
 
   if (printEmbedModeClasses) {
-    printEmbedModeClasses.split(' ').forEach(element => {
+    printEmbedModeClasses.split(' ').forEach((element) => {
       document.documentElement.classList.add(element)
     })
   }
@@ -185,7 +185,7 @@ App.propTypes = {
   overflowScroll: PropTypes.bool.isRequired,
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   currentPage: getPage(state),
   embedMode: isEmbedded(state),
   homePage: isHomepage(state),

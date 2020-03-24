@@ -1,9 +1,9 @@
-describe('The dp-glossary-header directive', function() {
+describe('The dp-glossary-header directive', function () {
   let $compile
   let $rootScope
 
-  beforeEach(function() {
-    angular.mock.module('dpDetail', function($provide) {
+  beforeEach(function () {
+    angular.mock.module('dpDetail', function ($provide) {
       $provide.constant('GLOSSARY', {
         DEFINITIONS: {
           BOUWBLOK: {
@@ -37,15 +37,15 @@ describe('The dp-glossary-header directive', function() {
         },
       })
 
-      $provide.factory('dpGlossaryMetaDirective', function() {
+      $provide.factory('dpGlossaryMetaDirective', function () {
         return {}
       })
-      $provide.factory('dpWkpbLinkDirective', function() {
+      $provide.factory('dpWkpbLinkDirective', function () {
         return {}
       })
     })
 
-    angular.mock.inject(function(_$compile_, _$rootScope_) {
+    angular.mock.inject(function (_$compile_, _$rootScope_) {
       $compile = _$compile_
       $rootScope = _$rootScope_
     })
@@ -80,7 +80,7 @@ describe('The dp-glossary-header directive', function() {
     return directive
   }
 
-  it('optionally shows the glossary label w/ an button to toggle more information', function() {
+  it('optionally shows the glossary label w/ an button to toggle more information', function () {
     let directive
 
     // Don't show it if there is no description
@@ -89,80 +89,45 @@ describe('The dp-glossary-header directive', function() {
     // When it's closed
     directive = getDirective(null, 'BOUWBLOK', false, null, null)
 
-    expect(
-      directive
-        .find('.o-header__subtitle')
-        .text()
-        .trim(),
-    ).toBe('Bouwblok')
-    expect(
-      directive
-        .find('.o-header__button:nth-of-type(1)')
-        .attr('title')
-        .trim(),
-    ).toBe('Uitleg tonen')
-    expect(
-      directive
-        .find('.o-header__button:nth-of-type(1) .u-sr-only')
-        .text()
-        .trim(),
-    ).toBe('Uitleg tonen')
+    expect(directive.find('.o-header__subtitle').text().trim()).toBe('Bouwblok')
+    expect(directive.find('.o-header__button:nth-of-type(1)').attr('title').trim()).toBe(
+      'Uitleg tonen',
+    )
+    expect(directive.find('.o-header__button:nth-of-type(1) .u-sr-only').text().trim()).toBe(
+      'Uitleg tonen',
+    )
 
     // When it's opened
     directive.find('.o-header__button:nth-of-type(1)').click()
-    expect(
-      directive
-        .find('.o-header__button:nth-of-type(1)')
-        .attr('title')
-        .trim(),
-    ).toBe('Uitleg verbergen')
-    expect(
-      directive
-        .find('.o-header__button:nth-of-type(1) .u-sr-only')
-        .text()
-        .trim(),
-    ).toBe('Uitleg verbergen')
+    expect(directive.find('.o-header__button:nth-of-type(1)').attr('title').trim()).toBe(
+      'Uitleg verbergen',
+    )
+    expect(directive.find('.o-header__button:nth-of-type(1) .u-sr-only').text().trim()).toBe(
+      'Uitleg verbergen',
+    )
   })
 
-  it('has support for plurals in the glossary label', function() {
+  it('has support for plurals in the glossary label', function () {
     let directive
 
     directive = getDirective(null, 'BOUWBLOK', false, null, null)
-    expect(
-      directive
-        .find('.o-header__subtitle')
-        .text()
-        .trim(),
-    ).toBe('Bouwblok')
+    expect(directive.find('.o-header__subtitle').text().trim()).toBe('Bouwblok')
 
     directive = getDirective(null, 'BOUWBLOK', true, null, null)
-    expect(
-      directive
-        .find('.o-header__subtitle')
-        .text()
-        .trim(),
-    ).toBe('Bouwblokken')
+    expect(directive.find('.o-header__subtitle').text().trim()).toBe('Bouwblokken')
   })
 
-  it('has an optional heading that can be placed in front of the glossary label', function() {
+  it('has an optional heading that can be placed in front of the glossary label', function () {
     const directive = getDirective('Ik ben een hele specifieke titel', 'BOUWBLOK', false, null)
 
-    expect(
-      directive
-        .find('.o-header__title')
-        .text()
-        .trim(),
-    ).toBe('Ik ben een hele specifieke titel')
+    expect(directive.find('.o-header__title').text().trim()).toBe(
+      'Ik ben een hele specifieke titel',
+    )
 
-    expect(
-      directive
-        .find('.o-header__subtitle')
-        .text()
-        .trim(),
-    ).toBe('Bouwblok')
+    expect(directive.find('.o-header__subtitle').text().trim()).toBe('Bouwblok')
   })
 
-  it('always has a glossary panel', function() {
+  it('always has a glossary panel', function () {
     const directive = getDirective(null, 'BOUWBLOK', false, null, null)
 
     // The panel is hidden by default
@@ -178,25 +143,20 @@ describe('The dp-glossary-header directive', function() {
       'Verhaaltje over bouwblokken',
     )
     expect(directive.find('.qa-glossary a').attr('href')).toBe('http:// www.example.com/bouwblok/')
-    expect(
-      directive
-        .find('.qa-glossary a')
-        .text()
-        .trim(),
-    ).toBe('Lees verder op stelselpedia')
+    expect(directive.find('.qa-glossary a').text().trim()).toBe('Lees verder op stelselpedia')
   })
 
-  describe('optionally loads the dp-glossary-meta directive', function() {
+  describe('optionally loads the dp-glossary-meta directive', function () {
     let metaData
 
-    beforeEach(function() {
+    beforeEach(function () {
       metaData = {
         id: '123456',
         begin_geldigheid: '2016-03-30T22:00:32.017685Z',
       }
     })
 
-    it("optionally show a button with 'toon metadata' in the header", function() {
+    it("optionally show a button with 'toon metadata' in the header", function () {
       let directive
 
       // BRONDOCUMENT has no meta data
@@ -209,36 +169,24 @@ describe('The dp-glossary-header directive', function() {
 
       // When it's closed
       expect(directive.find('.o-header__button:nth-of-type(2)').length).toBe(1)
-      expect(
-        directive
-          .find('.o-header__button:nth-of-type(2)')
-          .attr('title')
-          .trim(),
-      ).toBe('Informatie (metadata) tonen')
-      expect(
-        directive
-          .find('.o-header__button:nth-of-type(2) .u-sr-only')
-          .text()
-          .trim(),
-      ).toBe('Informatie (metadata) tonen')
+      expect(directive.find('.o-header__button:nth-of-type(2)').attr('title').trim()).toBe(
+        'Informatie (metadata) tonen',
+      )
+      expect(directive.find('.o-header__button:nth-of-type(2) .u-sr-only').text().trim()).toBe(
+        'Informatie (metadata) tonen',
+      )
 
       // When it's opened
       directive.find('.o-header__button:nth-of-type(2)').click()
-      expect(
-        directive
-          .find('.o-header__button:nth-of-type(2)')
-          .attr('title')
-          .trim(),
-      ).toBe('Informatie (metadata) verbergen')
-      expect(
-        directive
-          .find('.o-header__button:nth-of-type(2) .u-sr-only')
-          .text()
-          .trim(),
-      ).toBe('Informatie (metadata) verbergen')
+      expect(directive.find('.o-header__button:nth-of-type(2)').attr('title').trim()).toBe(
+        'Informatie (metadata) verbergen',
+      )
+      expect(directive.find('.o-header__button:nth-of-type(2) .u-sr-only').text().trim()).toBe(
+        'Informatie (metadata) verbergen',
+      )
     })
 
-    it('can open a panel that loads the dp-glossary-meta directive', function() {
+    it('can open a panel that loads the dp-glossary-meta directive', function () {
       const directive = getDirective(null, 'BOUWBLOK', false, metaData, null)
 
       // The panel is hidden by default
@@ -248,24 +196,19 @@ describe('The dp-glossary-header directive', function() {
       directive.find('.o-header__button:nth-of-type(2)').click()
 
       expect(directive.find('.qa-metadata').length).toBe(1)
-      expect(
-        directive
-          .find('.qa-metadata h3')
-          .text()
-          .trim(),
-      ).toBe('Metadata van bouwblok')
+      expect(directive.find('.qa-metadata h3').text().trim()).toBe('Metadata van bouwblok')
       expect(directive.find('.qa-metadata dp-glossary-meta').length).toBe(1)
     })
   })
 
-  describe('optionally activates the dp-wkpb-link directive', function() {
+  describe('optionally activates the dp-wkpb-link directive', function () {
     let brk
 
-    beforeEach(function() {
+    beforeEach(function () {
       brk = {}
     })
 
-    it("optionally includes the dp-wkpb-link in the header when it's a BEPERKING", function() {
+    it("optionally includes the dp-wkpb-link in the header when it's a BEPERKING", function () {
       let directive
 
       // BRONDOCUMENT has no wkpb-uittreksel
@@ -278,18 +221,18 @@ describe('The dp-glossary-header directive', function() {
     })
   })
 
-  describe('the show more stuff buttons', function() {
+  describe('the show more stuff buttons', function () {
     let directive
     const metaData = {
       id: '123456',
       begin_geldigheid: '2016-03-30T22:00:32.017685Z',
     }
 
-    beforeEach(function() {
+    beforeEach(function () {
       directive = getDirective(null, 'BOUWBLOK', false, metaData, null)
     })
 
-    it('can be opened and closed with the button in the header', function() {
+    it('can be opened and closed with the button in the header', function () {
       expect(directive.find('.qa-glossary').length).toBe(0)
 
       // Open uitleg
@@ -309,7 +252,7 @@ describe('The dp-glossary-header directive', function() {
       expect(directive.find('.qa-metadata').length).toBe(0)
     })
 
-    it('can be closed with the button (cross) in the panel', function() {
+    it('can be closed with the button (cross) in the panel', function () {
       expect(directive.find('.qa-glossary').length).toBe(0)
 
       // Open uitleg
@@ -329,7 +272,7 @@ describe('The dp-glossary-header directive', function() {
       expect(directive.find('.qa-metadatat').length).toBe(0)
     })
 
-    it('can open uitleg and metadata at the same time', function() {
+    it('can open uitleg and metadata at the same time', function () {
       expect(directive.find('.qa-glossary').length).toBe(0)
 
       // Open uitleg

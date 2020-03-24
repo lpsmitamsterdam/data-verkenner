@@ -86,7 +86,7 @@ Detail.propTypes = {
   detailFilterSelection: PropTypes.shape({}),
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   isLoading: isDetailLoading(state),
   user: getUser(state),
   endpoint: getDetailEndpoint(state),

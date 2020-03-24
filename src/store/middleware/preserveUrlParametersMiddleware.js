@@ -2,7 +2,7 @@ import paramsRegistry from '../params-registry'
 import { getLocationQuery } from '../redux-first-router/selectors'
 import ParamsRegistry from '../params-registry/paramRegistry'
 
-const preserveUrlParametersMiddleware = () => next => action => {
+const preserveUrlParametersMiddleware = () => (next) => (action) => {
   let nextAction = action
   if (nextAction.meta && (nextAction.meta.preserve || nextAction.meta.additionalParams)) {
     const { additionalParams } = nextAction.meta

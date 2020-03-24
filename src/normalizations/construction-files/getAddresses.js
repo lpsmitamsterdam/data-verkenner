@@ -1,4 +1,4 @@
-export default results =>
+export default (results) =>
   results.adressen.reduce(
     (acc, address) => [
       ...acc,

@@ -7,7 +7,9 @@ import './_map-type.scss'
 
 function hasLayer(activeBaseLayer, baseLayers) {
   return (
-    baseLayers && baseLayers.length > 0 && baseLayers.some(layer => layer.value === activeBaseLayer)
+    baseLayers &&
+    baseLayers.length > 0 &&
+    baseLayers.some((layer) => layer.value === activeBaseLayer)
   )
 }
 

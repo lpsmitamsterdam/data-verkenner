@@ -34,7 +34,7 @@ const RadioFilter: React.FC<FilterProps> = ({
           onChange={onChange}
         />
       </Label>
-      {options.map(option => {
+      {options.map((option) => {
         const controlId = `${type}-${option.id}`
 
         return (

@@ -8,5 +8,5 @@ import { ErrorExtensions } from '../models/graphql'
  * @param errors The errors to check for loading errors.
  */
 export default function getLoadingErrors(errors: GraphQLFormattedError<ErrorExtensions>[]) {
-  return errors.filter(error => error.extensions?.code !== 'UNAUTHORIZED')
+  return errors.filter((error) => error.extensions?.code !== 'UNAUTHORIZED')
 }

@@ -1,4 +1,4 @@
-;(function() {
+;(function () {
   angular.module('dpDetail').factory('dateConverter', dateConverterFactory)
 
   dateConverterFactory.$inject = ['d3']

@@ -12,7 +12,7 @@ import linkAttributesFromAction from '../../../shared/services/link-attributes-f
 import { toDatasetDetail } from '../../../store/redux-first-router/actions'
 import useSlug from '../../utils/useSlug'
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   const isLoading = isDetailLoading(state)
 
   return {

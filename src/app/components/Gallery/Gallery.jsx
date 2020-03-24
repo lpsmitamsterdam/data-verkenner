@@ -74,7 +74,7 @@ const Gallery = ({ title, allThumbnails, id, maxLength, access }) => {
               hasMarginBottom={hasMore}
               collapse
             >
-              {thumbnails.map(file => {
+              {thumbnails.map((file) => {
                 const fileTitle = file.match(/[^/]*$/g)[0]
                 const fileName = file.replace(/\//g, '-') // Replace all forward slashes to create a filename that can be read by the server
 

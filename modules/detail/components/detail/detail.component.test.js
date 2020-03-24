@@ -120,14 +120,14 @@ describe('the dp-detail component', () => {
           parse: angular.noop,
         },
       },
-      function($provide) {
+      function ($provide) {
         $provide.factory('ngIncludeDirective', () => {
           return {}
         })
       },
     )
 
-    angular.mock.inject(function(_$compile_, _$rootScope_, _$q_, _store_, _api_) {
+    angular.mock.inject(function (_$compile_, _$rootScope_, _$q_, _store_, _api_) {
       $compile = _$compile_
       $rootScope = _$rootScope_
       $q = _$q_

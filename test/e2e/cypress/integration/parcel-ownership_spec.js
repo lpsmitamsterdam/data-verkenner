@@ -11,25 +11,17 @@ describe('parcel-ownership (eigendommen) module', () => {
       // go to the homepage
       cy.visit('/')
       // the homepage should be visible
-      cy.get(homepage)
-        .should('exist')
-        .and('be.visible')
+      cy.get(homepage).should('exist').and('be.visible')
       // check if the link is in the dom and visible
-      cy.get('#homepage-address-block')
-        .should('exist')
-        .and('be.visible')
+      cy.get('#homepage-address-block').should('exist').and('be.visible')
       // the data-selection should not exist yet
       cy.get(dataSelection).should('not.exist')
       // click on the link to go to navigate to the page
-      cy.get('.homepage-block__link')
-        .contains('Kadaster-tabel')
-        .click()
+      cy.get('.homepage-block__link').contains('Kadaster-tabel').click()
       // the homepage should not be visible anymore
       cy.get(homepage).should('not.be.visible')
       // the data selection should exist
-      cy.get(dataSelection)
-        .should('exist')
-        .and('be.visible')
+      cy.get(dataSelection).should('exist').and('be.visible')
       // the title should contain Kadastrale objecten met zakelijk rechthebbenden
       cy.get(HEADINGS.dataSelectionHeading)
         .contains('Kadastrale objecten met zakelijk rechthebbenden')
@@ -43,25 +35,19 @@ describe('parcel-ownership (eigendommen) module', () => {
       // go to the homepage
       cy.visit('/')
       // click on the link to go navigate to the page
-      cy.get('.homepage-block__link')
-        .contains('Kadaster-tabel')
-        .click()
+      cy.get('.homepage-block__link').contains('Kadaster-tabel').click()
     })
 
     describe('user should not be able to view the kadaster data', () => {
       // TODO reactivate when feature switch is removed
       it('should show a notification that the user must authenticate', () => {
         // a warning notification should be shown that the user must authenticate
-        cy.get(notification)
-          .should('exist')
-          .and('be.visible')
+        cy.get(notification).should('exist').and('be.visible')
       })
 
       it('should not show the table with results', () => {
         // the table with results should not exist
-        cy.get(DATA_SELECTION_TABLE.table)
-          .should('not.exist')
-          .and('not.be.visible')
+        cy.get(DATA_SELECTION_TABLE.table).should('not.exist').and('not.be.visible')
       })
     })
   })
@@ -90,9 +76,7 @@ describe('parcel-ownership (eigendommen) module', () => {
           // go to the homepage
           cy.visit('/')
           // click on the link to go to the eigendommen
-          cy.get('.homepage-block__link')
-            .contains('Kadaster-tabel')
-            .click()
+          cy.get('.homepage-block__link').contains('Kadaster-tabel').click()
 
           cy.wait('@getDataselectieBrk')
           // cy.scrollTo('top');
@@ -100,16 +84,12 @@ describe('parcel-ownership (eigendommen) module', () => {
 
         it('should not show a notification', () => {
           // a warning notification should not exist
-          cy.get(notification)
-            .should('not.exist')
-            .and('not.be.visible')
+          cy.get(notification).should('not.exist').and('not.be.visible')
         })
 
         it('should show the table with results', () => {
           // the table with results should exist
-          cy.get(DATA_SELECTION_TABLE.table)
-            .should('exist')
-            .and('be.visible')
+          cy.get(DATA_SELECTION_TABLE.table).should('exist').and('be.visible')
         })
       })
     })
@@ -126,9 +106,7 @@ describe('parcel-ownership (eigendommen) module', () => {
         cy.get(`${DATA_SELECTION_TABLE.body} ${DATA_SELECTION_TABLE.row}:first-child`).click()
 
         cy.wait('@getBrkObjectExpand')
-        cy.get('.qa-detail')
-          .should('exist')
-          .and('be.visible')
+        cy.get('.qa-detail').should('exist').and('be.visible')
       })
     })
 
@@ -146,7 +124,7 @@ describe('parcel-ownership (eigendommen) module', () => {
         cy.get('.qa-available-filters')
           .find('.c-data-selection-available-filters__category')
           .first()
-          .then(group => {
+          .then((group) => {
             // get the innerText of the nested h2
             const category = group[0].children[0].innerText
             // get the innerText of the first nested li
@@ -204,9 +182,7 @@ describe('parcel-ownership (eigendommen) module', () => {
         cy.wait('@getBrkObject')
 
         // the cursor should be rendered inside the leaflet map
-        cy.get('.leaflet-interactive')
-          .should('exist')
-          .and('be.visible')
+        cy.get('.leaflet-interactive').should('exist').and('be.visible')
       })
     })
   })

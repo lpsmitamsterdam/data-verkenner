@@ -1,6 +1,6 @@
 /* globals BBGA */
 import * as d3 from 'd3'
-;(function() {
+;(function () {
   angular.module('dpDetail').config(configuration)
 
   configuration.$inject = ['$provide']

@@ -30,7 +30,7 @@ const IIIFThumbnail = ({ src, title }: Thumbnail) => {
           authorization: `Bearer ${accessToken || ''}`,
         },
       })
-        .then(response => {
+        .then((response) => {
           if (!response.ok) {
             setError(true)
             return null
@@ -38,7 +38,7 @@ const IIIFThumbnail = ({ src, title }: Thumbnail) => {
 
           return response.blob()
         })
-        .then(images => {
+        .then((images) => {
           setLoading(false)
 
           // Then create a local URL for that image and pass it to the local state

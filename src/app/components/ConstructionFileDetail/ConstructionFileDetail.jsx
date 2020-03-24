@@ -89,7 +89,7 @@ const ConstructionFileDetail = ({ results }) => {
             Adressen
           </Heading>
           <ul className="o-list">
-            {getAddresses(results).map(address => (
+            {getAddresses(results).map((address) => (
               <li key={address.id}>
                 <a
                   {...linkAttributesFromAction(

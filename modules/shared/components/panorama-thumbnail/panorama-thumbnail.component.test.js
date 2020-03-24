@@ -2,13 +2,13 @@ import { routing } from '../../../../src/app/routes'
 import { VIEW_MODE } from '../../../../src/shared/ducks/ui/ui'
 import PARAMETERS from '../../../../src/store/parameters'
 
-describe('The dp-panorama-thumbnail component', function() {
+describe('The dp-panorama-thumbnail component', function () {
   let $compile
   let $rootScope
   let parentScope
   let store
 
-  beforeEach(function() {
+  beforeEach(function () {
     angular.mock.module('dpShared', {
       sharedConfig: {
         RADIUS: 50,
@@ -18,7 +18,7 @@ describe('The dp-panorama-thumbnail component', function() {
       },
     })
 
-    angular.mock.inject(function(_$compile_, _$rootScope_, _store_) {
+    angular.mock.inject(function (_$compile_, _$rootScope_, _store_) {
       $compile = _$compile_
       $rootScope = _$rootScope_
       store = _store_
@@ -105,7 +105,7 @@ describe('The dp-panorama-thumbnail component', function() {
     })
   })
 
-  it('when it cannot find a thumbnail it shows a message', function() {
+  it('when it cannot find a thumbnail it shows a message', function () {
     const component = getComponent(undefined, false)
     const scope = component.isolateScope()
 

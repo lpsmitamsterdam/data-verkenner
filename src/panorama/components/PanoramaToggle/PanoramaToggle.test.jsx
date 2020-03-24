@@ -30,18 +30,12 @@ describe('PanoramaToggle', () => {
   })
 
   it('should handle onClick event on pano buttons', () => {
-    component
-      .find('ContextMenuItem')
-      .at(1)
-      .simulate('click')
+    component.find('ContextMenuItem').at(1).simulate('click')
     expect(setPanoramaTags).toHaveBeenCalledWith(PANO_LABELS[1].tags)
   })
 
   it('should handle onClick event on external pano button', () => {
-    component
-      .find('ContextMenuItem')
-      .at(PANO_LABELS.length)
-      .simulate('click')
+    component.find('ContextMenuItem').at(PANO_LABELS.length).simulate('click')
     expect(getStreetViewUrl).toHaveBeenCalledWith(props.location, props.heading)
     expect(fetchPanoramaRequestExternal).toHaveBeenCalled()
   })

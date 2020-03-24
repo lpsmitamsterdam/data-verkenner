@@ -26,17 +26,19 @@ describe('redirects', () => {
   const trackMock = jest.spyOn(matomoInstance, 'trackEvent')
 
   it('should redirect matched routes', () => {
-    REDIRECTS.forEach(route => {
-      expectWithNewRoute(`https://www.someurl.com${route.from}`, window.location.replace, expect =>
-        expect.toHaveBeenCalledWith(route.to),
+    REDIRECTS.forEach((route) => {
+      expectWithNewRoute(
+        `https://www.someurl.com${route.from}`,
+        window.location.replace,
+        (expect) => expect.toHaveBeenCalledWith(route.to),
       )
     })
   })
 
   it('should redirect matched routes (without a trailing slash)', () => {
-    REDIRECTS.forEach(route => {
+    REDIRECTS.forEach((route) => {
       const from = route.from.endsWith('/') ? route.from.slice(0, -1) : route.from
-      expectWithNewRoute(`https://www.someurl.com${from}`, window.location.replace, expect =>
+      expectWithNewRoute(`https://www.someurl.com${from}`, window.location.replace, (expect) =>
         expect.toHaveBeenCalledWith(route.to),
       )
     })
@@ -64,7 +66,7 @@ describe('redirects', () => {
   })
 
   it('should redirect matched routes', () => {
-    REDIRECTS.forEach(route => {
+    REDIRECTS.forEach((route) => {
       if (route.from.startsWith('/themakaart')) {
         resolveRedirects()
 

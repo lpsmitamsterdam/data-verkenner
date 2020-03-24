@@ -35,7 +35,7 @@ const mapOptions = MAP_CONFIG.MAP_OPTIONS
 const scaleControlOptions = MAP_CONFIG.SCALE_OPTIONS
 const zoomControlOptions = MAP_CONFIG.ZOOM_OPTIONS
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   baseLayer: {
     urlTemplate: getUrlTemplate(state),
     baseLayerOptions,
@@ -53,7 +53,7 @@ const mapStateToProps = state => ({
   isLoading: isMapLoading(state),
 })
 
-const mapDispatchToProps = dispatch =>
+const mapDispatchToProps = (dispatch) =>
   bindActionCreators(
     {
       onUpdateZoom: updateZoom,
@@ -71,7 +71,7 @@ const mapDispatchToProps = dispatch =>
 class LeafletContainer extends React.Component {
   constructor(props) {
     super(props)
-    this.setMapLeaflet = element => {
+    this.setMapLeaflet = (element) => {
       this.MapLeaflet = element
     }
 

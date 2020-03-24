@@ -18,12 +18,12 @@ export const LABELS = {
  * @param {Array} results
  * @returns {*[]}
  */
-export const orderAutoSuggestResults = results => {
+export const orderAutoSuggestResults = (results) => {
   const order = Object.values(LABELS)
 
-  const dataPart = results.filter(category => !order.includes(category.label))
+  const dataPart = results.filter((category) => !order.includes(category.label))
   const orderedPart = order.reduce((acc, label) => {
-    const res = results.filter(category => category.label === label)
+    const res = results.filter((category) => category.label === label)
     if (res) {
       return [...acc, ...res]
     }
@@ -38,9 +38,9 @@ function formatData(categories) {
 
   let indexInTotal = -1
 
-  const indexedCategories = sortedCategories.map(category => ({
+  const indexedCategories = sortedCategories.map((category) => ({
     ...category,
-    content: category.content.map(suggestion => {
+    content: category.content.map((suggestion) => {
       indexInTotal += 1
       return {
         category: category.label,
@@ -66,8 +66,8 @@ function search(query) {
 
   if (uri) {
     return fetch(uri, { headers: getAuthHeaders() })
-      .then(response => response.json())
-      .then(response => formatData(response))
+      .then((response) => response.json())
+      .then((response) => formatData(response))
   }
   return {}
 }

@@ -1,5 +1,5 @@
 import isDefined from '../../../../src/shared/services/is-defined'
-;(function() {
+;(function () {
   angular.module('dpShared').component('dpLink', {
     template: require('./link.html'),
     transclude: true,
@@ -21,14 +21,14 @@ import isDefined from '../../../../src/shared/services/is-defined'
 
   function DpLinkController($scope, store, $location) {
     const vm = this
-    this.$onInit = function() {
+    this.$onInit = function () {
       vm.activeUrl = $location.url()
 
       vm.className = vm.className || 'o-btn o-btn--link'
       vm.inline = vm.inline || false
       vm.tabIndex = vm.tabIndex || '0'
 
-      vm.dispatch = function(e) {
+      vm.dispatch = function (e) {
         e.preventDefault()
         if (vm.action) {
           store.dispatch(vm.action)

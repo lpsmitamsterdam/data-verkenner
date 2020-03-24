@@ -107,7 +107,7 @@ describe('DataSelection api', () => {
     }
 
     dataSelectionConfig.default = config
-    api.getByUrl = jest.fn(uri => {
+    api.getByUrl = jest.fn((uri) => {
       if (uri === `${process.env.API_ROOT}zwembaden/markers/`) {
         return Promise.resolve(mockedApiMarkersResponse)
       }

@@ -33,7 +33,7 @@ const DatasetSearchResults = ({ query, label, results, errors, isOverviewPage })
   // Check if user has the correct scopes to add or edit datasets
   const canEdit =
     getState().user && isOverviewPage
-      ? getState().user.scopes.some(scope => dcatdScopes.includes(scope))
+      ? getState().user.scopes.some((scope) => dcatdScopes.includes(scope))
       : false
 
   const matchingErrors = getErrorsForPath(errors, ['datasetSearch'])

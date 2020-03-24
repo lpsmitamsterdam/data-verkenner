@@ -107,7 +107,7 @@ ImageViewer.propTypes = {
   contextMenu: PropTypes.node,
 }
 
-const mapDispatchToProps = dispatch =>
+const mapDispatchToProps = (dispatch) =>
   bindActionCreators(
     {
       resetFileName: () => setCurrentFile(''),

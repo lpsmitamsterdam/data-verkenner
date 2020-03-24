@@ -1,5 +1,5 @@
 import isDefined from '../../../../src/shared/services/is-defined'
-;(function() {
+;(function () {
   angular.module('dpShared').factory('InstanceStorage', InstanceStorageFactory)
 
   function InstanceStorageFactory() {
