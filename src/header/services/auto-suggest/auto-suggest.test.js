@@ -75,35 +75,35 @@ describe('The auto-suggest service', () => {
 
   describe('sortAutoSuggestResults', () => {
     it('should sort the autoresults when all labels are returned', () => {
-      const results = SORT_ORDER.map(key => ({ label: key })).sort(
+      const results = SORT_ORDER.map((key) => ({ label: key })).sort(
         (a, b) => b.label.localeCompare(a.label), // sort alphabetically to scrumble results
       )
 
-      const expected = SORT_ORDER.map(key => ({ label: key }))
+      const expected = SORT_ORDER.map((key) => ({ label: key }))
 
       expect(orderAutoSuggestResults(results)).toEqual(expected)
     })
 
     it('should sort the autoresults when the first four labels are returned', () => {
-      const results = SORT_ORDER.map(key => ({ label: key }))
+      const results = SORT_ORDER.map((key) => ({ label: key }))
         .slice(0, 4)
         .sort(
           (a, b) => b.label.localeCompare(a.label), // sort alphabetically to scrumble results
         )
 
-      const expected = SORT_ORDER.map(key => ({ label: key })).slice(0, 4)
+      const expected = SORT_ORDER.map((key) => ({ label: key })).slice(0, 4)
 
       expect(orderAutoSuggestResults(results)).toEqual(expected)
     })
 
     it('should sort the autoresults when the last four labels are returned', () => {
-      const results = SORT_ORDER.map(key => ({ label: key }))
+      const results = SORT_ORDER.map((key) => ({ label: key }))
         .slice(4)
         .sort(
           (a, b) => b.label.localeCompare(a.label), // sort alphabetically to scrumble results
         )
 
-      const expected = SORT_ORDER.map(key => ({ label: key })).slice(4)
+      const expected = SORT_ORDER.map((key) => ({ label: key })).slice(4)
 
       expect(orderAutoSuggestResults(results)).toEqual(expected)
     })
