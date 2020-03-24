@@ -48,6 +48,7 @@ import {
   isPrintMode,
   isMapLinkVisible,
   UI,
+  getVariant,
 } from '../shared/ducks/ui/ui'
 import {
   normalizeCoordinate,
@@ -149,6 +150,12 @@ export default paramsRegistry
     routes.add(routesWithMapActive, UI, 'viewMode', {
       selector: getViewMode,
       defaultValue: UIInitialState.viewMode,
+    })
+  })
+  .addParameter(PARAMETERS.VARIANT, (routes) => {
+    routes.add(routesWithMapActive, UI, 'variant', {
+      selector: getVariant,
+      defaultValue: UIInitialState.variant,
     })
   })
   .addParameter(PARAMETERS.CATEGORY, (routes) => {

@@ -11,7 +11,7 @@ exports[`MapPanel should render MapLegend if store contains active map layers 1`
         "
 >
   <div
-    className="map-panel__heading"
+    className="map-panel__heading false"
   >
     <button
       className="map-panel__toggle"
@@ -42,11 +42,7 @@ exports[`MapPanel should render MapLegend if store contains active map layers 1`
     className="scroll-wrapper"
   >
     <MapLegend
-      activeMapLayers={
-        Array [
-          Object {},
-        ]
-      }
+      activeMapLayers={Array []}
       onLayerToggle={[Function]}
       onLayerVisibilityToggle={[Function]}
       overlays={
@@ -91,7 +87,7 @@ exports[`MapPanel should render MapType and MapLayers 1`] = `
         "
 >
   <div
-    className="map-panel__heading"
+    className="map-panel__heading false"
   >
     <button
       className="map-panel__toggle"

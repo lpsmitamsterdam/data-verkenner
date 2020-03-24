@@ -1,10 +1,24 @@
-import React from 'react'
+import React, { useState } from 'react'
+import styled from '@datapunt/asc-core'
+import { Heading, themeSpacing } from '@datapunt/asc-ui'
 import PropTypes from 'prop-types'
+import classNames from 'classnames'
 import { ChevronUp } from '@datapunt/asc-assets'
-import MapLayers from '../../components/layers/MapLayers'
 import MapLegend from '../../components/legend/MapLegend'
 import MapPanelHandle from '../../components/panel-handle/MapPanelHandle'
 import MapType from '../../components/type/MapType'
+import MapLayers from '../../components/layers/MapLayers'
+import MapLayer from '../../components/layers/MapLayer'
+import MapLegendVariantOne from '../../components/legend/MapLegendVariantOne'
+
+const StyledHeading = styled(Heading)`
+  padding: 0 ${themeSpacing(3)};
+`
+
+export const VARIANTS = {
+  one: 'map-panel-1',
+  two: 'map-panel-2',
+}
 
 const MapPanel = ({
   isMapPanelVisible,
@@ -21,18 +35,38 @@ const MapPanel = ({
   user,
   printMode,
   zoomLevel,
+  variant,
   isMapPanelHandleVisible: mapPanelHandleVisisble,
 }) => {
   const scrollWrapperRef = React.useRef(null)
+  const [updateFlash, setUpdateFlash] = useState()
+  let timeoutId
 
-  React.useEffect(() => {
-    if (isMapPanelVisible && activeMapLayers.length) {
-      if (scrollWrapperRef && scrollWrapperRef.current) {
-        /* istanbul ignore next */
-        scrollWrapperRef.current.scrollTop = 0
-      }
+  const handleOnLayerToggle = (...options) => {
+    if (timeoutId) {
+      clearTimeout(timeoutId)
     }
-  }, [isMapPanelVisible, activeMapLayers])
+    setUpdateFlash(true)
+    onLayerToggle(...options)
+    timeoutId = setTimeout(() => {
+      setUpdateFlash(false)
+    }, 1)
+  }
+
+  const headingClasses = classNames({
+    flash: updateFlash,
+    'flash--hidden': !updateFlash,
+  })
+
+  const sordedActiveLayers = []
+  panelLayers.forEach(({ mapLayers }) =>
+    mapLayers.forEach(({ id }) => {
+      const layer = activeMapLayers.find(({ id: activeId }) => activeId === id)
+      if (layer) {
+        sordedActiveLayers.push(layer)
+      }
+    }),
+  )
 
   return (
     <section
@@ -48,7 +82,7 @@ const MapPanel = ({
           map-panel--has${activeMapLayers.length > 0 ? '' : '-no'}-active-layers
         `}
     >
-      <div className="map-panel__heading">
+      <div className={`map-panel__heading ${typeof updateFlash !== 'undefined' && headingClasses}`}>
         <button
           type="button"
           className="map-panel__toggle"
@@ -70,9 +104,9 @@ const MapPanel = ({
         </button>
       </div>
       <div className="scroll-wrapper" ref={scrollWrapperRef}>
-        {activeMapLayers.length > 0 && (
+        {variant !== VARIANTS.one && activeMapLayers.length > 0 && (
           <MapLegend
-            activeMapLayers={activeMapLayers}
+            activeMapLayers={variant !== VARIANTS.two ? sordedActiveLayers : activeMapLayers}
             onLayerToggle={onLayerToggle}
             onLayerVisibilityToggle={onLayerVisibilityToggle}
             overlays={overlays}
@@ -90,11 +124,42 @@ const MapPanel = ({
             baseLayers={mapBaseLayers}
             onBaseLayerToggle={onBaseLayerToggle}
           />
-          <MapLayers
-            activeMapLayers={activeMapLayers}
-            panelLayers={panelLayers}
-            onLayerToggle={onLayerToggle}
-          />
+          {variant === VARIANTS.one &&
+            panelLayers.map(({ id, mapLayers, title }) => (
+              <React.Fragment key={id}>
+                <StyledHeading forwardedAs="h4">{title}</StyledHeading>
+                <MapLegendVariantOne
+                  activeMapLayers={mapLayers}
+                  onLayerToggle={onLayerToggle}
+                  onLayerVisibilityToggle={onLayerVisibilityToggle}
+                  overlays={overlays}
+                  user={user}
+                  zoomLevel={zoomLevel}
+                  printMode={printMode}
+                />
+              </React.Fragment>
+            ))}
+          {variant !== VARIANTS.one && variant !== VARIANTS.two && (
+            <MapLayers
+              activeMapLayers={activeMapLayers}
+              panelLayers={panelLayers}
+              onLayerToggle={onLayerToggle}
+            />
+          )}
+          {variant === VARIANTS.two && (
+            <div className="map-layers">
+              <h3 className="u-sr-only">Beschikbare kaartlagen</h3>
+              <ul>
+                {panelLayers.map(({ id, title, mapLayers }) => (
+                  <MapLayer
+                    key={id}
+                    {...{ id, title, mapLayers, activeMapLayers, panelLayers }}
+                    onLayerToggle={handleOnLayerToggle}
+                  />
+                ))}
+              </ul>
+            </div>
+          )}
         </MapPanelHandle>
       </div>
     </section>

@@ -48,6 +48,41 @@
       height: $handle-height;
       width: $handle-height;
     }
+
+    &:after {
+      content: '';
+      display: block;
+      width: 70%;
+      border-radius: 100%;
+      background-color: $primary-contrast-blue;
+      box-shadow: 0 0 8px 4px $primary-contrast-blue;
+      opacity: 0;
+      margin: auto;
+      z-index: 1;
+      position: relative;
+    }
+
+    &.flash:after {
+      opacity: 1;
+    }
+
+    &.flash--hidden:after {
+      animation: hide-flash 0.7s;
+    }
+
+    @keyframes hide-flash {
+      0% {
+        opacity: 1;
+      }
+
+      40% {
+        opacity: 1;
+      }
+
+      100% {
+        opacity: 0;
+      }
+    }
   }
 
   &__heading-title {

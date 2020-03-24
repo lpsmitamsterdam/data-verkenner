@@ -19,6 +19,7 @@ export const SHOW_PRINT = `${REDUCER_KEY}/SHOW_PRINT`
 export const TOGGLE_MAP_PANEL_HANDLE = `${REDUCER_KEY}/TOGGLE_MAP_PANEL_HANDLE`
 export const SET_VIEW_MODE = `${REDUCER_KEY}/SET_VIEW_MODE`
 export const SHARE_PAGE = `${REDUCER_KEY}/SHARE_PAGE`
+export const SET_VARIANT = `${REDUCER_KEY}/SET_VARIANT`
 
 export const VIEW_MODE = {
   MAP: 'kaart',
@@ -41,6 +42,7 @@ export const initialState = {
   isPrintMode: false,
   viewMode: VIEW_MODE.SPLIT,
   isMapLinkVisible: true,
+  variant: null,
 }
 
 export default function UiReducer(state = initialState, action) {
@@ -79,6 +81,12 @@ export default function UiReducer(state = initialState, action) {
       return {
         ...enrichedState,
         viewMode: action.payload,
+      }
+
+    case SET_VARIANT:
+      return {
+        ...enrichedState,
+        variant: action.payload,
       }
 
     case TOGGLE_MAP_PANEL_HANDLE:
@@ -136,6 +144,7 @@ export const isEmbedded = createSelector(getUIState, (ui) => ui.isEmbed)
 export const isEmbedPreview = createSelector(getUIState, (ui) => ui.isEmbedPreview)
 export const isPrintMode = createSelector(getUIState, (ui) => ui.isPrintMode)
 export const getViewMode = createSelector(getUIState, (ui) => ui.viewMode)
+export const getVariant = createSelector(getUIState, (ui) => ui.variant)
 export const isPrintOrEmbedMode = createSelector(
   isEmbedded,
   isPrintMode,

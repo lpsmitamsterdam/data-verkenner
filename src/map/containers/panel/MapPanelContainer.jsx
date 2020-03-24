@@ -4,6 +4,7 @@ import { bindActionCreators } from 'redux'
 import { getPanelLayers, selectActivePanelLayers } from '../../ducks/panel-layers/map-panel-layers'
 import { getBaseLayers } from '../../ducks/base-layers/map-base-layers'
 import {
+  getVariant,
   isMapPanelHandleVisible,
   isPrintMode,
   toggleMapPanelHandle,
@@ -32,6 +33,7 @@ const mapStateToProps = (state) => ({
   overlays: getMapOverlays(state),
   zoomLevel: getMapZoom(state),
   user: getUser(state),
+  variant: getVariant(state),
   printMode: isPrintMode(state),
   isMapPanelVisible: isMapPanelActive(state),
 })
