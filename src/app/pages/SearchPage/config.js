@@ -34,13 +34,56 @@ export const TYPES = {
   DATASET: 'dataset',
 }
 
-export const QUERY_TYPES = {
-  [routing.specialSearch.page]: 'specialSearch',
-  [routing.dataSearch.page]: 'dataSearch',
-  [routing.publicationSearch.page]: 'publicationSearch',
-  [routing.datasetSearch.page]: 'datasetSearch',
-  [routing.articleSearch.page]: 'articleSearch',
-  [routing.collectionSearch.page]: 'collectionSearch',
+// This object is used to define the sort order of the search page
+const SEARCH_TYPES_CONFIG = {
+  [routing.collectionSearch.page]: {
+    resolver: 'collectionSearch',
+    query: collectionSearchQuery,
+    to: toCollectionSearch,
+    label: routing.collectionSearch.title,
+    type: CmsType.Collection,
+    component: EditorialResults,
+  },
+  [routing.specialSearch.page]: {
+    resolver: 'specialSearch',
+    query: specialSearchQuery,
+    to: toSpecialSearch,
+    label: routing.specialSearch.title,
+    type: CmsType.Special,
+    component: EditorialResults,
+  },
+  [routing.dataSearch.page]: {
+    resolver: 'dataSearch',
+    query: dataSearchQuery,
+    to: toDataSearch,
+    label: routing.dataSearch.title,
+    type: TYPES.DATA,
+    component: DataSearchResults,
+  },
+  [routing.datasetSearch.page]: {
+    resolver: 'datasetSearch',
+    query: datasetSearchQuery,
+    to: toDatasetSearch,
+    label: routing.datasetSearch.title,
+    type: TYPES.DATASET,
+    component: DatasetSearchResults,
+  },
+  [routing.publicationSearch.page]: {
+    resolver: 'publicationSearch',
+    query: publicationSearchQuery,
+    to: toPublicationSearch,
+    label: routing.publicationSearch.title,
+    type: CmsType.Publication,
+    component: EditorialResults,
+  },
+  [routing.articleSearch.page]: {
+    resolver: 'articleSearch',
+    query: articleSearchQuery,
+    to: toArticleSearch,
+    label: routing.articleSearch.title,
+    type: CmsType.Article,
+    component: EditorialResults,
+  },
 }
 
 export const EDITORIAL_SEARCH_PAGES = [
@@ -52,58 +95,12 @@ export const EDITORIAL_SEARCH_PAGES = [
 
 export default {
   [routing.search.page]: {
-    resolver: Object.values(QUERY_TYPES),
+    // The all search results page calls the resolver for each search type
+    resolver: Object.values(SEARCH_TYPES_CONFIG).map(({ resolver }) => resolver),
     to: toSearch,
     query: searchQuery,
     label: routing.search.title,
     type: TYPES.SEARCH,
   },
-  [routing.dataSearch.page]: {
-    resolver: QUERY_TYPES[routing.dataSearch.page],
-    query: dataSearchQuery,
-    to: toDataSearch,
-    label: routing.dataSearch.title,
-    type: TYPES.DATA,
-    component: DataSearchResults,
-  },
-  [routing.publicationSearch.page]: {
-    resolver: QUERY_TYPES[routing.publicationSearch.page],
-    query: publicationSearchQuery,
-    to: toPublicationSearch,
-    label: routing.publicationSearch.title,
-    type: CmsType.Publication,
-    component: EditorialResults,
-  },
-  [routing.datasetSearch.page]: {
-    resolver: QUERY_TYPES[routing.datasetSearch.page],
-    query: datasetSearchQuery,
-    to: toDatasetSearch,
-    label: routing.datasetSearch.title,
-    type: TYPES.DATASET,
-    component: DatasetSearchResults,
-  },
-  [routing.articleSearch.page]: {
-    resolver: QUERY_TYPES[routing.articleSearch.page],
-    query: articleSearchQuery,
-    to: toArticleSearch,
-    label: routing.articleSearch.title,
-    type: CmsType.Article,
-    component: EditorialResults,
-  },
-  [routing.specialSearch.page]: {
-    resolver: QUERY_TYPES[routing.specialSearch.page],
-    query: specialSearchQuery,
-    to: toSpecialSearch,
-    label: routing.specialSearch.title,
-    type: CmsType.Special,
-    component: EditorialResults,
-  },
-  [routing.collectionSearch.page]: {
-    resolver: QUERY_TYPES[routing.collectionSearch.page],
-    query: collectionSearchQuery,
-    to: toCollectionSearch,
-    label: routing.collectionSearch.title,
-    type: CmsType.Collection,
-    component: EditorialResults,
-  },
+  ...SEARCH_TYPES_CONFIG,
 }
