@@ -8,7 +8,7 @@ import { toggleEmbedButtonAction } from '../../ducks/map/actions'
 const MapEmbedButton = ({ toggleEmbedButton }) => (
   <button
     type="button"
-    onClick={e => {
+    onClick={(e) => {
       e.preventDefault()
       toggleEmbedButton()
       setTimeout(() => window.open(getEmbedButtonLink(), '_blank'), 300)
@@ -22,7 +22,7 @@ const MapEmbedButton = ({ toggleEmbedButton }) => (
   </button>
 )
 
-const mapDispatchToProps = dispatch =>
+const mapDispatchToProps = (dispatch) =>
   bindActionCreators(
     {
       toggleEmbedButton: toggleEmbedButtonAction,

@@ -93,7 +93,7 @@ describe('The adressen nummeraanduiding resource', () => {
       }),
     )
 
-    const promise = fetchByLigplaatsId('abc123').then(response => {
+    const promise = fetchByLigplaatsId('abc123').then((response) => {
       expect(response).toEqual([
         {
           _display: 'Address display name 1',
@@ -133,7 +133,7 @@ describe('The adressen nummeraanduiding resource', () => {
       }),
     )
 
-    const promise = fetchHoofdadresByLigplaatsId('abc123').then(response => {
+    const promise = fetchHoofdadresByLigplaatsId('abc123').then((response) => {
       expect(response).toEqual({
         _display: 'Address display name 2',
         landelijk_id: '456',
@@ -162,7 +162,7 @@ describe('The adressen nummeraanduiding resource', () => {
       }),
     )
 
-    const promise = fetchHoofdadresByLigplaatsId('abc123').then(response => {
+    const promise = fetchHoofdadresByLigplaatsId('abc123').then((response) => {
       expect(response).not.toBeDefined()
     })
 
@@ -186,7 +186,7 @@ describe('The adressen nummeraanduiding resource', () => {
       }),
     )
 
-    const promise = fetchByStandplaatsId('abc123').then(response => {
+    const promise = fetchByStandplaatsId('abc123').then((response) => {
       expect(response).toEqual([
         {
           _display: 'Address display name 1',
@@ -226,7 +226,7 @@ describe('The adressen nummeraanduiding resource', () => {
       }),
     )
 
-    const promise = fetchHoofdadresByStandplaatsId('abc123').then(response => {
+    const promise = fetchHoofdadresByStandplaatsId('abc123').then((response) => {
       expect(response).toEqual({
         _display: 'Address display name 2',
         landelijk_id: '456',
@@ -255,7 +255,7 @@ describe('The adressen nummeraanduiding resource', () => {
       }),
     )
 
-    const promise = fetchHoofdadresByStandplaatsId('abc123').then(response => {
+    const promise = fetchHoofdadresByStandplaatsId('abc123').then((response) => {
       expect(response).not.toBeDefined()
     })
 

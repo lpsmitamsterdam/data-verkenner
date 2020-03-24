@@ -1,16 +1,16 @@
-describe('The dp-parent-relations directive', function() {
+describe('The dp-parent-relations directive', function () {
   let $compile
   let $rootScope
   let mockedContent
 
-  beforeEach(function() {
-    angular.mock.module('dpDetail', function($provide) {
-      $provide.factory('dpLinkDirective', function() {
+  beforeEach(function () {
+    angular.mock.module('dpDetail', function ($provide) {
+      $provide.factory('dpLinkDirective', function () {
         return {}
       })
     })
 
-    angular.mock.inject(function(_$compile_, _$rootScope_) {
+    angular.mock.inject(function (_$compile_, _$rootScope_) {
       $compile = _$compile_
       $rootScope = _$rootScope_
     })
@@ -80,7 +80,7 @@ describe('The dp-parent-relations directive', function() {
     return directive
   }
 
-  it('creates a list of parent entities', function() {
+  it('creates a list of parent entities', function () {
     const content = angular.copy(mockedContent)
 
     const directive = getDirective(content)
@@ -89,86 +89,26 @@ describe('The dp-parent-relations directive', function() {
     expect(directive.find('dt').length).toBe(6)
     expect(directive.find('dd').length).toBe(6)
 
-    expect(
-      directive
-        .find('dt:nth-of-type(1)')
-        .text()
-        .trim(),
-    ).toBe('Stadsdeel')
-    expect(
-      directive
-        .find('dd:nth-of-type(1)')
-        .text()
-        .trim(),
-    ).toBe('Centrum')
+    expect(directive.find('dt:nth-of-type(1)').text().trim()).toBe('Stadsdeel')
+    expect(directive.find('dd:nth-of-type(1)').text().trim()).toBe('Centrum')
 
-    expect(
-      directive
-        .find('dt:nth-of-type(2)')
-        .text()
-        .trim(),
-    ).toBe('Wijk')
-    expect(
-      directive
-        .find('dd:nth-of-type(2)')
-        .text()
-        .trim(),
-    ).toBe('Burgwallen')
+    expect(directive.find('dt:nth-of-type(2)').text().trim()).toBe('Wijk')
+    expect(directive.find('dd:nth-of-type(2)').text().trim()).toBe('Burgwallen')
 
-    expect(
-      directive
-        .find('dt:nth-of-type(3)')
-        .text()
-        .trim(),
-    ).toBe('Buurt')
-    expect(
-      directive
-        .find('dd:nth-of-type(3)')
-        .text()
-        .trim(),
-    ).toBe('Oude Kerk')
+    expect(directive.find('dt:nth-of-type(3)').text().trim()).toBe('Buurt')
+    expect(directive.find('dd:nth-of-type(3)').text().trim()).toBe('Oude Kerk')
 
-    expect(
-      directive
-        .find('dt:nth-of-type(4)')
-        .text()
-        .trim(),
-    ).toBe('Bouwblok')
-    expect(
-      directive
-        .find('dd:nth-of-type(4)')
-        .text()
-        .trim(),
-    ).toBe('YA77')
+    expect(directive.find('dt:nth-of-type(4)').text().trim()).toBe('Bouwblok')
+    expect(directive.find('dd:nth-of-type(4)').text().trim()).toBe('YA77')
 
-    expect(
-      directive
-        .find('dt:nth-of-type(5)')
-        .text()
-        .trim(),
-    ).toBe('Gebiedsgericht werken')
-    expect(
-      directive
-        .find('dd:nth-of-type(5)')
-        .text()
-        .trim(),
-    ).toBe('Centrum-West')
+    expect(directive.find('dt:nth-of-type(5)').text().trim()).toBe('Gebiedsgericht werken')
+    expect(directive.find('dd:nth-of-type(5)').text().trim()).toBe('Centrum-West')
 
-    expect(
-      directive
-        .find('dt:nth-of-type(6)')
-        .text()
-        .trim(),
-    ).toBe('Grootstedelijk gebied')
-    expect(
-      directive
-        .find('dd:nth-of-type(6)')
-        .text()
-        .trim(),
-    ).toBe('Noordzuidlijn')
+    expect(directive.find('dt:nth-of-type(6)').text().trim()).toBe('Grootstedelijk gebied')
+    expect(directive.find('dd:nth-of-type(6)').text().trim()).toBe('Noordzuidlijn')
   })
 
-  it("doesn't show missing relations", function() {
+  it("doesn't show missing relations", function () {
     const content = angular.copy(mockedContent)
 
     delete content.grootstedelijkgebied
@@ -179,7 +119,7 @@ describe('The dp-parent-relations directive', function() {
     expect(directive.find('dd').length).toBe(5)
   })
 
-  it('supports API data with and without prefix underscores', function() {
+  it('supports API data with and without prefix underscores', function () {
     const content = angular.copy(mockedContent)
     const data = angular.copy(content.grootstedelijkgebied)
 
@@ -191,17 +131,7 @@ describe('The dp-parent-relations directive', function() {
     expect(directive.find('dt').length).toBe(6)
     expect(directive.find('dd').length).toBe(6)
 
-    expect(
-      directive
-        .find('dt:nth-of-type(6)')
-        .text()
-        .trim(),
-    ).toBe('Grootstedelijk gebied')
-    expect(
-      directive
-        .find('dd:nth-of-type(6)')
-        .text()
-        .trim(),
-    ).toBe('Noordzuidlijn')
+    expect(directive.find('dt:nth-of-type(6)').text().trim()).toBe('Grootstedelijk gebied')
+    expect(directive.find('dd:nth-of-type(6)').text().trim()).toBe('Noordzuidlijn')
   })
 })

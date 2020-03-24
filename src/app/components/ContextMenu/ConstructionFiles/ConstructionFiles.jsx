@@ -94,7 +94,7 @@ ConstructionFiles.propTypes = {
   fileName: PropTypes.string.isRequired,
 }
 
-const mapDispatchToProps = dispatch =>
+const mapDispatchToProps = (dispatch) =>
   bindActionCreators(
     {
       openSharePage: sharePage,

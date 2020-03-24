@@ -51,7 +51,7 @@ describe('The dp-meetbout-graph directive', () => {
       },
     })
 
-    angular.mock.inject(function(_api_, _$rootScope_, _$compile_, _$q_) {
+    angular.mock.inject(function (_api_, _$rootScope_, _$compile_, _$q_) {
       api = _api_
       $rootScope = _$rootScope_
       $compile = _$compile_

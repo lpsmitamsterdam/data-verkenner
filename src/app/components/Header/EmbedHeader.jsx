@@ -30,7 +30,7 @@ const EmbedHeader = ({ closeAction }) => {
     }
   }, [])
 
-  const selectField = event => event.target.select()
+  const selectField = (event) => event.target.select()
 
   return (
     <div className="u-grid">
@@ -58,7 +58,7 @@ const EmbedHeader = ({ closeAction }) => {
               className="c-embed-header-form__input qa-embed-header-form-input"
               type="text"
               onClick={selectField}
-              onChange={e => {
+              onChange={(e) => {
                 setEmbedLink(e.target.value)
               }}
               value={embedLink}
@@ -83,7 +83,7 @@ const EmbedHeader = ({ closeAction }) => {
               className="c-embed-header-form__input qa-embed-header-form-input"
               type="text"
               onClick={selectField}
-              onChange={e => {
+              onChange={(e) => {
                 setIframe(e.target.value)
               }}
               value={iframe}

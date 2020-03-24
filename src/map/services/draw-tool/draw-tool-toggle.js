@@ -1,6 +1,6 @@
 import { disable, enable, isEnabled, setPolygon } from './draw-tool'
 
-export default markers => {
+export default (markers) => {
   if (isEnabled()) {
     disable()
   } else {

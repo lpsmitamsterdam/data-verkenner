@@ -40,7 +40,7 @@ const reducer = (state = initialState, action) => {
   }
 }
 
-export const addFilter = payload => ({
+export const addFilter = (payload) => ({
   type: ADD_FILTER,
   payload,
   meta: {
@@ -48,7 +48,7 @@ export const addFilter = payload => ({
   },
 })
 
-export const removeFilter = payload => ({
+export const removeFilter = (payload) => ({
   type: REMOVE_FILTER,
   payload,
   meta: {
@@ -59,7 +59,7 @@ export const removeFilter = payload => ({
 export const emptyFilters = () => ({ type: EMPTY_FILTERS })
 
 // Selectors
-const getReducerState = state => state[REDUCER_KEY]
+const getReducerState = (state) => state[REDUCER_KEY]
 export const getFiltersWithoutShape = createSelector(getReducerState, ({ filters }) => filters)
 export const getFilters = createSelector(
   getFiltersWithoutShape,
@@ -75,8 +75,8 @@ export const selectDataSelectionFilters = createSelector(
   getDataSelectionFilters,
   (activeFilters, availableFilters) => {
     const formattedFilters = availableFilters
-      .filter(filterSet => activeFilters[filterSet.slug])
-      .map(availableFilter => {
+      .filter((filterSet) => activeFilters[filterSet.slug])
+      .map((availableFilter) => {
         const value = activeFilters[availableFilter.slug]
         const filter = { ...availableFilter }
         // If there are no options but the filter is active, adding the filtered
@@ -92,7 +92,7 @@ export const selectDataSelectionFilters = createSelector(
         }
 
         const option =
-          filter.options.find(opt => opt.id === value) ||
+          filter.options.find((opt) => opt.id === value) ||
           (activeFilters.sbi_code && {
             label: activeFilters.sbi_code.replace(/['[\]]/g, ''),
           })

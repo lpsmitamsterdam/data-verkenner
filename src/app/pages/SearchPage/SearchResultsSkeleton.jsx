@@ -28,7 +28,7 @@ const SkeletonResultItem = styled.div`
 export const SearchResultsSkeleton = ({ page }) => {
   return (
     <CardContainer>
-      {[...Array(MAX_ITEMS).keys()].map(index => (
+      {[...Array(MAX_ITEMS).keys()].map((index) => (
         <SkeletonCard key={`${page}-${index}`} isLoading />
       ))}
     </CardContainer>

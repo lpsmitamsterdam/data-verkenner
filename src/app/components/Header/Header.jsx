@@ -53,8 +53,8 @@ const StyledHeader = styled(HeaderComponent)`
   }
 `
 
-const MenuDefault = props => <HeaderMenuContainer {...props} type="default" />
-const MenuMobile = props => <HeaderMenuContainer {...props} type="mobile" align="right" />
+const MenuDefault = (props) => <HeaderMenuContainer {...props} type="default" />
+const MenuMobile = (props) => <HeaderMenuContainer {...props} type="mobile" align="right" />
 
 const Header = ({
   homePage,

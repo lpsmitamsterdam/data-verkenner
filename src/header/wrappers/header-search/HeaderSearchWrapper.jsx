@@ -4,7 +4,7 @@ import { render } from 'react-dom'
 
 import HeaderSearchContainer from '../../containers/header-search/HeaderSearchContainer'
 
-const HeaderSearchWrapper = props => (
+const HeaderSearchWrapper = (props) => (
   <Provider store={window.reduxStore}>
     <HeaderSearchContainer {...props} />
   </Provider>

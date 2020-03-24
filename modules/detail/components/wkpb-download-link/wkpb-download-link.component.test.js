@@ -1,13 +1,13 @@
-describe('The dp-wkpb-download-link directive', function() {
+describe('The dp-wkpb-download-link directive', function () {
   let api
   let $compile
   let $q
   let $rootScope
 
-  beforeEach(function() {
+  beforeEach(function () {
     angular.mock.module('dpDetail')
 
-    angular.mock.inject(function(_$compile_, _$q_, _$rootScope_, _api_) {
+    angular.mock.inject(function (_$compile_, _$q_, _$rootScope_, _api_) {
       $compile = _$compile_
       $q = _$q_
       $rootScope = _$rootScope_
@@ -30,7 +30,7 @@ describe('The dp-wkpb-download-link directive', function() {
     return component
   }
 
-  it('renders the attributes', function() {
+  it('renders the attributes', function () {
     const component = getComponent('https"//api.com/my-api', 'download file')
 
     expect(component.attr('url')).toBe('https"//api.com/my-api')
@@ -39,7 +39,7 @@ describe('The dp-wkpb-download-link directive', function() {
 
   // Angular issue where the component doesn't get rendered in the tests
   // Skip this test for now untill component is refactored to React
-  xit('enriches the download url with the access token', function() {
+  xit('enriches the download url with the access token', function () {
     api.createUrlWithToken.and.returnValue($q.resolve('tokenUrl'))
     const component = getComponent('https"//api.com/my-api', 'download file')
 

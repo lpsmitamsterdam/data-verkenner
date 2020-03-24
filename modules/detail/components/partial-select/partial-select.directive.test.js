@@ -1,11 +1,11 @@
-describe('The dp-partial-select directive', function() {
+describe('The dp-partial-select directive', function () {
   let $compile
   let $rootScope
   let $q
   let partialCompiler
   let api
 
-  beforeEach(function() {
+  beforeEach(function () {
     angular.mock.module('dpDetail', {
       partialCompiler: {
         getHtml() {
@@ -20,7 +20,7 @@ describe('The dp-partial-select directive', function() {
       },
     })
 
-    angular.mock.inject(function(_$compile_, _$rootScope_, _$q_, _partialCompiler_, _api_) {
+    angular.mock.inject(function (_$compile_, _$rootScope_, _$q_, _partialCompiler_, _api_) {
       $compile = _$compile_
       $rootScope = _$rootScope_
       $q = _$q_
@@ -48,7 +48,7 @@ describe('The dp-partial-select directive', function() {
     return directive
   }
 
-  it('it retrieves the rendered template from partial-compiler based on the partial', function() {
+  it('it retrieves the rendered template from partial-compiler based on the partial', function () {
     const directive = getDirective({ foo: 'FAKE_API_DATA_A' }, 'my-template')
 
     expect(partialCompiler.getHtml).toHaveBeenCalledWith(
@@ -59,7 +59,7 @@ describe('The dp-partial-select directive', function() {
     expect(directive.find('div')[0].outerHTML).toBe('<div>This is a compiled template!</div>')
   })
 
-  it('puts a load more function on the scope', function() {
+  it('puts a load more function on the scope', function () {
     let hasMockedLoadMoreFunctionBeenCalled = false
 
     function mockedLoadMoreFunction() {

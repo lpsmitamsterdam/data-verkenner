@@ -1,6 +1,6 @@
 import proj4 from 'proj4'
 import * as Redux from 'redux'
-;(function() {
+;(function () {
   angular.module('dpShared').config(configuration)
 
   configuration.$inject = ['$provide', '$qProvider']

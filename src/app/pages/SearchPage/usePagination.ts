@@ -15,11 +15,11 @@ const usePagination = (query: DocumentNode, variables: Object, resolver: string 
     data && !Array.isArray(resolver) && data[resolver] ? data[resolver] : {}
 
   if (data && Array.isArray(resolver)) {
-    const allCounts = resolver.map(key => data[key] && data[key].totalCount)
+    const allCounts = resolver.map((key) => data[key] && data[key].totalCount)
 
     totalCount = allCounts.reduce((acc, cur) => acc + cur)
     filters = data.filters ? data.filters : []
-    results = resolver.map(key => {
+    results = resolver.map((key) => {
       const { results: dataResults = [], totalCount: dataTotalCount } = data[key] || {}
 
       return { key, results: dataResults, totalCount: dataTotalCount, filters: [] }
@@ -27,7 +27,7 @@ const usePagination = (query: DocumentNode, variables: Object, resolver: string 
   }
 
   const errors: GraphQLFormattedError<ErrorExtensions>[] = (error?.graphQLErrors ?? []).map(
-    graphQlError => {
+    (graphQlError) => {
       // Only include extensions that actually contain fields.
       const extensions =
         graphQlError.extensions !== undefined && Object.keys(graphQlError.extensions).length > 0

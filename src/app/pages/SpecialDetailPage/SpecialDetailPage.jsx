@@ -46,7 +46,7 @@ const SpecialDetailPage = ({ id }) => {
   )
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   const { id } = getLocationPayload(state)
   return {
     id,

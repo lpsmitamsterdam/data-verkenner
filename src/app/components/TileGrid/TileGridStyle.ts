@@ -73,11 +73,11 @@ export const TileGridItem = styled.div<TileGridItemProps>`
             grid-column: span ${size[1]};
             grid-row: span ${size[0]};
             ${size[1] === 2 &&
-              css`
-                &:before {
-                  padding-top: 50%;
-                }
-              `}
+            css`
+              &:before {
+                padding-top: 50%;
+              }
+            `}
           }
         `,
       )}

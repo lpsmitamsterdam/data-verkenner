@@ -135,7 +135,7 @@ class PanoramaContainer extends React.Component {
         <div
           ref={
             // eslint-disable-next-line
-            el => (this.panoramaRef = el)
+            (el) => (this.panoramaRef = el)
           }
           role="button"
           tabIndex="-1"
@@ -177,7 +177,7 @@ class PanoramaContainer extends React.Component {
   }
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   panoramaState: getPanorama(state),
   tags: getPanoramaTags(state),
   detailReference: getDetailReference(state),
@@ -188,7 +188,7 @@ const mapStateToProps = state => ({
   printMode: isPrintMode(state),
 })
 
-const mapDispatchToProps = dispatch => ({
+const mapDispatchToProps = (dispatch) => ({
   ...bindActionCreators(
     {
       setOrientation: setPanoramaOrientation,

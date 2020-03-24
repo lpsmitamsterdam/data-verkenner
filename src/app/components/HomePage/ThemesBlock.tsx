@@ -74,7 +74,7 @@ const ThemesBlock: React.FC = () => {
   if (fetching) {
     return (
       <ContentHolder>
-        {PLACEHOLDER_RANGE.map(index => (
+        {PLACEHOLDER_RANGE.map((index) => (
           <Column key={index} span={colSpan}>
             <PlaceholderContent key={index} />
           </Column>
@@ -83,7 +83,7 @@ const ThemesBlock: React.FC = () => {
     )
   }
 
-  const themeFilter = data?.filters.find(filter => filter.type === THEME_TYPE)
+  const themeFilter = data?.filters.find((filter) => filter.type === THEME_TYPE)
 
   // Show a message if an error occurred, or if no theme filter could be found.
   if (error || !themeFilter) {
@@ -98,7 +98,7 @@ const ThemesBlock: React.FC = () => {
 
   return (
     <ContentHolder>
-      {themeFilter.options.map(option => {
+      {themeFilter.options.map((option) => {
         const filters: ActiveFilter[] = [{ type: THEME_TYPE, values: [option.id] }]
 
         return (

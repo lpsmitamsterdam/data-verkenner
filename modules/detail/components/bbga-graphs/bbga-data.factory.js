@@ -1,4 +1,4 @@
-;(function() {
+;(function () {
   angular.module('dpDetail').factory('bbgaDataService', bbgaDataService)
 
   bbgaDataService.$inject = ['$q', 'api', 'BBGA_CONFIG']
@@ -19,7 +19,7 @@
     function getGraphData(visualisation, gebiedHeading, gebiedCode) {
       const variables = {}
 
-      BBGA_CONFIG[visualisation].forEach(function(variableConfig) {
+      BBGA_CONFIG[visualisation].forEach(function (variableConfig) {
         variables[variableConfig.variable] = getVariable(variableConfig, gebiedHeading, gebiedCode)
       })
 
@@ -50,7 +50,7 @@
         .getByUri('bbga/meta/', {
           variabele: variableName,
         })
-        .then(function(response) {
+        .then(function (response) {
           return {
             label: response.results[0].label,
             peildatum: response.results[0].peildatum,
@@ -65,7 +65,7 @@
           gebiedcode15: gebiedCode,
           jaar: 'latest',
         })
-        .then(function(response) {
+        .then(function (response) {
           return {
             label: gebiedHeading,
             code: gebiedCode,
@@ -81,7 +81,7 @@
       variableData.meta.jaar = variableData.data[0].jaar
 
       // Remove the jaar from it's old position
-      variableData.data.map(function(data) {
+      variableData.data.map(function (data) {
         delete data.jaar
 
         return data

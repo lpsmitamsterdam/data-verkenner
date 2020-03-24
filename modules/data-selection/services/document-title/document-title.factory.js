@@ -1,6 +1,6 @@
 import DATA_SELECTION_CONFIG from '../../../../src/shared/services/data-selection/data-selection-config'
 import isDefined from '../../../../src/shared/services/is-defined'
-;(function() {
+;(function () {
   // This factory name is namespaced because other modules will get a similar service with the same name
   angular
     .module('dpDataSelection')
@@ -30,9 +30,9 @@ import isDefined from '../../../../src/shared/services/is-defined'
       const markers = dataSelectionState.geometryFilter.markers || []
       const criteria = DATA_SELECTION_CONFIG.datasets[dataSelectionState.dataset].FILTERS
         // Retrieve all the active filters
-        .filter(availableFilter => isDefined(filtersState[availableFilter.slug]))
+        .filter((availableFilter) => isDefined(filtersState[availableFilter.slug]))
         // Show the value of each active filter
-        .map(activeFilter => {
+        .map((activeFilter) => {
           if (filtersState[activeFilter.slug] === '') {
             return `${activeFilter.label}: (Geen)`
           }

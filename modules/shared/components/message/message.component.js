@@ -1,4 +1,4 @@
-;(function() {
+;(function () {
   /**
    * The dpMessage component displays a message about any missing data
    * Although this component is yet without any behaviour (it simply styles the message)

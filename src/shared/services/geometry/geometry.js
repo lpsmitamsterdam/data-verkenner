@@ -2,7 +2,7 @@ import isObject from '../is-object'
 import BOUNDING_BOX from '../../../map/services/bounding-box.constant'
 import * as crsConverter from '../coordinate-reference-system/crs-converter'
 
-export const isVestigingAmsterdam = data => {
+export const isVestigingAmsterdam = (data) => {
   let isVestiging = false
   const southWestWgs84Coordinates = {
     latitude: BOUNDING_BOX.COORDINATES.southWest[0],
@@ -28,7 +28,7 @@ export const isVestigingAmsterdam = data => {
   return isVestiging
 }
 
-const getGeometry = data => {
+const getGeometry = (data) => {
   if (isObject(data.geometrie)) {
     return data.geometrie
   }

@@ -33,8 +33,9 @@ class MapLegend extends React.Component {
       'service=WMS&',
       'request=GetLegendGraphic&',
       `sld_version=${MAP_CONFIG.SLD_VERSION}&`,
-      `layer=${(legendItem.layers && legendItem.layers[0]) ||
-        (mapLayer.layers && mapLayer.layers[0])}&`,
+      `layer=${
+        (legendItem.layers && legendItem.layers[0]) || (mapLayer.layers && mapLayer.layers[0])
+      }&`,
       'format=image/svg%2Bxml&',
       legendItem.params ? `${queryString.stringify(legendItem.params)}&` : '',
       `rule=${encodeURIComponent(legendItem.imageRule || legendItem.title)}`,
@@ -43,9 +44,9 @@ class MapLegend extends React.Component {
 
   determineLayerVisibility(mapLayer) {
     const { overlays } = this.props
-    return overlays.some(overlay =>
+    return overlays.some((overlay) =>
       [{ id: mapLayer.id }, ...mapLayer.legendItems].some(
-        legendItem => overlay.id === legendItem.id && overlay.isVisible,
+        (legendItem) => overlay.id === legendItem.id && overlay.isVisible,
       ),
     )
   }
@@ -53,7 +54,7 @@ class MapLegend extends React.Component {
   determineLegendItemVisibility(legendItem) {
     const { overlays } = this.props
     return overlays.some(
-      overlay => (overlay.id === legendItem.id && overlay.isVisible) || legendItem.notSelectable,
+      (overlay) => (overlay.id === legendItem.id && overlay.isVisible) || legendItem.notSelectable,
     )
   }
 
@@ -62,7 +63,7 @@ class MapLegend extends React.Component {
 
     // When the legendItems itself are selectable, the legendItems can be toggled on/off individually
     return mapLayer.legendItems?.some(({ notSelectable }) => !notSelectable)
-      ? mapLayer.legendItems.map(legendItem => onLayerVisibilityToggle(legendItem.id, isVisible))
+      ? mapLayer.legendItems.map((legendItem) => onLayerVisibilityToggle(legendItem.id, isVisible))
       : onLayerVisibilityToggle(mapLayer.id, isVisible)
   }
 
@@ -96,7 +97,9 @@ class MapLegend extends React.Component {
                   className={`
                     map-legend__category
                     map-legend__category--${
-                      mapLayer.legendItems.some(legendItem => legendItem.notSelectable) ? 'un' : ''
+                      mapLayer.legendItems.some((legendItem) => legendItem.notSelectable)
+                        ? 'un'
+                        : ''
                     }selectable-legend
                   `}
                 >

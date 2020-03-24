@@ -11,7 +11,7 @@ describe('addMetaToRoutesMiddleware', () => {
     })),
   }
 
-  const setState = state => {
+  const setState = (state) => {
     store.getState = jest.fn(() => state)
   }
 

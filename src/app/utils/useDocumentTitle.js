@@ -7,7 +7,7 @@ const TITLE = 'Data en informatie - Amsterdam'
 
 function useDocumentTitle() {
   const locationType = useSelector(getLocationType)
-  const { title: storeTitle } = Object.values(routing).find(value => value.type === locationType)
+  const { title: storeTitle } = Object.values(routing).find((value) => value.type === locationType)
 
   const [documentTitle, setTitle] = React.useState(`${storeTitle} - ${TITLE}`)
 

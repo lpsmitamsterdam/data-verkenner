@@ -1,4 +1,4 @@
-;(function() {
+;(function () {
   angular.module('atlas').run(runBlock)
 
   runBlock.$inject = ['$timeout', '$rootScope', '$window']

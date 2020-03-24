@@ -32,7 +32,7 @@ const initialState = {
 }
 
 describe('DataSelection', () => {
-  const setup = overrides =>
+  const setup = (overrides) =>
     shallow(
       <DataSelection
         view={VIEW_MODE.FULL}

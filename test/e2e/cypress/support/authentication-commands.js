@@ -9,7 +9,7 @@ const checkEnvironmentVariablesSet = () => {
     'PASSWORD_EMPLOYEE',
     'PASSWORD_EMPLOYEE_PLUS',
   ]
-  variables.forEach(variable => {
+  variables.forEach((variable) => {
     if (Cypress.env(variable) === undefined) {
       throw new Error(`Environment variable not set: ${variable}`)
     }
@@ -35,12 +35,8 @@ Cypress.Commands.add('login', (type = 'EMPLOYEE_PLUS') => {
 
   const stateToken = stateTokenGenerator()
 
-  cy.window()
-    .its('sessionStorage')
-    .invoke('setItem', 'returnPath', '#')
-  cy.window()
-    .its('sessionStorage')
-    .invoke('setItem', 'stateToken', stateToken)
+  cy.window().its('sessionStorage').invoke('setItem', 'returnPath', '#')
+  cy.window().its('sessionStorage').invoke('setItem', 'stateToken', stateToken)
 
   const redirectUri = 'http://localhost:3000/'
   const url = [
@@ -65,7 +61,7 @@ Cypress.Commands.add('login', (type = 'EMPLOYEE_PLUS') => {
       })
 
       // Follow redirect to login page manually
-      .then(response => {
+      .then((response) => {
         return cy.request({
           url: response.headers.location,
           followRedirect: false,
@@ -74,7 +70,7 @@ Cypress.Commands.add('login', (type = 'EMPLOYEE_PLUS') => {
 
       // Post credentials and account type
       // extracts url from form
-      .then(response =>
+      .then((response) =>
         cy.request({
           method: 'POST',
           url: `${Cypress.env('API_ROOT')}/auth/idp/${response.body.match(/action="(.*?)"/).pop()}`,
@@ -89,7 +85,7 @@ Cypress.Commands.add('login', (type = 'EMPLOYEE_PLUS') => {
       )
 
       // Follow redirect manually
-      .then(response =>
+      .then((response) =>
         cy.request({
           url: response.headers.location,
           followRedirect: false,
@@ -97,7 +93,7 @@ Cypress.Commands.add('login', (type = 'EMPLOYEE_PLUS') => {
       )
 
       // Return to the application
-      .then(response => {
+      .then((response) => {
         // Replace redirect URI from earlier (localhost:3000) with baseUrl
         const originalUrl = response.headers.location
         const returnUrl = originalUrl.replace(redirectUri, baseUrl)
@@ -109,7 +105,7 @@ Cypress.Commands.add('login', (type = 'EMPLOYEE_PLUS') => {
           cy.window()
             .its('sessionStorage')
             .invoke('getItem', 'accessToken')
-            .then(value => {
+            .then((value) => {
               USER_TOKENS[type] = value
             })
         })
@@ -120,7 +116,7 @@ Cypress.Commands.add('login', (type = 'EMPLOYEE_PLUS') => {
 Cypress.Commands.add('logout', () => {
   const loginMenuItem = `${HEADER_MENU.rootMobile} ${HEADER_MENU.login}`
   cy.get(loginMenuItem)
-    .then(element => {
+    .then((element) => {
       if (!element.is(':visible')) {
         cy.get(`${HEADER_MENU.rootMobile}`).click()
       }
@@ -135,7 +131,7 @@ Cypress.Commands.add('logout', () => {
 // Cypress doesn’t recognize `window.fetch` calls as XHR requests, which makes
 // it impossible to stub them. We delete `fetch` from the window object so the
 // `unfetch` polyfill (which uses proper `XMLHttpRequest`) kicks in.
-Cypress.on('window:before:load', win => {
+Cypress.on('window:before:load', (win) => {
   delete win.fetch // eslint-disable-line no-param-reassign
 })
 

@@ -17,12 +17,12 @@ DataSelectionActiveFilters.propTypes = {
   removeFilter: PropTypes.func.isRequired,
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   filters: selectDataSelectionFilters(state),
 })
 
-const mapDispatchToProps = dispatch => ({
-  removeFilter: key =>
+const mapDispatchToProps = (dispatch) => ({
+  removeFilter: (key) =>
     key === 'shape' ? dispatch(removeGeometryFilter()) : dispatch(removeActiveFilter(key)),
 })
 

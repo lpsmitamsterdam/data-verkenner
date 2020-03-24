@@ -42,25 +42,25 @@ export default function reducer(state = initialState, action: SearchPageAction):
   switch (action.type) {
     case SET_FILTER_VALUES: {
       const { type, values } = action.payload
-      const existingFilter = enrichedState.activeFilters.find(filter => filter.type === type)
+      const existingFilter = enrichedState.activeFilters.find((filter) => filter.type === type)
       const updatedFilter: ActiveFilter =
         existingFilter !== undefined ? { ...existingFilter, values } : { type, values }
 
       // Append or replace the updated filter.
       let activeFilters =
         existingFilter !== undefined
-          ? enrichedState.activeFilters.map(filter =>
+          ? enrichedState.activeFilters.map((filter) =>
               filter.type === type ? updatedFilter : filter,
             )
           : [...enrichedState.activeFilters, updatedFilter]
 
       // Remove any filter that are empty.
-      activeFilters = activeFilters.filter(filter => filter.values.length !== 0)
+      activeFilters = activeFilters.filter((filter) => filter.values.length !== 0)
 
       // Sort the filters so URL will remain consistent.
       activeFilters = activeFilters
         .sort((a, b) => (a.type > b.type ? 1 : -1))
-        .map(filter => ({ ...filter, values: filter.values.sort() }))
+        .map((filter) => ({ ...filter, values: filter.values.sort() }))
 
       return {
         ...enrichedState,
@@ -104,7 +104,7 @@ export const getActiveFilters = ({ [REDUCER_KEY]: { activeFilters } }: StoreValu
 export const getFilterValues = (type: string) => ({
   [REDUCER_KEY]: { activeFilters },
 }: StoreValue) => {
-  const matchedFilter = activeFilters.find(filter => filter.type === type)
+  const matchedFilter = activeFilters.find((filter) => filter.type === type)
 
   if (matchedFilter !== undefined) {
     return matchedFilter.values

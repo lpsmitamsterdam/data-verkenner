@@ -32,7 +32,7 @@ const PanoramaToggle = ({
     window.open(url, '_blank')
   }
 
-  const handleSetPanoramaTags = tags => {
+  const handleSetPanoramaTags = (tags) => {
     openPanoramaTags(tags)
     showMenuToggle(false)
   }
@@ -91,7 +91,7 @@ PanoramaToggle.propTypes = {
   openPanoramaExternal: PropTypes.PropTypes.func.isRequired,
 }
 
-const mapDispatchToProps = dispatch =>
+const mapDispatchToProps = (dispatch) =>
   bindActionCreators(
     {
       openPanoramaTags: setPanoramaTags,

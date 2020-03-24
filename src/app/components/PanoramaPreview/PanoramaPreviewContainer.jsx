@@ -5,7 +5,7 @@ import {
   isPanoramaPreviewLoading,
 } from '../../../panorama/ducks/preview/panorama-preview'
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   panoramaPreview: getPanoramaPreview(state),
   isLoading: isPanoramaPreviewLoading(state),
 })

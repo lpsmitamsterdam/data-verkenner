@@ -20,11 +20,11 @@ const AutoSuggestCategory = ({ category, activeSuggestion, query, onSuggestionSe
     <div className="auto-suggest__dropdown-category">
       <h4 className="auto-suggest__dropdown-category__heading qa-auto-suggest-header">{label}</h4>
       <ul>
-        {suggestions.map(suggestion => (
+        {suggestions.map((suggestion) => (
           <AutoSuggestItem
             key={suggestion.label + suggestion.index}
             isActive={activeSuggestion && activeSuggestion.index === suggestion.index}
-            onSuggestionSelection={e => {
+            onSuggestionSelection={(e) => {
               onSuggestionSelection(suggestion, label, e)
             }}
             content={suggestion.label}

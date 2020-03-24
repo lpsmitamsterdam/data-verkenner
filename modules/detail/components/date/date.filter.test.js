@@ -4,7 +4,7 @@ describe('The dpDate filter', () => {
   beforeEach(() => {
     angular.mock.module('dpDetail')
 
-    angular.mock.inject(_dpDateFilter_ => {
+    angular.mock.inject((_dpDateFilter_) => {
       dpDateFilter = _dpDateFilter_
     })
   })

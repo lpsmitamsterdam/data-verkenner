@@ -19,7 +19,7 @@ const ResultItem = styled.div`
 `
 
 function getKeyByValue(object, value) {
-  return Object.keys(object).find(key => object[key] === value)
+  return Object.keys(object).find((key) => object[key] === value)
 }
 
 const SearchResultsOverview = ({ query, totalCount, results, errors, loading }) => {
@@ -38,7 +38,7 @@ const SearchResultsOverview = ({ query, totalCount, results, errors, loading }) 
         )
         // TODO: This statement should match the error code instead, needs to be implemented in the API.
         const hasNoMatchingFilters = errors.some(
-          err => err.message === 'The entered type(s) does not exist',
+          (err) => err.message === 'The entered type(s) does not exist',
         )
         const hasErrors = matchingErrors.length > 0
         const hasResults = resultItemTotalCount > 0

@@ -1,8 +1,8 @@
-;(function() {
+;(function () {
   angular.module('dpDetail').filter('filename', filenameFilter)
 
   function filenameFilter() {
-    return function(input) {
+    return function (input) {
       const parts = input.split('/')
 
       const lastPart = parts[parts.length - 1]

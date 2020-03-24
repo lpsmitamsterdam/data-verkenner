@@ -35,7 +35,7 @@ describe('The auth service', () => {
   beforeEach(() => {
     Object.defineProperty(window, 'sessionStorage', {
       value: {
-        getItem: key => {
+        getItem: (key) => {
           switch (key) {
             case 'accessToken':
               return savedAccessToken

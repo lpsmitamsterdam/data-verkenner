@@ -8,15 +8,11 @@ describe('visitor permissions', () => {
 
     cy.visit('/')
 
-    cy.get('#auto-suggest__input')
-      .focus()
-      .type('bakker')
+    cy.get('#auto-suggest__input').focus().type('bakker')
 
     cy.wait('@getResults')
-    cy.get('.auto-suggest__tip')
-      .should('exist')
-      .and('be.visible')
-    cy.get(queries.autoSuggestHeader).should($values => {
+    cy.get('.auto-suggest__tip').should('exist').and('be.visible')
+    cy.get(queries.autoSuggestHeader).should(($values) => {
       expect($values).to.not.contain(values.kadastraleSubjecten)
     })
   })
@@ -27,13 +23,11 @@ describe('visitor permissions', () => {
 
     cy.visit('/')
 
-    cy.get('#auto-suggest__input')
-      .focus()
-      .type('bakker{enter}')
+    cy.get('#auto-suggest__input').focus().type('bakker{enter}')
 
     cy.waitForSearch(false)
     cy.get(queries.warningPanel).contains('Meer resultaten na inloggen')
-    cy.get(queries.searchHeader).should($values => {
+    cy.get(queries.searchHeader).should(($values) => {
       expect($values).to.not.contain(values.kadastraleSubjecten)
     })
   })
@@ -69,7 +63,7 @@ describe('visitor permissions', () => {
     cy.wait('@getNummeraanduidingen')
     cy.get(queries.warningPanelAngular).contains('Medewerkers/ketenpartners van Gemeente Amsterdam')
     cy.get(queries.headerTitle).contains('A 0001')
-    cy.get(queries.headerSubTitle).should($values => {
+    cy.get(queries.headerSubTitle).should(($values) => {
       expect($values).to.not.contain(values.aantekeningen)
     })
   })
@@ -92,7 +86,7 @@ describe('visitor permissions', () => {
     cy.wait('@getPanden')
     cy.wait('@getSitueringen')
     cy.get(queries.headerTitle).contains('Dam 1')
-    cy.get(queries.headerSubTitle).should($values => {
+    cy.get(queries.headerSubTitle).should(($values) => {
       expect($values).to.contain('Ligt in')
       expect($values).to.contain('Panoramabeeld')
       expect($values).to.contain('Verblijfsobject')
@@ -118,9 +112,7 @@ describe('visitor permissions', () => {
     cy.wait('@getObject')
     cy.get(queries.warningPanelAngular).contains('Medewerkers/ketenpartners van Gemeente Amsterdam')
     cy.get(queries.headerTitle).contains('142')
-    cy.get(queries.keyValueList)
-      .contains(values.documentnaam)
-      .should('not.exist')
+    cy.get(queries.keyValueList).contains(values.documentnaam).should('not.exist')
   })
 
   it('6. Should show a visitor a notification for limited map layers', () => {
@@ -133,14 +125,12 @@ describe('visitor permissions', () => {
     // the map panel should have the class expanded
     cy.get('.map-panel').should('have.class', 'map-panel--expanded')
 
-    cy.get(queries.mapLayersCategory).should($values => {
+    cy.get(queries.mapLayersCategory).should(($values) => {
       expect($values).to.contain(values.economieEnHaven)
       expect($values).to.contain(values.geografie)
       expect($values).to.contain(values.bedrijvenInvloedsgebieden)
     })
-    cy.get(queries.legendToggleItem)
-      .contains(values.vestigingenHoreca)
-      .click()
+    cy.get(queries.legendToggleItem).contains(values.vestigingenHoreca).click()
     cy.get(queries.legendNotification)
       .scrollIntoView()
       .contains(values.legendPermissionNotification)
@@ -170,9 +160,7 @@ describe('visitor permissions', () => {
       cy.get(queries.warningPanelAngular).contains(
         'Medewerkers/ketenpartners van Gemeente Amsterdam',
       )
-      cy.get(queries.listItem)
-        .contains(values.pandVestigingName)
-        .should('not.exist')
+      cy.get(queries.listItem).contains(values.pandVestigingName).should('not.exist')
     })
 
     it('C. Should show a visitor limited information in a Geo search', () => {
@@ -190,15 +178,11 @@ describe('visitor permissions', () => {
       cy.wait('@getNummeraanduidingen')
       cy.get('.o-header').contains('121437.46, 487418.76 (52.3736166, 4.8943521)')
       cy.get(queries.warningPanel).contains('Medewerkers/ketenpartners van Gemeente Amsterdam')
-      cy.get(queries.headerSubTitle)
-        .contains(values.vestigingen)
-        .should('not.exist')
+      cy.get(queries.headerSubTitle).contains(values.vestigingen).should('not.exist')
       // the map view maximize button should exist
       cy.get('button.icon-button__right')
       // click on the maximize button to open the map view
-      cy.get('button.icon-button__right')
-        .first()
-        .click()
+      cy.get('button.icon-button__right').first().click()
       cy.wait(250)
       cy.get(queries.mapSearchResultsCategoryHeader)
         .contains(values.vestigingen)
@@ -220,9 +204,7 @@ describe('visitor permissions', () => {
       cy.get(queries.warningPanelAngular).contains(
         'Medewerkers/ketenpartners van Gemeente Amsterdam',
       )
-      cy.get(queries.listItem)
-        .contains(values.ligplaatsVestigingName)
-        .should('not.exist')
+      cy.get(queries.listItem).contains(values.ligplaatsVestigingName).should('not.exist')
     })
 
     it('E. Should show a visitor limited information in "standplaats" search', () => {
@@ -239,9 +221,7 @@ describe('visitor permissions', () => {
       cy.get(queries.warningPanelAngular).contains(
         'Medewerkers/ketenpartners van Gemeente Amsterdam',
       )
-      cy.get(queries.listItem)
-        .contains(values.standplaatsVestigingName)
-        .should('not.exist')
+      cy.get(queries.listItem).contains(values.standplaatsVestigingName).should('not.exist')
     })
 
     it('F. Should NOT allow a visitor to view "vestiging"', () => {
@@ -276,18 +256,12 @@ describe('visitor permissions', () => {
     cy.wait('@getSitueringen')
     cy.get(queries.headerTitle).contains('Museumtuin met hekwerken en bouwfragmenten')
     cy.get(queries.warningPanelAngular).contains('Medewerkers/ketenpartners van Gemeente Amsterdam')
-    cy.get(queries.keyValueList)
-      .contains(values.redengevendeOmschrijving)
-      .should('not.exist')
+    cy.get(queries.keyValueList).contains(values.redengevendeOmschrijving).should('not.exist')
     // the map view maximize button should exist
     cy.get('button.icon-button__right')
     // click on the maximize button to open the map view
-    cy.get('button.icon-button__right')
-      .first()
-      .click()
-    cy.get(queries.mapDetailResultItem)
-      .contains(values.type)
-      .should('not.exist')
+    cy.get('button.icon-button__right').first().click()
+    cy.get(queries.mapDetailResultItem).contains(values.type).should('not.exist')
   })
 
   it('8B. Should show a visitor limited information in "monument complex"', () => {
@@ -301,8 +275,6 @@ describe('visitor permissions', () => {
     cy.wait('@getMonumenten')
     cy.get(queries.headerTitle).contains('Hortus Botanicus')
     cy.get(queries.warningPanelAngular).contains('Medewerkers/ketenpartners van Gemeente Amsterdam')
-    cy.get(queries.keyValueList)
-      .contains(values.beschrijving)
-      .should('not.exist')
+    cy.get(queries.keyValueList).contains(values.beschrijving).should('not.exist')
   })
 })

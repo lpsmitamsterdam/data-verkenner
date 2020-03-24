@@ -45,7 +45,7 @@ const ActualityContainer = () => {
                       </tr>
                     </thead>
                     <tbody>
-                      {sources.map(source => (
+                      {sources.map((source) => (
                         <tr className="c-table__content-row">
                           {source.title && (
                             <td className="c-table__field c-table__content-field">

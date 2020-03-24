@@ -1,4 +1,4 @@
-;(function() {
+;(function () {
   angular.module('dpShared').component('dpPanel', {
     bindings: {
       isPanelVisible: '<',
@@ -26,11 +26,11 @@
   function DpPanelController() {
     const vm = this
 
-    this.$onInit = function() {
+    this.$onInit = function () {
       vm.sizeClass = vm.size ? `c-panel--${vm.size}` : ''
       vm.typeClass = vm.type ? `c-panel--${vm.type}` : ''
 
-      vm.close = function() {
+      vm.close = function () {
         vm.isPanelVisible = false
         vm.closeAction && vm.closeAction() // eslint-disable-line no-unused-expressions
       }

@@ -1,4 +1,4 @@
-describe('The api factory', function() {
+describe('The api factory', function () {
   let $rootScope
   let $interval
   let $http
@@ -13,7 +13,7 @@ describe('The api factory', function() {
   const mockUrl1 = `${process.env.API_ROOT}bag/verblijfsobject/123/`
   const mockUrl2 = `${process.env.API_ROOT}bag/verblijfsobject/456/`
 
-  beforeEach(function() {
+  beforeEach(function () {
     angular.mock.module('dpShared', {
       sharedConfig: {
         AUTH_HEADER_PREFIX: 'Bearer ',
@@ -29,7 +29,7 @@ describe('The api factory', function() {
       },
     })
 
-    angular.mock.inject(function(
+    angular.mock.inject(function (
       _$rootScope_,
       _$interval_,
       _$http_,
@@ -56,22 +56,22 @@ describe('The api factory', function() {
 
     isLoggedIn = false
 
-    clearHttpCache = function() {
+    clearHttpCache = function () {
       // Clearing the cache whenever authorization level is lowered
       $cacheFactory.get('$http').removeAll()
     }
   })
 
-  afterEach(function() {
+  afterEach(function () {
     $httpBackend.verifyNoOutstandingExpectation()
     $httpBackend.verifyNoOutstandingRequest()
     clearHttpCache()
   })
 
-  it('getByUrl returns the data as a promise', function() {
+  it('getByUrl returns the data as a promise', function () {
     let returnValue
 
-    api.getByUrl(mockUrl1).then(function(data) {
+    api.getByUrl(mockUrl1).then(function (data) {
       returnValue = data
     })
 
@@ -80,10 +80,10 @@ describe('The api factory', function() {
     expect(returnValue).toEqual(mockedApiData)
   })
 
-  it('getByUrl optionally accepts a promise to allow for cancelling the request', function() {
+  it('getByUrl optionally accepts a promise to allow for cancelling the request', function () {
     const cancel = $q.defer()
 
-    api.getByUrl(mockUrl1, undefined, cancel).then(function() {
+    api.getByUrl(mockUrl1, undefined, cancel).then(function () {
       fail() // Should never be resolved
     })
 
@@ -91,11 +91,11 @@ describe('The api factory', function() {
     $httpBackend.verifyNoOutstandingRequest()
   })
 
-  it('getByUrl optionally accepts a promise, rejects the promise when the request is not cancelled', function() {
+  it('getByUrl optionally accepts a promise, rejects the promise when the request is not cancelled', function () {
     let returnValue
     const cancel = $q.defer()
 
-    api.getByUrl(mockUrl1, undefined, cancel).then(function(data) {
+    api.getByUrl(mockUrl1, undefined, cancel).then(function (data) {
       returnValue = data
     })
 
@@ -108,10 +108,10 @@ describe('The api factory', function() {
     expect(isRejected).toBe(true)
   })
 
-  it('getByUri can be used when the API ROOT is unknown', function() {
+  it('getByUri can be used when the API ROOT is unknown', function () {
     let returnValue
 
-    api.getByUri('bag/verblijfsobject/123/').then(function(data) {
+    api.getByUri('bag/verblijfsobject/123/').then(function (data) {
       returnValue = data
     })
 
@@ -120,7 +120,7 @@ describe('The api factory', function() {
     expect(returnValue).toEqual(mockedApiData)
   })
 
-  it('does not add an Authorization header if the user is not logged in', function() {
+  it('does not add an Authorization header if the user is not logged in', function () {
     // Not logged in
     isLoggedIn = false
 
@@ -129,7 +129,7 @@ describe('The api factory', function() {
     $httpBackend.flush()
   })
 
-  it('adds an Authorization header if the user is logged in', function() {
+  it('adds an Authorization header if the user is logged in', function () {
     // Logged in
     isLoggedIn = true
     $httpBackend.expectGET(
@@ -142,7 +142,7 @@ describe('The api factory', function() {
     $httpBackend.flush()
   })
 
-  it('does not add an Authorization header if specified not to', function() {
+  it('does not add an Authorization header if specified not to', function () {
     // Logged in
     isLoggedIn = true
 
@@ -154,11 +154,11 @@ describe('The api factory', function() {
   describe('generating a URL with an access token', () => {
     it('adds the access token when logged in', () => {
       isLoggedIn = true
-      api.createUrlWithToken('https://test.amsterdam.nl/').then(actual => {
+      api.createUrlWithToken('https://test.amsterdam.nl/').then((actual) => {
         expect(actual).toBe('https://test.amsterdam.nl/?access_token=MY_FAKE_ACCESS_TOKEN')
       })
 
-      api.createUrlWithToken('https://test.amsterdam.nl/?a=b').then(actual => {
+      api.createUrlWithToken('https://test.amsterdam.nl/?a=b').then((actual) => {
         expect(actual).toBe('https://test.amsterdam.nl/?a=b&access_token=MY_FAKE_ACCESS_TOKEN')
       })
 
@@ -168,11 +168,11 @@ describe('The api factory', function() {
     it('does not add the access token when not logged in', () => {
       isLoggedIn = false
 
-      api.createUrlWithToken('https://test.amsterdam.nl/').then(actual => {
+      api.createUrlWithToken('https://test.amsterdam.nl/').then((actual) => {
         expect(actual).toBe('https://test.amsterdam.nl/')
       })
 
-      api.createUrlWithToken('https://test.amsterdam.nl/?a=b').then(actual => {
+      api.createUrlWithToken('https://test.amsterdam.nl/?a=b').then((actual) => {
         expect(actual).toBe('https://test.amsterdam.nl/?a=b')
       })
 
@@ -182,11 +182,11 @@ describe('The api factory', function() {
     it('adds extra params to the url when specified', () => {
       isLoggedIn = false
 
-      api.createUrlWithToken('https://test.amsterdam.nl/', { c: 'd' }).then(actual => {
+      api.createUrlWithToken('https://test.amsterdam.nl/', { c: 'd' }).then((actual) => {
         expect(actual).toBe('https://test.amsterdam.nl/?c=d')
       })
 
-      api.createUrlWithToken('https://test.amsterdam.nl/?a=b', { c: 'd' }).then(actual => {
+      api.createUrlWithToken('https://test.amsterdam.nl/?a=b', { c: 'd' }).then((actual) => {
         expect(actual).toBe('https://test.amsterdam.nl/?a=b&c=d')
       })
 
@@ -201,7 +201,7 @@ describe('The api factory', function() {
       const getRequest = $httpBackend.whenGET(mockUrl2)
       getRequest.respond(500, 'ERROR')
 
-      api.getByUri('bag/verblijfsobject/456/').then(function(data) {
+      api.getByUri('bag/verblijfsobject/456/').then(function (data) {
         returnValue = data
       })
 
@@ -221,7 +221,7 @@ describe('The api factory', function() {
       const getRequest = $httpBackend.whenGET(mockUrl2)
       getRequest.respond(500, 'ERROR')
 
-      api.getByUri('bag/verblijfsobject/456/').then(function(data) {
+      api.getByUri('bag/verblijfsobject/456/').then(function (data) {
         returnValue = data
       })
 
@@ -245,7 +245,7 @@ describe('The api factory', function() {
       const getRequest = $httpBackend.whenGET(mockUrl2)
       getRequest.respond(500, 'ERROR')
 
-      api.getByUri('bag/verblijfsobject/456/').then(function(data) {
+      api.getByUri('bag/verblijfsobject/456/').then(function (data) {
         returnValue = data
       })
 

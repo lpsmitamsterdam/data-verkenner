@@ -54,7 +54,7 @@ const DataList = ({ type, label, count, results, withPagination }) => (
 
     {results ? (
       <List hasMarginBottom={!withPagination}>
-        {results.map(location => (
+        {results.map((location) => (
           <li key={location.id}>
             <StyledLink
               to={toDetailFromEndpoint(location.endpoint, VIEW_MODE.SPLIT)}

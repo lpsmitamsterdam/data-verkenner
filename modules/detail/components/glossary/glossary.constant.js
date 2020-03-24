@@ -1,4 +1,4 @@
 import GLOSSARY from '../../../../src/detail/services/glossary.constant'
-;(function() {
+;(function () {
   angular.module('dpDetail').constant('GLOSSARY', GLOSSARY)
 })()

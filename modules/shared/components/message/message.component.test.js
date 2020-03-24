@@ -1,11 +1,11 @@
-describe('The message component', function() {
+describe('The message component', function () {
   let $compile
   let $rootScope
 
-  beforeEach(function() {
+  beforeEach(function () {
     angular.mock.module('dpShared')
 
-    angular.mock.inject(function(_$compile_, _$rootScope_) {
+    angular.mock.inject(function (_$compile_, _$rootScope_) {
       $compile = _$compile_
       $rootScope = _$rootScope_
     })
@@ -18,7 +18,7 @@ describe('The message component', function() {
     return component
   }
 
-  it('displays a styled message', function() {
+  it('displays a styled message', function () {
     const component = getComponent()
 
     expect(component.find('span').length).toBe(1)

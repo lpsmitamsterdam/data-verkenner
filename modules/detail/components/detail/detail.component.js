@@ -1,6 +1,6 @@
 import removeMd from 'remove-markdown'
 import { downloadDatasetResource } from '../../../../src/shared/ducks/detail/actions'
-;(function() {
+;(function () {
   angular.module('dpDetail').component('dpDetail', {
     bindings: {
       endpoint: '@',
@@ -26,7 +26,7 @@ import { downloadDatasetResource } from '../../../../src/shared/ducks/detail/act
     const vm = this
 
     vm.$onInit = () => {
-      vm.stripMarkdown = val => removeMd(val)
+      vm.stripMarkdown = (val) => removeMd(val)
 
       vm.downloadResource = (dataset, resourceUrl) =>
         store.dispatch(downloadDatasetResource({ dataset, resourceUrl }))
@@ -34,7 +34,7 @@ import { downloadDatasetResource } from '../../../../src/shared/ducks/detail/act
 
     /* istanbul ignore next */
     // eslint-disable-next-line complexity
-    vm.$onChanges = changes => {
+    vm.$onChanges = (changes) => {
       const { detailTemplateUrl, detailData, detailFilterSelection } = changes
       if (!(detailTemplateUrl && detailData)) return
       if (detailTemplateUrl && detailTemplateUrl.previousValue !== detailTemplateUrl.currentValue) {

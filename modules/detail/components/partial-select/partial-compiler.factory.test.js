@@ -1,12 +1,12 @@
-describe('The partialCompiler factory', function() {
+describe('The partialCompiler factory', function () {
   let $rootScope
   let $templateCache
   let partialCompiler
 
-  beforeEach(function() {
+  beforeEach(function () {
     angular.mock.module('dpDetail')
 
-    angular.mock.inject(function(_$rootScope_, _$templateCache_, _partialCompiler_) {
+    angular.mock.inject(function (_$rootScope_, _$templateCache_, _partialCompiler_) {
       $rootScope = _$rootScope_
       $templateCache = _$templateCache_
       partialCompiler = _partialCompiler_
@@ -19,11 +19,11 @@ describe('The partialCompiler factory', function() {
     )
   })
 
-  it('gets a template based on an url and returns the HTML', function() {
+  it('gets a template based on an url and returns the HTML', function () {
     let output
     const emptyScope = $rootScope.$new()
 
-    partialCompiler.getHtml('basic-template.html', emptyScope).then(function(_output_) {
+    partialCompiler.getHtml('basic-template.html', emptyScope).then(function (_output_) {
       output = _output_
     })
 
@@ -35,13 +35,13 @@ describe('The partialCompiler factory', function() {
     expect(output[1].outerHTML).toBe('<p class="ng-scope">Second paragraph</p>')
   })
 
-  it('creates a scope and puts data on it', function() {
+  it('creates a scope and puts data on it', function () {
     let output
     const scope = $rootScope.$new()
     scope.header = 'This is a heading'
     scope.paragraph = 'This is a paragraph.'
 
-    partialCompiler.getHtml('path/template-with-variables.html', scope).then(function(_output_) {
+    partialCompiler.getHtml('path/template-with-variables.html', scope).then(function (_output_) {
       output = _output_
     })
 

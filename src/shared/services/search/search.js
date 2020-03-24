@@ -3,7 +3,7 @@ import { getByUrl } from '../api/api'
 import { formatLinks } from './search-formatter'
 
 export function loadMore(category) {
-  return getByUrl(category.next).then(nextPageData => {
+  return getByUrl(category.next).then((nextPageData) => {
     // Don't change the input, create a new variable
     const output = {}
 
@@ -24,8 +24,8 @@ export function loadMore(category) {
 // @TODO remove the exception when backend uses correct sub type name tg-3551
 export function replaceBuurtcombinatie(searchResults) {
   const results = [...searchResults]
-  results.forEach(result => {
-    result.results.forEach(item => {
+  results.forEach((result) => {
+    result.results.forEach((item) => {
       if (item.subtype === 'buurtcombinatie') {
         item.subtypeLabel = 'wijk' // eslint-disable-line no-param-reassign
       }
@@ -47,5 +47,5 @@ export function getNumberOfResults(searchResults) {
   )
 }
 
-export const getNumberOfResultsPanel = results =>
+export const getNumberOfResultsPanel = (results) =>
   results.reduce((acc, { results: subResults }) => acc + subResults.length, 0)

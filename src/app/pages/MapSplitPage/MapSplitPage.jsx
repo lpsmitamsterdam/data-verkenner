@@ -109,7 +109,7 @@ const PanoramaContainer = React.lazy(() => import('../../../panorama/containers/
   return null
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   endpoint: getDetailEndpoint(state),
   hasSelection: !!getSelectionType(state),
   viewMode: getViewMode(state),
@@ -117,7 +117,7 @@ const mapStateToProps = state => ({
   printMode: isPrintMode(state),
 })
 
-const mapDispatchToProps = dispatch =>
+const mapDispatchToProps = (dispatch) =>
   bindActionCreators(
     {
       getPageActionEndpoint: endpointActionCreator,

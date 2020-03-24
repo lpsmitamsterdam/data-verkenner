@@ -79,7 +79,7 @@ MapDetailResultWrapper.propTypes = {
   onPanoPreviewClick: PropTypes.func,
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   isEmbed: isEmbedded(state),
 })
 

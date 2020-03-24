@@ -43,19 +43,19 @@ export default function ErrorMessageReducer(state = initialState, action) {
 }
 
 export const resetGlobalError = () => ({ type: RESET_GLOBAL_ERROR })
-export const setGlobalError = errorType => ({
+export const setGlobalError = (errorType) => ({
   type: SET_GLOBAL_ERROR,
   payload: errorType,
 })
 
-const getErrorState = state => state.error
+const getErrorState = (state) => state.error
 
 // Reducer need to be refactored if it's not used by angular modules to avoid unnecessary complexity
 // like this.
 export const getMessage = createSelector(
   getErrorState,
-  error =>
+  (error) =>
     ERROR_MESSAGES[Object.entries(error.types).map(([type, value]) => value && type)[0]] ||
     ERROR_MESSAGES[ERROR_TYPES.GENERAL_ERROR],
 )
-export const hasGlobalError = createSelector(getErrorState, error => error.hasErrors)
+export const hasGlobalError = createSelector(getErrorState, (error) => error.hasErrors)

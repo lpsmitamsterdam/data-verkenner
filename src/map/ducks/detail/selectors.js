@@ -8,14 +8,14 @@ import { isDataDetailPage, isPanoPage } from '../../../store/redux-first-router/
 
 const shouldShowGeoJson = () => isDataDetailPage || isPanoPage
 
-const mapDetailSelector = state => state.mapDetail
+const mapDetailSelector = (state) => state.mapDetail
 
 export const getCurrentEndpoint = createSelector(
   mapDetailSelector,
-  mapDetail => mapDetail.currentEndpoint,
+  (mapDetail) => mapDetail.currentEndpoint,
 )
 
-export const getAllResults = createSelector(mapDetailSelector, mapDetail => mapDetail.byEndpoint)
+export const getAllResults = createSelector(mapDetailSelector, (mapDetail) => mapDetail.byEndpoint)
 
 export const selectLatestMapDetail = createSelector(
   [getCurrentEndpoint, getAllResults],
@@ -24,7 +24,7 @@ export const selectLatestMapDetail = createSelector(
 
 export const getMapDetailGeometry = createSelector(
   selectLatestMapDetail,
-  activeMapDetail => activeMapDetail && activeMapDetail.geometrie,
+  (activeMapDetail) => activeMapDetail && activeMapDetail.geometrie,
 )
 
 export const getDetailId = createSelector(
@@ -33,7 +33,7 @@ export const getDetailId = createSelector(
   (detailEndpoint, currentEndpoint) => detailEndpoint || currentEndpoint,
 )
 
-export const getGeometry = createSelector(getDetailGeometry, detailGeometry => detailGeometry)
+export const getGeometry = createSelector(getDetailGeometry, (detailGeometry) => detailGeometry)
 
 export const getGeoJson = createSelector(
   shouldShowGeoJson,

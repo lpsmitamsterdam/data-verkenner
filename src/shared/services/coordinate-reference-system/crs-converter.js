@@ -83,7 +83,7 @@ export function rdToWgs84(rdCoordinates) {
   }
 }
 
-export const parseLocationString = location => ({
+export const parseLocationString = (location) => ({
   lat: parseFloat(location.split(',')[0]),
   lng: parseFloat(location.split(',')[1]),
 })

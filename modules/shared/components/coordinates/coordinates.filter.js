@@ -1,4 +1,4 @@
-;(function() {
+;(function () {
   angular.module('dpShared').filter('coordinates', coordinatesFilter)
 
   coordinatesFilter.$inject = ['crsConverter']
@@ -9,7 +9,7 @@
      *
      * @returns {String} - A formatted string with RD and lat/lon coordinates "X, Y (lat, lon)"
      */
-    return function(location, type) {
+    return function (location, type) {
       let wgs84Location
       let rdLocation
 
@@ -28,13 +28,13 @@
       }
 
       const formattedWgs84Location = wgs84Location
-        .map(function(coordinate) {
+        .map(function (coordinate) {
           return coordinate.toFixed(7)
         })
         .join(', ')
 
       const formattedRdLocation = rdLocation
-        .map(function(coordinate) {
+        .map(function (coordinate) {
           return coordinate.toFixed(2)
         })
         .join(', ')

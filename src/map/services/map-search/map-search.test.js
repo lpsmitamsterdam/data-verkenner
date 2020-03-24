@@ -66,7 +66,7 @@ describe('mapSearch service', () => {
     })
 
     it('should return results and ignore the ignore the failing calls (http 500 errors)', async () => {
-      getByUrl.mockImplementation(url => {
+      getByUrl.mockImplementation((url) => {
         if (url.indexOf('/nap/') > 0) {
           return Promise.reject()
         }

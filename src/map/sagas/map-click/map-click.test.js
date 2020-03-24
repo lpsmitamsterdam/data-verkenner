@@ -157,7 +157,7 @@ describe('switchClickAction', () => {
       if (fn === getImageDataByLocation) {
         return {
           id: '123',
-          location: Object.keys(payload.location).map(key => payload.location[key]),
+          location: Object.keys(payload.location).map((key) => payload.location[key]),
         }
       }
       return next()

@@ -1,6 +1,6 @@
 import BaseCoder from './base-coder'
 
-const getCoderForBase = base => new BaseCoder(base)
+const getCoderForBase = (base) => new BaseCoder(base)
 
 describe('The BaseCoder', () => {
   function encode(e, base, ndecimals) {
@@ -41,9 +41,9 @@ describe('The BaseCoder', () => {
       }
 
       ;[999, 12345, 9999, 123456, 99999, 1234567890]
-        .map(n => [n, -n])
+        .map((n) => [n, -n])
         .reduce((r, n) => r.concat(n), [])
-        .forEach(n => {
+        .forEach((n) => {
           const enc = encode(n, base)
           expect(decode(enc, base)).toBe(n)
         })
@@ -154,7 +154,7 @@ describe('The BaseCoder', () => {
       ;[
         [525, 'aap'],
         [525, 10.1],
-      ].forEach(a => {
+      ].forEach((a) => {
         const f = () => decode(...a)
         expect(f).toThrowError(RangeError)
       })
@@ -171,7 +171,7 @@ describe('The BaseCoder', () => {
         ['F', 16, 1.5],
         ['F', 16, 'aap'],
         ['F', 16, true],
-      ].forEach(a => {
+      ].forEach((a) => {
         const f = () => decode(...a)
         expect(f).toThrowError(RangeError)
       })
@@ -193,7 +193,7 @@ describe('The BaseCoder', () => {
       ;[
         [525, 'aap'],
         [525, 10.1],
-      ].forEach(a => {
+      ].forEach((a) => {
         const f = () => encode(...a)
         expect(f).toThrowError(RangeError)
       })
@@ -205,7 +205,7 @@ describe('The BaseCoder', () => {
         [525, 10, 5.7],
         [525, 10, 'noot'],
         [525, 10, false],
-      ].forEach(a => {
+      ].forEach((a) => {
         const f = () => encode(...a)
         expect(f).toThrowError(RangeError)
       })

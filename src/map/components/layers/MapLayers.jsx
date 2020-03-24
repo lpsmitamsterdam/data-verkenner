@@ -25,12 +25,12 @@ const MapLayers = ({ panelLayers, activeMapLayers, onLayerToggle }) => {
           <li className="map-layers__category" key={id}>
             <h4 className="map-layers__category-text">{title}</h4>
             <ul>
-              {mapLayers.map(layer => (
+              {mapLayers.map((layer) => (
                 <li
                   className={`
                       map-layers__title
                       map-layers__title--${
-                        activeMapLayers.some(mapLayer => layer.title === mapLayer.title)
+                        activeMapLayers.some((mapLayer) => layer.title === mapLayer.title)
                           ? 'active'
                           : 'inactive'
                       }

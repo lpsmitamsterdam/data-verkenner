@@ -9,10 +9,7 @@ describe('MapSearchResultsItem', () => {
     const label = 'Dam 1'
     const wrapper = shallow(<MapSearchResultsItem onClick={clickHandler} label={label} />)
 
-    wrapper
-      .find('button')
-      .at(0)
-      .simulate('click')
+    wrapper.find('button').at(0).simulate('click')
     expect(clickHandler).toHaveBeenCalled()
   })
 

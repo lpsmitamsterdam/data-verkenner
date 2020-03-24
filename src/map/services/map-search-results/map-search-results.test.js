@@ -8,7 +8,7 @@ describe('Map search results', () => {
       const calculatedOrder = items.reduce(
         (accumulator, newValue) =>
           // eslint-disable-line
-          [...accumulator, basicSortDataModel.findIndex(item => item.type === newValue.type)],
+          [...accumulator, basicSortDataModel.findIndex((item) => item.type === newValue.type)],
         [],
       )
       expect(calculatedOrder).toEqual([2, 0, 1])

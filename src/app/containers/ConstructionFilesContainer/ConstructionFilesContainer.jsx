@@ -69,7 +69,7 @@ const ConstructionFilesContainer = ({ fileName, user }) => {
     [fileName],
   )
 
-  const onDownloadFile = size => {
+  const onDownloadFile = (size) => {
     trackEvent({
       documentTitle,
       action: 'Download-bouwtekening',
@@ -113,7 +113,7 @@ ConstructionFilesContainer.propTypes = {
   endpoint: PropTypes.string.isRequired,
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   fileName: getFileName(state),
   endpoint: `${process.env.API_ROOT}stadsarchief/bouwdossier/${getLocationPayload(state).id.replace(
     'id',

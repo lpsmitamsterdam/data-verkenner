@@ -12,7 +12,7 @@ describe('panoPreview service', () => {
         url: 'url',
       }),
     )
-    fetchPano({ latitude: 123, longitude: 321 }).then(res => {
+    fetchPano({ latitude: 123, longitude: 321 }).then((res) => {
       expect(res).toEqual({
         id: 'pano_id',
         heading: 'heading',
@@ -26,7 +26,7 @@ describe('panoPreview service', () => {
 
   it('should return an empty object when status is 404', () => {
     getByUrl.mockReturnValueOnce(Promise.resolve({}))
-    fetchPano({ latitude: 123, longitude: 321 }).then(res => {
+    fetchPano({ latitude: 123, longitude: 321 }).then((res) => {
       expect(res).toEqual({})
     })
   })

@@ -53,8 +53,8 @@ LoginLink.propTypes = {
   inverted: PropTypes.bool,
 }
 
-export const mapDispatchToProps = dispatch => ({
-  login: e => {
+export const mapDispatchToProps = (dispatch) => ({
+  login: (e) => {
     e.preventDefault()
     dispatch(authenticateRequest('inloggen'))
     window.auth.login()

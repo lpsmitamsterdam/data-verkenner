@@ -1,8 +1,8 @@
 import { dateToString } from '../../../shared/services/date-formatter/date-formatter'
 
-export const aggregateFilter = input => {
+export const aggregateFilter = (input) => {
   const result = input.reduce((aggregation, value) => {
-    const counter = aggregation.find(item => item.name === value)
+    const counter = aggregation.find((item) => item.name === value)
 
     if (counter) {
       counter.count += 1
@@ -25,9 +25,9 @@ export const aggregateFilter = input => {
   })
 }
 
-export const alignRightFilter = input => `<div class='u-align--right'>${input}</div>`
+export const alignRightFilter = (input) => `<div class='u-align--right'>${input}</div>`
 
-export const bagAddressFilter = input => {
+export const bagAddressFilter = (input) => {
   const nummer = input.huisnummer + input.huisletter
   const fullNummer = nummer + (input.huisnummer_toevoeging ? `-${input.huisnummer_toevoeging}` : '')
 
@@ -35,7 +35,7 @@ export const bagAddressFilter = input => {
   return `${input._openbare_ruimte_naam} ${fullNummer}`
 }
 
-export const dateFilter = input => {
+export const dateFilter = (input) => {
   if (!input) return ''
   const date = new Date(input)
   return date && dateToString(date)
@@ -43,9 +43,9 @@ export const dateFilter = input => {
 
 // Only return the address to form the label. The `non_mailing`
 // indicatie will be used in the template as a condition however.
-export const hrBezoekAdresFilter = input => input.bezoekadres_volledig_adres
+export const hrBezoekAdresFilter = (input) => input.bezoekadres_volledig_adres
 
-export const modificationDateFilter = input => {
+export const modificationDateFilter = (input) => {
   if (typeof input === 'string') {
     const last = new Date(input)
     const now = new Date(Date.now())
@@ -69,13 +69,13 @@ export const modificationDateFilter = input => {
   return input
 }
 
-export const nevenadresFilter = hoofdadres => {
+export const nevenadresFilter = (hoofdadres) => {
   const isNevenadres = String(hoofdadres).toLowerCase() === 'false'
 
   return isNevenadres ? '(nevenadres)' : ''
 }
 
-export const nummerAanduidingTypeFilter = input => {
+export const nummerAanduidingTypeFilter = (input) => {
   let type
 
   if (input.ligplaats_id) {
@@ -112,14 +112,14 @@ export const truncateHtmlAsTextFilter = (input, maxLength = 250) => {
   return input
 }
 
-export const verblijfsObjectGevormdFilter = statusId => {
+export const verblijfsObjectGevormdFilter = (statusId) => {
   const VERBLIJFSOBJECT_GEVORMD = 18
   const isVerblijfsobjectGevormd = Number(statusId) === VERBLIJFSOBJECT_GEVORMD
 
   return isVerblijfsobjectGevormd ? '(verblijfsobject gevormd)' : ''
 }
 
-export const zipCodeFilter = input => {
+export const zipCodeFilter = (input) => {
   // Only touch valid Dutch zip codes, leave all other input unchanged
   if (input && input.match(/^[1-9][0-9]{3}[a-zA-Z]{2}$/)) {
     return `${input.substr(0, 4)} ${input.substr(4, 2).toUpperCase()}`

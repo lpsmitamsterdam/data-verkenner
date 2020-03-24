@@ -55,7 +55,7 @@ describe('The dp-data-selection-header', () => {
           dispatch: angular.noop,
         },
       },
-      function($provide) {
+      function ($provide) {
         $provide.factory('dpDataSelectionToggleViewButtonDirective', () => {
           return {}
         })
@@ -222,7 +222,7 @@ describe('The dp-data-selection-header', () => {
     })
   })
 
-  describe('the header title', function() {
+  describe('the header title', function () {
     it('in TABLE view shows the name followed by the number of results', () => {
       mockedInputTable.numberOfRecords = 1234
       component = getComponent(mockedInputTable)
@@ -236,58 +236,33 @@ describe('The dp-data-selection-header', () => {
       // Singular
       mockedInputCatalog.numberOfRecords = 10
       component = getComponent(mockedInputCatalog)
-      expect(
-        component
-          .find('.qa-title')
-          .text()
-          .trim(),
-      ).toBe('Datasets (10)')
+      expect(component.find('.qa-title').text().trim()).toBe('Datasets (10)')
 
       // Plural, with thousand separator
       mockedInputCatalog.numberOfRecords = 1234
       component = getComponent(mockedInputCatalog)
-      expect(
-        component
-          .find('.qa-title')
-          .text()
-          .trim(),
-      ).toBe('Datasets (1.234)')
+      expect(component.find('.qa-title').text().trim()).toBe('Datasets (1.234)')
     })
 
     it("in LIST view shows just the string 'Resultaten'", () => {
       // No results
       mockedInputList.numberOfRecords = 0
       component = getComponent(mockedInputList)
-      expect(
-        component
-          .find('.qa-title')
-          .text()
-          .trim(),
-      ).toBe('Resultaten')
+      expect(component.find('.qa-title').text().trim()).toBe('Resultaten')
 
       // 1 Result
       mockedInputList.numberOfRecords = 1
       component = getComponent(mockedInputList)
-      expect(
-        component
-          .find('.qa-title')
-          .text()
-          .trim(),
-      ).toBe('Resultaten')
+      expect(component.find('.qa-title').text().trim()).toBe('Resultaten')
 
       // Multiple results
       mockedInputList.numberOfRecords = 1234
       component = getComponent(mockedInputList)
-      expect(
-        component
-          .find('.qa-title')
-          .text()
-          .trim(),
-      ).toBe('Resultaten')
+      expect(component.find('.qa-title').text().trim()).toBe('Resultaten')
     })
   })
-  ;['TABLE', 'CATALOG'].forEach(viewName => {
-    beforeEach(function() {
+  ;['TABLE', 'CATALOG'].forEach((viewName) => {
+    beforeEach(function () {
       mockedViewInput = viewName === 'TABLE' ? mockedInputTable : mockedInputCatalog
     })
 
@@ -302,7 +277,7 @@ describe('The dp-data-selection-header', () => {
         expect(component.find('.qa-title').length).toBe(1)
       })
 
-      it("doesn't show tabs", function() {
+      it("doesn't show tabs", function () {
         component = getComponent(mockedViewInput)
 
         expect(component.find('.qa-tabs').length).toBe(0)
@@ -318,7 +293,7 @@ describe('The dp-data-selection-header', () => {
       expect(component.find('.qa-title').length).toBe(1)
     })
 
-    it('shows the tabs', function() {
+    it('shows the tabs', function () {
       component = getComponent(mockedInputList)
 
       expect(component.find('.qa-tabs').length).toBe(1)
@@ -329,18 +304,8 @@ describe('The dp-data-selection-header', () => {
     it('use the TITLE_TAB values from DATA_SELECTION_CONFIG', () => {
       component = getComponent(mockedInputList)
 
-      expect(
-        component
-          .find('.qa-tabs li:nth-child(1)')
-          .text()
-          .trim(),
-      ).toBe('BAG Adressen')
-      expect(
-        component
-          .find('.qa-tabs li:nth-child(2)')
-          .text()
-          .trim(),
-      ).toContain('HR Vestigingen')
+      expect(component.find('.qa-tabs li:nth-child(1)').text().trim()).toBe('BAG Adressen')
+      expect(component.find('.qa-tabs li:nth-child(2)').text().trim()).toContain('HR Vestigingen')
     })
 
     it('inactive tabs are links to the first page of other datasets', () => {
@@ -367,18 +332,8 @@ describe('The dp-data-selection-header', () => {
       mockedInputList.numberOfRecords = 12345
       component = getComponent(mockedInputList)
 
-      expect(
-        component
-          .find('.qa-tabs li:nth-child(1)')
-          .text()
-          .trim(),
-      ).toBe('BAG Adressen')
-      expect(
-        component
-          .find('.qa-tabs li:nth-child(2)')
-          .text()
-          .trim(),
-      ).toBe('HR Vestigingen')
+      expect(component.find('.qa-tabs li:nth-child(1)').text().trim()).toBe('BAG Adressen')
+      expect(component.find('.qa-tabs li:nth-child(2)').text().trim()).toBe('HR Vestigingen')
 
       // When BAG is active
       mockedInputList.dataset = 'bag'
@@ -386,30 +341,15 @@ describe('The dp-data-selection-header', () => {
 
       expect(component.find('.qa-tabs li:nth-child(1)').text()).toContain('BAG Adressen')
       expect(component.find('.qa-tabs li:nth-child(1)').text()).toContain(' (12.345)')
-      expect(
-        component
-          .find('.qa-tabs li:nth-child(2)')
-          .text()
-          .trim(),
-      ).toBe('HR Vestigingen')
+      expect(component.find('.qa-tabs li:nth-child(2)').text().trim()).toBe('HR Vestigingen')
     })
 
     it('it does not show the number of results in the tab heading when not available', () => {
       mockedInputList.numberOfRecords = null
       component = getComponent(mockedInputList)
 
-      expect(
-        component
-          .find('.qa-tabs li:nth-child(1)')
-          .text()
-          .trim(),
-      ).toBe('BAG Adressen')
-      expect(
-        component
-          .find('.qa-tabs li:nth-child(2)')
-          .text()
-          .trim(),
-      ).toBe('HR Vestigingen')
+      expect(component.find('.qa-tabs li:nth-child(1)').text().trim()).toBe('BAG Adressen')
+      expect(component.find('.qa-tabs li:nth-child(2)').text().trim()).toBe('HR Vestigingen')
     })
   })
 })

@@ -11,7 +11,7 @@ function isNumber(value) {
 }
 
 function getPandData(geosearchResults) {
-  const pandCategories = geosearchResults.filter(category => category.slug === 'pand')
+  const pandCategories = geosearchResults.filter((category) => category.slug === 'pand')
   const pandCategory = pandCategories.length ? pandCategories[0] : null
   const pandCategoryIndex = pandCategory ? geosearchResults.indexOf(pandCategory) : null
   const pandEndpoint = pandCategory ? pandCategory.results[0].endpoint : null
@@ -21,7 +21,7 @@ function getPandData(geosearchResults) {
 
 function getPlaatsData(geosearchResults) {
   const plaatsCategories = geosearchResults.filter(
-    category => ['standplaats', 'ligplaats'].indexOf(category.slug) > -1,
+    (category) => ['standplaats', 'ligplaats'].indexOf(category.slug) > -1,
   )
   const plaatsCategory = plaatsCategories.length ? plaatsCategories[0] : null
   const plaatsCategoryIndex = plaatsCategory ? geosearchResults.indexOf(plaatsCategory) : null
@@ -31,17 +31,17 @@ function getPlaatsData(geosearchResults) {
 }
 
 function getRelatedObjects(geosearchResults, user) {
-  return new Promise(resolve => {
+  return new Promise((resolve) => {
     const [pandCategoryIndex, pandEndpoint] = getPandData(geosearchResults)
     const [plaatsCategoryIndex, plaatsEndpoint] = getPlaatsData(geosearchResults)
 
     if (plaatsEndpoint && user.scopes.includes('HR/R')) {
       // Only fetching 'vestigingen' for a standplaats/ligplaats, so
       // we check for employee status here already
-      getByUrl(plaatsEndpoint).then(plaats => {
+      getByUrl(plaatsEndpoint).then((plaats) => {
         const vestigingenUri = `${process.env.API_ROOT}handelsregister/vestiging/?nummeraanduiding=${plaats.hoofdadres.landelijk_id}`
 
-        getByUrl(vestigingenUri).then(vestigingen => {
+        getByUrl(vestigingenUri).then((vestigingen) => {
           const formatted =
             vestigingen && vestigingen.count ? formatCategory('vestiging', vestigingen) : null
           const labelLigplaats = plaats.ligplaatsidentificatie ? ' binnen deze ligplaats' : null
@@ -71,15 +71,15 @@ function getRelatedObjects(geosearchResults, user) {
       })
     } else if (pandEndpoint) {
       // pand matched, remove monumenten from top results
-      geosearchResults = geosearchResults.filter(item => item.slug !== 'monument')
-      getByUrl(pandEndpoint).then(pand => {
+      geosearchResults = geosearchResults.filter((item) => item.slug !== 'monument')
+      getByUrl(pandEndpoint).then((pand) => {
         const vestigingenUri = `handelsregister/vestiging/?pand=${pand.pandidentificatie}`
 
         const requests = [
-          getByUrl(pand._adressen.href).then(objecten => {
+          getByUrl(pand._adressen.href).then((objecten) => {
             // In verblijfsobjecten the status field is really a vbo_status field
             // Rename this field to allow for tranparant processing of the search results
-            objecten.results.forEach(result => {
+            objecten.results.forEach((result) => {
               result.vbo_status = result.vbo_status || result.status
             })
             const formatted = objecten && objecten.count ? formatCategory('adres', objecten) : null
@@ -94,14 +94,14 @@ function getRelatedObjects(geosearchResults, user) {
               : null
             return extended
           }),
-          getByUrl(pand._monumenten.href).then(objecten =>
+          getByUrl(pand._monumenten.href).then((objecten) =>
             objecten && objecten.count ? formatCategory('monument', objecten) : null,
           ),
         ]
 
         if (user.scopes.includes('HR/R')) {
           requests.push(
-            getByUrl(`${process.env.API_ROOT}${vestigingenUri}`).then(vestigingen => {
+            getByUrl(`${process.env.API_ROOT}${vestigingenUri}`).then((vestigingen) => {
               const formatted =
                 vestigingen && vestigingen.count ? formatCategory('vestiging', vestigingen) : null
               const extended = formatted
@@ -119,7 +119,7 @@ function getRelatedObjects(geosearchResults, user) {
           )
         }
 
-        Promise.all(requests).then(results => {
+        Promise.all(requests).then((results) => {
           const geosearchResultsCopy = [...geosearchResults]
           const filteredResults = results.filter(identity)
 
@@ -139,7 +139,7 @@ function getRelatedObjects(geosearchResults, user) {
 export default function geosearch(location, user) {
   const allRequests = []
 
-  SEARCH_CONFIG.COORDINATES_ENDPOINTS.forEach(endpoint => {
+  SEARCH_CONFIG.COORDINATES_ENDPOINTS.forEach((endpoint) => {
     const isInScope = endpoint.authScope && user.scopes && user.scopes.includes(endpoint.authScope)
 
     if (!endpoint.authScope || isInScope) {
@@ -159,7 +159,7 @@ export default function geosearch(location, user) {
         false,
         true,
       ).then(
-        data => ({ features: getFeaturesFromResult(endpoint.uri, data) }),
+        (data) => ({ features: getFeaturesFromResult(endpoint.uri, data) }),
         () => ({ features: [] }),
       ) // empty features on failure of api call
       allRequests.push(request)
@@ -168,5 +168,5 @@ export default function geosearch(location, user) {
 
   return Promise.all(allRequests)
     .then(geosearchFormatter)
-    .then(results => getRelatedObjects(results, user))
+    .then((results) => getRelatedObjects(results, user))
 }

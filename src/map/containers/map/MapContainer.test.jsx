@@ -38,7 +38,7 @@ describe('overrideLeafletGetBounds', () => {
     }
     const map = {
       getPixelBounds: jest.fn(() => pixelBounds),
-      unproject: jest.fn(p => {
+      unproject: jest.fn((p) => {
         if (p.x === 482988) return sw
         return ne
       }),

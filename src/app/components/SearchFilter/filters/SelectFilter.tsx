@@ -28,7 +28,7 @@ const SelectFilter: React.FC<FilterProps> = ({
       <option key={`${type}-all`} value="">
         {formatAllOptionLabel(totalCount, hideCount)}
       </option>
-      {options.map(option => {
+      {options.map((option) => {
         const controlId = `${type}-${option.id}`
 
         return (

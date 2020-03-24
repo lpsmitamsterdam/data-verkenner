@@ -1,4 +1,4 @@
-const normalizeDownloadsObject = downloads => {
+const normalizeDownloadsObject = (downloads) => {
   try {
     return (
       downloads &&

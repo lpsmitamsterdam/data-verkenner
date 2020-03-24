@@ -24,7 +24,7 @@ const Search = ({
   inputProps,
   children,
 }) => {
-  const onOpenSearchToggle = open => {
+  const onOpenSearchToggle = (open) => {
     onOpenSearchBarToggle(open)
   }
 

@@ -26,9 +26,9 @@ if (isIE) {
   window.L.Browser.touch = false
 }
 
-const visibleToOpacity = isVisible => (isVisible ? 100 : 0)
+const visibleToOpacity = (isVisible) => (isVisible ? 100 : 0)
 
-const convertBounds = map => {
+const convertBounds = (map) => {
   const leafletBounds = map.getBounds()
   return {
     northEast: [leafletBounds._northEast.lat, leafletBounds._northEast.lng],
@@ -53,14 +53,14 @@ class MapLeaflet extends React.Component {
 
     const { getLeafletInstance } = this.props
 
-    this.setMapElement = element => {
+    this.setMapElement = (element) => {
       if (element && element.leafletElement) {
         this.MapElement = element.leafletElement
         getLeafletInstance(this.MapElement)
       }
     }
 
-    this.setActiveElement = element => {
+    this.setActiveElement = (element) => {
       if (element) {
         this.activeElement = element.leafletElement
         this.checkIfActiveElementNeedsUpdate(this.activeElement)
@@ -164,7 +164,7 @@ class MapLeaflet extends React.Component {
   handleLoading(layer) {
     const { _leaflet_id: leafletId } = layer
 
-    this.setState(state => ({
+    this.setState((state) => ({
       pendingLayers: !state.pendingLayers.includes(leafletId)
         ? [...state.pendingLayers, leafletId]
         : state.pendingLayers,
@@ -174,8 +174,8 @@ class MapLeaflet extends React.Component {
   handleLoaded(layer) {
     const { _leaflet_id: leafletId } = layer
 
-    this.setState(state => ({
-      pendingLayers: state.pendingLayers.filter(layerId => layerId !== leafletId),
+    this.setState((state) => ({
+      pendingLayers: state.pendingLayers.filter((layerId) => layerId !== leafletId),
     }))
   }
 
@@ -201,8 +201,8 @@ class MapLeaflet extends React.Component {
 
     const { pendingLayers } = this.state
 
-    const tmsLayers = layers.filter(layer => layer.type === MAP_CONFIG.MAP_LAYER_TYPES.TMS)
-    const nonTmsLayers = layers.filter(layer => layer.type !== MAP_CONFIG.MAP_LAYER_TYPES.TMS)
+    const tmsLayers = layers.filter((layer) => layer.type === MAP_CONFIG.MAP_LAYER_TYPES.TMS)
+    const nonTmsLayers = layers.filter((layer) => layer.type !== MAP_CONFIG.MAP_LAYER_TYPES.TMS)
 
     const loadingHandlers = {
       onLoading: ({ sourceTarget }) => this.handleLoading(sourceTarget),
@@ -282,7 +282,7 @@ class MapLeaflet extends React.Component {
             />
           )}
           {markers.map(
-            item =>
+            (item) =>
               Boolean(item.position) && (
                 <CustomMarker
                   ref={markerConfig[item.type].requestFocus && this.setActiveElement}
@@ -295,7 +295,7 @@ class MapLeaflet extends React.Component {
               ),
           )}
           {brkMarkers.map(
-            item =>
+            (item) =>
               Boolean(item.position) && (
                 <CustomMarker
                   ref={markerConfig[item.type].requestFocus && this.setActiveElement}
@@ -315,7 +315,7 @@ class MapLeaflet extends React.Component {
             />
           )}
           {geoJsons.map(
-            shape =>
+            (shape) =>
               Boolean(shape.geoJson) && (
                 <GeoJSON
                   data={shape.geoJson}
@@ -326,7 +326,7 @@ class MapLeaflet extends React.Component {
               ),
           )}
           {rdGeoJsons.map(
-            shape =>
+            (shape) =>
               Boolean(shape.geoJson) && (
                 <RdGeoJson
                   data={shape.geoJson}

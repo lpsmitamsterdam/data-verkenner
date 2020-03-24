@@ -47,7 +47,7 @@ const SearchSort = ({ sort, isOverviewPage, disabled }) => {
           data-testid="sort-select"
           value={sort}
           disabled={disabled}
-          onChange={e => {
+          onChange={(e) => {
             trackEvent({
               category: 'search',
               action: 'sort',

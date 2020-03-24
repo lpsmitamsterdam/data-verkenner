@@ -1,13 +1,6 @@
 function decodeToken(token) {
   try {
-    return JSON.parse(
-      window.atob(
-        token
-          .split('.')[1]
-          .replace('-', '+')
-          .replace('_', '/'),
-      ),
-    )
+    return JSON.parse(window.atob(token.split('.')[1].replace('-', '+').replace('_', '/')))
   } catch (e) {
     return {}
   }

@@ -2,7 +2,7 @@ import * as dataSelectionConfig from '../../../../../src/shared/services/data-se
 import isDefined from '../../../../../src/shared/services/is-defined'
 import { DOWNLOAD_DATA_SELECTION } from '../../../../../src/shared/ducks/data-selection/constants'
 
-describe('The dp-data-selection-download-button component', function() {
+describe('The dp-data-selection-download-button component', function () {
   let $compile
   let $q
   let $rootScope
@@ -40,7 +40,7 @@ describe('The dp-data-selection-download-button component', function() {
     },
   }
 
-  beforeEach(function() {
+  beforeEach(function () {
     angular.mock.module('dpDataSelection', {
       store: {
         dispatch: angular.noop,
@@ -49,7 +49,7 @@ describe('The dp-data-selection-download-button component', function() {
 
     dataSelectionConfig.default = config
 
-    angular.mock.inject(function(_$compile_, _$q_, _$rootScope_, _store_, _api_) {
+    angular.mock.inject(function (_$compile_, _$q_, _$rootScope_, _store_, _api_) {
       $compile = _$compile_
       $q = _$q_
       $rootScope = _$rootScope_
@@ -81,13 +81,13 @@ describe('The dp-data-selection-download-button component', function() {
     return component
   }
 
-  it('will generate a download link for the current dataset', function() {
+  it('will generate a download link for the current dataset', function () {
     const component = getComponent('dataset_a', {})
 
     expect(component.find('a').attr('href')).toContain('/datasets/a/download/')
   })
 
-  it('will filters as parameters to the download link', function() {
+  it('will filters as parameters to the download link', function () {
     let component
 
     // With one active filter
@@ -110,7 +110,7 @@ describe('The dp-data-selection-download-button component', function() {
     )
   })
 
-  it('uses URL encoding for the values of the active filters', function() {
+  it('uses URL encoding for the values of the active filters', function () {
     // With one active filter
     const component = getComponent('dataset_a', {
       filter_a: 'äéë',
@@ -169,7 +169,7 @@ describe('The dp-data-selection-download-button component', function() {
     expect(component.find('a').attr('href')).toBe('tokenUrl')
   })
 
-  it('dispatches an action that is tracked by matomo', function() {
+  it('dispatches an action that is tracked by matomo', function () {
     const component = getComponent('dataset_a', {})
     component.find('a').click()
 

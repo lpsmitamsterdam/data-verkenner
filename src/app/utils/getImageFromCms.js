@@ -1,4 +1,4 @@
-const isString = any => typeof any === 'string'
+const isString = (any) => typeof any === 'string'
 /**
  *
  * Generate the url from imgproxy. For more info check: https://github.com/imgproxy/imgproxy/blob/master/docs/generating_the_url_basic.md

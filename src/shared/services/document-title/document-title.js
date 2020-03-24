@@ -39,7 +39,7 @@ export const datasetDetailDocumentTitle = () => {
   return `${label}`
 }
 
-export const detailDocumentTitleWithName = action => {
+export const detailDocumentTitleWithName = (action) => {
   // We fill the title for details in 2 steps
   let title = document.title.replace(' - Data en informatie - Amsterdam', '')
 

@@ -1,4 +1,4 @@
-;(function() {
+;(function () {
   angular.module('dpDetail').factory('partialCompiler', partialCompilerFactory)
 
   partialCompilerFactory.$inject = ['$q', '$compile', '$rootScope', '$templateRequest']
@@ -9,12 +9,12 @@
     }
 
     function getHtml(templateUrl, sharedScope) {
-      return $templateRequest(templateUrl).then(function(template) {
+      return $templateRequest(templateUrl).then(function (template) {
         const q = $q.defer()
 
         const html = $compile(template)(sharedScope)
 
-        $rootScope.$applyAsync(function() {
+        $rootScope.$applyAsync(function () {
           /*
                      Wait for the next digest cycle (making this function asynchronous), the variables should be
                      rendered inside the template before returning the HTML.

@@ -2,7 +2,7 @@ import isDefined from '../../../../src/shared/services/is-defined'
 
 // This component is just an mock of the dp-link component
 // Is only used in the tests to simplify the test process
-;(function() {
+;(function () {
   angular.module('dpShared').directive('dpLink', dpLinkDirective)
 
   dpLinkDirective.$inject = ['store']

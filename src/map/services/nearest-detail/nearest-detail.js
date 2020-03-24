@@ -11,7 +11,7 @@ const generateParams = (layer, location, zoom) => ({
     : Math.round(2 ** (MAP_CONFIG.BASE_LAYER_OPTIONS.maxZoom - zoom) / 2),
 })
 
-export const sortResults = results =>
+export const sortResults = (results) =>
   results.sort((a, b) => {
     if (a.detailIsShape && b.detailIsShape) {
       return a.distance - b.distance
@@ -26,7 +26,7 @@ export const sortResults = results =>
   })
 
 const retrieveLayers = (detailItems, detailIsShape) =>
-  detailItems.map(item => ({
+  detailItems.map((item) => ({
     detailIsShape,
     ...item.properties,
   }))
@@ -35,7 +35,7 @@ export default async function fetchNearestDetail(location, layers, zoom) {
   const results = sortResults(
     (
       await Promise.all(
-        layers.map(async layer => {
+        layers.map(async (layer) => {
           const params = generateParams(layer, location, zoom)
           const result = await getByUrl(process.env.API_ROOT + layer.detailUrl, params)
           const features = getFeaturesFromResult(layer.detailUrl, result)

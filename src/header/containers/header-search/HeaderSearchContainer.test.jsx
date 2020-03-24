@@ -17,7 +17,7 @@ describe('HeaderSearchContainer', () => {
     getSuggestionsAction.mockImplementation(() => ({
       type: 'getSuggestionsAction',
     }))
-    clearMapDetail.mockImplementation(endpoint => ({
+    clearMapDetail.mockImplementation((endpoint) => ({
       type: CLEAR_MAP_DETAIL,
       payload: endpoint,
     }))

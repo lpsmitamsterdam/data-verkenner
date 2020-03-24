@@ -16,7 +16,7 @@ module.exports = () => {
       'react|react-dom|redux-first-router|redux-first-router-link|redux-first-router-restore-scroll|reselect|redux|@?redux-saga|react-redux|react-helmet|prop-types',
   }
 
-  const getTestRegex = path => new RegExp(`/node_modules/(${path})/`)
+  const getTestRegex = (path) => new RegExp(`/node_modules/(${path})/`)
 
   return merge(commonConfig(), {
     output: {

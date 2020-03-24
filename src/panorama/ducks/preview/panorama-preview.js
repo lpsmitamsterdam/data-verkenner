@@ -42,26 +42,26 @@ export default function PanoPreviewReducer(state = initialState, action) {
 }
 
 // action creators
-export const fetchPanoramaPreview = location => ({
+export const fetchPanoramaPreview = (location) => ({
   type: FETCH_PANORAMA_PREVIEW_REQUEST,
   payload: location,
 })
 
-export const fetchPanoramaPreviewSuccess = payload => ({
+export const fetchPanoramaPreviewSuccess = (payload) => ({
   type: FETCH_PANORAMA_PREVIEW_SUCCESS,
   payload,
 })
 
-export const fetchPanoramaPreviewFailure = error => ({
+export const fetchPanoramaPreviewFailure = (error) => ({
   type: FETCH_PANORAMA_PREVIEW_FAILURE,
   payload: error,
 })
 
 // selectors
-const getPanoramaPreviewState = state => state[REDUCER_KEY]
+const getPanoramaPreviewState = (state) => state[REDUCER_KEY]
 
-const getStateOfKey = key => state =>
-  createSelector(getPanoramaPreviewState, data => data[key])(state)
+const getStateOfKey = (key) => (state) =>
+  createSelector(getPanoramaPreviewState, (data) => data[key])(state)
 
 export const getPanoramaPreview = getStateOfKey('preview')
 export const isPanoramaPreviewLoading = getStateOfKey('isLoading')

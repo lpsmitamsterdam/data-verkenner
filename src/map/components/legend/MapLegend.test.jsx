@@ -69,16 +69,10 @@ describe('MapLegend', () => {
   it('should toggle the layer', () => {
     const onLayerToggleMock = jest.fn()
     const component = shallow(<MapLegend {...props} onLayerToggle={onLayerToggleMock} />)
-    component
-      .find('button')
-      .at(0)
-      .simulate('click')
+    component.find('button').at(0).simulate('click')
     expect(onLayerToggleMock).toHaveBeenCalledWith(props.activeMapLayers[0])
 
-    component
-      .find('button')
-      .at(1)
-      .simulate('click')
+    component.find('button').at(1).simulate('click')
     expect(onLayerToggleMock).toHaveBeenCalledWith(props.activeMapLayers[1])
   })
 

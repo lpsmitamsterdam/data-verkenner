@@ -38,24 +38,16 @@ describe('search module', () => {
       cy.get(AUTO_SUGGEST.INPUT).type('{downarrow}{downarrow}')
 
       cy.get(AUTO_SUGGEST.LIST_ITEM_BUTTON).as('listItemButton')
-      cy.get('@listItemButton')
-        .eq(1)
-        .should('not.have.class', inactiveClass)
-      cy.get('@listItemButton')
-        .eq(1)
-        .should('have.class', activeClass)
+      cy.get('@listItemButton').eq(1).should('not.have.class', inactiveClass)
+      cy.get('@listItemButton').eq(1).should('have.class', activeClass)
 
       cy.get(AUTO_SUGGEST.INPUT).type('{uparrow}')
-      cy.get('@listItemButton')
-        .eq(1)
-        .should('have.class', inactiveClass)
+      cy.get('@listItemButton').eq(1).should('have.class', inactiveClass)
     })
 
     it('should to to the search result page when selecting the "..." option', () => {
       cy.get(AUTO_SUGGEST.LIST_ITEM_BUTTON).as('listItemButton2')
-      cy.get('@listItemButton2')
-        .eq(3)
-        .click()
+      cy.get('@listItemButton2').eq(3).click()
       cy.waitForSearch(false)
 
       cy.get(SEARCHPAGE_SELECTORS.RESULTS_BLOCK).should('exist')
@@ -63,9 +55,7 @@ describe('search module', () => {
 
     it('should to to the detail page when selecting a result', () => {
       cy.get(AUTO_SUGGEST.LIST_ITEM_BUTTON).as('listItemButton2')
-      cy.get('@listItemButton2')
-        .eq(2)
-        .click()
+      cy.get('@listItemButton2').eq(2).click()
       cy.wait('@getDetail')
 
       cy.get(DETAIL_PAGE).should('exist')
@@ -91,9 +81,7 @@ describe('search module', () => {
         .find(SEARCHPAGE_SELECTORS.MORE_BUTTON)
         .click()
 
-      cy.get(SEARCHPAGE_SELECTORS.RESULTS_ITEM_LINK)
-        .closest('li')
-        .as('resultItems')
+      cy.get(SEARCHPAGE_SELECTORS.RESULTS_ITEM_LINK).closest('li').as('resultItems')
 
       cy.get('@resultItems')
         .contains('nevenadres')
@@ -107,9 +95,7 @@ describe('search module', () => {
         .scrollIntoView()
         .and('be.visible')
 
-      cy.get(SEARCHPAGE_SELECTORS.HEADER)
-        .contains(`met '${SEARCH_QUERY}'`)
-        .should('exist')
+      cy.get(SEARCHPAGE_SELECTORS.HEADER).contains(`met '${SEARCH_QUERY}'`).should('exist')
     })
   })
 })

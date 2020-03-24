@@ -1,15 +1,15 @@
-describe('The dp-wkpb-link directive', function() {
+describe('The dp-wkpb-link directive', function () {
   let $compile
   let $rootScope
 
-  beforeEach(function() {
-    angular.mock.module('dpDetail', function($provide) {
-      $provide.factory('dpLinkDirective', function() {
+  beforeEach(function () {
+    angular.mock.module('dpDetail', function ($provide) {
+      $provide.factory('dpLinkDirective', function () {
         return {}
       })
     })
 
-    angular.mock.inject(function(_$compile_, _$rootScope_) {
+    angular.mock.inject(function (_$compile_, _$rootScope_) {
       $compile = _$compile_
       $rootScope = _$rootScope_
     })
@@ -27,7 +27,7 @@ describe('The dp-wkpb-link directive', function() {
     return component
   }
 
-  it('creates a dp-redux-link that directs to a object-wkpb endpoint', function() {
+  it('creates a dp-redux-link that directs to a object-wkpb endpoint', function () {
     const component = getComponent('abc789')
     const scope = component.isolateScope()
 
@@ -37,7 +37,7 @@ describe('The dp-wkpb-link directive', function() {
     expect(scope.vm.wkpbEndpoint).toContain('/brk/object-wkpb/abc789/')
   })
 
-  it('is spelled WKPB-uittreksel', function() {
+  it('is spelled WKPB-uittreksel', function () {
     const component = getComponent('abc789')
 
     expect(component.text()).toContain('WKPB-uittreksel')

@@ -54,10 +54,7 @@ describe('DataSearch', () => {
     }
     const component = shallow(<DataSearch {...extendedProps} />)
 
-    component
-      .find('button.qa-show-more')
-      .at(0)
-      .simulate('click')
+    component.find('button.qa-show-more').at(0).simulate('click')
     expect(toDetailMock).toHaveBeenCalledWith('https://something.com', VIEW_MODE.SPLIT)
   })
 })

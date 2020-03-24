@@ -19,7 +19,7 @@ BezoekAdres.propTypes = {
 
 const FileType = ({ formattedValue }) => (
   <div>
-    {formattedValue.map(fileType => (
+    {formattedValue.map((fileType) => (
       <div className="c-data-selection-file-type">
         <span
           className={`c-data-selection-file-type__name c-data-selection-file-type__format-${fileType.name.toLowerCase()}`}
@@ -62,7 +62,7 @@ SBIOmschrijving.propTypes = {
 
 const Tags = ({ formattedValue }) => (
   <div>
-    {formattedValue.map(tag => (
+    {formattedValue.map((tag) => (
       <div className="u-inline">
         <span className="o-tag o-tag--small">{tag.name}</span>
       </div>

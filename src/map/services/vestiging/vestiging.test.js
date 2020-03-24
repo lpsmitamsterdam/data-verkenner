@@ -60,7 +60,7 @@ describe('The vestiging resource', () => {
       }),
     )
 
-    const promise = fetchByPandId(1).then(response => {
+    const promise = fetchByPandId(1).then((response) => {
       expect(response).toEqual([
         {
           _display: 'Vestiging display name 1',
@@ -93,7 +93,7 @@ describe('The vestiging resource', () => {
       }),
     )
 
-    const promise = fetchByAddressId(0).then(response => {
+    const promise = fetchByAddressId(0).then((response) => {
       expect(response).toEqual([
         {
           _display: 'Vestiging display name 1',

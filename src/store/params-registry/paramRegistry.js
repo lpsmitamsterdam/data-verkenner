@@ -47,15 +47,15 @@ class ParamsRegistry {
     const { encode, decode, selector, defaultValue } = reducerSettingsKeys
     const allowedKeys = [encode, decode, defaultValue, selector]
 
-    Object.keys(overrideOptions).forEach(value => {
+    Object.keys(overrideOptions).forEach((value) => {
       if (!allowedKeys.includes(value)) {
         throw new Error(`Key given to reducer settings is not allowed: "${value}"`)
       }
     })
 
     return {
-      selector: state => get(state, `[${reducerKey}]${stateKey}`),
-      decode: val => {
+      selector: (state) => get(state, `[${reducerKey}]${stateKey}`),
+      decode: (val) => {
         if (typeof val !== 'string') {
           return val
         }
@@ -70,7 +70,7 @@ class ParamsRegistry {
 
         return val
       },
-      encode: val => {
+      encode: (val) => {
         if (typeof val === 'boolean' || typeof val === 'number') {
           return String(val)
         }
@@ -131,7 +131,7 @@ class ParamsRegistry {
     }
     const routeApi = {
       add: (routes, reducerKey, stateKey, reducerObject, addHistory = true) => {
-        ;[...(Array.isArray(routes) ? [...routes] : [routes])].forEach(route => {
+        ;[...(Array.isArray(routes) ? [...routes] : [routes])].forEach((route) => {
           if (!reducerKey || typeof stateKey === 'undefined') {
             throw new Error(
               `Param "${param}" with route "${route}" must contain a reducerKey and stateKey`,
@@ -253,7 +253,9 @@ class ParamsRegistry {
                 : decodedValue,
             }
           }
-          const reducerObj = Object.values(object.routes).find(obj => obj.reducerKey === reducerKey)
+          const reducerObj = Object.values(object.routes).find(
+            (obj) => obj.reducerKey === reducerKey,
+          )
           return {
             ...acc,
             ...(reducerObj ? { [reducerObj.stateKey]: reducerObj.defaultValue } : {}),

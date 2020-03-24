@@ -30,13 +30,13 @@ const exitProcess = (code, error) => {
 }
 
 console.log('Pa11y: checking configuration')
-const checkTestsActions = allTests => {
+const checkTestsActions = (allTests) => {
   // flatten actions
   const actions = allTests.reduce(
     (acc, next) => (next.actions ? [...acc, ...next.actions] : acc),
     [],
   )
-  const invalidActions = actions.filter(value => pa11y.isValidAction(value) === false)
+  const invalidActions = actions.filter((value) => pa11y.isValidAction(value) === false)
   if (invalidActions.length > 0) {
     console.error('invalid actions encountered:')
     invalidActions.forEach(console.error)
@@ -72,7 +72,7 @@ const actions = tests.map((test, idx) => () => {
 pAll(actions, {
   concurrency: CONCURRENT_TESTS,
 })
-  .then(results => {
+  .then((results) => {
     const total = {
       errors: 0,
       warnings: 0,
@@ -80,7 +80,7 @@ pAll(actions, {
     }
 
     results.forEach(
-      result => {
+      (result) => {
         if (result.documentTitle) {
           console.log(`Pa11y: results for "${result.documentTitle}"`)
 
@@ -100,7 +100,7 @@ pAll(actions, {
           )
         }
       },
-      reason => {
+      (reason) => {
         exitProcess(1, reason)
       },
     )
@@ -122,6 +122,6 @@ pAll(actions, {
     }
     exitProcess(0)
   })
-  .catch(error => {
+  .catch((error) => {
     exitProcess(1, error)
   })

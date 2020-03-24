@@ -10,7 +10,7 @@
  * @returns {Object.<string, string>} A key-value map representation of
  * the query string, or null if `queryString` is falsy.
  */
-const queryStringParser = queryString => {
+const queryStringParser = (queryString) => {
   if (!queryString || queryString.length === 0) {
     return null
   }
@@ -33,10 +33,10 @@ const queryStringParser = queryString => {
   }, {})
 }
 
-export const encodeQueryParams = params =>
+export const encodeQueryParams = (params) =>
   params
     ? Object.keys(params)
-        .map(param => `${encodeURIComponent(param)}=${encodeURIComponent(params[param])}`)
+        .map((param) => `${encodeURIComponent(param)}=${encodeURIComponent(params[param])}`)
         .join('&')
     : ''
 

@@ -37,14 +37,14 @@ const SearchFilter: React.FC<SearchFilterProps> = ({ filter, totalCount, hideCou
   const FilterContent = getFilterComponent(filterType)
 
   function onSelectionChange(values: string[]) {
-    const disabledFilters = selection.filter(value => !values.includes(value))
-    const enabledFilters = values.filter(value => !selection.includes(value))
+    const disabledFilters = selection.filter((value) => !values.includes(value))
+    const enabledFilters = values.filter((value) => !selection.includes(value))
 
-    disabledFilters.forEach(value =>
+    disabledFilters.forEach((value) =>
       trackEvent({ category: 'search', action: 'disable-filter', name: `${type}-${value}` }),
     )
 
-    enabledFilters.forEach(value =>
+    enabledFilters.forEach((value) =>
       trackEvent({ category: 'search', action: 'enable-filter', name: `${type}-${value}` }),
     )
 
@@ -60,7 +60,7 @@ const SearchFilter: React.FC<SearchFilterProps> = ({ filter, totalCount, hideCou
         totalCount={totalCount}
         hideCount={hideCount}
         selection={selection}
-        onSelectionChange={values => onSelectionChange(values)}
+        onSelectionChange={(values) => onSelectionChange(values)}
       />
     </FilterBox>
   )

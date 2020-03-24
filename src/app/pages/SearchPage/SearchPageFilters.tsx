@@ -102,7 +102,7 @@ const SearchPageFilters: React.FC<SearchPageFiltersProps> = ({
       <PageFilterBox {...{ query, currentPage }} />
       <>
         {filters.length > 0 &&
-          filters.map(filter => (
+          filters.map((filter) => (
             <SearchFilter
               key={filter.type}
               filter={filter}

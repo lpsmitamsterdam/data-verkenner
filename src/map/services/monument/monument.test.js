@@ -24,7 +24,7 @@ describe('The monument resource', () => {
       }),
     )
 
-    const promise = fetchByPandId(1).then(response => {
+    const promise = fetchByPandId(1).then((response) => {
       expect(response).toEqual([
         {
           _display: 'Monument display name 1',

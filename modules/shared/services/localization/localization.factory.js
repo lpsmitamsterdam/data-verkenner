@@ -1,4 +1,4 @@
-;(function() {
+;(function () {
   angular.module('dpShared').factory('localization', localizationFactory)
 
   function localizationFactory() {

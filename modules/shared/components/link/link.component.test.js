@@ -3,7 +3,7 @@ import isDefined from '../../../../src/shared/services/is-defined'
 // This test is never run because the problems that dp-link gives.
 // In the test configuration is the link.component.mock used
 //    instead of link.component
-describe('The dp-link component', function() {
+describe('The dp-link component', function () {
   let $compile
   let $rootScope
   let store
@@ -14,7 +14,7 @@ describe('The dp-link component', function() {
   let mockedStateUrlConverter
   let mockedTargetPath
 
-  beforeEach(function() {
+  beforeEach(function () {
     mockedActions = {
       ACTION_WITH_LINK: 'ACTION_WITH_LINK',
       ACTION_WITH_BUTTON: 'ACTION_WITH_BUTTON',
@@ -47,7 +47,7 @@ describe('The dp-link component', function() {
       },
     })
 
-    angular.mock.inject(function(_$compile_, _$rootScope_, _store_) {
+    angular.mock.inject(function (_$compile_, _$rootScope_, _store_) {
       $compile = _$compile_
       $rootScope = _$rootScope_
       store = _store_
@@ -102,7 +102,7 @@ describe('The dp-link component', function() {
     return component
   }
 
-  it('can have a custom className', function() {
+  it('can have a custom className', function () {
     let component
 
     // A link with a custom class
@@ -114,7 +114,7 @@ describe('The dp-link component', function() {
     expect(component.find('button').attr('class')).toContain('my-special-class')
   })
 
-  it('has a default fallback class if no className is specified', function() {
+  it('has a default fallback class if no className is specified', function () {
     let component
 
     // A link with the default class
@@ -126,7 +126,7 @@ describe('The dp-link component', function() {
     expect(component.find('button').attr('class')).toContain('o-btn o-btn--link')
   })
 
-  it('has an optional hover text (title attribute)', function() {
+  it('has an optional hover text (title attribute)', function () {
     let component
 
     // A link with hover text
@@ -138,7 +138,7 @@ describe('The dp-link component', function() {
     expect(component.find('button').attr('title')).toContain('Woohoo!')
   })
 
-  it('clicking the button will trigger a call to store.dispatch', function() {
+  it('clicking the button will trigger a call to store.dispatch', function () {
     let component
 
     // A dispatch with a payload

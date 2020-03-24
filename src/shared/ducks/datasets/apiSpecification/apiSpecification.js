@@ -46,12 +46,12 @@ export const fetchApiSpecificationRequest = () => ({
   type: FETCH_API_SPECIFICATION_REQUEST,
 })
 
-export const fetchApiSpecificationSuccess = payload => ({
+export const fetchApiSpecificationSuccess = (payload) => ({
   type: FETCH_API_SPECIFICATION_SUCCESS,
   payload,
 })
 
-export const fetchApiSpecificationFailure = payload => ({
+export const fetchApiSpecificationFailure = (payload) => ({
   type: FETCH_API_SPECIFICATION_FAILURE,
   payload,
 })

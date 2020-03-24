@@ -265,8 +265,8 @@ function editVertex(vertex) {
 // that all limits are respected and that the last consistent state gets exposed by the
 // drawing tool
 function registerDrawEvents() {
-  Object.keys(L.Draw.Event).forEach(eventName => {
-    drawTool.map.on(L.Draw.Event[eventName], e => {
+  Object.keys(L.Draw.Event).forEach((eventName) => {
+    drawTool.map.on(L.Draw.Event[eventName], (e) => {
       if (eventName === 'DELETED') {
         // IE HACK
         start(300)
@@ -293,7 +293,7 @@ function registerDrawEvents() {
 }
 
 function unregisterDrawEvents() {
-  Object.keys(L.Draw.Event).forEach(eventName => {
+  Object.keys(L.Draw.Event).forEach((eventName) => {
     drawTool.map.off(L.Draw.Event[eventName])
   })
 }
@@ -437,7 +437,7 @@ export function updateShape() {
     area = L.GeometryUtil.geodesicArea(latLngs)
     intersects = currentShape.layer.intersects()
   } else if (drawTool.drawShapeHandler._markers && drawTool.drawShapeHandler._markers.length > 0) {
-    latLngs = drawTool.drawShapeHandler._markers.map(m => m._latlng)
+    latLngs = drawTool.drawShapeHandler._markers.map((m) => m._latlng)
     area = drawTool.drawShapeHandler._area
     distance = getDistance(latLngs, false)
   } else if (currentShape.markersEdit.length > 0) {
@@ -491,7 +491,7 @@ function deleteMarker() {
   const marker = currentShape.deleteMarker
   const { drawShapeHandler } = drawTool
   const markers = drawShapeHandler._markers // is always an array
-  const index = markers.findIndex(m => m._leaflet_id === marker._leaflet_id)
+  const index = markers.findIndex((m) => m._leaflet_id === marker._leaflet_id)
   let nDelete = markers.length - index // Delete all from last to marker, inclusive
   while (nDelete > 0) {
     // Remove the last vertex from the polyline, removes polyline from map if only one point
@@ -519,7 +519,7 @@ function getLastDrawnMarker() {
 function bindLastDrawnMarker() {
   const lastMarker = getLastDrawnMarker()
   const isFirstMarker = drawTool.drawShapeHandler._markers.length === 1
-  ;['mousedown', 'click'].forEach(key =>
+  ;['mousedown', 'click'].forEach((key) =>
     lastMarker.on(key, () => {
       if (drawTool.drawShapeHandler.enabled()) {
         // click on map automatically creates a new marker -> remove that first
@@ -542,6 +542,6 @@ function bindLastDrawnMarker() {
   )
 }
 
-export const isDrawingActive = drawingMode => drawingMode !== drawToolConfig.DRAWING_MODE.NONE
+export const isDrawingActive = (drawingMode) => drawingMode !== drawToolConfig.DRAWING_MODE.NONE
 
 /* eslint-enable no-use-before-define,no-underscore-dangle */

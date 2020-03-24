@@ -1,6 +1,6 @@
 import { ERROR_TYPES } from '../../../../src/shared/ducks/error/error-message'
 
-describe('The window error handler', function() {
+describe('The window error handler', function () {
   const httpStatus = {
     logResponse: angular.noop,
     registerError: angular.noop,
@@ -10,7 +10,7 @@ describe('The window error handler', function() {
   let onError
   let windowErrorHandler
 
-  beforeEach(function() {
+  beforeEach(function () {
     onError = null
     const window = {
       addEventListener(type, func) {
@@ -24,11 +24,11 @@ describe('The window error handler', function() {
       httpStatus,
     })
 
-    angular.mock.module(function($provide) {
+    angular.mock.module(function ($provide) {
       $provide.value('$window', window)
     })
 
-    angular.mock.inject(function(_$rootScope_, _windowErrorHandler_) {
+    angular.mock.inject(function (_$rootScope_, _windowErrorHandler_) {
       windowErrorHandler = _windowErrorHandler_
       $rootScope = _$rootScope_
     })
@@ -62,7 +62,7 @@ describe('The window error handler', function() {
     expect(httpStatus.logResponse).not.toHaveBeenCalled()
   })
 
-  it('registers url load errors by listening to window error events', function() {
+  it('registers url load errors by listening to window error events', function () {
     onError({
       target: {
         src: 'aap',
@@ -76,7 +76,7 @@ describe('The window error handler', function() {
     )
   })
 
-  it('does not register error if matomo is not loaded', function() {
+  it('does not register error if matomo is not loaded', function () {
     onError({
       target: {
         src: 'https://analytics.data.amsterdam.nl/matomo.js',

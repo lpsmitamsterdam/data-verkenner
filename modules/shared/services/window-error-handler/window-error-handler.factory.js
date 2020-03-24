@@ -1,5 +1,5 @@
 import { ERROR_TYPES } from '../../../../src/shared/ducks/error/error-message'
-;(function() {
+;(function () {
   angular.module('dpShared').factory('windowErrorHandler', windowErrorHandlerFactory)
 
   windowErrorHandlerFactory.$inject = ['$log', '$rootScope', '$window', 'httpStatus']
@@ -8,7 +8,7 @@ import { ERROR_TYPES } from '../../../../src/shared/ducks/error/error-message'
     return () => {
       $window.addEventListener(
         'error',
-        function(event) {
+        function (event) {
           // Initiated by browser without Raven/Sentry intervening.
           // Fired when asset load from HTML fails.
           // e.g. Matomo fails to load, or a tile is not loaded.

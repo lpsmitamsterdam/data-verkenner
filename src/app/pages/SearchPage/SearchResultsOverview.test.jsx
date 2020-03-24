@@ -47,7 +47,7 @@ describe('SearchResultsOverview', () => {
     describe('when results for each type', () => {
       const mockTypes = ['foo', 'foo2']
 
-      const mockResults = mockTypes.map(type => ({
+      const mockResults = mockTypes.map((type) => ({
         key: type,
         totalCount: 1,
         results: [{ id: 'foo' }],
@@ -65,7 +65,7 @@ describe('SearchResultsOverview', () => {
         const pageType = mockTypes[mockTypes.length - 1]
 
         const pageComponent = component.at(mockTypes.length - 1)
-        const pageResults = mockResults.find(result => result.key === pageType)
+        const pageResults = mockResults.find((result) => result.key === pageType)
 
         // Heading
         expect(pageComponent.find('SearchHeading').exists()).toBeTruthy()

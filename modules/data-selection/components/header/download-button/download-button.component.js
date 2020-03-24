@@ -1,7 +1,7 @@
 import DATA_SELECTION_CONFIG from '../../../../../src/shared/services/data-selection/data-selection-config'
 import isDefined from '../../../../../src/shared/services/is-defined'
 import { downloadDataSelection } from '../../../../../src/shared/ducks/data-selection/actions'
-;(function() {
+;(function () {
   angular.module('dpDataSelection').component('dpDataSelectionDownloadButton', {
     bindings: {
       dataset: '@',
@@ -26,7 +26,7 @@ import { downloadDataSelection } from '../../../../../src/shared/ducks/data-sele
 
       let url = process.env.API_ROOT + DATA_SELECTION_CONFIG.datasets[vm.dataset].ENDPOINT_EXPORT
 
-      DATA_SELECTION_CONFIG.datasets[vm.dataset].FILTERS.forEach(function(filter) {
+      DATA_SELECTION_CONFIG.datasets[vm.dataset].FILTERS.forEach(function (filter) {
         if (angular.isString(vm.activeFilters[filter.slug])) {
           filterParams.push(
             `${filter.slug}=${$window.encodeURIComponent(vm.activeFilters[filter.slug])}`,
@@ -48,7 +48,7 @@ import { downloadDataSelection } from '../../../../../src/shared/ducks/data-sele
         url += `?${filterParams.join('&')}`
       }
 
-      api.createUrlWithToken(url).then(tokenUrl => (vm.downloadUrl = tokenUrl))
+      api.createUrlWithToken(url).then((tokenUrl) => (vm.downloadUrl = tokenUrl))
 
       vm.downloadDataSelection = () =>
         store.dispatch(downloadDataSelection(DATA_SELECTION_CONFIG.datasets[vm.dataset].TITLE))

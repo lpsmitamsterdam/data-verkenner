@@ -18,7 +18,7 @@ const CONSTANTS = {
   },
 }
 
-export const authCustomDimensions = state => {
+export const authCustomDimensions = (state) => {
   const authenticated = userIsAuthenticated(state)
     ? CONSTANTS.DIMENSION3.AUTHENTICATED
     : CONSTANTS.DIMENSION3.UNAUTHENTICATED

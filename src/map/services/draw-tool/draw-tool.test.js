@@ -163,7 +163,7 @@ describe('draw-tool service', () => {
         [52.37455608226589, 4.888835359085925],
       ]
 
-      latLngsPolygon = latLngsArray.map(latLng => ({
+      latLngsPolygon = latLngsArray.map((latLng) => ({
         lat: latLng[0],
         lng: latLng[1],
         distanceTo: jest.fn(() => 1),
@@ -346,7 +346,7 @@ describe('draw-tool service', () => {
 
       it('should replace the old polygon when setPolygon', () => {
         // Arrange
-        latLngsPolygon = latLngsArray.map(latLng => ({
+        latLngsPolygon = latLngsArray.map((latLng) => ({
           lat: latLng[0],
           lng: latLng[1],
           distanceTo: jest.fn(() => 1000),
@@ -400,7 +400,7 @@ describe('draw-tool service', () => {
         [52.3745924, 4.8887719],
         [52.374557, 4.8887248],
       ]
-      latLngsPolygon = latLngsArray.map(latLng => ({
+      latLngsPolygon = latLngsArray.map((latLng) => ({
         lat: latLng[0],
         lng: latLng[1],
         distanceTo: jest.fn(() => 1000),
@@ -569,7 +569,7 @@ describe('draw-tool service', () => {
         currentShape.layerPrev = layer
         drawTool.drawingMode = drawToolConfig.DRAWING_MODE.DRAW
         drawTool.drawnItems = layer
-        latLngsPolygon = latLngsArray.map(latLng => ({
+        latLngsPolygon = latLngsArray.map((latLng) => ({
           lat: latLng[0],
           lng: latLng[1],
           distanceTo: jest.fn(() => 1),
@@ -620,7 +620,7 @@ describe('draw-tool service', () => {
           }
           drawTool.drawShapeHandler._markers = [marker] // eslint-disable-line no-underscore-dangle
           currentShape.markers = [currentShape.markers.pop()]
-          latLngsPolygon = currentShape.markers.map(latLng => ({
+          latLngsPolygon = currentShape.markers.map((latLng) => ({
             lat: latLng[0],
             lng: latLng[1],
             distanceTo: jest.fn(() => 1),

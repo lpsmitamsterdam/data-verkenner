@@ -1,4 +1,4 @@
-;(function() {
+;(function () {
   angular.module('dpShared').factory('storage', storageFactory)
 
   storageFactory.$inject = ['$window', 'InstanceStorage']

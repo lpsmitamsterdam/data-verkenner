@@ -27,7 +27,7 @@ let polygon = {}
 let has2Markers
 let moreThan2Markers
 
-export const isPanoLayer = layer => layer.id && layer.id.startsWith(PANORAMA)
+export const isPanoLayer = (layer) => layer.id && layer.id.startsWith(PANORAMA)
 
 export default function MapReducer(state = initialState, action) {
   const enrichedState = {
@@ -107,26 +107,26 @@ export default function MapReducer(state = initialState, action) {
     case TOGGLE_MAP_OVERLAY:
       return {
         ...enrichedState,
-        overlays: enrichedState.overlays.some(overlay =>
+        overlays: enrichedState.overlays.some((overlay) =>
           action.payload.mapLayers.includes(overlay.id),
         )
           ? [
               ...enrichedState.overlays.filter(
-                overlay => !action.payload.mapLayers.includes(overlay.id),
+                (overlay) => !action.payload.mapLayers.includes(overlay.id),
               ),
             ]
           : [
               ...enrichedState.overlays,
               ...action.payload.mapLayers
                 .reverse()
-                .map(mapLayerId => ({ id: mapLayerId, isVisible: true })),
+                .map((mapLayerId) => ({ id: mapLayerId, isVisible: true })),
             ],
       }
 
     case TOGGLE_MAP_OVERLAY_VISIBILITY:
       return {
         ...enrichedState,
-        overlays: enrichedState.overlays.map(overlay => ({
+        overlays: enrichedState.overlays.map((overlay) => ({
           ...overlay,
           isVisible: overlay.id === action.mapLayerId ? action.isVisible : overlay.isVisible,
         })),

@@ -1,4 +1,4 @@
-;(function() {
+;(function () {
   angular.module('dpDetail').constant('BBGA_TEVREDENHEID_CONFIG', [
     {
       label: 'Tevredenheid met buurt',

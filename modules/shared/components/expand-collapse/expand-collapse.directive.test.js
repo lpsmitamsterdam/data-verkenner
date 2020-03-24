@@ -27,17 +27,11 @@ describe('`dpExpandCollapse` directive', () => {
       overflow: 'hidden',
     })
 
-    angular
-      .element(document)
-      .find('body')
-      .append(collapsedElement)
+    angular.element(document).find('body').append(collapsedElement)
 
     $interval.flush(FLUSH_PERIOD)
 
-    const button = angular
-      .element(document)
-      .find('body')
-      .find('button')
+    const button = angular.element(document).find('body').find('button')
 
     expect(button).not.toBeUndefined()
     expect(collapsedElement.scope().collapsed).toBeTruthy()
@@ -60,10 +54,7 @@ describe('`dpExpandCollapse` directive', () => {
   it('Should leave non-lengthy content', () => {
     const untouchedElement = $compile(`<p dp-expand-collapse>${content}</p>`)($rootScope)
 
-    angular
-      .element(document)
-      .find('body')
-      .append(untouchedElement)
+    angular.element(document).find('body').append(untouchedElement)
 
     $interval.flush(FLUSH_PERIOD)
 

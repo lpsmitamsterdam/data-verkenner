@@ -1,4 +1,4 @@
-;(function() {
+;(function () {
   angular.module('dpShared').factory('crsConverter', crsConverterFactory)
 
   crsConverterFactory.$inject = ['CRS_CONFIG', 'proj4']

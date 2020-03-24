@@ -32,7 +32,7 @@ describe('The dp-sbi-filter component', () => {
       },
     })
 
-    angular.mock.inject(function(_$compile_, _$rootScope_, _store_) {
+    angular.mock.inject(function (_$compile_, _$rootScope_, _store_) {
       $compile = _$compile_
       $rootScope = _$rootScope_
       store = _store_
@@ -141,36 +141,16 @@ describe('The dp-sbi-filter component', () => {
       expect(component.find('.qa-sbi-filter h1').text()).toBe('')
 
       // sbi filter
-      expect(
-        component
-          .find('.qa-sbi-filter h2')
-          .eq(0)
-          .text(),
-      ).toBe('SBI-code')
-      expect(
-        component
-          .find('.qa-sbi-filter ul')
-          .eq(0)
-          .find('li').length,
-      ).toBe(9)
+      expect(component.find('.qa-sbi-filter h2').eq(0).text()).toBe('SBI-code')
+      expect(component.find('.qa-sbi-filter ul').eq(0).find('li').length).toBe(9)
 
-      expect(
-        component
-          .find('.qa-sbi-filter ul')
-          .eq(0)
-          .find('li button')
-          .eq(0)
-          .text(),
-      ).toContain('de eerste van level 1')
+      expect(component.find('.qa-sbi-filter ul').eq(0).find('li button').eq(0).text()).toContain(
+        'de eerste van level 1',
+      )
 
-      expect(
-        component
-          .find('.qa-sbi-filter ul')
-          .eq(0)
-          .find('li button')
-          .eq(8)
-          .text(),
-      ).toContain('Optie van de drieeenheid')
+      expect(component.find('.qa-sbi-filter ul').eq(0).find('li button').eq(8).text()).toContain(
+        'Optie van de drieeenheid',
+      )
     })
 
     it('filter list with limit of 10 items then click show more and click show less', () => {
@@ -185,12 +165,7 @@ describe('The dp-sbi-filter component', () => {
       const component = getComponent()
 
       // maximum number of items
-      expect(
-        component
-          .find('.qa-sbi-filter ul')
-          .eq(0)
-          .find('li').length,
-      ).toBe(10)
+      expect(component.find('.qa-sbi-filter ul').eq(0).find('li').length).toBe(10)
 
       expect(component.find('.qa-show-more-button').length).toBe(1)
 
@@ -198,23 +173,13 @@ describe('The dp-sbi-filter component', () => {
       component.find('.qa-show-more-button').click()
       $rootScope.$apply()
 
-      expect(
-        component
-          .find('.qa-sbi-filter ul')
-          .eq(0)
-          .find('li').length,
-      ).toBe(11)
+      expect(component.find('.qa-sbi-filter ul').eq(0).find('li').length).toBe(11)
 
       // Click the show less button
       component.find('.qa-show-more-button').click()
       $rootScope.$apply()
 
-      expect(
-        component
-          .find('.qa-sbi-filter ul')
-          .eq(0)
-          .find('li').length,
-      ).toBe(10)
+      expect(component.find('.qa-sbi-filter ul').eq(0).find('li').length).toBe(10)
     })
   })
 
@@ -222,12 +187,7 @@ describe('The dp-sbi-filter component', () => {
     it('when selecting the first filter; one filter is communicated', () => {
       const component = getComponent()
 
-      component
-        .find('.qa-sbi-filter ul')
-        .eq(0)
-        .find('li button')
-        .eq(0)
-        .click()
+      component.find('.qa-sbi-filter ul').eq(0).find('li button').eq(0).click()
 
       expect(store.dispatch).toHaveBeenCalledWith(
         addFilter({
@@ -242,12 +202,7 @@ describe('The dp-sbi-filter component', () => {
       }
       const component = getComponent(activeFilters)
 
-      component
-        .find('.qa-sbi-filter ul')
-        .eq(0)
-        .find('li button')
-        .eq(4)
-        .click()
+      component.find('.qa-sbi-filter ul').eq(0).find('li button').eq(4).click()
 
       expect(store.dispatch).toHaveBeenCalledWith(
         addFilter({
@@ -261,10 +216,7 @@ describe('The dp-sbi-filter component', () => {
     it('when using input field to send 1 sbi-code', () => {
       const component = getComponent()
 
-      component
-        .find('.qa-sbi-filter-form-input')
-        .val('888')
-        .triggerHandler('change')
+      component.find('.qa-sbi-filter-form-input').val('888').triggerHandler('change')
 
       expect(store.dispatch).toHaveBeenCalledWith(
         addFilter({
@@ -276,10 +228,7 @@ describe('The dp-sbi-filter component', () => {
     it('when using input field to send multiple sbi-codes', () => {
       const component = getComponent()
 
-      component
-        .find('.qa-sbi-filter-form-input')
-        .val('   9999   ,  44,3')
-        .triggerHandler('change')
+      component.find('.qa-sbi-filter-form-input').val('   9999   ,  44,3').triggerHandler('change')
 
       expect(store.dispatch).toHaveBeenCalledWith(
         addFilter({
@@ -294,10 +243,7 @@ describe('The dp-sbi-filter component', () => {
       }
       const component = getComponent(activeFilters)
 
-      component
-        .find('.qa-sbi-filter-form-input')
-        .val('')
-        .triggerHandler('change')
+      component.find('.qa-sbi-filter-form-input').val('').triggerHandler('change')
       expect(store.dispatch).toHaveBeenCalledWith(removeFilter('sbi_code'))
     })
   })
