@@ -46,20 +46,31 @@ const ShareBar = ({
           onClick={() => handlePageShare('facebook')}
           hoverColor="#3b5999"
           iconSize={30}
+          title="Deel op Facebook"
         >
           <Facebook />
         </ShareButton>
-        <ShareButton type="button" onClick={() => handlePageShare('twitter')} hoverColor="#55acee">
+        <ShareButton
+          type="button"
+          onClick={() => handlePageShare('twitter')}
+          hoverColor="#55acee"
+          title="Deel op Twitter"
+        >
           <Twitter />
         </ShareButton>
-        <ShareButton type="button" onClick={() => handlePageShare('linkedin')} hoverColor="#0077B5">
+        <ShareButton
+          type="button"
+          onClick={() => handlePageShare('linkedin')}
+          hoverColor="#0077B5"
+          title="Deel op LinkedIn"
+        >
           <Linkedin />
         </ShareButton>
-        <ShareButton type="button" onClick={() => handlePageShare('email')}>
+        <ShareButton type="button" onClick={() => handlePageShare('email')} title="Deel via email">
           <Email />
         </ShareButton>
         {hasPrintButton && (
-          <ShareButton type="button" onClick={openPrintMode}>
+          <ShareButton type="button" onClick={openPrintMode} title="Print deze pagina">
             <Print />
           </ShareButton>
         )}
