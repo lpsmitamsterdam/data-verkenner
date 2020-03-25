@@ -45,8 +45,12 @@ const NonSelectableLegendParagraph = styled(Paragraph)`
   margin-bottom: ${themeSpacing(2)};
 `
 
-const LayerButton = styled.button`
+// We cannot use a button because of IE11
+const LayerButton = styled.div.attrs({
+  role: 'button',
+})`
   display: flex;
+  cursor: pointer;
   justify-content: space-between;
   align-items: center;
   width: 100%;
@@ -121,11 +125,12 @@ const MapLegend = ({
     [overlays, activeMapLayers],
   )
 
-  const collectionIndeterminate = mapLayers.some(
-    ({ isVisible, legendItems }) =>
-      !isVisible || legendItems.some(({ isVisible: legendVisibility }) => !legendVisibility),
-  )
   const allInvisible = mapLayers.every(({ isVisible }) => !isVisible)
+  const collectionIndeterminate =
+    mapLayers.some(
+      ({ isVisible, legendItems }) =>
+        !isVisible || legendItems.some(({ isVisible: legendVisibility }) => !legendVisibility),
+    ) && !allInvisible
 
   // Effect if all layers are unchecked manually within a collection
   useEffect(() => {
@@ -160,7 +165,7 @@ const MapLegend = ({
   return (
     <>
       {(!isPrintOrEmbedView || (isPrintOrEmbedView && !allInvisible)) && (
-        <LayerButton type="button" onClick={() => setOpen(!open)} open={open}>
+        <LayerButton onClick={() => setOpen(!open)} open={open}>
           <TitleWrapper>
             <StyledCheckbox
               id={title}
@@ -184,7 +189,8 @@ const MapLegend = ({
           {mapLayers &&
             mapLayers.map((mapLayer, mapLayerIndex) => {
               const layerIsChecked = mapLayer.isVisible
-              const layerIsIndeterminate = mapLayer.legendItems.some(({ isVisible }) => !isVisible)
+              const layerIsIndeterminate =
+                mapLayer.legendItems.some(({ isVisible }) => !isVisible) && layerIsChecked
 
               // If there are no legend items, the layer itself will be used as legend item as the current design does not support one-level map layers
               const legendItems =
@@ -216,7 +222,9 @@ const MapLegend = ({
                         name={mapLayer.title}
                         onChange={
                           /* istanbul ignore next */
-                          () => onLayerToggle(mapLayer)
+                          () => {
+                            onLayerToggle(mapLayer)
+                          }
                         }
                       />
                     </StyledLabel>

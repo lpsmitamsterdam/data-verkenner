@@ -10,6 +10,10 @@ const COOKIE_NAME = 'showUpdateAlert'
 
 const StyledAlertMessage = styled(AlertMessage)`
   z-index: 3;
+  // IE11 fix
+  & > div {
+    min-width: 0%;
+  }
 `
 
 // Todo: remove this before 1th of may 2020, as this alert wont be relevant anymore
@@ -24,9 +28,9 @@ const UpdateAlert: React.FC = () => {
         onDismiss={() => createCookie(COOKIE_NAME, '160')} // 4 weeks
       >
         <Paragraph>
-          Kaartlagen zijn nu anders.{' '}
-          <Link onDarkBackground title="Meer info" href="/content/nieuws/">
-            Meer info
+          De indeling van de kaartlagen is veranderd.{' '}
+          <Link onDarkBackground title="Lees meer" href="/content/nieuws/">
+            Lees meer
           </Link>
         </Paragraph>
       </StyledAlertMessage>

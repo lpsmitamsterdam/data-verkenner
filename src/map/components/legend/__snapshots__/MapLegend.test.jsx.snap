@@ -2,10 +2,9 @@
 
 exports[`MapLegend should render the component 1`] = `
 <Fragment>
-  <styled.button
+  <styled.div
     onClick={[Function]}
     open={false}
-    type="button"
   >
     <styled.div>
       <Styled(Component)
@@ -24,6 +23,6 @@ exports[`MapLegend should render the component 1`] = `
     >
       <SvgChevronDown />
     </Icon>
-  </styled.button>
+  </styled.div>
 </Fragment>
 `;
