@@ -25,5 +25,4 @@ export default {
   MARKER: 'marker',
   MARKER_ICON: 'marker-icon',
   MAP_LINK: 'map-link',
-  VARIANT: 'variant',
 }

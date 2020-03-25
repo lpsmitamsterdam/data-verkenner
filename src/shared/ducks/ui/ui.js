@@ -42,7 +42,6 @@ export const initialState = {
   isPrintMode: false,
   viewMode: VIEW_MODE.SPLIT,
   isMapLinkVisible: true,
-  variant: null,
 }
 
 export default function UiReducer(state = initialState, action) {
@@ -144,7 +143,6 @@ export const isEmbedded = createSelector(getUIState, (ui) => ui.isEmbed)
 export const isEmbedPreview = createSelector(getUIState, (ui) => ui.isEmbedPreview)
 export const isPrintMode = createSelector(getUIState, (ui) => ui.isPrintMode)
 export const getViewMode = createSelector(getUIState, (ui) => ui.viewMode)
-export const getVariant = createSelector(getUIState, (ui) => ui.variant)
 export const isPrintOrEmbedMode = createSelector(
   isEmbedded,
   isPrintMode,

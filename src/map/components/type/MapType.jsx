@@ -3,8 +3,6 @@ import PropTypes from 'prop-types'
 import { Heading } from '@datapunt/asc-ui'
 import { SelectButton } from '../../../shared/components/select-button'
 
-import './_map-type.scss'
-
 function hasLayer(activeBaseLayer, baseLayers) {
   return (
     baseLayers &&

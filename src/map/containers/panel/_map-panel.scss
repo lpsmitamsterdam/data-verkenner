@@ -1,8 +1,7 @@
 @import '../../../shared/styles/config';
 
 .map-panel {
-  background-color: $primary-light;
-  border: solid 1px $secondary-gray20;
+  border: solid 1px $white;
   bottom: $container-whitespace;
   box-shadow: 2px 2px 0 0 $secondary-gray40;
   display: flex;
@@ -60,28 +59,6 @@
       margin: auto;
       z-index: 1;
       position: relative;
-    }
-
-    &.flash:after {
-      opacity: 1;
-    }
-
-    &.flash--hidden:after {
-      animation: hide-flash 0.7s;
-    }
-
-    @keyframes hide-flash {
-      0% {
-        opacity: 1;
-      }
-
-      40% {
-        opacity: 1;
-      }
-
-      100% {
-        opacity: 0;
-      }
     }
   }
 

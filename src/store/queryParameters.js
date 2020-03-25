@@ -2,9 +2,9 @@ import { routing } from '../app/routes'
 import { DATA_SEARCH_REDUCER } from '../shared/ducks/data-search/reducer'
 import {
   getActiveFilters,
+  getPage,
   getQuery,
   getSort,
-  getPage,
   REDUCER_KEY as SEARCH_REDUCER,
 } from '../app/pages/SearchPage/SearchPageDucks'
 import { getDataSelectionPage, getGeometryFilter } from '../shared/ducks/data-selection/selectors'
@@ -19,9 +19,9 @@ import {
   getCenter,
   getMapOverlays,
   getMapZoom,
-  isMapPanelActive,
-  getMarkerLocation,
   getMarkerIcon,
+  getMarkerLocation,
+  isMapPanelActive,
 } from '../map/ducks/map/selectors'
 import { initialState as panoramaInitialState } from '../panorama/ducks/constants'
 import { PANORAMA } from '../panorama/ducks/reducer'
@@ -45,10 +45,9 @@ import {
   initialState as UIInitialState,
   isEmbedded,
   isEmbedPreview,
-  isPrintMode,
   isMapLinkVisible,
+  isPrintMode,
   UI,
-  getVariant,
 } from '../shared/ducks/ui/ui'
 import {
   normalizeCoordinate,
@@ -150,12 +149,6 @@ export default paramsRegistry
     routes.add(routesWithMapActive, UI, 'viewMode', {
       selector: getViewMode,
       defaultValue: UIInitialState.viewMode,
-    })
-  })
-  .addParameter(PARAMETERS.VARIANT, (routes) => {
-    routes.add(routesWithMapActive, UI, 'variant', {
-      selector: getVariant,
-      defaultValue: UIInitialState.variant,
     })
   })
   .addParameter(PARAMETERS.CATEGORY, (routes) => {
