@@ -194,7 +194,6 @@ function commonConfig() {
         },
       ]),
       new HtmlWebpackPlugin({
-        inject: false,
         template: './index.ejs',
         minify: {
           collapseWhitespace: !isDev,
