@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import classNames from 'classnames'
-import styled, { css } from '@datapunt/asc-core'
+import styled, { css } from 'styled-components'
 import {
   AmsterdamLogo,
   Header as HeaderComponent,

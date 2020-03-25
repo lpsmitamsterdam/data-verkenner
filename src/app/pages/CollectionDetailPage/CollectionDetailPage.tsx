@@ -1,6 +1,6 @@
 /* eslint-disable camelcase */
 import React, { useEffect } from 'react'
-import styled from '@datapunt/asc-core'
+import styled from 'styled-components'
 import { Link, Row, themeSpacing } from '@datapunt/asc-ui'
 import { useSelector } from 'react-redux'
 import CardListBlock, { CMSCollectionList } from '../../components/CardList/CardListBlock'

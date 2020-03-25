@@ -1,4 +1,4 @@
-import styled, { css } from '@datapunt/asc-core'
+import styled, { css } from 'styled-components'
 import { breakpoint, Button, Paragraph, themeColor, themeSpacing } from '@datapunt/asc-ui'
 import React from 'react'
 

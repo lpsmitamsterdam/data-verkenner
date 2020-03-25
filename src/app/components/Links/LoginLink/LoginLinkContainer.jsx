@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import styled from '@datapunt/asc-core'
+import styled from 'styled-components'
 import { Link, styles, svgFill, themeColor } from '@datapunt/asc-ui'
 import { connect } from 'react-redux'
 import { authenticateRequest } from '../../../../shared/ducks/user/user'

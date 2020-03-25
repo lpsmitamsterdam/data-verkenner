@@ -1,4 +1,4 @@
-import styled from '@datapunt/asc-core'
+import styled from 'styled-components'
 import { breakpoint, themeColor } from '@datapunt/asc-ui'
 
 const TileLabel = styled.div`

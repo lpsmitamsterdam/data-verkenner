@@ -1,5 +1,5 @@
-import styled, { Theme } from '@datapunt/asc-core'
-import { Column, Link, Row, themeSpacing } from '@datapunt/asc-ui'
+import styled from 'styled-components'
+import { Theme, Column, Link, Row, themeSpacing } from '@datapunt/asc-ui'
 import { perceivedLoading } from '@datapunt/asc-ui/lib/utils/themeUtils'
 import React, { useState } from 'react'
 import RouterLink from 'redux-first-router-link'

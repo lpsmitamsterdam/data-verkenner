@@ -1,6 +1,6 @@
 import React from 'react'
 import { Card, CardContent, Heading, themeColor, themeSpacing } from '@datapunt/asc-ui'
-import styled from '@datapunt/asc-core'
+import styled from 'styled-components'
 import EditorialCard from '../EditorialCard'
 import { CMSResultItem } from '../../utils/useFromCMS'
 

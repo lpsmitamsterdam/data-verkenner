@@ -1,6 +1,6 @@
 import React, { Suspense } from 'react'
 import PropTypes from 'prop-types'
-import styled from '@datapunt/asc-core'
+import styled from 'styled-components'
 import Helmet from 'react-helmet'
 import { useSelector } from 'react-redux'
 import EmbedIframeComponent from './components/EmbedIframe/EmbedIframe'

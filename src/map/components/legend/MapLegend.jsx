@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import queryString from 'querystring'
 
-import styled from '@datapunt/asc-core'
+import styled from 'styled-components'
 import { Checkbox, themeSpacing } from '@datapunt/asc-ui'
 import MAP_CONFIG from '../../services/map.config'
 

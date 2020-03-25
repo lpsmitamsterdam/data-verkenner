@@ -1,6 +1,7 @@
 import React from 'react'
-import styled, { ascDefaultTheme, css } from '@datapunt/asc-core'
+import styled, { css } from 'styled-components'
 import {
+  ascDefaultTheme,
   Card,
   CardContent,
   CardMedia,

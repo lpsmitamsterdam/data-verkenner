@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import styled from '@datapunt/asc-core'
+import styled from 'styled-components'
 import { Heading, themeColor, themeSpacing } from '@datapunt/asc-ui'
 import Notification from '../../../shared/components/notification/Notification'
 import LoginLinkContainer from '../Links/LoginLink/LoginLinkContainer'

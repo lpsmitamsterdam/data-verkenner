@@ -1,4 +1,4 @@
-import styled, { css } from '@datapunt/asc-core'
+import styled, { css } from 'styled-components'
 import { breakpoint, perceivedLoading, themeColor, Link, themeSpacing } from '@datapunt/asc-ui'
 import { SizeOnBreakpoint } from '../TileGrid/TileGridStyle'
 import getImageFromCms from '../../utils/getImageFromCms'

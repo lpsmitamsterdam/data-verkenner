@@ -1,4 +1,4 @@
-import styled from '@datapunt/asc-core'
+import styled from 'styled-components'
 import { themeSpacing } from '@datapunt/asc-ui'
 import React from 'react'
 import { DEFAULT_LOCALE } from '../../../shared/config/locale.config'

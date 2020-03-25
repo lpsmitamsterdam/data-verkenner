@@ -1,5 +1,5 @@
 import React, { memo } from 'react'
-import styled from '@datapunt/asc-core'
+import styled from 'styled-components'
 import { useDispatch } from 'react-redux'
 import {
   breakpoint,

@@ -1,4 +1,4 @@
-import styled from '@datapunt/asc-core'
+import styled from 'styled-components'
 import { CardContainer } from '@datapunt/asc-ui'
 import RouterLink from 'redux-first-router-link'
 import React, { memo } from 'react'

@@ -1,6 +1,6 @@
 /* eslint-disable camelcase */
 import React from 'react'
-import styled from '@datapunt/asc-core'
+import styled from 'styled-components'
 import { AlertMessage } from '@datapunt/asc-ui'
 import { useSelector } from 'react-redux'
 import { isEmbedded } from '../../../shared/ducks/ui/ui'
