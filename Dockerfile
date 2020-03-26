@@ -32,7 +32,6 @@ COPY .babelrc \
      .prettierrc \
      .prettierignore \
       webpack.* \
-      index.ejs \
       favicon.png \
       /app/
 
