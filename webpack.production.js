@@ -20,8 +20,8 @@ module.exports = () => {
 
   return merge(commonConfig(), {
     output: {
-      filename: '[name].js?id=[chunkhash]',
-      chunkFilename: '[name].bundle.js?id=[chunkhash]',
+      filename: '[name].[hash].js',
+      chunkFilename: '[name].[chunkhash].bundle.js',
     },
     mode: 'production',
     devtool: 'source-map',
@@ -106,7 +106,6 @@ module.exports = () => {
           },
         },
       },
-      runtimeChunk: true,
     },
     plugins: [new MiniCssExtractPlugin('main.[contenthash].css')],
   })
