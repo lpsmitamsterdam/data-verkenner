@@ -17,12 +17,7 @@ exports[`The AutoSuggest component should allow the user to navigate with the ke
     [MockFunction] {
       "calls": Array [
         Array [
-          Object {
-            "persist": [MockFunction],
-            "target": Object {
-              "value": "d",
-            },
-          },
+          "d",
         ],
       ],
       "results": Array [
@@ -115,6 +110,7 @@ exports[`The AutoSuggest component should allow the user to navigate with the ke
           Object {
             "onBlur": [Function],
             "onChange": [Function],
+            "onClear": [Function],
             "onFocus": [Function],
             "onKeyDown": [Function],
             "value": "dam",
@@ -205,12 +201,7 @@ exports[`The AutoSuggest component should allow the user to navigate with the ke
     [MockFunction] {
       "calls": Array [
         Array [
-          Object {
-            "persist": [MockFunction],
-            "target": Object {
-              "value": "d",
-            },
-          },
+          "d",
         ],
       ],
       "results": Array [
@@ -303,6 +294,7 @@ exports[`The AutoSuggest component should allow the user to navigate with the ke
           Object {
             "onBlur": [Function],
             "onChange": [Function],
+            "onClear": [Function],
             "onFocus": [Function],
             "onKeyDown": [Function],
             "value": "dam",
@@ -390,12 +382,7 @@ exports[`The AutoSuggest component should toggle the "showsuggestions" state on 
     [MockFunction] {
       "calls": Array [
         Array [
-          Object {
-            "persist": [MockFunction],
-            "target": Object {
-              "value": "d",
-            },
-          },
+          "d",
         ],
       ],
       "results": Array [
@@ -488,6 +475,7 @@ exports[`The AutoSuggest component should toggle the "showsuggestions" state on 
           Object {
             "onBlur": [Function],
             "onChange": [Function],
+            "onClear": [Function],
             "onFocus": [Function],
             "onKeyDown": [Function],
             "value": "dam",
@@ -575,12 +563,7 @@ exports[`The AutoSuggest component should toggle the "showsuggestions" state on 
     [MockFunction] {
       "calls": Array [
         Array [
-          Object {
-            "persist": [MockFunction],
-            "target": Object {
-              "value": "d",
-            },
-          },
+          "d",
         ],
       ],
       "results": Array [
@@ -673,6 +656,7 @@ exports[`The AutoSuggest component should toggle the "showsuggestions" state on 
           Object {
             "onBlur": [Function],
             "onChange": [Function],
+            "onClear": [Function],
             "onFocus": [Function],
             "onKeyDown": [Function],
             "value": "dam",
@@ -760,12 +744,7 @@ exports[`The AutoSuggest component should toggle the "showsuggestions" state on 
     [MockFunction] {
       "calls": Array [
         Array [
-          Object {
-            "persist": [MockFunction],
-            "target": Object {
-              "value": "d",
-            },
-          },
+          "d",
         ],
       ],
       "results": Array [
@@ -858,6 +837,7 @@ exports[`The AutoSuggest component should toggle the "showsuggestions" state on 
           Object {
             "onBlur": [Function],
             "onChange": [Function],
+            "onClear": [Function],
             "onFocus": [Function],
             "onKeyDown": [Function],
             "value": "dam",

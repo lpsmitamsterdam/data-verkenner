@@ -52,6 +52,7 @@ const Search = ({
         {children}
       </StyledSearchBar>
       <SearchBarToggle
+        title={inputProps.placeholder}
         hideAt="tabletM"
         onOpen={onOpenSearchToggle}
         open={openSearchBarToggle}

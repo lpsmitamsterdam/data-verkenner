@@ -51,7 +51,14 @@ const FeedbackModalComponent = ({
     <TopBar>
       <Heading as="h4">
         Feedback
-        <Button variant="blank" type="button" size={30} onClick={handleClose} icon={<Close />} />
+        <Button
+          variant="blank"
+          title="Sluit"
+          type="button"
+          size={30}
+          onClick={handleClose}
+          icon={<Close />}
+        />
       </Heading>
     </TopBar>
     <Divider />
@@ -63,6 +70,7 @@ const FeedbackModalComponent = ({
       </Paragraph>
       <Button
         as="a"
+        title="Onjuistheid terugmelden"
         variant="primary"
         onClick={reportFeedbackAction}
         href={getMailtoLink(
@@ -83,6 +91,7 @@ const FeedbackModalComponent = ({
       </Paragraph>
       <Button
         as="a"
+        title="Probleem melden"
         variant="primary"
         onClick={reportProblemAction}
         href={getMailtoLink(PROBLEM_RECIPIENT, PROBLEM_SUBJECT, PROBLEM_BODY(window.location.href))}

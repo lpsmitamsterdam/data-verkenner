@@ -25,7 +25,7 @@ const Map = ({
   <section className="context-menu">
     <ContextMenuComponent
       data-test="context-menu"
-      alt="Actiemenu"
+      title="Actiemenu"
       arrowIcon={<ChevronDown />}
       icon={
         <Icon padding={4} inline size={24}>
