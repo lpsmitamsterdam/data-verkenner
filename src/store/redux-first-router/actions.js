@@ -1,8 +1,8 @@
 import { ROUTER_NAMESPACE, routing } from '../../app/routes'
-import { DATASET_ROUTE_MAPPER } from '../../shared/ducks/data-selection/constants'
-import PARAMETERS from '../parameters'
-import { VIEW_MODE } from '../../shared/ducks/ui/ui'
 import { HEADER_LINKS } from '../../shared/config/config'
+import { DATASET_ROUTE_MAPPER } from '../../shared/ducks/data-selection/constants'
+import { VIEW_MODE } from '../../shared/ducks/ui/ui'
+import PARAMETERS from '../parameters'
 
 export const preserveQuery = (action, additionalParams = null) => ({
   ...action,
@@ -17,6 +17,21 @@ export const shouldResetState = (action, allowedRoutes = []) =>
   action.type &&
   action.type.startsWith(ROUTER_NAMESPACE) &&
   allowedRoutes.every((route) => !action.type.includes(route))
+
+const toSearchOfType = (type) => (
+  additionalParams = null,
+  skipSaga = false,
+  forceSaga = false,
+  preserve = true,
+) => ({
+  type,
+  meta: {
+    preserve,
+    skipSaga,
+    forceSaga,
+    additionalParams,
+  },
+})
 
 export const toDataDetail = (detailReference, additionalParams = null, tracking = true) => {
   const [id, type, subtype] = detailReference
@@ -55,20 +70,7 @@ export const toGeoSearch = (additionalParams) =>
     additionalParams,
   )
 
-export const toDataSearch = (
-  additionalParams = null,
-  skipSaga = false,
-  forceSaga = false,
-  preserve = true,
-) => ({
-  type: routing.dataSearch.type,
-  meta: {
-    preserve,
-    skipSaga,
-    forceSaga,
-    additionalParams,
-  },
-})
+export const toDataSearch = toSearchOfType(routing.dataSearch.type)
 
 export const toDataSearchType = (type) =>
   toDataSearch(
@@ -177,35 +179,8 @@ export const toConstructionFilesFromEndpoint = (endpoint) => {
   }
 }
 
-export const toDatasetSearch = (
-  additionalParams = null,
-  skipSaga = false,
-  forceSaga = false,
-  preserve = true,
-) => ({
-  type: routing.datasetSearch.type,
-  meta: {
-    preserve,
-    skipSaga,
-    forceSaga,
-    additionalParams,
-  },
-})
-
-export const toSearch = (
-  additionalParams = null,
-  skipSaga = false,
-  forceSaga = false,
-  preserve = true,
-) => ({
-  type: routing.search.type,
-  meta: {
-    preserve,
-    skipSaga,
-    forceSaga,
-    additionalParams,
-  },
-})
+export const toDatasetSearch = toSearchOfType(routing.datasetSearch.type)
+export const toSearch = toSearchOfType(routing.search.type)
 
 export const toDataSuggestion = (payload, view) => {
   const { type, subtype, id } = getDetailPageData(payload.endpoint)
@@ -325,22 +300,9 @@ export const toNotFoundPage = () => ({
 export const toHelpPage = () =>
   toArticleDetail(HEADER_LINKS.HELP.id[process.env.NODE_ENV], HEADER_LINKS.HELP.slug)
 
-export const toCmsSearch = (type) => (
-  additionalParams = null,
-  skipSaga = false,
-  forceSaga = false,
-  preserve = true,
-) => ({
-  type,
-  meta: {
-    preserve,
-    skipSaga,
-    forceSaga,
-    additionalParams,
-  },
-})
-
-export const toPublicationSearch = toCmsSearch(routing.publicationSearch.type)
-export const toArticleSearch = toCmsSearch(routing.articleSearch.type)
-export const toSpecialSearch = toCmsSearch(routing.specialSearch.type)
-export const toCollectionSearch = toCmsSearch(routing.collectionSearch.type)
+export const toPublicationSearch = toSearchOfType(routing.publicationSearch.type)
+export const toArticleSearch = toSearchOfType(routing.articleSearch.type)
+export const toSpecialSearch = toSearchOfType(routing.specialSearch.type)
+export const toCollectionSearch = toSearchOfType(routing.collectionSearch.type)
+export const toMapCollectionSearch = toSearchOfType(routing.mapCollectionSearch.type)
+export const toMapLayerSearch = toSearchOfType(routing.mapLayerSearch.type)

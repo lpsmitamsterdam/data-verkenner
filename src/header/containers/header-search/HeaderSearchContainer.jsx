@@ -7,25 +7,29 @@ import PARAMETERS from '../../../store/parameters'
 import {
   toArticleDetail,
   toArticleSearch,
+  toCollectionDetail,
+  toCollectionSearch,
   toDataSearch,
   toDatasetDetail,
   toDatasetSearch,
   toDataSuggestion,
+  toMapCollectionSearch,
+  toMapLayerSearch,
   toMapWithLegendOpen,
   toPublicationDetail,
   toPublicationSearch,
   toSearch,
   toSpecialSearch,
-  toCollectionDetail,
-  toCollectionSearch,
 } from '../../../store/redux-first-router/actions'
 import {
   isArticlePage,
+  isCollectionPage,
   isDataPage,
   isDatasetPage,
+  isMapCollectionPage,
+  isMapLayerPage,
   isPublicationPage,
   isSpecialPage,
-  isCollectionPage,
 } from '../../../store/redux-first-router/selectors'
 import {
   getActiveSuggestions,
@@ -47,6 +51,8 @@ const mapStateToProps = (state) => ({
   isPublicationPage: isPublicationPage(state),
   isSpecialPage: isSpecialPage(state),
   isCollectionPage: isCollectionPage(state),
+  isMapCollectionPage: isMapCollectionPage(state),
+  isMapLayerPage: isMapLayerPage(state),
   view: getViewMode(state),
   isMapActive: isMapPage(state),
   numberOfSuggestions: getNumberOfSuggestions(state),
@@ -133,6 +139,26 @@ const mapDispatchToProps = (dispatch) => ({
   onCollectionSearch: (query) =>
     dispatch(
       toCollectionSearch(
+        {
+          [PARAMETERS.QUERY]: query,
+        },
+        false,
+        true,
+      ),
+    ),
+  onMapCollectionSearch: (query) =>
+    dispatch(
+      toMapCollectionSearch(
+        {
+          [PARAMETERS.QUERY]: query,
+        },
+        false,
+        true,
+      ),
+    ),
+  onMapLayerSearch: (query) =>
+    dispatch(
+      toMapLayerSearch(
         {
           [PARAMETERS.QUERY]: query,
         },

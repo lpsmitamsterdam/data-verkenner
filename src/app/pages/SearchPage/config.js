@@ -1,27 +1,32 @@
+import { CmsType } from '../../../shared/config/cms.config'
 import {
-  dataSearchQuery,
-  datasetSearchQuery,
-  searchQuery,
-  articleSearchQuery,
-  publicationSearchQuery,
-  specialSearchQuery,
-  collectionSearchQuery,
-} from './documents.graphql'
-
-import {
-  toSearch,
-  toPublicationSearch,
   toArticleSearch,
-  toSpecialSearch,
+  toCollectionSearch,
   toDataSearch,
   toDatasetSearch,
-  toCollectionSearch,
+  toMapCollectionSearch,
+  toMapLayerSearch,
+  toPublicationSearch,
+  toSearch,
+  toSpecialSearch,
 } from '../../../store/redux-first-router/actions'
-import { routing } from '../../routes'
-import { CmsType } from '../../../shared/config/cms.config'
 import EditorialResults from '../../components/EditorialResults'
+import { routing } from '../../routes'
 import DataSearchResults from './DataSearchResults'
 import DatasetSearchResults from './DatasetSearchResults'
+import {
+  articleSearchQuery,
+  collectionSearchQuery,
+  dataSearchQuery,
+  datasetSearchQuery,
+  mapCollectionSearchQuery,
+  mapLayerSearchQuery,
+  publicationSearchQuery,
+  searchQuery,
+  specialSearchQuery,
+} from './documents.graphql'
+import MapCollectionSearchResults from './MapCollectionSearchResults'
+import MapLayerSearchResults from './MapLayerSearchResults'
 
 export const MAX_RESULTS = 50
 export const DEFAULT_LIMIT = 10
@@ -32,6 +37,8 @@ export const TYPES = {
   SEARCH: 'search',
   DATA: 'data',
   DATASET: 'dataset',
+  MAP_COLLECTION: 'mapcollection',
+  MAP_LAYER: 'maplayer',
 }
 
 // This object is used to define the sort order of the search page
@@ -43,6 +50,22 @@ const SEARCH_TYPES_CONFIG = {
     label: routing.collectionSearch.title,
     type: CmsType.Collection,
     component: EditorialResults,
+  },
+  [routing.mapLayerSearch.page]: {
+    resolver: 'mapLayerSearch',
+    query: mapLayerSearchQuery,
+    to: toMapLayerSearch,
+    label: routing.mapLayerSearch.title,
+    type: TYPES.MAP_LAYER,
+    component: MapLayerSearchResults,
+  },
+  [routing.mapCollectionSearch.page]: {
+    resolver: 'mapCollectionSearch',
+    query: mapCollectionSearchQuery,
+    to: toMapCollectionSearch,
+    label: routing.mapCollectionSearch.title,
+    type: TYPES.MAP_COLLECTION,
+    component: MapCollectionSearchResults,
   },
   [routing.specialSearch.page]: {
     resolver: 'specialSearch',

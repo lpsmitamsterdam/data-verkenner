@@ -10,6 +10,8 @@ export const MAIN_PATHS = {
   PUBLICATIONS: 'publicaties',
   SPECIALS: 'specials',
   COLLECTIONS: 'dossiers',
+  MAP_COLLECTIONS: 'kaartcollecties',
+  MAP_LAYERS: 'kaartlagen',
 }
 
 export const routing = {
@@ -163,6 +165,18 @@ export const routing = {
     path: `/${MAIN_PATHS.COLLECTIONS}/zoek/`,
     type: `${ROUTER_NAMESPACE}/${PAGES.COLLECTION_SEARCH}`,
     page: PAGES.COLLECTION_SEARCH,
+  },
+  mapCollectionSearch: {
+    title: 'Kaartcollecties',
+    path: `/${MAIN_PATHS.MAP_COLLECTIONS}/zoek/`,
+    type: `${ROUTER_NAMESPACE}/${PAGES.MAP_COLLECTION_SEARCH}`,
+    page: PAGES.MAP_COLLECTION_SEARCH,
+  },
+  mapLayerSearch: {
+    title: 'Kaartlagen',
+    path: `/${MAIN_PATHS.MAP_LAYERS}/zoek/`,
+    type: `${ROUTER_NAMESPACE}/${PAGES.MAP_LAYER_SEARCH}`,
+    page: PAGES.MAP_LAYER_SEARCH,
   },
 }
 

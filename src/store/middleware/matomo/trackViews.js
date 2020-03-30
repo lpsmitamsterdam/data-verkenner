@@ -1,8 +1,8 @@
-import { routing } from '../../../app/routes'
-import { getDetail } from '../../../shared/ducks/detail/selectors'
-import { FETCH_DETAIL_SUCCESS } from '../../../shared/ducks/detail/constants'
-import { isDatasetDetailPage } from '../../redux-first-router/selectors'
 import { MATOMO_CONSTANTS } from '../../../app/matomo'
+import { routing } from '../../../app/routes'
+import { FETCH_DETAIL_SUCCESS } from '../../../shared/ducks/detail/constants'
+import { getDetail } from '../../../shared/ducks/detail/selectors'
+import { isDatasetDetailPage } from '../../redux-first-router/selectors'
 
 let views = Object.entries(routing).reduce((acc, [, value]) => ({
   ...acc,
@@ -76,6 +76,8 @@ delete views[routing.dataSearch.type]
 delete views[routing.search.type]
 delete views[routing.datasetSearch.type]
 delete views[routing.collectionSearch.type]
+delete views[routing.mapCollectionSearch.type]
+delete views[routing.mapLayerSearch.type]
 
 const trackViews = views
 

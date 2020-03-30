@@ -89,6 +89,8 @@ class HeaderSearch extends React.Component {
       isPublicationPage,
       isSpecialPage,
       isCollectionPage,
+      isMapCollectionPage,
+      isMapLayerPage,
       typedQuery,
       onCleanDatasetOverview,
       onDatasetSearch,
@@ -98,9 +100,20 @@ class HeaderSearch extends React.Component {
       onPublicationSearch,
       onSpecialSearch,
       onCollectionSearch,
+      onMapCollectionSearch,
+      onMapLayerSearch,
     } = this.props
 
-    const { ARTICLES, DATASETS, PUBLICATIONS, DATA, SPECIALS, COLLECTIONS } = LABELS
+    const {
+      ARTICLES,
+      DATASETS,
+      PUBLICATIONS,
+      DATA,
+      SPECIALS,
+      COLLECTIONS,
+      MAP_COLLECTIONS,
+      MAP_LAYERS,
+    } = LABELS
 
     const searchAction = {
       [DATASETS]: onDatasetSearch,
@@ -109,6 +122,8 @@ class HeaderSearch extends React.Component {
       [DATA]: onDataSearch,
       [SPECIALS]: onSpecialSearch,
       [COLLECTIONS]: onCollectionSearch,
+      [MAP_COLLECTIONS]: onMapCollectionSearch,
+      [MAP_LAYERS]: onMapLayerSearch,
     }
 
     if (activeSuggestion.index === -1) {
@@ -129,6 +144,10 @@ class HeaderSearch extends React.Component {
           ? SPECIALS
           : isCollectionPage
           ? COLLECTIONS
+          : isMapCollectionPage
+          ? MAP_COLLECTIONS
+          : isMapLayerPage
+          ? MAP_LAYERS
           : null)
 
       const actionFn = searchAction[searchType]
@@ -192,6 +211,8 @@ HeaderSearch.defaultProps = {
   isPublicationPage: false,
   isSpecialPage: false,
   isCollectionPage: false,
+  isMapCollectionPage: false,
+  isMapLayerPage: false,
 }
 
 HeaderSearch.propTypes = {
@@ -209,6 +230,8 @@ HeaderSearch.propTypes = {
   isPublicationPage: PropTypes.bool,
   isSpecialPage: PropTypes.bool,
   isCollectionPage: PropTypes.bool,
+  isMapCollectionPage: PropTypes.bool,
+  isMapLayerPage: PropTypes.bool,
   isMapActive: PropTypes.bool.isRequired,
   numberOfSuggestions: PropTypes.number,
   onCleanDatasetOverview: PropTypes.func.isRequired,
@@ -218,6 +241,8 @@ HeaderSearch.propTypes = {
   onPublicationSearch: PropTypes.func.isRequired,
   onSpecialSearch: PropTypes.func.isRequired,
   onCollectionSearch: PropTypes.func.isRequired,
+  onMapCollectionSearch: PropTypes.func.isRequired,
+  onMapLayerSearch: PropTypes.func.isRequired,
   openDataSuggestion: PropTypes.func.isRequired,
   openDatasetSuggestion: PropTypes.func.isRequired,
   openEditorialSuggestion: PropTypes.func.isRequired,

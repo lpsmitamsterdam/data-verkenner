@@ -1,27 +1,20 @@
-import { routing } from '../app/routes'
-import { DATA_SEARCH_REDUCER } from '../shared/ducks/data-search/reducer'
 import {
   getActiveFilters,
+  getPage,
   getQuery,
   getSort,
-  getPage,
   REDUCER_KEY as SEARCH_REDUCER,
 } from '../app/pages/SearchPage/SearchPageDucks'
-import { getDataSelectionPage, getGeometryFilter } from '../shared/ducks/data-selection/selectors'
-import { DATA_SELECTION } from '../shared/ducks/data-selection/reducer'
+import { routing } from '../app/routes'
 import { initialState as mapInitialState, REDUCER_KEY as MAP } from '../map/ducks/map/constants'
-import {
-  initialState as filesInitialState,
-  REDUCER_KEY as FILES,
-} from '../shared/ducks/files/constants'
 import {
   getActiveBaseLayer,
   getCenter,
   getMapOverlays,
   getMapZoom,
-  isMapPanelActive,
-  getMarkerLocation,
   getMarkerIcon,
+  getMarkerLocation,
+  isMapPanelActive,
 } from '../map/ducks/map/selectors'
 import { initialState as panoramaInitialState } from '../panorama/ducks/constants'
 import { PANORAMA } from '../panorama/ducks/reducer'
@@ -33,8 +26,16 @@ import {
   getPanoramaPitch,
   getPanoramaTags,
 } from '../panorama/ducks/selectors'
+import { DATA_SEARCH_REDUCER } from '../shared/ducks/data-search/reducer'
 import { getDataSearchLocation, getSearchCategory } from '../shared/ducks/data-search/selectors'
 import { initialState as dataSelectionInitialState } from '../shared/ducks/data-selection/constants'
+import { DATA_SELECTION } from '../shared/ducks/data-selection/reducer'
+import { getDataSelectionPage, getGeometryFilter } from '../shared/ducks/data-selection/selectors'
+import {
+  initialState as filesInitialState,
+  REDUCER_KEY as FILES,
+} from '../shared/ducks/files/constants'
+import { getFileName } from '../shared/ducks/files/selectors'
 import {
   getFiltersWithoutShape,
   initialState as filterInitialState,
@@ -45,8 +46,8 @@ import {
   initialState as UIInitialState,
   isEmbedded,
   isEmbedPreview,
-  isPrintMode,
   isMapLinkVisible,
+  isPrintMode,
   UI,
 } from '../shared/ducks/ui/ui'
 import {
@@ -55,7 +56,6 @@ import {
 } from '../shared/services/coordinate-reference-system'
 import PARAMETERS from './parameters'
 import paramsRegistry from './params-registry'
-import { getFileName } from '../shared/ducks/files/selectors'
 
 const routesWithSearch = [
   routing.search.type,
@@ -65,6 +65,8 @@ const routesWithSearch = [
   routing.specialSearch.type,
   routing.publicationSearch.type,
   routing.collectionSearch.type,
+  routing.mapCollectionSearch.type,
+  routing.mapLayerSearch.type,
 ]
 
 const routesWithDataSelection = [
