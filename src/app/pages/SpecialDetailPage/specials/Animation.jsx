@@ -9,7 +9,7 @@ import {
   themeColor,
   themeSpacing,
 } from '@datapunt/asc-ui'
-import styled from '@datapunt/asc-core'
+import styled from 'styled-components'
 import ShareBar from '../../../components/ShareBar/ShareBar'
 import Video from '../../../components/Video/Video'
 

@@ -1,5 +1,5 @@
 import React from 'react'
-import styled from '@datapunt/asc-core'
+import styled from 'styled-components'
 import { Column } from '@datapunt/asc-ui'
 
 import setIframeSize from '../../../../shared/services/set-iframe-size/setIframeSize'

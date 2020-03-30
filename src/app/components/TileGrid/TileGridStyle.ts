@@ -1,5 +1,5 @@
-import styled, { css, Theme, ascDefaultTheme } from '@datapunt/asc-core'
-import { breakpoint, themeColor } from '@datapunt/asc-ui'
+import styled, { css } from 'styled-components'
+import { breakpoint, themeColor, Theme, ascDefaultTheme } from '@datapunt/asc-ui'
 
 const GAP = ascDefaultTheme.spacing * 6
 

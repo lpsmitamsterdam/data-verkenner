@@ -2,7 +2,7 @@
 
 exports[`App should render the homepage 1`] = `
 <ThemeProvider>
-  <GlobalStyleComponent />
+  <Memo(GlobalStyleComponent) />
   <MatomoProvider
     value={MatomoTracker {}}
   >
@@ -59,7 +59,7 @@ exports[`App should render the homepage 1`] = `
 
 exports[`App should render the mapview 1`] = `
 <ThemeProvider>
-  <GlobalStyleComponent />
+  <Memo(GlobalStyleComponent) />
   <MatomoProvider
     value={MatomoTracker {}}
   >

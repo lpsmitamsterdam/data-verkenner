@@ -1,6 +1,6 @@
 import React from 'react'
 import RouterLink from 'redux-first-router-link'
-import styled from '@datapunt/asc-core'
+import styled from 'styled-components'
 import { Heading, Paragraph, List, Typography, themeSpacing, Link } from '@datapunt/asc-ui'
 import { formatNoResultsMessage } from './utils'
 

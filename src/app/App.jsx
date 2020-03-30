@@ -2,7 +2,7 @@ import React from 'react'
 import classNames from 'classnames'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import styled from '@datapunt/asc-core'
+import styled from 'styled-components'
 import {
   GlobalStyle,
   ThemeProvider,

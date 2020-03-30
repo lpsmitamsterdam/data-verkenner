@@ -1,4 +1,4 @@
-import { css } from '@datapunt/asc-core'
+import { css } from 'styled-components'
 import { themeColor } from '@datapunt/asc-ui'
 
 const focusOutline = (width = 4) =>

@@ -1,5 +1,5 @@
 import React from 'react'
-import styled from '@datapunt/asc-core'
+import styled from 'styled-components'
 import { Row, Column, Heading, Paragraph, Link, themeSpacing } from '@datapunt/asc-ui'
 import ShareBar from '../components/ShareBar/ShareBar'
 import ContentContainer from '../components/ContentContainer/ContentContainer'

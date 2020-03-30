@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Helmet } from 'react-helmet'
-import styled from '@datapunt/asc-core'
+import styled from 'styled-components'
 import { Container, themeColor } from '@datapunt/asc-ui'
 import { useMatomo } from '@datapunt/matomo-tracker-react'
 import useDocumentTitle from '../../utils/useDocumentTitle'

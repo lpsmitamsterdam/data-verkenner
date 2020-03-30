@@ -7,9 +7,7 @@ describe('withGrid', () => {
 
   it('returns the grid', () => {
     const MockComponent = () => withGrid(<ChildComponent />)
-    const component = shallow(<MockComponent />)
-      .dive()
-      .dive()
+    const component = shallow(<MockComponent />).dive()
 
     expect(component.at(0).exists()).toBeTruthy()
     expect(component.at(0).find('ChildComponent')).toBeTruthy()

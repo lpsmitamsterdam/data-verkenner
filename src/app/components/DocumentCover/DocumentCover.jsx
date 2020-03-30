@@ -1,5 +1,5 @@
 import React from 'react'
-import styled from '@datapunt/asc-core'
+import styled from 'styled-components'
 import { Button, Spinner, Image, themeColor, themeSpacing, breakpoint } from '@datapunt/asc-ui'
 import { Download } from '@datapunt/asc-assets'
 

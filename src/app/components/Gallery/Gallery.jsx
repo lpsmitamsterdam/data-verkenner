@@ -2,7 +2,7 @@
 import React from 'react'
 import { PropTypes } from 'prop-types'
 import RouterLink from 'redux-first-router-link'
-import styled from '@datapunt/asc-core'
+import styled from 'styled-components'
 import { GridContainer, GridItem, Heading, themeSpacing, themeColor, Link } from '@datapunt/asc-ui'
 import { Minimise, Enlarge } from '@datapunt/asc-assets'
 import { toConstructionFileViewer } from '../../../store/redux-first-router/actions'
@@ -11,10 +11,9 @@ import IIIFThumbnail from '../IIIFThumbnail/IIIFThumbnail'
 import Notification from '../../../shared/components/notification/Notification'
 
 const GalleryGridContainer = styled(GridContainer)`
-border-bottom: 1px solid ${themeColor('tint', 'level3')}
-  padding-bottom: ${themeSpacing(5)}
-  padding-top: ${themeSpacing(10)}
-
+  border-bottom: 1px solid ${themeColor('tint', 'level3')};
+  padding-bottom: ${themeSpacing(5)};
+  padding-top: ${themeSpacing(10)};
 `
 
 const StyledHeading = styled(Heading)`

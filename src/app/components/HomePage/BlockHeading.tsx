@@ -1,4 +1,4 @@
-import styled from '@datapunt/asc-core'
+import styled from 'styled-components'
 import { Heading, breakpoint, themeSpacing } from '@datapunt/asc-ui'
 
 const BlockHeading = styled(Heading)`
