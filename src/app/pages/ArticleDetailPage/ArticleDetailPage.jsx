@@ -46,6 +46,61 @@ const ListItemContent = styled.div`
   }
 `
 
+const DownloadLink = styled(Link).attrs({
+  type: 'button',
+})`
+  text-align: left;
+  background-color: ${themeColor(
+    'tint',
+    'level1',
+  )}; // Buttons are grey by default on Safari and Firefox
+
+  small {
+    text-transform: uppercase;
+    color: ${themeColor('tint', 'level6')};
+  }
+`
+
+const StyledHeading = styled(Heading)`
+  ${({ isContentType }) =>
+    isContentType &&
+    css`
+      margin-bottom: ${themeSpacing(4)};
+    `}
+`
+
+const StyledContentContainer = styled(ContentContainer)`
+  ${({ hasImage }) =>
+    hasImage &&
+    css`
+      @media screen and ${breakpoint('max-width', 'tabletM')} {
+        margin-top: 0px;
+      }
+    `}
+`
+
+const StyledRow = styled(Row)`
+  @media screen and ${breakpoint('max-width', 'tabletM')} {
+    padding-left: 0px;
+    padding-right: 0px;
+  }
+`
+
+const EditorialBodyStyled = styled(EditorialBody)`
+  width: 100%;
+`
+
+const Divider = styled.div`
+  width: 200px;
+  height: 3px;
+  background-color: ${themeColor('secondary')};
+  margin: ${themeSpacing(8, 0, 6)};
+`
+
+const StyledEditorialResults = styled(EditorialResults)`
+  margin-bottom: ${themeSpacing(25)};
+`
+
 /* istanbul ignore next */
 const ArticleDetailPage = ({ id }) => {
   const { fetchData, results, loading, error } = useFromCMS(cmsConfig.ARTICLE, id)
@@ -82,61 +137,6 @@ const ArticleDetailPage = ({ id }) => {
   const linkAction = slug && toArticleDetail(id, slug)
 
   const normalizedDownloads = normalizeDownloadsObject(downloads)
-
-  const DownloadLink = styled(Link).attrs({
-    type: 'button',
-  })`
-    text-align: left;
-    background-color: ${themeColor(
-      'tint',
-      'level1',
-    )}; // Buttons are grey by default on Safari and Firefox
-
-    small {
-      text-transform: uppercase;
-      color: ${themeColor('tint', 'level6')};
-    }
-  `
-
-  const StyledHeading = styled(Heading)`
-    ${({ isContentType }) =>
-      isContentType &&
-      css`
-        margin-bottom: ${themeSpacing(4)};
-      `}
-  `
-
-  const StyledContentContainer = styled(ContentContainer)`
-    ${({ hasImage }) =>
-      hasImage &&
-      css`
-        @media screen and ${breakpoint('max-width', 'tabletM')} {
-          margin-top: 0px;
-        }
-      `}
-  `
-
-  const StyledRow = styled(Row)`
-    @media screen and ${breakpoint('max-width', 'tabletM')} {
-      padding-left: 0px;
-      padding-right: 0px;
-    }
-  `
-
-  const EditorialBodyStyled = styled(EditorialBody)`
-    width: 100%;
-  `
-
-  const Divider = styled.div`
-    width: 200px;
-    height: 3px;
-    background-color: ${themeColor('secondary')};
-    margin: ${themeSpacing(8, 0, 6)};
-  `
-
-  const StyledEditorialResults = styled(EditorialResults)`
-    margin-bottom: ${themeSpacing(25)};
-  `
 
   const isContentType = articleType === EDITORIAL_FIELD_TYPE_VALUES.CONTENT
 
