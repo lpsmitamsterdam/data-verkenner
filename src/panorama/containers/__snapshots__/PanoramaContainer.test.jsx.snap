@@ -20,7 +20,7 @@ exports[`PanoramaContainer should render StatusBar when panoramaState is complet
     extraClass=""
     icon="cross"
     onClick={[Function]}
-    title="Sluit panorama"
+    title="Panoramabeeld sluiten"
   />
   <div
     className="c-map__controls c-map__controls--bottom-left"
@@ -71,7 +71,7 @@ exports[`PanoramaContainer should render everything 1`] = `
     extraClass=""
     icon="cross"
     onClick={[Function]}
-    title="Sluit panorama"
+    title="Panoramabeeld sluiten"
   />
   <div
     className="c-map__controls c-map__controls--bottom-left"

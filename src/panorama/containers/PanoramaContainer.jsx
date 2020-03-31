@@ -149,7 +149,7 @@ class PanoramaContainer extends React.Component {
           alignLeft
         />
 
-        <IconButton onClick={onClose} title="Sluit panorama" icon="cross" />
+        <IconButton onClick={onClose} title="Panoramabeeld sluiten" icon="cross" />
         <div className="c-map__controls c-map__controls--bottom-left">
           {!printMode && panoramaState.location && (
             <PanoramaToggle
