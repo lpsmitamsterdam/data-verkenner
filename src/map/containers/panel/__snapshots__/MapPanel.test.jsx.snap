@@ -7,7 +7,7 @@ exports[`MapPanel should render MapLegend if store contains active map layers 1`
   className="
           map-panel
           map-panel--collapsed
-          map-panel--has-active-layers
+          map-panel--has-no-active-layers
         "
 >
   <div
@@ -41,39 +41,26 @@ exports[`MapPanel should render MapLegend if store contains active map layers 1`
   <div
     className="scroll-wrapper"
   >
-    <MapLegend
-      activeMapLayers={
-        Array [
-          Object {},
-        ]
-      }
-      onLayerToggle={[Function]}
-      onLayerVisibilityToggle={[Function]}
-      overlays={
-        Array [
-          Object {},
-        ]
-      }
-      user={Object {}}
-      zoomLevel={10}
-    />
     <MapPanelHandle
       isMapPanelHandleVisible={true}
       onMapPanelHandleToggle={[Function]}
     >
+      <UpdateAlert />
       <MapType
         activeBaseLayer=""
         baseLayers={Object {}}
         onBaseLayerToggle={[Function]}
       />
-      <MapLayers
-        activeMapLayers={
+      <MapLegend
+        onLayerToggle={[Function]}
+        onLayerVisibilityToggle={[Function]}
+        overlays={
           Array [
             Object {},
           ]
         }
-        onLayerToggle={[Function]}
-        panelLayers={Array []}
+        user={Object {}}
+        zoomLevel={10}
       />
     </MapPanelHandle>
   </div>
@@ -125,15 +112,11 @@ exports[`MapPanel should render MapType and MapLayers 1`] = `
       isMapPanelHandleVisible={true}
       onMapPanelHandleToggle={[Function]}
     >
+      <UpdateAlert />
       <MapType
         activeBaseLayer=""
         baseLayers={Object {}}
         onBaseLayerToggle={[Function]}
-      />
-      <MapLayers
-        activeMapLayers={Array []}
-        onLayerToggle={[Function]}
-        panelLayers={Array []}
       />
     </MapPanelHandle>
   </div>

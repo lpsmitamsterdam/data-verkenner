@@ -2,6 +2,11 @@ import React from 'react'
 import { shallow } from 'enzyme'
 import MapLegend from './MapLegend'
 
+jest.mock('react-redux', () => ({
+  ...jest.requireActual('react-redux'),
+  useSelector: jest.fn(),
+}))
+
 describe('MapLegend', () => {
   const props = {
     zoomLevel: 2,
@@ -64,43 +69,5 @@ describe('MapLegend', () => {
   it('should render the component', () => {
     const component = shallow(<MapLegend {...props} />)
     expect(component).toMatchSnapshot()
-  })
-
-  it('should toggle the layer', () => {
-    const onLayerToggleMock = jest.fn()
-    const component = shallow(<MapLegend {...props} onLayerToggle={onLayerToggleMock} />)
-    component.find('button').at(0).simulate('click')
-    expect(onLayerToggleMock).toHaveBeenCalledWith(props.activeMapLayers[0])
-
-    component.find('button').at(1).simulate('click')
-    expect(onLayerToggleMock).toHaveBeenCalledWith(props.activeMapLayers[1])
-  })
-
-  it('should handle the checkbox click', () => {
-    const onLayerToggleMock = jest.fn()
-    const component = shallow(<MapLegend {...props} onLayerToggle={onLayerToggleMock} />)
-
-    expect(
-      component.instance().determineLegendItemVisibility(props.activeMapLayers[1].legendItems[0]),
-    ).toBe(false)
-
-    expect(
-      component.instance().determineLegendItemVisibility(props.activeMapLayers[1].legendItems[1]),
-    ).toBe(true)
-  })
-
-  it('should handle the checkbox onchange', () => {
-    const onLayerVisibilityToggleMock = jest.fn()
-    const component = shallow(
-      <MapLegend {...props} onLayerVisibilityToggle={onLayerVisibilityToggleMock} />,
-    )
-
-    // With legendaItems
-    component.instance().toggleLayerVisibility(props.activeMapLayers[0])
-    expect(onLayerVisibilityToggleMock).toHaveBeenCalledTimes(1)
-
-    // Without legendaItems
-    component.instance().toggleLayerVisibility(props.activeMapLayers[1])
-    expect(onLayerVisibilityToggleMock).toHaveBeenCalledTimes(3)
   })
 })

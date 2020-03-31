@@ -4,11 +4,12 @@ exports[`MapType rendering should render select buttons with aerial value 1`] = 
 <section
   className="map-type"
 >
-  <h3
-    className="map-type__title"
+  <Heading
+    as="h1"
+    forwardedAs="h4"
   >
     Achtergrond
-  </h3>
+  </Heading>
   <SelectButton
     className="map-type__select map-type__select--topography"
     handleChange={[MockFunction]}
@@ -99,11 +100,12 @@ exports[`MapType rendering should render select buttons with topography value 1`
 <section
   className="map-type"
 >
-  <h3
-    className="map-type__title"
+  <Heading
+    as="h1"
+    forwardedAs="h4"
   >
     Achtergrond
-  </h3>
+  </Heading>
   <SelectButton
     className="map-type__select map-type__select--topography"
     handleChange={[MockFunction]}

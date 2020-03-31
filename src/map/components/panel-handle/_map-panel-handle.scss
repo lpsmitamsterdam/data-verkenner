@@ -1,7 +1,7 @@
 .map-panel-handle {
   $handle-height: 24px;
 
-  background-color: $secondary-gray5;
+  background-color: $white;
   border-top: 2px solid $secondary-gray20;
   margin-top: -2px;
   position: relative;
@@ -51,11 +51,5 @@
         background-color: $secondary-gray5;
       }
     }
-  }
-
-  .is-embed &,
-  .is-embed-preview &,
-  .is-print-mode & {
-    display: none;
   }
 }

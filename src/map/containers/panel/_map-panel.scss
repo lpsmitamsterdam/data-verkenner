@@ -1,8 +1,7 @@
 @import '../../../shared/styles/config';
 
 .map-panel {
-  background-color: $primary-light;
-  border: solid 1px $secondary-gray20;
+  border: solid 1px $white;
   bottom: $container-whitespace;
   box-shadow: 2px 2px 0 0 $secondary-gray40;
   display: flex;
@@ -47,6 +46,19 @@
       @include icon-sprite('icon-map-layers', $secondary-gray60, $primary-dark, $handle-height);
       height: $handle-height;
       width: $handle-height;
+    }
+
+    &:after {
+      content: '';
+      display: block;
+      width: 70%;
+      border-radius: 100%;
+      background-color: $primary-contrast-blue;
+      box-shadow: 0 0 8px 4px $primary-contrast-blue;
+      opacity: 0;
+      margin: auto;
+      z-index: 1;
+      position: relative;
     }
   }
 

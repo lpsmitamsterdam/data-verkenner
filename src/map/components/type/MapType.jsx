@@ -1,9 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-
+import { Heading } from '@datapunt/asc-ui'
 import { SelectButton } from '../../../shared/components/select-button'
-
-import './_map-type.scss'
 
 function hasLayer(activeBaseLayer, baseLayers) {
   return (
@@ -15,8 +13,7 @@ function hasLayer(activeBaseLayer, baseLayers) {
 
 const MapType = ({ activeBaseLayer, baseLayers, onBaseLayerToggle }) => (
   <section className="map-type">
-    <h3 className="map-type__title">Achtergrond</h3>
-
+    <Heading forwardedAs="h4">Achtergrond</Heading>
     <SelectButton
       className="map-type__select map-type__select--topography"
       handleChange={onBaseLayerToggle}
