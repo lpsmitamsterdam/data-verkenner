@@ -87,7 +87,7 @@ const DataCard = ({ type, label, count, results, ...otherProps }) => (
 
       <ParagraphWrapper>
         <StyledParagraph>
-          {results.map(({ id, endpoint, label: itemLabel }, index) => (
+          {results?.map(({ id, endpoint, label: itemLabel }, index) => (
             <React.Fragment key={id}>
               <StyledParagraphLink
                 to={toDetailFromEndpoint(endpoint, VIEW_MODE.SPLIT)}
