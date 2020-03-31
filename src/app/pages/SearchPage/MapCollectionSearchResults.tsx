@@ -71,6 +71,7 @@ const List = styled.ul`
   margin: 0;
   list-style: inside;
   font-weight: bold;
+  line-height: ${themeSpacing(7)};
 `
 
 const IntroText = styled.span`
@@ -121,7 +122,7 @@ const MapCollectionCard: React.FC<MapCollectionCardProps> = ({ result }) => {
     <CardWrapper>
       <StyledCard>
         <CardHeader href={result.href}>
-          <CardImage src={result.meta.thumbnail} alt="" />
+          <CardImage src={process.env.CMS_ROOT + result.meta.thumbnail} alt="" />
           <CardHeadingContainer>
             <CardHeaderIcon inline size={16}>
               <MapLayers />
