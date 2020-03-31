@@ -139,7 +139,7 @@ const MapCollectionCard: React.FC<MapCollectionCardProps> = ({ result }) => {
           </List>
           {hiddenLayers.length > 0 && (
             <StyledButton variant="blank" onClick={handleOnClick} hasMarginBottom={expanded}>
-              Toon meer
+              {expanded ? 'Toon minder' : 'Toon meer'}
               <StyledIcon inline size={14}>
                 {expanded ? <ChevronUp /> : <ChevronDown />}
               </StyledIcon>
