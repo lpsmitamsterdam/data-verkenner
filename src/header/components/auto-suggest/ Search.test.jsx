@@ -10,7 +10,9 @@ describe('Search', () => {
     searchBarProps: {},
     openSearchBarToggle: false,
     onOpenSearchBarToggle: onOpenSearchBarToggleMock,
-    inputProps: {},
+    inputProps: {
+      placeholder: 'Zoek',
+    },
   }
 
   afterEach(() => {
@@ -20,7 +22,7 @@ describe('Search', () => {
   it('should shallow the searchbar and searchtoggle', () => {
     const component = mount(
       <ThemeProvider>
-        <Search props={props} />
+        <Search {...props} />
       </ThemeProvider>,
     )
     expect(component.find('Styled(SearchBar)').exists()).toBe(true)

@@ -46,12 +46,6 @@ const AppBody = ({
   return hasGrid ? (
     <>
       <AppContainer id="main" className="main-container">
-        <Helmet>
-          <meta
-            name="viewport"
-            content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"
-          />
-        </Helmet>
         <NotificationAlert />
         <Suspense fallback={<LoadingIndicator style={{ top: '200px' }} />}>
           {homePage && <HomePage />}
