@@ -1,15 +1,15 @@
 import get from 'lodash.get'
-import { routing } from '../../../app/routes'
-import paramsRegistry from '../../../store/params-registry'
-import PARAMETERS from '../../../store/parameters'
 import PAGES from '../../../app/pages'
+import { routing } from '../../../app/routes'
+import PARAMETERS from '../../../store/parameters'
+import paramsRegistry from '../../../store/params-registry'
 import { shouldResetState } from '../../../store/redux-first-router/actions'
 import {
-  initialState,
-  FETCH_SUGGESTIONS_REQUEST,
-  REDUCER_KEY,
-  FETCH_SUGGESTIONS_SUCCESS,
   FETCH_SUGGESTIONS_FAILURE,
+  FETCH_SUGGESTIONS_REQUEST,
+  FETCH_SUGGESTIONS_SUCCESS,
+  initialState,
+  REDUCER_KEY,
   SET_ACTIVE_SUGGESTION,
 } from './constants'
 
@@ -73,6 +73,8 @@ export default function AutoSuggestReducer(state = initialState, action) {
     case routing.publicationSearch.type:
     case routing.specialSearch.type:
     case routing.collectionSearch.type:
+    case routing.mapCollectionSearch.type:
+    case routing.mapLayerSearch.type:
       return {
         ...enrichedState,
         typedQuery: get(action, `meta.query[${PARAMETERS.QUERY}]`),

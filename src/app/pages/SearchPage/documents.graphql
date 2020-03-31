@@ -98,6 +98,30 @@ query collectionSearchQuery(
   }
 }
 
+query mapCollectionSearchQuery(
+  $q: String
+  $limit: Int
+  $page: Int
+  $withPagination: Boolean!
+) {
+  mapCollectionSearch(q: $q, input: { limit: $limit, page: $page }) {
+    ...MapCollectionFields
+    ...MapCollectionPageInfoFields
+  }
+}
+
+query mapLayerSearchQuery(
+  $q: String
+  $limit: Int
+  $page: Int
+  $withPagination: Boolean!
+) {
+  mapLayerSearch(q: $q, input: { limit: $limit, page: $page }) {
+    ...MapLayerFields
+    ...MapLayerPageInfoFields
+  }
+}
+
 query searchQuery($q: String!, $limit: Int, $filters: [FilterInput!]) {
   filters {
     type
@@ -127,6 +151,12 @@ query searchQuery($q: String!, $limit: Int, $filters: [FilterInput!]) {
   collectionSearch(q: $q, input: { limit: $limit, filters: $filters }) {
     ...CMSFields
   }
+  mapCollectionSearch(q: $q, input: { limit: $limit }) {
+    ...MapCollectionFields
+  }
+  mapLayerSearch(q: $q, input: { limit: $limit }) {
+    ...MapLayerFields
+  }
 }
 
 query totalCountSearch($q: String!, $limit: Int) {
@@ -146,6 +176,12 @@ query totalCountSearch($q: String!, $limit: Int) {
     totalCount
   }
   collectionSearch(q: $q, input: { limit: $limit }) {
+    totalCount
+  }
+  mapCollectionSearch(q: $q, input: { limit: $limit }) {
+    totalCount
+  }
+  mapLayerSearch(q: $q, input: { limit: $limit }) {
     totalCount
   }
 }
@@ -211,7 +247,49 @@ fragment FilterFields on SearchResult {
   }
 }
 
+fragment MapCollectionFields on MapCollectionSearchResult {
+  totalCount
+  results {
+    id
+    title
+    href
+    mapLayers {
+      id
+      title
+    }
+    meta {
+      thumbnail
+    }
+  }
+}
+
+fragment MapLayerFields on MapLayerSearchResult {
+  totalCount
+  results {
+    id
+    title
+    href
+  }
+}
+
+
 fragment PageInfoFields on SearchResult {
+  pageInfo @include(if: $withPagination) {
+    hasLimitedResults
+    hasNextPage
+    totalPages
+  }
+}
+
+fragment MapCollectionPageInfoFields on MapCollectionSearchResult {
+  pageInfo @include(if: $withPagination) {
+    hasLimitedResults
+    hasNextPage
+    totalPages
+  }
+}
+
+fragment MapLayerPageInfoFields on MapLayerSearchResult {
   pageInfo @include(if: $withPagination) {
     hasLimitedResults
     hasNextPage

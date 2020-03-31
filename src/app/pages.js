@@ -28,6 +28,10 @@ const PAGES = {
   COLLECTION_DETAIL: 'COLLECTION_DETAIL',
   COLLECTION_SEARCH: 'COLLECTION_SEARCH',
 
+  // map pages
+  MAP_COLLECTION_SEARCH: 'MAP_COLLECTION_SEARCH',
+  MAP_LAYER_SEARCH: 'MAP_LAYER_SEARCH',
+
   // text pages
   ACTUALITY: 'ACTUALITY',
   LOGIN: 'LOGIN',
@@ -66,6 +70,8 @@ export const isSearchPage = (page) =>
   page === PAGES.ARTICLE_SEARCH ||
   page === PAGES.PUBLICATION_SEARCH ||
   page === PAGES.SPECIAL_SEARCH ||
-  page === PAGES.COLLECTION_SEARCH
+  page === PAGES.COLLECTION_SEARCH ||
+  page === PAGES.MAP_COLLECTION_SEARCH ||
+  page === PAGES.MAP_LAYER_SEARCH
 
 export const isDatasetPage = (page) => page === PAGES.DATASET_SEARCH

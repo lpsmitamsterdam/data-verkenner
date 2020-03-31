@@ -11,8 +11,8 @@ export const LABELS = {
   DATA: 'Data',
   SPECIALS: 'In Beeld',
   COLLECTIONS: 'Dossiers',
-  MAPLAYERS: 'Kaartlagen',
-  MAPCOLLECTIONS: 'Kaartcollecties',
+  MAP_COLLECTIONS: 'Kaartcollecties',
+  MAP_LAYERS: 'Kaartlagen',
 }
 
 // Sort order of the data results. These strings correspond to the labels defined in the typeahead API.
@@ -33,8 +33,8 @@ export const SORT_ORDER_DATA = [
 // Sort order of the autosuggest results
 export const SORT_ORDER = [
   LABELS.COLLECTIONS,
-  LABELS.MAPLAYERS,
-  LABELS.MAPCOLLECTIONS,
+  LABELS.MAP_LAYERS,
+  LABELS.MAP_COLLECTIONS,
   ...SORT_ORDER_DATA,
   LABELS.DATASETS,
   LABELS.PUBLICATIONS,
