@@ -7,6 +7,9 @@ exports[`MapLegend should render the component 1`] = `
     open={false}
   >
     <styled.div>
+      <label
+        className="u-sr-only"
+      />
       <Styled(Component)
         checked={true}
         className="checkbox"

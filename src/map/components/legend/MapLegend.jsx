@@ -167,6 +167,9 @@ const MapLegend = ({
       {(!isPrintOrEmbedView || (isPrintOrEmbedView && !allInvisible)) && (
         <LayerButton onClick={() => setOpen(!open)} open={open}>
           <TitleWrapper>
+            <label className="u-sr-only" htmlFor={title}>
+              {title}
+            </label>
             <StyledCheckbox
               id={title}
               className="checkbox"
