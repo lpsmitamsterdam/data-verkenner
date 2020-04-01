@@ -134,9 +134,7 @@ const MapLegend = ({
 
   // Effect if all layers are unchecked manually within a collection
   useEffect(() => {
-    if (allInvisible) {
-      setOpen(false)
-    }
+    setOpen(!allInvisible)
   }, [allInvisible])
 
   const handleOnChangeCollection = (e) => {
@@ -225,8 +223,16 @@ const MapLegend = ({
                         name={mapLayer.title}
                         onChange={
                           /* istanbul ignore next */
-                          () => {
-                            onLayerToggle(mapLayer)
+                          (e) => {
+                            if (!e.currentTarget.checked && layerIsIndeterminate) {
+                              mapLayer.legendItems
+                                .filter(({ isVisible }) => !isVisible)
+                                .forEach(({ id }) => {
+                                  onLayerVisibilityToggle(id, false)
+                                })
+                            } else {
+                              onLayerToggle(mapLayer)
+                            }
                           }
                         }
                       />
