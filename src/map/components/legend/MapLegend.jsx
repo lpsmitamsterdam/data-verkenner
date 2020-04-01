@@ -6,7 +6,6 @@ import styled, { css } from 'styled-components'
 import {
   Paragraph,
   Checkbox,
-  Heading,
   Icon,
   Label,
   styles,
@@ -33,9 +32,6 @@ const StyledLabel = styled(Label)`
   width: 100%;
 `
 
-const CollectionHeading = styled(Heading)`
-  margin-bottom: 0;
-`
 const StyledCheckbox = styled(Checkbox)`
   padding: 0px;
   padding-right: ${themeSpacing(2)};
@@ -54,7 +50,7 @@ const LayerButton = styled.div.attrs({
   justify-content: space-between;
   align-items: center;
   width: 100%;
-  padding: 8px 12px;
+  padding: 0 12px;
   background-color: ${themeColor('tint', 'level2')};
 
   & > ${styles.IconStyle} {
@@ -165,20 +161,16 @@ const MapLegend = ({
       {(!isPrintOrEmbedView || (isPrintOrEmbedView && !allInvisible)) && (
         <LayerButton onClick={() => setOpen(!open)} open={open}>
           <TitleWrapper>
-            <label className="u-sr-only" htmlFor={title}>
-              {title}
-            </label>
-            <StyledCheckbox
-              id={title}
-              className="checkbox"
-              name={title}
-              indeterminate={collectionIndeterminate}
-              checked={!allInvisible}
-              onChange={handleOnChangeCollection}
-            />
-            <CollectionHeading gutterButtom={0} forwardedAs="h4">
-              {title}
-            </CollectionHeading>
+            <StyledLabel key={title} htmlFor={title} label={title}>
+              <StyledCheckbox
+                id={title}
+                className="checkbox"
+                name={title}
+                indeterminate={collectionIndeterminate}
+                checked={!allInvisible}
+                onChange={handleOnChangeCollection}
+              />
+            </StyledLabel>
           </TitleWrapper>
           <Icon size={15}>
             <ChevronDown />
