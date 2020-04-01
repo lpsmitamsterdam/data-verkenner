@@ -7,14 +7,14 @@ exports[`MapLegend should render the component 1`] = `
     open={false}
   >
     <styled.div>
-      <Styled(Label)>
+      <Styled(Styled(Label))>
         <Styled(Component)
           checked={true}
           className="checkbox"
           indeterminate={true}
           onChange={[Function]}
         />
-      </Styled(Label)>
+      </Styled(Styled(Label))>
     </styled.div>
     <Icon
       size={15}

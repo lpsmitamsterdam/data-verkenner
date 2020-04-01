@@ -32,6 +32,10 @@ const StyledLabel = styled(Label)`
   width: 100%;
 `
 
+const CollectionLabel = styled(StyledLabel)`
+  font-weight: 700;
+`
+
 const StyledCheckbox = styled(Checkbox)`
   padding: 0px;
   padding-right: ${themeSpacing(2)};
@@ -161,7 +165,7 @@ const MapLegend = ({
       {(!isPrintOrEmbedView || (isPrintOrEmbedView && !allInvisible)) && (
         <LayerButton onClick={() => setOpen(!open)} open={open}>
           <TitleWrapper>
-            <StyledLabel key={title} htmlFor={title} label={title}>
+            <CollectionLabel key={title} htmlFor={title} label={title}>
               <StyledCheckbox
                 id={title}
                 className="checkbox"
@@ -170,7 +174,7 @@ const MapLegend = ({
                 checked={!allInvisible}
                 onChange={handleOnChangeCollection}
               />
-            </StyledLabel>
+            </CollectionLabel>
           </TitleWrapper>
           <Icon size={15}>
             <ChevronDown />
