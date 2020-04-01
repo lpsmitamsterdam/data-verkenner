@@ -19,7 +19,7 @@ import {
   fetchExchange,
   dedupExchange,
 } from 'urql'
-import { isContentPage, isSearchPage, isDatasetPage, isEditorialDetailPage } from './pages'
+import { isContentPage, isSearchPage, isEditorialDetailPage } from './pages'
 import './_app.scss'
 import {
   hasOverflowScroll,
@@ -99,8 +99,7 @@ const App = ({
     homePage ||
     isEditorialDetailPage(currentPage) ||
     isContentPage(currentPage) ||
-    isSearchPage(currentPage) ||
-    isDatasetPage(currentPage)
+    isSearchPage(currentPage)
 
   // Redirect to the 404 page if currentPage isn't set
   if (currentPage === '' && window) {

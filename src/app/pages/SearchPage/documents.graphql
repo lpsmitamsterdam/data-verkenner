@@ -106,7 +106,7 @@ query mapCollectionSearchQuery(
 ) {
   mapCollectionSearch(q: $q, input: { limit: $limit, page: $page }) {
     ...MapCollectionFields
-    ...MapCollectionPageInfoFields
+    ...PageInfoFields
   }
 }
 
@@ -118,7 +118,7 @@ query mapLayerSearchQuery(
 ) {
   mapLayerSearch(q: $q, input: { limit: $limit, page: $page }) {
     ...MapLayerFields
-    ...MapLayerPageInfoFields
+    ...PageInfoFields
   }
 }
 
@@ -274,22 +274,6 @@ fragment MapLayerFields on MapLayerSearchResult {
 
 
 fragment PageInfoFields on SearchResult {
-  pageInfo @include(if: $withPagination) {
-    hasLimitedResults
-    hasNextPage
-    totalPages
-  }
-}
-
-fragment MapCollectionPageInfoFields on MapCollectionSearchResult {
-  pageInfo @include(if: $withPagination) {
-    hasLimitedResults
-    hasNextPage
-    totalPages
-  }
-}
-
-fragment MapLayerPageInfoFields on MapLayerSearchResult {
   pageInfo @include(if: $withPagination) {
     hasLimitedResults
     hasNextPage
