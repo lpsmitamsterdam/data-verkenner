@@ -25,7 +25,13 @@ function commonConfig() {
   return {
     context: root,
     entry: {
-      app: ['isomorphic-fetch', '@babel/polyfill', './src/index.js'],
+      app: [
+        'isomorphic-fetch',
+        'core-js/features/url',
+        'core-js/features/url-search-params',
+        '@babel/polyfill',
+        './src/index.js',
+      ],
     },
     output: {
       filename: '[name].bundle.js',
