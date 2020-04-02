@@ -97,18 +97,19 @@ const HighlightBlock = () => {
             />
           </ImageCardWrapperLarge>
           <ImageCardWrapperSmall>
-            {results &&
-              results
-                .slice(1)
-                .map((result) => (
-                  <HighlightCard
-                    key={result.id}
-                    loading={loading}
-                    showError={error}
-                    {...result}
-                    teaserImage={getImageFromCms(result.teaserImage, 500, 500)}
-                  />
-                ))}
+            {results?.length
+              ? results
+                  .slice(1)
+                  .map((result) => (
+                    <HighlightCard
+                      key={result.id}
+                      loading={loading}
+                      showError={error}
+                      {...result}
+                      teaserImage={getImageFromCms(result.teaserImage, 500, 500)}
+                    />
+                  ))
+              : null}
             {(error || loading) && (
               <>
                 <HighlightCard key={0} loading={loading} showError={error} />

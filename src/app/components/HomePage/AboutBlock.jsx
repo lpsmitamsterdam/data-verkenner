@@ -100,16 +100,17 @@ const AboutBlock = () => {
 
           <StyledRow hasMargin={false} showError={errorAboutData}>
             {errorAboutData && <ErrorMessage onClick={() => {}} />}
-            {resultsAboutData &&
-              resultsAboutData.map((aboutData, index) => (
-                <StyledCardColumn
-                  wrap
-                  key={aboutData.key || index}
-                  span={{ small: 1, medium: 2, big: 3, large: 3, xLarge: 3 }}
-                >
-                  <AboutCard loading={loadingAboutData} {...aboutData} />
-                </StyledCardColumn>
-              ))}
+            {resultsAboutData?.length
+              ? resultsAboutData.map((aboutData, index) => (
+                  <StyledCardColumn
+                    wrap
+                    key={aboutData.key || index}
+                    span={{ small: 1, medium: 2, big: 3, large: 3, xLarge: 3 }}
+                  >
+                    <AboutCard loading={loadingAboutData} {...aboutData} />
+                  </StyledCardColumn>
+                ))
+              : null}
           </StyledRow>
         </StyledColumn>
         <StyledColumn span={{ small: 1, medium: 2, big: 6, large: 6, xLarge: 6 }}>
@@ -119,16 +120,17 @@ const AboutBlock = () => {
 
           <StyledRow hasMargin={false} showError={errorAbout}>
             {errorAbout && <ErrorMessage onClick={() => {}} />}
-            {resultsAbout &&
-              resultsAbout.map((about, index) => (
-                <StyledCardColumn
-                  wrap
-                  key={about.key || index}
-                  span={{ small: 1, medium: 2, big: 3, large: 3, xLarge: 3 }}
-                >
-                  <AboutCard loading={loadingAbout} {...about} />
-                </StyledCardColumn>
-              ))}
+            {resultsAbout?.length
+              ? resultsAbout.map((about, index) => (
+                  <StyledCardColumn
+                    wrap
+                    key={about.key || index}
+                    span={{ small: 1, medium: 2, big: 3, large: 3, xLarge: 3 }}
+                  >
+                    <AboutCard loading={loadingAbout} {...about} />
+                  </StyledCardColumn>
+                ))
+              : null}
           </StyledRow>
         </StyledColumn>
       </Row>
