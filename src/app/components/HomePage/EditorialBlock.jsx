@@ -56,21 +56,22 @@ const EditorialBlock = ({ title, list, showMoreProps = {}, showContentType = fal
       <CardRow showError={error}>
         {error && <ErrorMessage absolute />}
         <Row hasMargin={false}>
-          {specials &&
-            specials.map((special, index) => (
-              <Column
-                key={special.key || index}
-                wrap
-                span={{ small: 1, medium: 2, big: 3, large: 4, xLarge: 4 }}
-              >
-                <EditorialBlockCard
-                  loading={loading}
-                  showError={error}
-                  {...special}
-                  showContentType={showContentType}
-                />
-              </Column>
-            ))}
+          {specials.length
+            ? specials.map((special, index) => (
+                <Column
+                  key={special.key || index}
+                  wrap
+                  span={{ small: 1, medium: 2, big: 3, large: 4, xLarge: 4 }}
+                >
+                  <EditorialBlockCard
+                    loading={loading}
+                    showError={error}
+                    {...special}
+                    showContentType={showContentType}
+                  />
+                </Column>
+              ))
+            : null}
         </Row>
       </CardRow>
       {showMoreProps.to && showMoreProps.label && (
