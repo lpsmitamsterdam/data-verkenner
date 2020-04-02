@@ -62,16 +62,17 @@ const OrganizationBlock = () => {
       </Row>
       <StyledRow hasMargin={false} showError={error}>
         {error && <ErrorMessage />}
-        {results &&
-          results.map((result) => (
-            <Column
-              key={result.key}
-              wrap
-              span={{ small: 1, medium: 1, big: 3, large: 3, xLarge: 3 }}
-            >
-              <OrganizationCard loading={loading} {...result} />
-            </Column>
-          ))}
+        {results?.length
+          ? results.map((result) => (
+              <Column
+                key={result.key}
+                wrap
+                span={{ small: 1, medium: 1, big: 3, large: 3, xLarge: 3 }}
+              >
+                <OrganizationCard loading={loading} {...result} />
+              </Column>
+            ))
+          : null}
       </StyledRow>
     </StyledCardContainer>
   )

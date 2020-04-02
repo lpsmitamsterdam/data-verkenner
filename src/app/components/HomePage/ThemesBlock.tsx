@@ -83,7 +83,7 @@ const ThemesBlock: React.FC = () => {
     )
   }
 
-  const themeFilter = data?.filters.find((filter) => filter.type === THEME_TYPE)
+  const themeFilter = data?.filters?.find((filter) => filter.type === THEME_TYPE)
 
   // Show a message if an error occurred, or if no theme filter could be found.
   if (error || !themeFilter) {
