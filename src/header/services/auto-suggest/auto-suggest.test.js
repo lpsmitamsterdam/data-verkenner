@@ -1,4 +1,4 @@
-import autoSuggestSearch, { orderAutoSuggestResults } from './auto-suggest'
+import autoSuggestSearch, { orderAutoSuggestResults, SORT_ORDER } from './auto-suggest'
 import { getAuthHeaders } from '../../../shared/services/auth/auth'
 
 jest.mock('../../../shared/services/auth/auth')
@@ -47,7 +47,7 @@ describe('The auto-suggest service', () => {
 
   it('can search and format data', () => {
     fetch.mockResponseOnce(JSON.stringify(mockedResults))
-    autoSuggestSearch('linnae').then(suggestions => {
+    autoSuggestSearch('linnae').then((suggestions) => {
       expect(suggestions.count).toBe(3)
       expect(suggestions.data.length).toBe(2)
 
@@ -74,31 +74,38 @@ describe('The auto-suggest service', () => {
   })
 
   describe('sortAutoSuggestResults', () => {
-    it('should sort the autoresults like follows: data [multiple keys], publications, datasets, articles', () => {
-      const data = [{ label: 'foo' }, { label: 'bar' }, { label: 'baz' }]
-      const datasets = { label: 'Datasets' }
-      const publications = { label: 'Publicaties' }
-      const articles = { label: 'Artikelen' }
+    it('should sort the autoresults when all labels are returned', () => {
+      const results = SORT_ORDER.map((key) => ({ label: key })).sort(
+        (a, b) => b.label.localeCompare(a.label), // sort alphabetically to scrumble results
+      )
 
-      const expectationAll = [...data, publications, datasets, articles]
-      const expectationFew1 = [...data, datasets, articles]
-      const expectationFew2 = [...data, publications, datasets]
-      const expectationFew3 = [...data, publications, articles]
-      const expectationFew4 = [publications, datasets, articles]
+      const expected = SORT_ORDER.map((key) => ({ label: key }))
 
-      expect(orderAutoSuggestResults([...data, articles, publications, datasets])).toEqual(
-        expectationAll,
-      )
-      expect(orderAutoSuggestResults([articles, ...data, datasets, publications])).toEqual(
-        expectationAll,
-      )
-      expect(orderAutoSuggestResults([publications, articles, ...data, datasets])).toEqual(
-        expectationAll,
-      )
-      expect(orderAutoSuggestResults([articles, datasets, ...data])).toEqual(expectationFew1)
-      expect(orderAutoSuggestResults([datasets, publications, ...data])).toEqual(expectationFew2)
-      expect(orderAutoSuggestResults([articles, publications, ...data])).toEqual(expectationFew3)
-      expect(orderAutoSuggestResults([datasets, articles, publications])).toEqual(expectationFew4)
+      expect(orderAutoSuggestResults(results)).toEqual(expected)
+    })
+
+    it('should sort the autoresults when the first four labels are returned', () => {
+      const results = SORT_ORDER.map((key) => ({ label: key }))
+        .slice(0, 4)
+        .sort(
+          (a, b) => b.label.localeCompare(a.label), // sort alphabetically to scrumble results
+        )
+
+      const expected = SORT_ORDER.map((key) => ({ label: key })).slice(0, 4)
+
+      expect(orderAutoSuggestResults(results)).toEqual(expected)
+    })
+
+    it('should sort the autoresults when the last four labels are returned', () => {
+      const results = SORT_ORDER.map((key) => ({ label: key }))
+        .slice(4)
+        .sort(
+          (a, b) => b.label.localeCompare(a.label), // sort alphabetically to scrumble results
+        )
+
+      const expected = SORT_ORDER.map((key) => ({ label: key })).slice(4)
+
+      expect(orderAutoSuggestResults(results)).toEqual(expected)
     })
   })
 })

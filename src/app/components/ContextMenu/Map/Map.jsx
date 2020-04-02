@@ -25,7 +25,7 @@ const Map = ({
   <section className="context-menu">
     <ContextMenuComponent
       data-test="context-menu"
-      alt="Actiemenu"
+      title="Actiemenu"
       arrowIcon={<ChevronDown />}
       icon={
         <Icon padding={4} inline size={24}>
@@ -86,12 +86,12 @@ Map.propTypes = {
   openEmbedPreview: PropTypes.func.isRequired,
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   hasPrintButton: hasPrintMode(state),
   hasEmbedButton: hasEmbedMode(state),
 })
 
-const mapDispatchToProps = dispatch =>
+const mapDispatchToProps = (dispatch) =>
   bindActionCreators(
     {
       openSharePage: sharePage,

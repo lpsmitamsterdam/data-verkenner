@@ -1,13 +1,13 @@
 import { DEFAULT_LOCALE } from '../../../../src/shared/config/locale.config'
 
-describe('The localization service', function() {
+describe('The localization service', function () {
   let localization
   let originalIntl
 
   beforeEach(() => {
     angular.mock.module('dpShared')
 
-    angular.mock.inject(function(_localization_) {
+    angular.mock.inject(function (_localization_) {
       localization = _localization_
     })
 

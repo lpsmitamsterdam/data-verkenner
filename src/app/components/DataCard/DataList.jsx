@@ -1,4 +1,4 @@
-import styled from '@datapunt/asc-core'
+import styled from 'styled-components'
 import { Icon, Link, themeSpacing, breakpoint } from '@datapunt/asc-ui'
 import React from 'react'
 import RouterLink from 'redux-first-router-link'
@@ -54,7 +54,7 @@ const DataList = ({ type, label, count, results, withPagination }) => (
 
     {results ? (
       <List hasMarginBottom={!withPagination}>
-        {results.map(location => (
+        {results.map((location) => (
           <li key={location.id}>
             <StyledLink
               to={toDetailFromEndpoint(location.endpoint, VIEW_MODE.SPLIT)}

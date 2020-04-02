@@ -1,5 +1,5 @@
 import React from 'react'
-import styled from '@datapunt/asc-core'
+import styled from 'styled-components'
 import {
   Card,
   CardContent,
@@ -110,7 +110,7 @@ const DatasetCard = ({
           <MetaText data-test="metaText">
             {distributionTypes &&
               distributionTypes.length > 0 &&
-              distributionTypes.map(distributionType => (
+              distributionTypes.map((distributionType) => (
                 <StyledTag key={distributionType} colorType="tint" colorSubtype="level3">
                   {distributionType}
                 </StyledTag>

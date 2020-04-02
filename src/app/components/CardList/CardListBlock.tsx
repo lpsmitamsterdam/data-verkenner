@@ -1,7 +1,7 @@
 /* eslint-disable camelcase */
 import React from 'react'
 import { Row, Column, themeColor, themeSpacing, breakpoint } from '@datapunt/asc-ui'
-import styled from '@datapunt/asc-core'
+import styled from 'styled-components'
 import CardList from './CardList'
 import { CMSResultItem } from '../../utils/useFromCMS'
 

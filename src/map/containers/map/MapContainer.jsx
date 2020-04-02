@@ -16,7 +16,7 @@ import MapEmbedButton from '../../components/map-embed-button/MapEmbedButton'
 import { previewDataAvailable as previewDataAvailableSelector } from '../../../shared/ducks/selection/selection'
 import { getDrawingMode } from '../../ducks/map/selectors'
 
-export const overrideLeafletGetBounds = map => {
+export const overrideLeafletGetBounds = (map) => {
   // We override here the getBounds method of Leaflet
   // To ensure the full coverage of the visible area
   // of the NonTiledLayer layer types
@@ -32,7 +32,7 @@ export const overrideLeafletGetBounds = map => {
   }
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   drawMode: getDrawingMode(state),
   embedMode: isEmbedded(state),
   printOrEmbedMode: isPrintOrEmbedMode(state),

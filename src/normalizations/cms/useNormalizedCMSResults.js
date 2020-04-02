@@ -23,7 +23,7 @@ export const EDITORIAL_FIELD_TYPE_VALUES = {
   CONTENT: 'content',
 }
 
-const normalizeObject = data => {
+const normalizeObject = (data) => {
   const {
     uuid,
     title,
@@ -99,7 +99,7 @@ const normalizeObject = data => {
   if (field_related) {
     const reformattedRelatedResults = reformatJSONApiResults({ field_items: field_related })
 
-    related = reformattedRelatedResults.map(dataItem => normalizeObject(dataItem, type))
+    related = reformattedRelatedResults.map((dataItem) => normalizeObject(dataItem, type))
   }
 
   return {
@@ -126,7 +126,7 @@ const normalizeObject = data => {
   }
 }
 
-const useNormalizedCMSResults = data => {
+const useNormalizedCMSResults = (data) => {
   // The data can be in the form of an array when used on the homepage or an overview page
   if (data.results || (data && data.length)) {
     const dataArray = data.results || data
@@ -134,10 +134,10 @@ const useNormalizedCMSResults = data => {
     // Return different format when the data include links to other endpoints
     return data._links
       ? {
-          data: dataArray.map(dataItem => normalizeObject(dataItem)),
+          data: dataArray.map((dataItem) => normalizeObject(dataItem)),
           links: data._links,
         }
-      : dataArray.map(dataItem => normalizeObject(dataItem))
+      : dataArray.map((dataItem) => normalizeObject(dataItem))
   }
 
   // Format just a single data object

@@ -35,8 +35,8 @@ const endpoints = [
 const relatedResourcesByType = {
   'bag/ligplaats': [
     {
-      fetch: ligplaatsId =>
-        fetchHoofdadresByLigplaatsId(ligplaatsId).then(result => fetchByAddressId(result.id)),
+      fetch: (ligplaatsId) =>
+        fetchHoofdadresByLigplaatsId(ligplaatsId).then((result) => fetchByAddressId(result.id)),
       type: 'vestiging',
       authScope: 'HR/R',
     },
@@ -58,8 +58,8 @@ const relatedResourcesByType = {
   ],
   'bag/standplaats': [
     {
-      fetch: standplaatsId =>
-        fetchHoofdadresByStandplaatsId(standplaatsId).then(result => fetchByAddressId(result.id)),
+      fetch: (standplaatsId) =>
+        fetchHoofdadresByStandplaatsId(standplaatsId).then((result) => fetchByAddressId(result.id)),
       type: 'vestiging',
       authScope: 'HR/R',
     },
@@ -74,7 +74,7 @@ export const geosearchTypes = {
 // and don't implement the geosearch api interface
 export const getFeaturesFromResult = (endpointType, result) => {
   if (endpointType === geosearchTypes.parkeervakken) {
-    return result.map(item => ({
+    return result.map((item) => ({
       properties: {
         display: item.id,
         type: 'parkeervakken/parkeervakken',
@@ -86,18 +86,18 @@ export const getFeaturesFromResult = (endpointType, result) => {
   return result.features
 }
 
-export const fetchRelatedForUser = user => data => {
-  const item = data.features.find(feature => relatedResourcesByType[feature.properties.type])
+export const fetchRelatedForUser = (user) => (data) => {
+  const item = data.features.find((feature) => relatedResourcesByType[feature.properties.type])
   if (!item) {
     return data.features
   }
 
   const resources = relatedResourcesByType[item.properties.type]
-  const requests = resources.map(resource =>
+  const requests = resources.map((resource) =>
     resource.authScope && (!user.authenticated || !user.scopes.includes(resource.authScope))
       ? []
-      : resource.fetch(item.properties.id).then(results =>
-          results.map(result => ({
+      : resource.fetch(item.properties.id).then((results) =>
+          results.map((result) => ({
             ...result,
             properties: {
               uri: result._links.self.href,
@@ -109,7 +109,7 @@ export const fetchRelatedForUser = user => data => {
         ),
   )
 
-  return Promise.all(requests).then(results =>
+  return Promise.all(requests).then((results) =>
     results.reduce((accumulator, subResults) => accumulator.concat(subResults), data.features),
   )
 }
@@ -118,7 +118,7 @@ export default function search(location, user) {
   const errorType = 'error'
   const allRequests = []
 
-  endpoints.forEach(endpoint => {
+  endpoints.forEach((endpoint) => {
     const isInScope = endpoint.authScope && user.scopes && user.scopes.includes(endpoint.authScope)
 
     if (!endpoint.authScope || isInScope) {
@@ -130,17 +130,17 @@ export default function search(location, user) {
       }
 
       const queryString = Object.keys(searchParams)
-        .map(key => `${encodeURIComponent(key)}=${encodeURIComponent(searchParams[key])}`)
+        .map((key) => `${encodeURIComponent(key)}=${encodeURIComponent(searchParams[key])}`)
         .join('&')
 
       const request = getByUrl(`${process.env.API_ROOT}${endpoint.uri}?${queryString}`)
-        .then(result => ({
+        .then((result) => ({
           features: getFeaturesFromResult(endpoint.uri, result),
         }))
         .then(fetchRelatedForUser(user))
         .then(
-          features => features.map(feature => transformResultByType(feature)),
-          code => ({
+          (features) => features.map((feature) => transformResultByType(feature)),
+          (code) => ({
             type: errorType,
             code,
           }),
@@ -150,16 +150,16 @@ export default function search(location, user) {
   })
 
   const allResults = Promise.all(
-    allRequests.map(p =>
-      p.then(result => Promise.resolve(result)).catch(() => Promise.resolve([])),
+    allRequests.map((p) =>
+      p.then((result) => Promise.resolve(result)).catch(() => Promise.resolve([])),
     ),
   ) // ignore the failing calls
   return allResults
-    .then(results => [].concat.apply([], [...results]))
-    .then(results => ({
+    .then((results) => [].concat.apply([], [...results]))
+    .then((results) => ({
       results: createMapSearchResultsModel(
-        results.filter(result => result && result.type !== errorType),
+        results.filter((result) => result && result.type !== errorType),
       ),
-      errors: results.some(result => result && result.type === errorType),
+      errors: results.some((result) => result && result.type === errorType),
     }))
 }

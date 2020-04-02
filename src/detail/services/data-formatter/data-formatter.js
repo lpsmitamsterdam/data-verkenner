@@ -11,16 +11,16 @@ const formatCatalogData = (data, catalogFilters) => {
   const formattedData = {
     _display: data['dct:title'],
     resources: resourceTypes
-      .map(item => ({
+      .map((item) => ({
         type: item.id,
-        rows: resources.filter(row => row['ams:resourceType'] === item.id),
+        rows: resources.filter((row) => row['ams:resourceType'] === item.id),
       }))
-      .filter(resource => resource.rows.length),
+      .filter((resource) => resource.rows.length),
     editDatasetId: data['dct:identifier'],
   }
 
   return Object.keys(data)
-    .filter(key => key !== 'dcat:distribution')
+    .filter((key) => key !== 'dcat:distribution')
     .reduce(
       (result, key) => ({
         ...result,
@@ -51,7 +51,7 @@ const formatDetailData = (rawData, category, subject, catalogFilters, scopes) =>
 
     data = { ...data, ...markdownFields }
 
-    data.canEditDataset = scopes.some(scope => dcatdScopes.includes(scope))
+    data.canEditDataset = scopes.some((scope) => dcatdScopes.includes(scope))
   }
   return data
 }

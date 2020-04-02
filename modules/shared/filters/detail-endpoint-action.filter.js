@@ -1,10 +1,10 @@
 import { toDetailFromEndpoint } from '../../../src/store/redux-first-router/actions'
 import { VIEW_MODE } from '../../../src/shared/ducks/ui/ui'
-;(function() {
+;(function () {
   angular.module('dpShared').filter('detailEndpointAction', detailEndpointAction)
 
   function detailEndpointAction() {
-    return endpoint => {
+    return (endpoint) => {
       if (!endpoint) {
         return
       }

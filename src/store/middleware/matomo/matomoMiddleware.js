@@ -4,7 +4,7 @@ import { authCustomDimensions, viewCustomDimensions } from './customDimensions'
 import matomoInstance from '../../../app/matomo'
 
 // Execute Matomo actions
-const matomoMiddleware = ({ getState }) => next => action => {
+const matomoMiddleware = ({ getState }) => (next) => (action) => {
   const nextAction = action
 
   const actionsToMatomo = []
@@ -32,7 +32,7 @@ const matomoMiddleware = ({ getState }) => next => action => {
         ...viewCustomDimensions(query, state),
       ]
 
-      actionsToMatomo.forEach(matomoAction => {
+      actionsToMatomo.forEach((matomoAction) => {
         matomoInstance.track({
           data: matomoAction({
             tracking,

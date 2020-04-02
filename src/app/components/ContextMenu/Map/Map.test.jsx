@@ -44,53 +44,35 @@ describe('ContextMenu for Maps', () => {
     it("should only render the print button on certain scenario's", () => {
       component.setProps({ hasPrintButton: true })
 
-      component
-        .find('ContextMenuItem')
-        .at(0)
-        .simulate('click')
+      component.find('ContextMenuItem').at(0).simulate('click')
       expect(showPrintMode).toHaveBeenCalled()
     })
 
     it("should only render the embed button on certain scenario's", () => {
       component.setProps({ hasPrintButton: false, hasEmbedButton: true })
 
-      component
-        .find('ContextMenuItem')
-        .at(0)
-        .simulate('click')
+      component.find('ContextMenuItem').at(0).simulate('click')
       expect(showEmbedPreview).toHaveBeenCalled()
     })
   })
 
   it('should handle onClick event on pano buttons', () => {
-    component
-      .find('ContextMenuItem')
-      .at(1)
-      .simulate('click')
+    component.find('ContextMenuItem').at(1).simulate('click')
     expect(sharePage).toHaveBeenCalledWith('facebook')
   })
 
   it('should handle onClick event on pano buttons', () => {
-    component
-      .find('ContextMenuItem')
-      .at(2)
-      .simulate('click')
+    component.find('ContextMenuItem').at(2).simulate('click')
     expect(sharePage).toHaveBeenCalledWith('twitter')
   })
 
   it('should handle onClick event on pano buttons', () => {
-    component
-      .find('ContextMenuItem')
-      .at(3)
-      .simulate('click')
+    component.find('ContextMenuItem').at(3).simulate('click')
     expect(sharePage).toHaveBeenCalledWith('linkedin')
   })
 
   it('should handle onClick event on pano buttons', () => {
-    component
-      .find('ContextMenuItem')
-      .at(4)
-      .simulate('click')
+    component.find('ContextMenuItem').at(4).simulate('click')
     expect(sharePage).toHaveBeenCalledWith('email')
   })
 })

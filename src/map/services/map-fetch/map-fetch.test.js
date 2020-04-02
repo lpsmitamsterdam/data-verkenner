@@ -41,7 +41,7 @@ describe('map-fetch', () => {
 
     getByUrl.mockImplementation(() => mockResult)
     // The detail function returns a further normalized result
-    const detail = jest.fn(result => ({ field: result.field }))
+    const detail = jest.fn((result) => ({ field: result.field }))
 
     const result = await fetchByUri(uri, detail, mockNormalization)
 

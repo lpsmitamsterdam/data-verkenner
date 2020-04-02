@@ -1,4 +1,4 @@
-;(function() {
+;(function () {
   angular.module('dpDetail').component('dpApiCall', {
     bindings: {
       endpoint: '@',
@@ -24,7 +24,7 @@
     vm.isLoading = true
     vm.useLoadingIndicatorDelay = false
 
-    $scope.$watch('vm.endpoint', function(endpoint) {
+    $scope.$watch('vm.endpoint', function (endpoint) {
       if (endpoint) {
         if (vm.useBrkObjectExpanded) {
           endpoint = endpoint.replace('brk/object', 'brk/object-expand')
@@ -37,7 +37,7 @@
         loadData(endpoint, vm.addApiRoot)
 
         // Load pages 2-n
-        vm.loadMore = function() {
+        vm.loadMore = function () {
           vm.isLoading = true
 
           loadData(vm.apiData.next)
@@ -48,7 +48,7 @@
     function loadData(endpoint, addApiRoot) {
       const callEndpointFn = addApiRoot ? api.getByUri : api.getByUrl
       callEndpointFn(endpoint)
-        .then(function(response) {
+        .then(function (response) {
           const hasPagination = angular.isArray(response.results)
 
           if (hasPagination) {

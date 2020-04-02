@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Helmet } from 'react-helmet'
-import styled from '@datapunt/asc-core'
+import styled from 'styled-components'
 import { Container, themeColor } from '@datapunt/asc-ui'
 import { useMatomo } from '@datapunt/matomo-tracker-react'
 import useDocumentTitle from '../../utils/useDocumentTitle'
@@ -44,10 +44,6 @@ const EditorialPage = ({
   return (
     <Container>
       <Helmet>
-        <meta
-          name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"
-        />
         {canonical && <link rel="canonical" href={canonical} />}
         {description && <meta name="description" content={description} />}
 

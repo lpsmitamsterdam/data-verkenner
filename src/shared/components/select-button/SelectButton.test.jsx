@@ -67,10 +67,7 @@ describe('SelectButton', () => {
     )
     wrapper.find('button.select-button__icon-wrapper').simulate('click')
 
-    wrapper
-      .find('button.select-button__drop-down-button')
-      .last()
-      .simulate('click')
+    wrapper.find('button.select-button__drop-down-button').last().simulate('click')
 
     expect(handleChange).toHaveBeenCalledWith('topo_rd_zw')
     expect(wrapper.find('.select-button.select-button--expanded').exists()).toBe(false)

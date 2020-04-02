@@ -1,4 +1,4 @@
-;(function() {
+;(function () {
   const keys = {
     stadsdeel: 'stadsdeel',
     wijk: 'buurtcombinatie',

@@ -1,4 +1,4 @@
-import styled, { css } from '@datapunt/asc-core'
+import styled, { css } from 'styled-components'
 import { breakpoint, perceivedLoading, themeColor, Link, themeSpacing } from '@datapunt/asc-ui'
 import { SizeOnBreakpoint } from '../TileGrid/TileGridStyle'
 import getImageFromCms from '../../utils/getImageFromCms'
@@ -26,18 +26,18 @@ const Tile = styled(Link)<TileProps>`
     backgroundImage && span && !isLoading
       ? css`
           ${span &&
-            Object.entries(span).map(
-              ([brkPoint, size]: [any, any]) => css`
-                background-image: url(${getImageFromCms(backgroundImage, 400, 300)});
-                @media screen and ${breakpoint('min-width', brkPoint)} {
-                  background-image: url(${getImageFromCms(
-                    backgroundImage,
-                    size[1] === 2 ? 600 : 300,
-                    size[0] === 2 ? 600 : 300,
-                  )});
-                }
-              `,
-            )}
+          Object.entries(span).map(
+            ([brkPoint, size]: [any, any]) => css`
+              background-image: url(${getImageFromCms(backgroundImage, 400, 300)});
+              @media screen and ${breakpoint('min-width', brkPoint)} {
+                background-image: url(${getImageFromCms(
+                  backgroundImage,
+                  size[1] === 2 ? 600 : 300,
+                  size[0] === 2 ? 600 : 300,
+                )});
+              }
+            `,
+          )}
         `
       : css`
           background-color: ${themeColor('support', 'valid')};

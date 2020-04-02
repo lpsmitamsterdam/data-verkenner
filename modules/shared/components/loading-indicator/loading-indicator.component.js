@@ -1,4 +1,4 @@
-;(function() {
+;(function () {
   angular.module('dpShared').component('dpLoadingIndicator', {
     bindings: {
       isLoading: '=',
@@ -19,10 +19,10 @@
 
     vm.showLoadingIndicator = false
 
-    $scope.$watch('vm.isLoading', function(isLoading) {
+    $scope.$watch('vm.isLoading', function (isLoading) {
       if (isLoading) {
         timer = $interval(
-          function() {
+          function () {
             vm.showLoadingIndicator = true
           },
           vm.useDelay ? threshold : 0,

@@ -1,4 +1,4 @@
-import styled from '@datapunt/asc-core'
+import styled from 'styled-components'
 import {
   breakpoint,
   CardContainer,
@@ -63,7 +63,7 @@ const OrganizationBlock = () => {
       <StyledRow hasMargin={false} showError={error}>
         {error && <ErrorMessage />}
         {results &&
-          results.map(result => (
+          results.map((result) => (
             <Column
               key={result.key}
               wrap

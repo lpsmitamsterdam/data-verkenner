@@ -1,25 +1,25 @@
 // Todo: fix / add tests
 import SEARCH_CONFIG from './search-config'
 
-const geosearchFormatter = allSearchResults => {
+const geosearchFormatter = (allSearchResults) => {
   const allFeaturesFlattened = allSearchResults
-    .map(searchResult => searchResult.features.map(feature => feature.properties))
+    .map((searchResult) => searchResult.features.map((feature) => feature.properties))
     .reduce((previous, current) => previous.concat(current), [])
 
-  return SEARCH_CONFIG.COORDINATES_HIERARCHY.map(rawCategory => {
+  return SEARCH_CONFIG.COORDINATES_HIERARCHY.map((rawCategory) => {
     const formattedCategory = {
       slug: rawCategory.slug || null,
       singular: rawCategory.singular,
       plural: rawCategory.plural,
       results: allFeaturesFlattened
-        .filter(feature => rawCategory.features.indexOf(feature.type) !== -1)
+        .filter((feature) => rawCategory.features.indexOf(feature.type) !== -1)
         .sort((featureA, featureB) => {
           const indexA = rawCategory.features.indexOf(featureA.type)
           const indexB = rawCategory.features.indexOf(featureB.type)
 
           return indexA - indexB
         })
-        .map(feature => {
+        .map((feature) => {
           let subtype = null
           let subtypeLabel
 
@@ -29,7 +29,7 @@ const geosearchFormatter = allSearchResults => {
           } else if (feature.type === 'bag/ligplaats' || feature.type === 'bag/standplaats') {
             ;[, subtype] = feature.type.split('/')
           } else {
-            ;['gebieden', 'bommenkaart'].forEach(category => {
+            ;['gebieden', 'bommenkaart'].forEach((category) => {
               const regex = new RegExp(`^${category}/`)
 
               if (feature.type.match(regex)) {
@@ -57,7 +57,7 @@ const geosearchFormatter = allSearchResults => {
     formattedCategory.count = formattedCategory.results.length
 
     return formattedCategory
-  }).filter(category => category.count > 0)
+  }).filter((category) => category.count > 0)
 }
 
 export default geosearchFormatter

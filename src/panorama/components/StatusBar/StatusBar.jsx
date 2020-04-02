@@ -4,7 +4,7 @@ import './StatusBar.scss'
 import { wgs84ToRd } from '../../../shared/services/coordinate-reference-system/crs-converter'
 import { dateToString } from '../../../shared/services/date-formatter/date-formatter'
 
-const convertLocation = location => {
+const convertLocation = (location) => {
   const [latitude, longitude] = location
   const { x: rdX, y: rdY } = wgs84ToRd({ latitude, longitude })
   const formattedWgs84Location = `${latitude.toFixed(7)}, ${longitude.toFixed(7)}`

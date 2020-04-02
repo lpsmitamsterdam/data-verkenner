@@ -18,18 +18,13 @@ describe('addresses module', () => {
     cy.visit(pageUrl)
 
     // the address table should be visible
-    cy.get(dataSelection)
-      .should('exist')
-      .and('be.visible')
+    cy.get(dataSelection).should('exist').and('be.visible')
   })
 
   describe('user should see the addresses table in full mode', () => {
     it('should open the address catalogus', () => {
       // the title should contain Adressen
-      cy.get(HEADINGS.dataSelectionHeading)
-        .contains('Adressen')
-        .should('exist')
-        .and('be.visible')
+      cy.get(HEADINGS.dataSelectionHeading).contains('Adressen').should('exist').and('be.visible')
 
       // the map view is not visible
       cy.get(mapContainer).should('not.exist')
@@ -42,7 +37,7 @@ describe('addresses module', () => {
       cy.get('.qa-available-filters')
         .find('.c-data-selection-available-filters__category')
         .first()
-        .then(group => {
+        .then((group) => {
           // get the innerText of the nested h2
           const category = group[0].children[0].innerText
           // get the innerText of the first nested li
@@ -91,17 +86,15 @@ describe('addresses module', () => {
     it('should open the detail view with the correct address', () => {
       cy.get(`${DATA_SELECTION_TABLE.head} ${DATA_SELECTION_TABLE.cell}`)
         .first()
-        .then(firstTableHeader => {
+        .then((firstTableHeader) => {
           const selectedGroup = firstTableHeader[0].innerText.trim()
           cy.get(`${DATA_SELECTION_TABLE.body} ${DATA_SELECTION_TABLE.row}`)
             .first()
             .find(`${DATA_SELECTION_TABLE.cell}:nth-child(1) .qa-table-value`)
-            .then(firstValue => {
+            .then((firstValue) => {
               const selectedValue = firstValue[0].innerText.trim()
               // click on the firstItem to open address preview panel
-              cy.get(`${DATA_SELECTION_TABLE.body} ${DATA_SELECTION_TABLE.row}`)
-                .first()
-                .click()
+              cy.get(`${DATA_SELECTION_TABLE.body} ${DATA_SELECTION_TABLE.row}`).first().click()
 
               // request the detail information
               cy.wait('@getNummeraanduiding')
@@ -112,14 +105,9 @@ describe('addresses module', () => {
               cy.wait('@getMonument')
 
               // the detail view should exist
-              cy.get('.qa-detail')
-                .should('exist')
-                .and('be.visible')
+              cy.get('.qa-detail').should('exist').and('be.visible')
               // the selectedGroup should exist
-              cy.get('dt')
-                .contains(selectedGroup)
-                .should('exist')
-                .and('be.visible')
+              cy.get('dt').contains(selectedGroup).should('exist').and('be.visible')
               // the selectedValue should exist as a sibling
               cy.get('dt')
                 .contains(selectedGroup)
@@ -137,30 +125,22 @@ describe('addresses module', () => {
           cy.get(`${DATA_SELECTION_TABLE.body} ${DATA_SELECTION_TABLE.row}`)
             .first()
             .find(`${DATA_SELECTION_TABLE.cell}:nth-child(1)`)
-            .then(firstValue => {
+            .then((firstValue) => {
               const selectedValue = firstValue[0].innerText.trim()
               // click on the firstItem to open address preview panel
-              cy.get(`${DATA_SELECTION_TABLE.body} ${DATA_SELECTION_TABLE.row}`)
-                .first()
-                .click()
+              cy.get(`${DATA_SELECTION_TABLE.body} ${DATA_SELECTION_TABLE.row}`).first().click()
               // the detail view should exist
-              cy.get('.qa-detail')
-                .should('exist')
-                .and('be.visible')
+              cy.get('.qa-detail').should('exist').and('be.visible')
               // the map view maximize button should exist
               cy.get('button.icon-button__right').should('exist')
               // click on the maximize button to open the map view
-              cy.get('button.icon-button__right')
-                .first()
-                .click()
+              cy.get('button.icon-button__right').first().click()
 
               cy.wait('@getNummeraanduiding')
               cy.wait('@getVerblijfsobject')
 
               // the preview panel should exist
-              cy.get('.map-preview-panel')
-                .should('exist')
-                .and('be.visible')
+              cy.get('.map-preview-panel').should('exist').and('be.visible')
               // the preview panel has the right title
               cy.get('.map-detail-result__header-subtitle')
                 .contains(selectedValue)
@@ -186,9 +166,7 @@ describe('addresses module', () => {
       cy.route('/monumenten/monumenten/*').as('getMonument')
 
       // click on the first item in the table
-      cy.get(`${DATA_SELECTION_TABLE.body} ${DATA_SELECTION_TABLE.row}`)
-        .first()
-        .click()
+      cy.get(`${DATA_SELECTION_TABLE.body} ${DATA_SELECTION_TABLE.row}`).first().click()
 
       cy.wait('@getNummeraanduiding')
       cy.wait('@getVerblijfsobject')
@@ -198,9 +176,7 @@ describe('addresses module', () => {
       cy.wait('@getMonument')
 
       // the cursor should still be rendered inside the leaflet map
-      cy.get('.leaflet-marker-icon')
-        .should('exist')
-        .and('be.visible')
+      cy.get('.leaflet-marker-icon').should('exist').and('be.visible')
     })
   })
 
@@ -211,19 +187,17 @@ describe('addresses module', () => {
       let totalCount
 
       // Get the number in the title before filtering
-      cy.get(HEADINGS.dataSelectionHeading).then(title => {
+      cy.get(HEADINGS.dataSelectionHeading).then((title) => {
         totalCount = getCountFromHeader(title.text())
       })
 
       // click on "AMC" in the left filter menu
-      cy.get('.c-data-selection-available-filters__item')
-        .contains('AMC')
-        .click()
+      cy.get('.c-data-selection-available-filters__item').contains('AMC').click()
       cy.wait('@getResults')
 
       // Expect the number in the title after filtering to be smaller than the number before
       // filtering
-      cy.get(HEADINGS.dataSelectionHeading).then(title => {
+      cy.get(HEADINGS.dataSelectionHeading).then((title) => {
         const filteredCount = getCountFromHeader(title.text())
         expect(filteredCount).to.be.below(totalCount)
       })
@@ -233,21 +207,15 @@ describe('addresses module', () => {
       cy.wait('@getGeoResults')
 
       // map should be visible now
-      cy.get('.qa-map-container')
-        .should('exist')
-        .and('be.visible')
+      cy.get('.qa-map-container').should('exist').and('be.visible')
       // , with large right column
-      cy.get('.qa-dashboard__column--right')
-        .should('exist')
-        .and('be.visible')
+      cy.get('.qa-dashboard__column--right').should('exist').and('be.visible')
       // count the number of cluster icons on the map
-      cy.get('.o-highlight-cluster').then(items => {
+      cy.get('.o-highlight-cluster').then((items) => {
         expect(items.length).to.gte(1)
       })
       // list should be visible in right column
-      cy.get('ul.o-list')
-        .should('exist')
-        .and('be.visible')
+      cy.get('ul.o-list').should('exist').and('be.visible')
       // active filter should show
       cy.get('.c-data-selection-active-filters__listitem')
         .contains('AMC')

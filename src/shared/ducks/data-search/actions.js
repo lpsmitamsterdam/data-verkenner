@@ -24,12 +24,12 @@ export const fetchMapSearchResultsSuccessList = (results, numberOfResults) => ({
   payload: { results, numberOfResults },
 })
 
-export const fetchMapSearchResultsFailure = payload => ({
+export const fetchMapSearchResultsFailure = (payload) => ({
   type: FETCH_GEO_SEARCH_RESULTS_FAILURE,
   payload,
 })
 
-export const requestNearestDetails = payload => ({
+export const requestNearestDetails = (payload) => ({
   type: REQUEST_NEAREST_DETAILS,
   payload,
 })

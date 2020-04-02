@@ -13,13 +13,13 @@ const initialState = {
 }
 
 const getUrlTemplateOfActiveLayer = (layers, value) => {
-  const activeLayer = layers.find(layer => layer.value === value)
+  const activeLayer = layers.find((layer) => layer.value === value)
   return activeLayer ? activeLayer.urlTemplate : ''
 }
 
-const getAllBaseLayers = state => state.mapLayers.baseLayers.items
+const getAllBaseLayers = (state) => state.mapLayers.baseLayers.items
 
-export const getBaseLayers = createSelector([getAllBaseLayers], baseLayers =>
+export const getBaseLayers = createSelector([getAllBaseLayers], (baseLayers) =>
   baseLayers.reduce(
     (result, item) => ({
       ...result,

@@ -1,5 +1,5 @@
-import styled, { css, Theme, ascDefaultTheme } from '@datapunt/asc-core'
-import { breakpoint, themeColor } from '@datapunt/asc-ui'
+import styled, { css } from 'styled-components'
+import { breakpoint, themeColor, Theme, ascDefaultTheme } from '@datapunt/asc-ui'
 
 const GAP = ascDefaultTheme.spacing * 6
 
@@ -73,11 +73,11 @@ export const TileGridItem = styled.div<TileGridItemProps>`
             grid-column: span ${size[1]};
             grid-row: span ${size[0]};
             ${size[1] === 2 &&
-              css`
-                &:before {
-                  padding-top: 50%;
-                }
-              `}
+            css`
+              &:before {
+                padding-top: 50%;
+              }
+            `}
           }
         `,
       )}

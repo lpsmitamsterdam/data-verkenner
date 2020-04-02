@@ -1,5 +1,5 @@
 import React from 'react'
-import styled from '@datapunt/asc-core'
+import styled from 'styled-components'
 import { Card, CardMedia, Image, CardContent, themeSpacing } from '@datapunt/asc-ui'
 import getState from '../../../shared/services/redux/get-state'
 
@@ -30,7 +30,7 @@ const IIIFThumbnail = ({ src, title }: Thumbnail) => {
           authorization: `Bearer ${accessToken || ''}`,
         },
       })
-        .then(response => {
+        .then((response) => {
           if (!response.ok) {
             setError(true)
             return null
@@ -38,7 +38,7 @@ const IIIFThumbnail = ({ src, title }: Thumbnail) => {
 
           return response.blob()
         })
-        .then(images => {
+        .then((images) => {
           setLoading(false)
 
           // Then create a local URL for that image and pass it to the local state

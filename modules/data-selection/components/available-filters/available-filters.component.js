@@ -16,24 +16,24 @@ DpDataSelectionAvailableFiltersController.$inject = ['$scope', 'store']
 
 function DpDataSelectionAvailableFiltersController($scope, store) {
   const vm = this
-  this.$onInit = function() {
+  this.$onInit = function () {
     const expandedFilters = []
 
     $scope.$watch('vm.dataset', updateConfig, true)
 
     vm.showMoreThreshold = 10
 
-    vm.hasInactiveFilterOptions = function(filter) {
-      return !filter.options.some(option =>
+    vm.hasInactiveFilterOptions = function (filter) {
+      return !filter.options.some((option) =>
         vm.isFilterOptionActive(filter.slug, option.id, option.label),
       )
     }
 
-    vm.isFilterOptionActive = function(filterSlug, id, label) {
+    vm.isFilterOptionActive = function (filterSlug, id, label) {
       return vm.activeFilters[filterSlug] === label || vm.activeFilters[filterSlug] === id
     }
 
-    vm.addFilter = function(filterSlug, optionId) {
+    vm.addFilter = function (filterSlug, optionId) {
       store.dispatch(
         addFilter({
           [filterSlug]: optionId,
@@ -41,33 +41,33 @@ function DpDataSelectionAvailableFiltersController($scope, store) {
       )
     }
 
-    vm.showExpandButton = function(filterSlug) {
+    vm.showExpandButton = function (filterSlug) {
       return (
         !vm.isExpandedFilter(filterSlug) &&
         getAvailableOptions(filterSlug).length > vm.showMoreThreshold
       )
     }
 
-    vm.nrHiddenOptions = function(filter) {
+    vm.nrHiddenOptions = function (filter) {
       return filter.numberOfOptions - filter.options.length
     }
 
-    vm.expandFilter = function(filterSlug) {
+    vm.expandFilter = function (filterSlug) {
       expandedFilters.push(filterSlug)
     }
 
-    vm.implodeFilter = function(filterSlug) {
+    vm.implodeFilter = function (filterSlug) {
       const index = expandedFilters.indexOf(filterSlug)
       if (index >= 0) {
         expandedFilters.splice(index, 1)
       }
     }
 
-    vm.isExpandedFilter = function(filterSlug) {
+    vm.isExpandedFilter = function (filterSlug) {
       return expandedFilters.indexOf(filterSlug) !== -1
     }
 
-    vm.canExpandImplode = function(filterSlug) {
+    vm.canExpandImplode = function (filterSlug) {
       return getAvailableOptions(filterSlug).length > vm.showMoreThreshold
     }
 
@@ -76,7 +76,7 @@ function DpDataSelectionAvailableFiltersController($scope, store) {
     }
 
     function getAvailableFilters(filterSlug) {
-      return vm.availableFilters.filter(filter => filter.slug === filterSlug)
+      return vm.availableFilters.filter((filter) => filter.slug === filterSlug)
     }
 
     function updateConfig() {

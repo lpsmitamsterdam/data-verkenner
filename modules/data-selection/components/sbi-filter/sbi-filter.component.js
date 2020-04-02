@@ -14,15 +14,17 @@ import { addFilter, removeFilter } from '../../../../src/shared/ducks/filters/fi
 
   function DpSbiFilterController($scope, store) {
     const vm = this
-    this.$onInit = function() {
-      const sbiLevelFilters = vm.availableFilters.filter(filter => filter.slug.startsWith('sbi_l'))
+    this.$onInit = function () {
+      const sbiLevelFilters = vm.availableFilters.filter((filter) =>
+        filter.slug.startsWith('sbi_l'),
+      )
       const numberOfOptions = sbiLevelFilters.reduce(
         (total, amount) => total + amount.numberOfOptions,
         0,
       )
       const options = sbiLevelFilters
-        .map(filter => {
-          return filter.options.map(sub => ({
+        .map((filter) => {
+          return filter.options.map((sub) => ({
             ...sub,
             slug: filter.slug,
           }))
@@ -40,7 +42,7 @@ import { addFilter, removeFilter } from '../../../../src/shared/ducks/filters/fi
       vm.filterSlug = 'sbi_code'
 
       vm.filter = {
-        ...vm.availableFilters.find(filter => filter.slug === 'sbi_code'),
+        ...vm.availableFilters.find((filter) => filter.slug === 'sbi_code'),
         options,
         numberOfOptions,
       }
@@ -49,10 +51,10 @@ import { addFilter, removeFilter } from '../../../../src/shared/ducks/filters/fi
         vm.addOrRemoveFilter(vm.sbiCode)
       }
 
-      vm.addOrRemoveFilter = value => {
+      vm.addOrRemoveFilter = (value) => {
         const formattedValue = value
           .split(',')
-          .map(data => `'${data.trim()}'`)
+          .map((data) => `'${data.trim()}'`)
           .join(', ')
 
         if (value === '') {
@@ -66,27 +68,27 @@ import { addFilter, removeFilter } from '../../../../src/shared/ducks/filters/fi
         }
       }
 
-      vm.clickFilter = string => {
+      vm.clickFilter = (string) => {
         vm.addOrRemoveFilter(string.replace(/: .*$/g, ''))
       }
 
-      vm.showExpandButton = function() {
+      vm.showExpandButton = function () {
         return !vm.isExpanded && vm.canExpandImplode()
       }
 
-      vm.nrHiddenOptions = function(filter) {
+      vm.nrHiddenOptions = function (filter) {
         return filter.numberOfOptions - filter.options.length
       }
 
-      vm.expandFilter = function() {
+      vm.expandFilter = function () {
         vm.isExpanded = true
       }
 
-      vm.implodeFilter = function() {
+      vm.implodeFilter = function () {
         vm.isExpanded = false
       }
 
-      vm.canExpandImplode = function() {
+      vm.canExpandImplode = function () {
         return vm.filter.options.length > vm.showMoreThreshold
       }
     }

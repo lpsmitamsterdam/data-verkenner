@@ -1,7 +1,7 @@
 import categoryLabelsByType from './category-labels-by-type'
 import { getStatusLabel, getStatusLabelAddress } from './status-labels'
 
-const getDefault = feature => ({
+const getDefault = (feature) => ({
   categoryLabel: categoryLabelsByType[feature.properties.type].singular,
   label: feature.properties.display,
   parent: feature.properties.parent,
@@ -10,19 +10,19 @@ const getDefault = feature => ({
   statusLabel: getStatusLabel(feature.properties.type),
 })
 
-const getAddress = item => ({
+const getAddress = (item) => ({
   ...getDefault(item),
   isNevenadres: !item.hoofdadres,
   status: item.vbo_status,
   statusLabel: getStatusLabelAddress(item),
 })
 
-const getOpenbareRuimte = item => ({
+const getOpenbareRuimte = (item) => ({
   ...getDefault(item),
   statusLabel: item.properties.opr_type !== 'Weg' ? item.properties.opr_type : '',
 })
 
-const getParkeervak = feature => ({
+const getParkeervak = (feature) => ({
   categoryLabel: categoryLabelsByType[feature.properties.type].singular,
   label: feature.properties.display,
   parent: null,
@@ -31,7 +31,7 @@ const getParkeervak = feature => ({
   statusLabel: getStatusLabel(feature.properties.type),
 })
 
-const transformResultByType = result => {
+const transformResultByType = (result) => {
   switch (result.properties.type) {
     case 'pand/address':
       return getAddress(result)

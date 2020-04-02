@@ -18,8 +18,8 @@ const MapSearchResults = ({
 }) => {
   const rdCoordinates = wgs84ToRd(location)
 
-  const limitResults = categories =>
-    categories.map(category => ({
+  const limitResults = (categories) =>
+    categories.map((category) => ({
       ...category,
       results: category.results.slice(0, resultLimit),
       subCategories: limitResults(category.subCategories),
@@ -68,7 +68,7 @@ const MapSearchResults = ({
               <Notification>{`Geen details beschikbaar van: ${missingLayers}`}</Notification>
             </li>
           )}
-          {limitResults(results).map(mainCategory => (
+          {limitResults(results).map((mainCategory) => (
             <MapSearchResultsCategory
               key={mainCategory.categoryLabel}
               category={mainCategory}

@@ -1,4 +1,4 @@
-import styled from '@datapunt/asc-core'
+import styled from 'styled-components'
 import { CardContainer } from '@datapunt/asc-ui'
 import RouterLink from 'redux-first-router-link'
 import React, { memo } from 'react'
@@ -32,7 +32,16 @@ const EditorialCardContainer = styled(CardContainer)`
   padding: 0;
 `
 
-const EditorialResults = ({ query, results, errors, label, loading, type, className }) => {
+const EditorialResults = ({
+  query,
+  results,
+  errors,
+  label,
+  loading,
+  type,
+  className,
+  isOverviewPage,
+}) => {
   const matchingErrors = getErrorsForPath(errors, ['articleSearch'])
   const hasLoadingError = getLoadingErrors(matchingErrors).length > 0
 
@@ -47,7 +56,7 @@ const EditorialResults = ({ query, results, errors, label, loading, type, classN
         <>
           {!hasLoadingError &&
             results.length > 0 &&
-            results.map(result => {
+            results.map((result) => {
               const {
                 id,
                 specialType,
@@ -64,7 +73,9 @@ const EditorialResults = ({ query, results, errors, label, loading, type, classN
                 ? EDITORIAL_DETAIL_ACTIONS[type](id, specialType, slug)
                 : EDITORIAL_DETAIL_ACTIONS[type](id, slug)
 
-              const showContentType = !!specialType || type === CmsType.Collection
+              const showContentType =
+                (isOverviewPage && type === CmsType.Collection) || !!specialType
+              const highlighted = isOverviewPage && type === CmsType.Collection
 
               return (
                 <EditorialCard
@@ -82,6 +93,7 @@ const EditorialResults = ({ query, results, errors, label, loading, type, classN
                   description={teaser}
                   date={!specialType && dateLocale}
                   showContentType={showContentType}
+                  highlighted={highlighted}
                 />
               )
             })}

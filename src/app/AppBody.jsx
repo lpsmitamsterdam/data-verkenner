@@ -1,6 +1,6 @@
 import React, { Suspense } from 'react'
 import PropTypes from 'prop-types'
-import styled from '@datapunt/asc-core'
+import styled from 'styled-components'
 import Helmet from 'react-helmet'
 import { useSelector } from 'react-redux'
 import EmbedIframeComponent from './components/EmbedIframe/EmbedIframe'
@@ -46,12 +46,6 @@ const AppBody = ({
   return hasGrid ? (
     <>
       <AppContainer id="main" className="main-container">
-        <Helmet>
-          <meta
-            name="viewport"
-            content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"
-          />
-        </Helmet>
         <NotificationAlert />
         <Suspense fallback={<LoadingIndicator style={{ top: '200px' }} />}>
           {homePage && <HomePage />}

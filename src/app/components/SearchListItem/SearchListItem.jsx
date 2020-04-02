@@ -3,7 +3,7 @@ import RouterLink from 'redux-first-router-link'
 import PropTypes from 'prop-types'
 import { NORMAL_VBO_STATUSSES } from '../../../map/services/map-search/status-labels'
 
-const isString = value => typeof value === 'string'
+const isString = (value) => typeof value === 'string'
 
 const showSubtype = (categorySlug, link) =>
   isString(link.subtype) &&
@@ -15,7 +15,7 @@ const showSubtype = (categorySlug, link) =>
     categorySlug === 'explosief' ||
     (categorySlug === 'monument' && link.subtype === 'complex'))
 
-const getExtraInfo = result => {
+const getExtraInfo = (result) => {
   let extraInfo = ''
   if (result.type_adres && result.type_adres !== 'Hoofdadres') {
     extraInfo += ' (nevenadres)'

@@ -1,6 +1,6 @@
 import React from 'react'
 import RouterLink from 'redux-first-router-link'
-import styled from '@datapunt/asc-core'
+import styled from 'styled-components'
 import { Link, themeColor, svgFill, styles } from '@datapunt/asc-ui'
 
 const StyledLink = styled(Link)`

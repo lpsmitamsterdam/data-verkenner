@@ -1,4 +1,4 @@
-;(function() {
+;(function () {
   /* istanbul ignore next */
   angular.module('dpDataSelection').component('dpDataSelectionPagination', {
     bindings: {
@@ -15,7 +15,7 @@
   function DpDataSelectionPaginationController() {
     const vm = this
 
-    vm.$onChanges = function() {
+    vm.$onChanges = function () {
       const isFirstPage = vm.currentPage === 1
       const isLastPage = vm.currentPage === vm.numberOfPages
 
@@ -52,7 +52,7 @@
       }
     }
 
-    vm.goToPage = function(event) {
+    vm.goToPage = function (event) {
       event.preventDefault()
 
       if (
@@ -64,7 +64,7 @@
       }
     }
 
-    this.$onInit = function() {
+    this.$onInit = function () {
       if (vm.numberOfPages && vm.currentPage > vm.numberOfPages) {
         vm.setPage()(1)
       }

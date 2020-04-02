@@ -23,12 +23,8 @@ describe('datasets search module', () => {
       cy.get('.auto-suggest').submit()
       cy.waitForSearch()
 
-      cy.get(datasetsTab)
-        .contains('Datasets')
-        .click()
-      cy.get(datasetsCard)
-        .should('exist')
-        .and('be.visible')
+      cy.get(datasetsTab).contains('Datasets').click()
+      cy.get(datasetsCard).should('exist').and('be.visible')
     })
 
     it('should not open the datasets results because there are no results', () => {
@@ -41,12 +37,8 @@ describe('datasets search module', () => {
       cy.get('.auto-suggest').submit()
       cy.waitForSearch()
 
-      cy.get(datasetsTab)
-        .should('not.exist')
-        .and('not.be.visible')
-      cy.get(datasetsCard)
-        .should('not.exist')
-        .and('not.be.visible')
+      cy.get(datasetsTab).should('not.exist').and('not.be.visible')
+      cy.get(datasetsCard).should('not.exist').and('not.be.visible')
     })
   })
 })

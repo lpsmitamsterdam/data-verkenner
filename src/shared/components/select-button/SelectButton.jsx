@@ -6,7 +6,7 @@ import './_select-button.scss'
 class SelectButton extends React.Component {
   static getSelected(props) {
     return (
-      props.options.find(option => option.value === props.value) ||
+      props.options.find((option) => option.value === props.value) ||
       props.options[0] || {
         label: props.label,
         value: props.value,
@@ -114,7 +114,7 @@ class SelectButton extends React.Component {
           select-button--${isExpanded ? 'expanded' : 'collapsed'}
           select-button--${isDisabled ? 'disabled' : 'enabled'}
         `}
-        ref={node => {
+        ref={(node) => {
           this.node = node
         }}
       >
@@ -135,7 +135,7 @@ class SelectButton extends React.Component {
         </button>
 
         <ul className="select-button__drop-down">
-          {options.map(option => (
+          {options.map((option) => (
             <li
               className={`
                 select-button__drop-down-item

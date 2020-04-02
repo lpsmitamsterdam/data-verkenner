@@ -87,7 +87,7 @@ describe('The dataSelectionApiDcatd factory', () => {
       'ams:facet_info': {},
     }
     dataSelectionConfig.default = config
-    api.getByUrl = jest.fn(url => {
+    api.getByUrl = jest.fn((url) => {
       if (url === `${process.env.API_ROOT}dcatd/reject`) {
         return Promise.reject()
       }

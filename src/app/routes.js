@@ -10,6 +10,8 @@ export const MAIN_PATHS = {
   PUBLICATIONS: 'publicaties',
   SPECIALS: 'specials',
   COLLECTIONS: 'dossiers',
+  MAP_COLLECTIONS: 'kaartcollecties',
+  MAP_LAYERS: 'kaartlagen',
 }
 
 export const routing = {
@@ -164,12 +166,24 @@ export const routing = {
     type: `${ROUTER_NAMESPACE}/${PAGES.COLLECTION_SEARCH}`,
     page: PAGES.COLLECTION_SEARCH,
   },
+  mapCollectionSearch: {
+    title: 'Kaartcollecties',
+    path: `/${MAIN_PATHS.MAP_COLLECTIONS}/zoek/`,
+    type: `${ROUTER_NAMESPACE}/${PAGES.MAP_COLLECTION_SEARCH}`,
+    page: PAGES.MAP_COLLECTION_SEARCH,
+  },
+  mapLayerSearch: {
+    title: 'Kaartlagen',
+    path: `/${MAIN_PATHS.MAP_LAYERS}/zoek/`,
+    type: `${ROUTER_NAMESPACE}/${PAGES.MAP_LAYER_SEARCH}`,
+    page: PAGES.MAP_LAYER_SEARCH,
+  },
 }
 
 /**
  * We need to check if the route paths have a trailing slash
  */
-Object.values(routing).forEach(value => {
+Object.values(routing).forEach((value) => {
   if (value.path.substring(value.path.length - 1) !== '/') {
     // eslint-disable-next-line no-console
     console.warn(`Route for "${value.title}" doesn't have trailing slash`)

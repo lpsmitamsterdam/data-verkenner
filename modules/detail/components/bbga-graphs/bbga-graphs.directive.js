@@ -1,4 +1,4 @@
-;(function() {
+;(function () {
   angular.module('dpDetail').directive('dpBbgaGraphs', dpBbgaGraphsDirective)
 
   dpBbgaGraphsDirective.$inject = ['BBGA', 'bbgaDataService']
@@ -17,7 +17,7 @@
     function linkFunction(scope, element) {
       bbgaDataService
         .getGraphData('PERSONEN', scope.gebiedHeading, scope.gebiedCode)
-        .then(function(data) {
+        .then(function (data) {
           const personenGraph = new BBGA.Personen()
 
           personenGraph.create(element[0].querySelector('.js-personen-graph'), data)
@@ -25,7 +25,7 @@
 
       bbgaDataService
         .getGraphData('HUIZEN', scope.gebiedHeading, scope.gebiedCode)
-        .then(function(data) {
+        .then(function (data) {
           const huizenGraph = new BBGA.Huizen()
 
           huizenGraph.create(element[0].querySelector('.js-huizen-graph'), data)

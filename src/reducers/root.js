@@ -24,7 +24,7 @@ import DataSelectionReducer, { DATA_SELECTION } from '../shared/ducks/data-selec
 import DatasetReducer, { DATASETS } from '../shared/ducks/datasets/datasets'
 import FilesReducer, { FILES_REDUCER } from '../shared/ducks/files/reducer'
 
-export default routeReducer => (oldState = {}, action) => {
+export default (routeReducer) => (oldState = {}, action) => {
   const mapLayers = combineReducers({
     layers: MapLayersReducer,
     baseLayers: MapBaseLayersReducer,

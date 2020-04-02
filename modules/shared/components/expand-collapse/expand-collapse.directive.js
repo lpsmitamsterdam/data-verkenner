@@ -1,4 +1,4 @@
-;(function() {
+;(function () {
   angular.module('dpShared').directive('dpExpandCollapse', DpExpandCollapseDirective)
 
   DpExpandCollapseDirective.$inject = ['$compile', '$interval']

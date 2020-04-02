@@ -7,7 +7,7 @@ import {
   reportProblemAction,
 } from '../../../header/ducks/actions'
 
-const mapDispatchToProps = dispatch =>
+const mapDispatchToProps = (dispatch) =>
   bindActionCreators(
     {
       closeModalAction,

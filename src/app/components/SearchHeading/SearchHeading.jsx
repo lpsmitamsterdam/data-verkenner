@@ -1,6 +1,6 @@
 import React from 'react'
 import { Heading, themeColor, themeSpacing } from '@datapunt/asc-ui'
-import styled from '@datapunt/asc-core'
+import styled from 'styled-components'
 
 const Divider = styled.div`
   width: 200px;

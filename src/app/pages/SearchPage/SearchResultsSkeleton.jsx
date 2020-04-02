@@ -1,5 +1,5 @@
 import React from 'react'
-import styled from '@datapunt/asc-core'
+import styled from 'styled-components'
 import { CardContainer, Card, themeSpacing } from '@datapunt/asc-ui'
 import SearchHeading from '../../components/SearchHeading/SearchHeading'
 import SEARCH_PAGE_CONFIG from './config'
@@ -28,7 +28,7 @@ const SkeletonResultItem = styled.div`
 export const SearchResultsSkeleton = ({ page }) => {
   return (
     <CardContainer>
-      {[...Array(MAX_ITEMS).keys()].map(index => (
+      {[...Array(MAX_ITEMS).keys()].map((index) => (
         <SkeletonCard key={`${page}-${index}`} isLoading />
       ))}
     </CardContainer>

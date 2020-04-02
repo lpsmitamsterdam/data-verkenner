@@ -26,10 +26,7 @@ describe('ToggleDrawing', () => {
     setupComponent('0,3 m', true, 3, {
       onEnd: mockFn,
     })
-    wrapper
-      .find('button')
-      .at(0)
-      .simulate('click')
+    wrapper.find('button').at(0).simulate('click')
     expect(mockFn).toHaveBeenCalled()
   })
 
@@ -38,10 +35,7 @@ describe('ToggleDrawing', () => {
     setupComponent('0,0 m', true, 0, {
       onCancel: mockFn,
     })
-    wrapper
-      .find('button')
-      .at(0)
-      .simulate('click')
+    wrapper.find('button').at(0).simulate('click')
     expect(mockFn).toHaveBeenCalled()
   })
 
@@ -50,10 +44,7 @@ describe('ToggleDrawing', () => {
     setupComponent('0,3 m', false, 3, {
       onReset: mockFn,
     })
-    wrapper
-      .find('button')
-      .at(0)
-      .simulate('click')
+    wrapper.find('button').at(0).simulate('click')
     expect(mockFn).toHaveBeenCalled()
   })
 
@@ -62,10 +53,7 @@ describe('ToggleDrawing', () => {
     setupComponent('', false, 0, {
       onStart: mockFn,
     })
-    wrapper
-      .find('button')
-      .at(0)
-      .simulate('click')
+    wrapper.find('button').at(0).simulate('click')
     expect(mockFn).toHaveBeenCalled()
   })
 

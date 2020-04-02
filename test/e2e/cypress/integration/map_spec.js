@@ -17,9 +17,7 @@ describe('map module', () => {
       // the homepage should be visible
       cy.get(homepage).should('be.visible')
       // check if the link is in the dom and visible
-      cy.get('.qa-map-link')
-        .should('exist')
-        .and('be.visible')
+      cy.get('.qa-map-link').should('exist').and('be.visible')
       // the map should not exist yet
       cy.get(map).should('not.exist')
       // click on the link to go to the map
@@ -27,9 +25,7 @@ describe('map module', () => {
       // the homepage should not be visible anymore
       cy.get(homepage).should('not.be.visible')
       // the map should be visible
-      cy.get(map)
-        .should('exist')
-        .and('be.visible')
+      cy.get(map).should('exist').and('be.visible')
     })
   })
 
@@ -56,14 +52,10 @@ describe('map module', () => {
       cy.visit('/')
 
       cy.get('.qa-map-link').click()
-      cy.get('#auto-suggest__input')
-        .focus()
-        .type('dam 1')
+      cy.get('#auto-suggest__input').focus().type('dam 1')
 
       cy.wait('@getTypeaheadResults')
-      cy.get('.auto-suggest')
-        .contains('Dam 1')
-        .click()
+      cy.get('.auto-suggest').contains('Dam 1').click()
 
       cy.wait('@getVerblijfsobject')
       // check that the circle icon is drawed on the map
@@ -83,9 +75,7 @@ describe('map module', () => {
         .and('be.visible')
         .and('have.attr', 'src', `${svgMapPath}search.svg`)
 
-      cy.get('.map-preview-panel.map-preview-panel--visible')
-        .contains('Beursplein 15')
-        .click()
+      cy.get('.map-preview-panel.map-preview-panel--visible').contains('Beursplein 15').click()
 
       cy.get('.leaflet-marker-icon.leaflet-zoom-animated.leaflet-interactive')
         .should('exist')
@@ -100,25 +90,16 @@ describe('map module', () => {
       // click on the button inside the panel balloon thingy, and expect the large right column to
       // become visible
       cy.get('button.map-preview-panel__button[title="Volledige weergave tonen"]').click()
-      cy.get(columnRight)
-        .should('exist')
-        .and('be.visible')
+      cy.get(columnRight).should('exist').and('be.visible')
       cy.wait('@getNummeraanduiding')
       cy.wait('@getPanden')
       cy.wait('@getObjectExpand')
       cy.wait('@getSitueringen')
       cy.wait('@getMonument')
-      cy.get(columnRight)
-        .get('.qa-title')
-        .contains('Beursplein 15')
-      cy.get(columnRight)
-        .get('dl')
-        .contains('1012JW')
+      cy.get(columnRight).get('.qa-title').contains('Beursplein 15')
+      cy.get(columnRight).get('dl').contains('1012JW')
       cy.wait('@getPanoThumbnail')
-      cy.get(columnRight)
-        .get('img.c-panorama-thumbnail--img')
-        .should('exist')
-        .and('be.visible')
+      cy.get(columnRight).get('img.c-panorama-thumbnail--img').should('exist').and('be.visible')
     })
 
     // Known issue
@@ -139,27 +120,19 @@ describe('map module', () => {
       // the map panel should have the class expanded
       cy.get('.map-panel').should('have.class', 'map-panel--expanded')
       // the scroll wrapper should be visible when map panel is expanded
-      cy.get(scrollWrapper)
-        .should('exist')
-        .and('be.visible')
+      cy.get(scrollWrapper).should('exist').and('be.visible')
 
       // click on a map layer
-      cy.get('.map-layers__category')
-        .contains('Meetbouten - Zaksnelheid')
-        .click()
+      cy.get('.map-layers__category').contains('Meetbouten - Zaksnelheid').click()
       cy.get(scrollWrapper).scrollTo('top')
-      cy.get(notification)
-        .contains('Zichtbaar bij verder inzoomen')
-        .and('is.visible')
+      cy.get(notification).contains('Zichtbaar bij verder inzoomen').and('is.visible')
       cy.get('.leaflet-control-zoom-in').click()
 
       // wait for the second click
       cy.wait(250)
       cy.get('.leaflet-control-zoom-in').click()
       cy.get(notification).should('not.be.visible')
-      cy.get('.map-legend__items')
-        .should('exist')
-        .and('be.visible')
+      cy.get('.map-legend__items').should('exist').and('be.visible')
 
       // click on the map
       cy.wait(250)
@@ -172,30 +145,17 @@ describe('map module', () => {
       cy.get('button.map-search-results__button').click()
 
       cy.wait('@getPanoThumbnail')
-      cy.get(columnRight)
-        .should('exist')
-        .and('be.visible')
-      cy.get(columnRight)
-        .get('.qa-title')
-        .contains('10581111')
-      cy.get(columnRight)
-        .get('dl')
-        .contains('Nieuwmarkt 25')
-      cy.get(columnRight)
-        .get('img.c-panorama-thumbnail--img')
-        .should('exist')
-        .and('be.visible')
+      cy.get(columnRight).should('exist').and('be.visible')
+      cy.get(columnRight).get('.qa-title').contains('10581111')
+      cy.get(columnRight).get('dl').contains('Nieuwmarkt 25')
+      cy.get(columnRight).get('img.c-panorama-thumbnail--img').should('exist').and('be.visible')
 
       // the map view maximize button should exist
       cy.get('button.icon-button__right')
       // click on the maximize button to open the map view
-      cy.get('button.icon-button__right')
-        .first()
-        .click()
+      cy.get('button.icon-button__right').first().click()
 
-      cy.get(columnRight)
-        .should('exist')
-        .and('not.be.visible')
+      cy.get(columnRight).should('exist').and('not.be.visible')
       cy.get('.map-preview-panel.map-preview-panel--visible')
         .get('img.map-detail-result__header-pano')
         .should('exist')
@@ -204,28 +164,15 @@ describe('map module', () => {
 
       cy.go('back')
 
-      cy.get(columnRight)
-        .should('exist')
-        .and('be.visible')
-      cy.get(columnRight)
-        .get('.qa-title')
-        .contains('10581111')
-      cy.get(columnRight)
-        .get('dl')
-        .contains('Nieuwmarkt 25')
-      cy.get(columnRight)
-        .get('img.c-panorama-thumbnail--img')
-        .should('exist')
-        .and('be.visible')
+      cy.get(columnRight).should('exist').and('be.visible')
+      cy.get(columnRight).get('.qa-title').contains('10581111')
+      cy.get(columnRight).get('dl').contains('Nieuwmarkt 25')
+      cy.get(columnRight).get('img.c-panorama-thumbnail--img').should('exist').and('be.visible')
 
       cy.go('back')
 
-      cy.get(columnRight)
-        .should('exist')
-        .and('not.be.visible')
-      cy.get('.map-preview-panel.map-preview-panel--visible')
-        .should('exist')
-        .and('be.visible')
+      cy.get(columnRight).should('exist').and('not.be.visible')
+      cy.get('.map-preview-panel.map-preview-panel--visible').should('exist').and('be.visible')
       cy.checkPreviewPanel(['Nieuwmarkt 25', '10581111'])
     })
   })
@@ -235,18 +182,11 @@ describe('map module', () => {
       // route to the map by url
       cy.visit(`/${routing.data.path}?${VIEW}=kaart`)
       // the map container should exist
-      cy.get(map)
-        .should('exist')
-        .and('be.visible')
+      cy.get(map).should('exist').and('be.visible')
       // the leaflet map should exist
-      cy.get('.leaflet-container')
-        .should('exist')
-        .and('be.visible')
+      cy.get('.leaflet-container').should('exist').and('be.visible')
       // the leaflet map should exist and should contain img
-      cy.get('.leaflet-tile-container')
-        .find('img')
-        .should('exist')
-        .and('be.visible')
+      cy.get('.leaflet-tile-container').find('img').should('exist').and('be.visible')
     })
 
     it('should add a map-layer to the leaflet map', () => {
@@ -260,22 +200,14 @@ describe('map module', () => {
       // the map panel should have the class expanded
       cy.get('.map-panel').should('have.class', 'map-panel--expanded')
       // the scroll wrapper should be visible when map panel is expanded
-      cy.get(scrollWrapper)
-        .should('exist')
-        .and('be.visible')
+      cy.get(scrollWrapper).should('exist').and('be.visible')
 
       // get the first map-layer button
-      cy.get('.map-layers__title')
-        .first()
-        .click()
+      cy.get('.map-layers__title').first().click()
       // check if the map has overlay panes
-      cy.get('.leaflet-overlay-pane')
-        .children()
-        .should('exist')
+      cy.get('.leaflet-overlay-pane').children().should('exist')
       // check if there is a canvas element inside the first overlay pane
-      cy.get('.leaflet-overlay-pane')
-        .find('canvas')
-        .should('exist')
+      cy.get('.leaflet-overlay-pane').find('canvas').should('exist')
     })
   })
 
@@ -292,9 +224,7 @@ describe('map module', () => {
       // the map panel should have the class expanded
       cy.get('.map-panel').should('have.class', 'map-panel--expanded')
       // the scroll wrapper should be visible when map panel is expanded
-      cy.get(scrollWrapper)
-        .should('exist')
-        .and('be.visible')
+      cy.get(scrollWrapper).should('exist').and('be.visible')
     })
   })
 })

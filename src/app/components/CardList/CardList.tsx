@@ -1,6 +1,6 @@
 import React from 'react'
 import { Card, CardContent, Heading, themeColor, themeSpacing } from '@datapunt/asc-ui'
-import styled from '@datapunt/asc-core'
+import styled from 'styled-components'
 import EditorialCard from '../EditorialCard'
 import { CMSResultItem } from '../../utils/useFromCMS'
 
@@ -9,9 +9,9 @@ const StyledCard = styled(Card)`
   align-items: flex-start;
   height: 100%;
   width: 100%;
-  background-color: ${themeColor('tint', 'level2')}
-    // Override the margin-bottom of the Card component when used in a CardContainer
-    & {
+  background-color: ${themeColor('tint', 'level2')};
+  // Override the margin-bottom of the Card component when used in a CardContainer
+  & {
     margin-bottom: 0px;
   }
 `

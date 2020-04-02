@@ -16,15 +16,10 @@ describe('employee permissions', () => {
     cy.route('/typeahead?q=bakker').as('getResults')
 
     cy.visit('/')
-    cy.get('#auto-suggest__input')
-      .focus()
-      .click()
-      .type('bakker')
+    cy.get('#auto-suggest__input').focus().click().type('bakker')
 
     cy.wait('@getResults')
-    cy.get('.auto-suggest__tip')
-      .should('exist')
-      .and('be.visible')
+    cy.get('.auto-suggest__tip').should('exist').and('be.visible')
     cy.get('.auto-suggest__dropdown').contains(values.kadastraleSubjecten)
     cy.get('.auto-suggest__dropdown-item').contains('Bakkerswaal')
   })
@@ -35,9 +30,7 @@ describe('employee permissions', () => {
 
     cy.visit('/')
 
-    cy.get('#auto-suggest__input')
-      .focus()
-      .type('bakker{enter}')
+    cy.get('#auto-suggest__input').focus().type('bakker{enter}')
 
     cy.waitForSearch()
     cy.get(queries.warningPanel).contains(
@@ -45,7 +38,7 @@ describe('employee permissions', () => {
     )
     cy.get(queries.searchHeader)
       .contains(values.kadastraleSubjecten)
-      .then(title => {
+      .then((title) => {
         const count = getCountFromHeader(title.text())
         expect(count).to.be.below(100)
       })
@@ -62,9 +55,7 @@ describe('employee permissions', () => {
       'Medewerkers met speciale bevoegdheden kunnen alle gegevens zien (ook zakelijke rechten).',
     )
     cy.get(queries.headerTitle).contains('akker')
-    cy.get(queries.natuurlijkPersoon)
-      .should('exist')
-      .and('be.visible')
+    cy.get(queries.natuurlijkPersoon).should('exist').and('be.visible')
   })
 
   it('2B. Should allow an employee to view a non-natural subject', () => {
@@ -76,9 +67,7 @@ describe('employee permissions', () => {
     cy.wait('@getResults')
     cy.get(queries.warningPanel).should('not.exist')
     cy.get(queries.headerTitle).contains('er & T')
-    cy.get(queries.nietNatuurlijkPersoon)
-      .should('exist')
-      .and('be.visible')
+    cy.get(queries.nietNatuurlijkPersoon).should('exist').and('be.visible')
   })
 
   it('3. Should show an employee all info for a cadastral subject', () => {
@@ -115,7 +104,7 @@ describe('employee permissions', () => {
     cy.wait('@getPanden')
     cy.wait('@getSitueringen')
     cy.get(queries.headerTitle).contains('Dam 1')
-    cy.get(queries.headerSubTitle).should($values => {
+    cy.get(queries.headerSubTitle).should(($values) => {
       expect($values).to.contain('Ligt in')
       expect($values).to.contain('Panoramabeeld')
       expect($values).to.contain('Verblijfsobject')
@@ -146,21 +135,17 @@ describe('employee permissions', () => {
 
   it.skip('6. Should allow an employee to view all map layers', () => {
     cy.visit(urls.map)
-    cy.get(queries.mapLayersCategory).should($values => {
+    cy.get(queries.mapLayersCategory).should(($values) => {
       expect($values).to.contain(values.economieEnHaven)
       expect($values).to.contain(values.geografie)
       expect($values).to.contain(values.bedrijvenInvloedsgebieden)
     })
-    cy.get(queries.legendToggleItem)
-      .contains(values.vestigingenHoreca)
-      .click()
+    cy.get(queries.legendToggleItem).contains(values.vestigingenHoreca).click()
     cy.get(queries.legendNotification).should('not.exist')
     /** Leave out visible for elements that could be hidden by overscroll
      cy.get(queries.legendItem).contains(values.legendCafeValue).should('exist').and('be.visible');
      */
-    cy.get(queries.legendItem)
-      .contains(values.legendCafeValue)
-      .should('exist')
+    cy.get(queries.legendItem).contains(values.legendCafeValue).should('exist')
   })
 
   it('7A. Should allow an employee to view "Vestigingen"', () => {

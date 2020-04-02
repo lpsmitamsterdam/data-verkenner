@@ -11,7 +11,7 @@ const subTypesLabels = {
   verdachtgebied: 'verdacht gebied',
 }
 
-export const getStatusLabel = type => {
+export const getStatusLabel = (type) => {
   const semgents = type.split('/')
   const segment = semgents[1] ? semgents[1] : semgents[0]
   return subTypesLabels[segment] ? subTypesLabels[segment] : ''
@@ -31,10 +31,10 @@ export const NORMAL_VBO_STATUSSES = [
   'Verbouwing verblijfsobject',
 ]
 
-const shouldShowStatus = result =>
+const shouldShowStatus = (result) =>
   result.vbo_status && !NORMAL_VBO_STATUSSES.includes(result.vbo_status)
 
-export const getStatusLabelAddress = result =>
+export const getStatusLabelAddress = (result) =>
   `${shouldShowStatus(result) ? `${result.vbo_status}` : ''}` +
   `${
     shouldShowStatus(result) && result.type_adres && result.type_adres !== 'Hoofdadres' ? ' ' : ''

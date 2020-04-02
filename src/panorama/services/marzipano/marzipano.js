@@ -110,7 +110,7 @@ export function loadScene(viewer, onClickHandler, image, heading, pitch, fov, ho
 
   hotspotsObject
     .sort((hotspotA, hotspotB) => hotspotB.distance - hotspotA.distance)
-    .forEach(hotspot => createHotspotTemplate(viewer, scene, view, hotspot, onClickHandler))
+    .forEach((hotspot) => createHotspotTemplate(viewer, scene, view, hotspot, onClickHandler))
 
   view.setYaw(degreesToRadians(heading))
   view.setPitch(degreesToRadians(pitch))

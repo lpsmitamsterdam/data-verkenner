@@ -1,6 +1,7 @@
 import React from 'react'
-import styled, { ascDefaultTheme } from '@datapunt/asc-core'
+import styled, { css } from 'styled-components'
 import {
+  ascDefaultTheme,
   Card,
   CardContent,
   CardMedia,
@@ -12,6 +13,7 @@ import {
   themeSpacing,
 } from '@datapunt/asc-ui'
 import getImageFromCms from '../../utils/getImageFromCms'
+import getContentTypeLabel from '../../utils/getContentTypeLabel'
 import { CmsType, SpecialType } from '../../../shared/config/cms.config'
 
 const notFoundImage = '/assets/images/not_found_thumbnail.jpg'
@@ -39,9 +41,14 @@ const StyledCardContent = styled(CardContent)`
   flex-direction: column;
   padding: 0;
   margin-left: ${themeSpacing(4)};
-  border-bottom: 1px solid ${themeColor('tint', 'level3')};
   position: relative;
   min-height: 100%;
+
+  ${({ highlighted }) =>
+    !highlighted &&
+    css`
+      border-bottom: 1px solid ${themeColor('tint', 'level3')};
+    `}
 `
 
 const StyledLink = styled(Link)`
@@ -72,17 +79,29 @@ const StyledCard = styled(Card)`
   align-items: stretch;
   background-color: inherit;
 
+  ${({ highlighted }) =>
+    highlighted &&
+    css`
+      padding: ${themeSpacing(2)};
+      border: ${themeColor('tint', 'level3')} 1px solid;
+    `}
+
   &:last-child {
     margin-bottom: 0;
   }
 `
 
 const StyledCardMedia = styled(CardMedia)`
-  ${({ vertical, imageDimensions }) => `
-  flex: 1 0 auto;
-    border: 1px solid ${themeColor('tint', 'level3')};
+  ${({ vertical, imageDimensions }) => css`
+    flex: 1 0 auto;
     max-width: ${imageDimensions[0]}px;
     max-height: ${imageDimensions[1]}px;
+
+    ${({ highlighted }) =>
+      !highlighted &&
+      css`
+        border: 1px solid ${themeColor('tint', 'level3')};
+      `}
 
     &::before {
       padding-top: ${vertical ? '145%' : '100%'};
@@ -138,6 +157,7 @@ interface EditorialCardProps {
   imageDimensions?: [number, number]
   compact?: boolean
   showContentType?: boolean
+  highlighted?: boolean
 }
 
 const EditorialCard: React.FC<EditorialCardProps> = ({
@@ -150,6 +170,7 @@ const EditorialCard: React.FC<EditorialCardProps> = ({
   imageDimensions = [400, 400],
   compact = false,
   showContentType = false,
+  highlighted = false,
   ...otherProps
 }) => {
   const imageIsVertical = imageDimensions[0] !== imageDimensions[1] // Image dimensions indicate whether the image is square or not
@@ -160,10 +181,16 @@ const EditorialCard: React.FC<EditorialCardProps> = ({
     imageIsVertical ? imageDimensions[1] : imageDimensions[0],
   )
 
+  const contentTypeLabel = getContentTypeLabel(type, specialType)
+
   return (
     <StyledLink {...{ title, linkType: 'blank', compact, ...otherProps }}>
-      <StyledCard horizontal>
-        <StyledCardMedia imageDimensions={imageDimensions} vertical={imageIsVertical}>
+      <StyledCard horizontal highlighted={highlighted}>
+        <StyledCardMedia
+          imageDimensions={imageDimensions}
+          vertical={imageIsVertical}
+          highlighted={highlighted}
+        >
           <Image
             {...(image ? { ...srcSet, ...sizes } : {})}
             src={getImageFromCms(image, imageDimensions[0], imageDimensions[1]) || notFoundImage}
@@ -171,12 +198,10 @@ const EditorialCard: React.FC<EditorialCardProps> = ({
             square
           />
         </StyledCardMedia>
-        <StyledCardContent>
-          {showContentType && (
+        <StyledCardContent highlighted={highlighted}>
+          {showContentType && contentTypeLabel && (
             <div>
-              <ContentType data-test="contentType">
-                {getContentTypeLabel(type, specialType)}
-              </ContentType>
+              <ContentType data-test="contentType">{contentTypeLabel}</ContentType>
             </div>
           )}
 
@@ -210,29 +235,3 @@ const EditorialCard: React.FC<EditorialCardProps> = ({
 }
 
 export default EditorialCard
-
-function getContentTypeLabel(type: CmsType, specialType?: SpecialType) {
-  if (specialType) {
-    switch (specialType) {
-      case SpecialType.Animation:
-        return 'Animatie'
-      case SpecialType.Dashboard:
-        return 'Dashboard'
-      default:
-        throw new Error(`Unable to get content type label, unknown special type '${specialType}'.`)
-    }
-  }
-
-  switch (type) {
-    case CmsType.Article:
-      return 'Artikel'
-    case CmsType.Collection:
-      return 'Dossier'
-    case CmsType.Publication:
-      return 'Publicatie'
-    case CmsType.Special:
-      return 'In Beeld'
-    default:
-      throw new Error(`Unable to get content type label, unknown type '${specialType}'.`)
-  }
-}

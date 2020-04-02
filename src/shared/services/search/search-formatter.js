@@ -15,9 +15,11 @@ function formatLabel(item) {
 }
 
 export function formatLinks(slug, links) {
-  const endpointConfig = SEARCH_CONFIG.QUERY_ENDPOINTS.filter(endpoint => endpoint.slug === slug)[0]
+  const endpointConfig = SEARCH_CONFIG.QUERY_ENDPOINTS.filter(
+    (endpoint) => endpoint.slug === slug,
+  )[0]
 
-  return links.map(item => {
+  return links.map((item) => {
     const subtype = item.subtype || null
     let subtypeLabel = subtype
 
@@ -37,7 +39,9 @@ export function formatLinks(slug, links) {
 }
 
 export function formatCategory(slug, endpointSearchResults) {
-  const endpointConfig = SEARCH_CONFIG.QUERY_ENDPOINTS.filter(endpoint => endpoint.slug === slug)[0]
+  const endpointConfig = SEARCH_CONFIG.QUERY_ENDPOINTS.filter(
+    (endpoint) => endpoint.slug === slug,
+  )[0]
   const links = (isObject(endpointSearchResults) && endpointSearchResults.results) || []
 
   return {
@@ -60,7 +64,7 @@ export function formatCategory(slug, endpointSearchResults) {
 export function formatCategories(allSearchResults, user, categorySlug) {
   return allSearchResults.map((endpointSearchResults, index) =>
     formatCategory(
-      SEARCH_CONFIG.QUERY_ENDPOINTS.filter(endpoint =>
+      SEARCH_CONFIG.QUERY_ENDPOINTS.filter((endpoint) =>
         categorySlug
           ? endpoint.slug === categorySlug
           : !endpoint.authScope || user.scopes.includes(endpoint.authScope),

@@ -16,12 +16,12 @@ module.exports = () => {
       'react|react-dom|redux-first-router|redux-first-router-link|redux-first-router-restore-scroll|reselect|redux|@?redux-saga|react-redux|react-helmet|prop-types',
   }
 
-  const getTestRegex = path => new RegExp(`/node_modules/(${path})/`)
+  const getTestRegex = (path) => new RegExp(`/node_modules/(${path})/`)
 
   return merge(commonConfig(), {
     output: {
-      filename: '[name].js?id=[chunkhash]',
-      chunkFilename: '[name].bundle.js?id=[chunkhash]',
+      filename: '[name].[hash].js',
+      chunkFilename: '[name].[chunkhash].bundle.js',
     },
     mode: 'production',
     devtool: 'source-map',
@@ -106,7 +106,6 @@ module.exports = () => {
           },
         },
       },
-      runtimeChunk: true,
     },
     plugins: [new MiniCssExtractPlugin('main.[contenthash].css')],
   })

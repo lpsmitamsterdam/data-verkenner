@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import classNames from 'classnames'
-import styled, { css } from '@datapunt/asc-core'
+import styled, { css } from 'styled-components'
 import {
   AmsterdamLogo,
   Header as HeaderComponent,
@@ -53,8 +53,8 @@ const StyledHeader = styled(HeaderComponent)`
   }
 `
 
-const MenuDefault = props => <HeaderMenuContainer {...props} type="default" />
-const MenuMobile = props => <HeaderMenuContainer {...props} type="mobile" align="right" />
+const MenuDefault = (props) => <HeaderMenuContainer {...props} type="default" />
+const MenuMobile = (props) => <HeaderMenuContainer {...props} type="mobile" align="right" />
 
 const Header = ({
   homePage,

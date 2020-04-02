@@ -1,4 +1,4 @@
-import styled from '@datapunt/asc-core'
+import styled from 'styled-components'
 import { breakpoint, themeColor, themeSpacing } from '@datapunt/asc-ui'
 import React from 'react'
 import NavigationCard from './NavigationCard'
@@ -52,7 +52,7 @@ const StyledCardContainer = styled.div`
 
 const NavigationBlock = () => (
   <StyledCardContainer data-test="navigation-block">
-    {navigationLinks.map(linkProps => (
+    {navigationLinks.map((linkProps) => (
       <NavigationCard key={linkProps.id} {...linkProps} />
     ))}
   </StyledCardContainer>

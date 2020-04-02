@@ -23,7 +23,7 @@ import {
 } from '../../ducks/map/selectors'
 import { getUser } from '../../../shared/ducks/user/user'
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   activeBaseLayer: getActiveBaseLayer(state),
   activeMapLayers: selectActivePanelLayers(state),
   isMapPanelHandleVisible: !state.map.overlays.length || isMapPanelHandleVisible(state),
@@ -37,7 +37,7 @@ const mapStateToProps = state => ({
 })
 
 // TODO: Add method that checks whether layer is active and toggles accordingly
-const mapDispatchToProps = dispatch =>
+const mapDispatchToProps = (dispatch) =>
   bindActionCreators(
     {
       onBaseLayerToggle: setMapBaseLayer,

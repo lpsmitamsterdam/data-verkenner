@@ -1,4 +1,4 @@
-;(function() {
+;(function () {
   angular.module('dpDetail').directive('dpParentRelations', dpParentRelationsDirective)
 
   function dpParentRelationsDirective() {
@@ -19,13 +19,13 @@
   function DpParentRelationsController(PARENT_RELATIONS_CONFIG) {
     const vm = this
 
-    vm.$onChanges = changes => {
+    vm.$onChanges = (changes) => {
       vm.parentRelations = PARENT_RELATIONS_CONFIG.keyOrder
-        .map(key => ({
+        .map((key) => ({
           data: vm.content[key] || vm.content[`_${key}`] || null,
           label: PARENT_RELATIONS_CONFIG.labels[key],
         }))
-        .filter(item => item.data !== null)
+        .filter((item) => item.data !== null)
     }
   }
 })()

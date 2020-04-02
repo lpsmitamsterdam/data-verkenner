@@ -23,7 +23,7 @@ function getCatalogFilters(data) {
     formatTypes: getOptions(distributionProperties['dcat:mediaType']),
     serviceTypes: getOptions(distributionProperties['ams:serviceType']),
     resourceTypes: getOptions(distributionProperties['ams:resourceType']),
-    ownerTypes: ownerProperties.map(item => ({
+    ownerTypes: ownerProperties.map((item) => ({
       id: item,
       label: item,
     })),

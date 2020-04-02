@@ -8,27 +8,27 @@ import {
   DOWNLOAD_DATASET_RESOURCE,
 } from './constants'
 
-export const clearMapDetail = payload => ({
+export const clearMapDetail = (payload) => ({
   type: CLEAR_MAP_DETAIL,
   payload,
 })
 
-export const showDetail = payload => ({
+export const showDetail = (payload) => ({
   type: SHOW_DETAIL,
   payload,
 })
 
-export const setView = payload => ({
+export const setView = (payload) => ({
   type: SET_VIEW,
   payload,
 })
 
-export const fetchDetailRequest = payload => ({
+export const fetchDetailRequest = (payload) => ({
   type: FETCH_DETAIL_REQUEST,
   payload,
 })
 
-export const fetchDetailSuccess = payload => ({
+export const fetchDetailSuccess = (payload) => ({
   type: FETCH_DETAIL_SUCCESS,
   payload,
   meta: {
@@ -36,12 +36,12 @@ export const fetchDetailSuccess = payload => ({
   },
 })
 
-export const fetchDetailFailure = payload => ({
+export const fetchDetailFailure = (payload) => ({
   type: FETCH_DETAIL_FAILURE,
   payload,
 })
 
-export const downloadDatasetResource = payload => ({
+export const downloadDatasetResource = (payload) => ({
   type: DOWNLOAD_DATASET_RESOURCE,
   meta: {
     tracking: payload,

@@ -13,7 +13,7 @@ const CheckboxFilter: React.FC<FilterProps> = ({
   function onChange(event: React.FormEvent<HTMLInputElement>) {
     const { value: changedValue } = event.currentTarget
     const newSelection = selection.includes(changedValue)
-      ? selection.filter(value => value !== changedValue)
+      ? selection.filter((value) => value !== changedValue)
       : [...selection, changedValue]
 
     onSelectionChange(newSelection)
@@ -21,7 +21,7 @@ const CheckboxFilter: React.FC<FilterProps> = ({
 
   return (
     <>
-      {options.map(option => {
+      {options.map((option) => {
         const controlId = `${type}-${option.id}`
 
         return (

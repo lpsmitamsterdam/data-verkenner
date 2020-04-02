@@ -2,7 +2,7 @@ import { connect } from 'react-redux'
 import { getMapListResults } from '../../../shared/ducks/data-search/selectors'
 import DataSearchContainer from './DataSearchContainer'
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   searchResults: getMapListResults(state),
 })
 

@@ -1,7 +1,9 @@
 import React from 'react'
 import { shallow } from 'enzyme'
 import Gallery from './Gallery'
+import getState from '../../../shared/services/redux/get-state'
 
+jest.mock('../../../shared/services/redux/get-state')
 jest.mock('../../../shared/services/link-attributes-from-action/linkAttributesFromAction')
 
 describe('Gallery', () => {
@@ -11,9 +13,15 @@ describe('Gallery', () => {
 
   const setState = jest.fn()
   const useStateSpy = jest.spyOn(React, 'useState')
-  useStateSpy.mockImplementation(init => [init, setState])
+  useStateSpy.mockImplementation((init) => [init, setState])
 
   beforeEach(() => {
+    getState.mockImplementation(() => ({
+      user: {
+        scopes: [],
+      },
+    }))
+
     component = shallow(
       <Gallery
         id="foo1234"

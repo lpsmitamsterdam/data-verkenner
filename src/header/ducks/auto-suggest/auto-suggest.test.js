@@ -1,5 +1,5 @@
-import reducer, { getSuggestionsAction, setActiveSuggestionAction } from './auto-suggest'
 import { routing } from '../../../app/routes'
+import reducer, { getSuggestionsAction, setActiveSuggestionAction } from './auto-suggest'
 import {
   FETCH_SUGGESTIONS_FAILURE,
   FETCH_SUGGESTIONS_REQUEST,
@@ -96,9 +96,11 @@ describe('AutoSuggestReducer Reducer', () => {
       routing.articleSearch.type,
       routing.publicationSearch.type,
       routing.collectionSearch.type,
+      routing.mapCollectionSearch.type,
+      routing.mapLayerSearch.type,
     ]
 
-    tabRoutes.forEach(route => {
+    tabRoutes.forEach((route) => {
       expect(
         reducer(initialState, {
           type: route,

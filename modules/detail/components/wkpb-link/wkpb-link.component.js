@@ -1,4 +1,4 @@
-;(function() {
+;(function () {
   angular.module('dpDetail').component('dpWkpbLink', {
     bindings: {
       brkId: '@',
@@ -11,7 +11,7 @@
   function DpWkpbLinkController() {
     const vm = this
 
-    this.$onInit = function() {
+    this.$onInit = function () {
       vm.wkpbEndpoint = `${process.env.ROOT}brk/object-wkpb/${vm.brkId}/`
     }
   }

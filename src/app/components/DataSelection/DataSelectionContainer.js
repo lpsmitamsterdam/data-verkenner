@@ -11,7 +11,7 @@ import {
 import { getViewMode } from '../../../shared/ducks/ui/ui'
 import DataSelection from './DataSelection'
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   const { isLoading, dataset, authError, page } = getDataSelection(state)
   return {
     isLoading,
@@ -27,7 +27,7 @@ const mapStateToProps = state => {
   }
 }
 
-const mapDispatchToProps = dispatch =>
+const mapDispatchToProps = (dispatch) =>
   bindActionCreators(
     {
       setPage: setDatasetPage,

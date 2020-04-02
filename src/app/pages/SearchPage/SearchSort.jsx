@@ -1,5 +1,5 @@
 import React from 'react'
-import styled from '@datapunt/asc-core'
+import styled from 'styled-components'
 import { useMatomo } from '@datapunt/matomo-tracker-react'
 import { breakpoint, Label, Select, themeColor, themeSpacing } from '@datapunt/asc-ui'
 import { useDispatch } from 'react-redux'
@@ -47,7 +47,7 @@ const SearchSort = ({ sort, isOverviewPage, disabled }) => {
           data-testid="sort-select"
           value={sort}
           disabled={disabled}
-          onChange={e => {
+          onChange={(e) => {
             trackEvent({
               category: 'search',
               action: 'sort',

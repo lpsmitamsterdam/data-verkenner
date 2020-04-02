@@ -1,4 +1,4 @@
-import styled from '@datapunt/asc-core'
+import styled from 'styled-components'
 import { themeSpacing } from '@datapunt/asc-ui'
 import { GraphQLFormattedError } from 'graphql'
 import React from 'react'
@@ -46,7 +46,7 @@ const DataSearchResults: React.FC<DataSearchResultsProps> = ({
 
   return totalCount > 0 ? (
     <>
-      {results.map(result => {
+      {results.map((result) => {
         const hasLoadingError = loadingErrors.some(
           ({ extensions }) => extensions?.type === result.type,
         )

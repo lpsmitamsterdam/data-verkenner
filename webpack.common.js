@@ -25,7 +25,13 @@ function commonConfig() {
   return {
     context: root,
     entry: {
-      app: ['isomorphic-fetch', '@babel/polyfill', './src/index.js'],
+      app: [
+        'isomorphic-fetch',
+        'core-js/features/url',
+        'core-js/features/url-search-params',
+        '@babel/polyfill',
+        './src/index.js',
+      ],
     },
     output: {
       filename: '[name].bundle.js',
@@ -194,14 +200,10 @@ function commonConfig() {
         },
       ]),
       new HtmlWebpackPlugin({
-        inject: false,
-        template: './index.ejs',
         minify: {
           collapseWhitespace: !isDev,
         },
-        sortChunks: 'none',
         lang: 'nl',
-        hash: true,
         title: 'Data en informatie - Amsterdam',
         description:
           'Data en informatie is dé website voor iedereen die op zoek is naar objectieve, betrouwbare en actuele data en informatie over Amsterdam.',

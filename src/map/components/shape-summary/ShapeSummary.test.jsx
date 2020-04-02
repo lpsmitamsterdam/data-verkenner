@@ -13,10 +13,7 @@ describe('ShapeSummary', () => {
     const wrapper = shallow(
       <ShapeSummary shapeDistanceTxt="23,45 km" onClearDrawing={onClearDrawing} />,
     )
-    wrapper
-      .find('button')
-      .at(0)
-      .simulate('click')
+    wrapper.find('button').at(0).simulate('click')
     expect(onClearDrawing).toHaveBeenCalled()
   })
 

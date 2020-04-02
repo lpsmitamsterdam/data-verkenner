@@ -7,7 +7,7 @@ import Search from './Search'
 const getSuggestionByIndex = (searchResults, suggestionIndex) =>
   searchResults
     .reduce((flatResults, category) => [...flatResults, ...category.content], [])
-    .find(flatSuggestion => flatSuggestion.index === suggestionIndex)
+    .find((flatSuggestion) => flatSuggestion.index === suggestionIndex)
 
 class AutoSuggest extends React.Component {
   constructor(props) {
@@ -35,17 +35,22 @@ class AutoSuggest extends React.Component {
     }, 200)
   }
 
-  onInput(value) {
+  onInput(e) {
     const { onTextInput, activeSuggestion } = this.props
 
     if (activeSuggestion.index > -1) {
       this.resetActiveSuggestion()
     }
-    onTextInput(value)
+    onTextInput(e.currentTarget.value)
 
     this.setState({
       showSuggestions: true,
     })
+  }
+
+  onClear() {
+    const { onTextInput } = this.props
+    onTextInput('')
   }
 
   onFocus() {
@@ -181,6 +186,7 @@ class AutoSuggest extends React.Component {
       onBlur: this.onBlur,
       onFocus: this.onFocus,
       onChange: this.onInput,
+      onClear: this.onClear,
       onKeyDown: this.navigateSuggestions,
       value: query || '',
     }
@@ -201,7 +207,6 @@ class AutoSuggest extends React.Component {
       <form onSubmit={this.onFormSubmit} className="auto-suggest" data-test="search-form">
         <fieldset>
           {legendTitle && <legend className="u-sr-only">{legendTitle}</legend>}
-
           <Search
             {...{
               expanded: showAutoSuggest,
@@ -217,7 +222,7 @@ class AutoSuggest extends React.Component {
             {showAutoSuggest && (
               <div className="auto-suggest__dropdown">
                 <h3 className="auto-suggest__tip">Enkele suggesties</h3>
-                {suggestions.map(category => (
+                {suggestions.map((category) => (
                   <AutoSuggestCategory
                     activeSuggestion={activeSuggestion}
                     category={category}

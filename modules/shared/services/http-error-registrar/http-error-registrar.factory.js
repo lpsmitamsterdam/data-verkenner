@@ -1,12 +1,12 @@
 import { ERROR_TYPES } from '../../../../src/shared/ducks/error/error-message'
-;(function() {
+;(function () {
   angular
     .module('dpShared')
     .factory('httpErrorRegistrar', httpErrorRegistrarFactory)
     .config([
       '$httpProvider',
       // eslint-disable-next-line angular/di
-      $httpProvider => $httpProvider.interceptors.push('httpErrorRegistrar'),
+      ($httpProvider) => $httpProvider.interceptors.push('httpErrorRegistrar'),
     ])
 
   httpErrorRegistrarFactory.$inject = ['$interval', '$q', '$window', 'httpStatus']

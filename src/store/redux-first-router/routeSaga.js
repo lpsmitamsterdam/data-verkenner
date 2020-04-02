@@ -16,7 +16,7 @@ const routeSagaMapping = [
   [routing.dataDetail.type, fetchDetailEffect],
 ]
 
-const yieldOnFirstAction = sideEffect =>
+const yieldOnFirstAction = (sideEffect) =>
   function* gen(action) {
     const { skipSaga, firstAction, forceSaga } = action.meta || {}
     if (!skipSaga && (firstAction || forceSaga)) {

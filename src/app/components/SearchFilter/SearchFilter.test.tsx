@@ -124,7 +124,7 @@ describe('SearchFilter', () => {
 
   describe('getFilterComponent', () => {
     it('should get a component for all possible types', () => {
-      Object.values(FilterType).forEach(type => {
+      Object.values(FilterType).forEach((type) => {
         expect(getFilterComponent(type)).toBeDefined()
       })
     })

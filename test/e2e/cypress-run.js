@@ -3,6 +3,7 @@
 // Once a Cypress version is released that clears renderer
 // between tests this hack (entire file) can be removed.
 
+/* eslint-disable no-console */
 const cypress = require('cypress')
 const Promise = require('bluebird')
 
@@ -18,10 +19,10 @@ return glob(`${SCRIPTS_FOLDER}/**/*`, {
   nodir: true,
   realpath: true,
 })
-  .tap(specs => {
+  .tap((specs) => {
     console.log('Found ', specs.length, ' specs:\n\n', specs)
   })
-  .each(spec => {
+  .each((spec) => {
     console.log('\nRunning spec:', spec)
 
     return cypress
@@ -38,7 +39,7 @@ return glob(`${SCRIPTS_FOLDER}/**/*`, {
           PASSWORD_EMPLOYEE_PLUS: process.env.PASSWORD_EMPLOYEE_PLUS,
         },
       })
-      .then(results => {
+      .then((results) => {
         numFailed += results.totalFailed
         summary.push({
           name: spec.split('/')[spec.split('/').length - 1],
@@ -55,7 +56,7 @@ return glob(`${SCRIPTS_FOLDER}/**/*`, {
   .then(() => {
     console.log('\n-----------------------------')
     console.log(`Cypress end to end tests summary:`)
-    summary.forEach(item => {
+    summary.forEach((item) => {
       console.log(`\n${item.name}
   - Total Suites: ${item.totalSuites}
   - Total Tests: ${item.totalTests}
@@ -77,7 +78,7 @@ return glob(`${SCRIPTS_FOLDER}/**/*`, {
 
     process.exit(numFailed)
   })
-  .catch(err => {
+  .catch((err) => {
     console.error(err)
     throw err
   })

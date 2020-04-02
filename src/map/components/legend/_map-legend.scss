@@ -5,38 +5,25 @@ $icon-height: 24px;
 
 .map-legend {
   background-color: $primary-light;
-  border: 1px solid $secondary-gray40;
   border-top: none;
   list-style-type: none;
-  margin: 8px 8px 32px;
+  margin: 8px 12px 32px;
   padding: 0;
   user-select: none;
 
   @media screen and (min-width: $breakpoint-md) {
-    margin: 12px 12px 32px;
+    margin: 0 12px 32px;
+  }
+
+  &__map-layer {
+    border-bottom: 1px solid $white-two;
   }
 
   &__category {
     align-items: center;
-    border-top: 1px solid $secondary-gray40;
     display: flex;
     justify-content: space-between;
-    padding: 9px 10px;
     position: relative;
-
-    &--selectable-legend {
-      &::after {
-        // sass-lint:disable-line nesting-depth
-        background-color: $secondary-gray40;
-        bottom: -1px;
-        content: '';
-        display: block;
-        height: 1px;
-        left: 0;
-        position: absolute;
-        width: 36px;
-      }
-    }
 
     &--unselectable-legend + .map-legend__items {
       padding-top: 0;
@@ -53,22 +40,18 @@ $icon-height: 24px;
     background-color: $thema-10;
     color: $primary-light;
     display: block;
-    margin: 10px;
+    margin: 10px 0;
     padding: 10px;
     text-align: center;
   }
 
   &__items {
-    padding: 10px;
+    padding: 0 4px 4px;
   }
 
   &__item {
     align-items: center;
     display: flex;
-
-    & + & {
-      margin-top: 12px;
-    }
   }
 
   &__image {
@@ -79,7 +62,7 @@ $icon-height: 24px;
     width: 16px;
 
     &--not-selectable {
-      margin-left: 36px;
+      margin-right: 12px;
     }
 
     & + * {
@@ -125,14 +108,6 @@ $icon-height: 24px;
     &:focus {
       background-color: $secondary-gray20;
       border-color: $primary-dark;
-    }
-  }
-
-  .is-embed & {
-    &__image {
-      &--not-selectable {
-        margin-left: 36px;
-      }
     }
   }
 

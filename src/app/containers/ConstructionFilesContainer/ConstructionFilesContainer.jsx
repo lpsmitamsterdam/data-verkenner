@@ -5,12 +5,11 @@ import { Heading } from '@datapunt/asc-ui'
 import { useMatomo } from '@datapunt/matomo-tracker-react'
 import { getFileName } from '../../../shared/ducks/files/selectors'
 import { getUser } from '../../../shared/ducks/user/user'
-import { SCOPES } from '../../../shared/services/auth/auth'
-import NotAuthorizedMessage from '../../components/PanelMessages/NotAuthorizedMessage'
 import ConstructionFileDetail from '../../components/ConstructionFileDetail/ConstructionFileDetail'
 import { getLocationPayload } from '../../../store/redux-first-router/selectors'
 import LoadingIndicator from '../../../shared/components/loading-indicator/LoadingIndicator'
 import ErrorMessage from '../../components/PanelMessages/ErrorMessage/ErrorMessage'
+import { getByUrl } from '../../../shared/services/api/api'
 import './ConstructionFilesContainer.scss'
 import { ConstructionFiles as ContextMenu } from '../../components/ContextMenu'
 import useDocumentTitle from '../../utils/useDocumentTitle'
@@ -21,7 +20,7 @@ const ImageViewer = React.lazy(() => import('../../components/ImageViewer/ImageV
 const ERROR_MESSAGE =
   'Er kunnen door een technische storing helaas geen bouwdossiers worden getoond. Probeer het later nog eens.'
 
-const ConstructionFilesContainer = ({ fileName, user }) => {
+const ConstructionFilesContainer = ({ fileName, endpoint }) => {
   const [results, setResults] = React.useState(null)
   const [errorMessage, setErrorMessage] = React.useState(false)
   const [loading, setLoading] = React.useState(false)
@@ -32,10 +31,19 @@ const ConstructionFilesContainer = ({ fileName, user }) => {
 
   const { titel: title } = results || {}
 
-  React.useEffect(() => {
+  async function fetchConstructionFiles() {
+    setLoading(true)
+    try {
+      const data = await getByUrl(endpoint)
+      setResults(data)
+    } catch (e) {
+      setErrorMessage(ERROR_MESSAGE)
+    }
     setLoading(false)
-    setResults({})
-    setErrorMessage(ERROR_MESSAGE)
+  }
+
+  React.useEffect(() => {
+    fetchConstructionFiles()
   }, [])
 
   // Effect to update the documentTitle
@@ -69,7 +77,7 @@ const ConstructionFilesContainer = ({ fileName, user }) => {
     [fileName],
   )
 
-  const onDownloadFile = size => {
+  const onDownloadFile = (size) => {
     trackEvent({
       documentTitle,
       action: 'Download-bouwtekening',
@@ -80,40 +88,33 @@ const ConstructionFilesContainer = ({ fileName, user }) => {
 
   const noResultsTemplate = withGrid(<Heading as="em">Geen resultaten gevonden</Heading>)
 
-  const notAuthorizedTemplate = withGrid(<NotAuthorizedMessage type="bouwdossiers" />)
-
   const loadingTemplate = withGrid(<LoadingIndicator />)
 
-  // eslint-disable-next-line no-nested-ternary
-  return user.scopes.includes(SCOPES['BD/R']) ? (
-    errorMessage ? (
-      <ErrorMessage errorMessage={errorMessage} />
-    ) : (
-      <>
-        {imageViewerActive && (
-          <ImageViewer
-            {...{ fileName, title }}
-            contextMenu={<ContextMenu onDownload={onDownloadFile} fileName={fileName} />}
-          />
-        )}
-        {loading && loadingTemplate}
-        {!loading &&
-          !fileName &&
-          (results ? <ConstructionFileDetail results={results} /> : noResultsTemplate)}
-      </>
-    )
+  return errorMessage ? (
+    <ErrorMessage errorMessage={errorMessage} />
   ) : (
-    notAuthorizedTemplate
+    <>
+      {imageViewerActive && (
+        <ImageViewer
+          {...{ fileName, title }}
+          contextMenu={<ContextMenu onDownload={onDownloadFile} fileName={fileName} />}
+        />
+      )}
+      {loading && loadingTemplate}
+      {!loading &&
+        !fileName &&
+        (results ? <ConstructionFileDetail results={results} /> : noResultsTemplate)}
+    </>
   )
 }
 
 ConstructionFilesContainer.propTypes = {
-  fileName: PropTypes.string,
+  fileName: PropTypes.string.isRequired,
   user: PropTypes.shape({}).isRequired,
   endpoint: PropTypes.string.isRequired,
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   fileName: getFileName(state),
   endpoint: `${process.env.API_ROOT}stadsarchief/bouwdossier/${getLocationPayload(state).id.replace(
     'id',

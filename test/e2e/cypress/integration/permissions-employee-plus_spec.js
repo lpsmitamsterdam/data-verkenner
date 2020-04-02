@@ -17,18 +17,11 @@ describe('employee PLUS permissions', () => {
 
     cy.visit('/')
 
-    cy.get('#auto-suggest__input')
-      .focus()
-      .type('bakker')
+    cy.get('#auto-suggest__input').focus().type('bakker')
 
     cy.wait('@getResults')
-    cy.get('.auto-suggest__dropdown')
-      .get('h4')
-      .invoke('width')
-      .should('be.gt', 0)
-    cy.get('.auto-suggest__tip')
-      .should('exist')
-      .and('be.visible')
+    cy.get('.auto-suggest__dropdown').get('h4').invoke('width').should('be.gt', 0)
+    cy.get('.auto-suggest__tip').should('exist').and('be.visible')
     cy.get('.auto-suggest__dropdown').contains(values.kadastraleSubjecten)
     cy.get('.auto-suggest__dropdown-item').contains('lia Bak')
   })
@@ -39,15 +32,13 @@ describe('employee PLUS permissions', () => {
 
     cy.visit('/')
 
-    cy.get('#auto-suggest__input')
-      .focus()
-      .type('bakker{enter}')
+    cy.get('#auto-suggest__input').focus().type('bakker{enter}')
 
     cy.waitForSearch()
     cy.get(queries.warningPanel).should('not.exist')
     cy.get(queries.searchHeader)
       .contains(values.kadastraleSubjecten)
-      .then(title => {
+      .then((title) => {
         const count = getCountFromHeader(title.text())
         expect(count).to.be.above(100)
       })
@@ -64,9 +55,7 @@ describe('employee PLUS permissions', () => {
     cy.wait('@getZakelijkeRechten')
     cy.get(queries.warningPanel).should('not.exist')
     cy.get(queries.headerTitle).contains('akke')
-    cy.get(queries.natuurlijkPersoon)
-      .should('exist')
-      .and('be.visible')
+    cy.get(queries.natuurlijkPersoon).should('exist').and('be.visible')
     cy.get('.qa-kadastraal-subject-recht').contains('Eigendom')
   })
 
@@ -81,9 +70,7 @@ describe('employee PLUS permissions', () => {
     cy.wait('@getZakelijkeRechten')
     cy.get(queries.warningPanel).should('not.exist')
     cy.get(queries.headerTitle).contains('ledo Ho')
-    cy.get(queries.nietNatuurlijkPersoon)
-      .should('exist')
-      .and('be.visible')
+    cy.get(queries.nietNatuurlijkPersoon).should('exist').and('be.visible')
     cy.get('.qa-kadastraal-subject-recht').contains('Eigendom')
   })
 
@@ -121,7 +108,7 @@ describe('employee PLUS permissions', () => {
     cy.wait('@getPanden')
     cy.wait('@getSitueringen')
     cy.get(queries.headerTitle).contains('Nes 98')
-    cy.get(queries.headerSubTitle).should($values => {
+    cy.get(queries.headerSubTitle).should(($values) => {
       expect($values).to.contain('Ligt in')
       expect($values).to.contain('Panoramabeeld')
       expect($values).to.contain('Verblijfsobject')
@@ -152,14 +139,12 @@ describe('employee PLUS permissions', () => {
 
   it.skip('6. Should allow a plus employee to view all map layers', () => {
     cy.visit(urls.map)
-    cy.get(queries.mapLayersCategory).should($values => {
+    cy.get(queries.mapLayersCategory).should(($values) => {
       expect($values).to.contain(values.economieEnHaven)
       expect($values).to.contain(values.geografie)
       expect($values).to.contain(values.bedrijvenInvloedsgebieden)
     })
-    cy.get(queries.legendToggleItem)
-      .contains(values.vestigingenHoreca)
-      .click()
+    cy.get(queries.legendToggleItem).contains(values.vestigingenHoreca).click()
     cy.get(queries.legendNotification).should('not.exist')
     // DP-6654 fix this on Chrome
     // cy.get(queries.legendItem).contains(values.legendCafeValue).should('exist')

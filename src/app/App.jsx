@@ -2,7 +2,7 @@ import React from 'react'
 import classNames from 'classnames'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import styled from '@datapunt/asc-core'
+import styled from 'styled-components'
 import {
   GlobalStyle,
   ThemeProvider,
@@ -19,7 +19,7 @@ import {
   fetchExchange,
   dedupExchange,
 } from 'urql'
-import { isContentPage, isSearchPage, isDatasetPage, isEditorialDetailPage } from './pages'
+import { isContentPage, isSearchPage, isEditorialDetailPage } from './pages'
 import './_app.scss'
 import {
   hasOverflowScroll,
@@ -99,8 +99,7 @@ const App = ({
     homePage ||
     isEditorialDetailPage(currentPage) ||
     isContentPage(currentPage) ||
-    isSearchPage(currentPage) ||
-    isDatasetPage(currentPage)
+    isSearchPage(currentPage)
 
   // Redirect to the 404 page if currentPage isn't set
   if (currentPage === '' && window) {
@@ -129,12 +128,12 @@ const App = ({
 
   // Adding/removing multiple classes as string doesn't seem to work in IE11.
   // Add/remove them one by one.
-  printAndEmbedClasses.forEach(element => {
+  printAndEmbedClasses.forEach((element) => {
     document.documentElement.classList.remove(element)
   })
 
   if (printEmbedModeClasses) {
-    printEmbedModeClasses.split(' ').forEach(element => {
+    printEmbedModeClasses.split(' ').forEach((element) => {
       document.documentElement.classList.add(element)
     })
   }
@@ -185,7 +184,7 @@ App.propTypes = {
   overflowScroll: PropTypes.bool.isRequired,
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   currentPage: getPage(state),
   embedMode: isEmbedded(state),
   homePage: isHomepage(state),

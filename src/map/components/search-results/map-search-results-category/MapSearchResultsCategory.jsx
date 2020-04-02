@@ -5,13 +5,13 @@ import MapSearchResultsItem from '../map-search-results-item/MapSearchResultsIte
 
 import categoryLabelsByType from '../../../services/map-search/category-labels-by-type'
 
-const getStatusLabel = result =>
+const getStatusLabel = (result) =>
   result.statusLabel && result.statusLabel.length > 0 ? `(${result.statusLabel})` : ''
 
-const getPluralLabel = result => categoryLabelsByType[result.type].plural
+const getPluralLabel = (result) => categoryLabelsByType[result.type].plural
 
 const MapSearchResultsCategory = ({ category, onItemClick, onShowMoreClick, isSubcategory }) => {
-  const subCategories = category.subCategories.map(subCategory => (
+  const subCategories = category.subCategories.map((subCategory) => (
     <MapSearchResultsCategory
       key={subCategory.categoryLabel}
       category={subCategory}
@@ -29,7 +29,7 @@ const MapSearchResultsCategory = ({ category, onItemClick, onShowMoreClick, isSu
         {category.results.length > 1 ? `${getPluralLabel(category)}` : `${category.categoryLabel}`}
       </h4>
       <ul className="map-search-results-category__list">
-        {category.results.map(result => (
+        {category.results.map((result) => (
           <MapSearchResultsItem
             key={result.uri}
             label={result.label}

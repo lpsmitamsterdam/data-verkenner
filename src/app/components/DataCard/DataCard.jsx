@@ -9,7 +9,7 @@ import {
   CardMedia,
   Paragraph,
 } from '@datapunt/asc-ui'
-import styled from '@datapunt/asc-core'
+import styled from 'styled-components'
 import RouterLink from 'redux-first-router-link'
 import React from 'react'
 import { toDataSearchType, toDetailFromEndpoint } from '../../../store/redux-first-router/actions'

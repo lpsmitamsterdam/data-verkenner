@@ -1,6 +1,6 @@
 /* eslint-disable camelcase */
 import React from 'react'
-import styled from '@datapunt/asc-core'
+import styled from 'styled-components'
 import { AlertMessage } from '@datapunt/asc-ui'
 import { useSelector } from 'react-redux'
 import { isEmbedded } from '../../../shared/ducks/ui/ui'
@@ -22,17 +22,17 @@ const StyledAlertMessage = styled(AlertMessage)`
 
 const NotificationAlert: React.FC = () => {
   const hide = useSelector(isEmbedded)
-  if (!hide && !getCookie(COOKIE_NAME)) {
-    const { fetchData, results } = useDataFetching()
+  const { fetchData, results } = useDataFetching()
 
-    React.useEffect(() => {
-      // Limit = 1 because this prevents us from getting multiple notifications
-      const endpoint = `${process.env.CMS_ROOT}jsonapi/node/notification?filter[field_active]=1&page[limit]=1`
-      ;(async () => {
-        await fetchData(endpoint)
-      })()
-    }, [])
+  React.useEffect(() => {
+    // Limit = 1 because this prevents us from getting multiple notifications
+    const endpoint = `${process.env.CMS_ROOT}jsonapi/node/notification?filter[field_active]=1&page[limit]=1`
+    ;(async () => {
+      await fetchData(endpoint)
+    })()
+  }, [])
 
+  if (!hide && !getCookie(COOKIE_NAME) && results) {
     const { title, body, field_notification_type, field_position } =
       results?.data[0]?.attributes || {}
 

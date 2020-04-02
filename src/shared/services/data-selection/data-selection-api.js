@@ -8,24 +8,24 @@ function formatFilters(dataset, rawData) {
   const sortFilters = DATA_SELECTION_CONFIG.datasets[dataset].SORT_FILTERS || false
   const newRawData = { ...rawData }
   const filters = formattedFilters
-    .filter(filter => isObject(rawData[filter.slug]))
-    .map(filter => {
+    .filter((filter) => isObject(rawData[filter.slug]))
+    .map((filter) => {
       const newFilter = { ...filter }
       // use the specific term order when defined
       if (newFilter.order) {
         newRawData[newFilter.slug].options = newFilter.order
-          .map(term => {
-            const found = newRawData[newFilter.slug].options.filter(item => item.label === term)
+          .map((term) => {
+            const found = newRawData[newFilter.slug].options.filter((item) => item.label === term)
             return found.length > 0 ? found[0] : null
           })
-          .filter(item => !!item)
+          .filter((item) => !!item)
         delete newFilter.order
       }
       return { ...newFilter, ...newRawData[newFilter.slug] }
     })
 
   if (sortFilters) {
-    return filters.map(filter => {
+    return filters.map((filter) => {
       filter.options.sort((a, b) => {
         // ignore upper and lowercase
         const labelA = a.label.toLowerCase()
@@ -59,7 +59,7 @@ function recurGetContent(path, rawData) {
   const remainingPath = path.splice(1)
 
   return Array.isArray(rawValue)
-    ? rawValue.map(value => recurGetContent(remainingPath, value))
+    ? rawValue.map((value) => recurGetContent(remainingPath, value))
     : recurGetContent(remainingPath, rawValue)
 }
 
@@ -73,18 +73,18 @@ function formatData(dataset, view, rawData) {
     return rawData
   }
   return {
-    head: fields.map(item => item.label),
-    body: rawData.map(rawDataRow => ({
+    head: fields.map((item) => item.label),
+    body: rawData.map((rawDataRow) => ({
       detailEndpoint: rawDataRow._links.self.href,
-      content: fields.map(item =>
-        item.variables.map(variable => ({
+      content: fields.map((item) =>
+        item.variables.map((variable) => ({
           key: variable,
           value: recurGetContent(variable.split('.'), rawDataRow),
         })),
       ),
     })),
-    formatters: fields.map(item => item.formatter),
-    templates: fields.map(item => item.template),
+    formatters: fields.map((item) => item.formatter),
+    templates: fields.map((item) => item.template),
   }
 }
 
@@ -94,10 +94,10 @@ function filterUnavailableFilters(dataset, activeFilters = {}) {
   const activeAndAvailableFilters = { ...activeFilters }
 
   // Filter activeFilters that are not available for this dataset
-  Object.keys(activeFilters).forEach(activeFilterKey => {
+  Object.keys(activeFilters).forEach((activeFilterKey) => {
     const isAvailable =
       DATA_SELECTION_CONFIG.datasets[dataset].FILTERS.filter(
-        filter => activeFilterKey === filter.slug,
+        (filter) => activeFilterKey === filter.slug,
       ).length === 1
 
     if (!isAvailable && !isDefined(activeFilters.shape)) {
@@ -131,7 +131,7 @@ function query(dataset, view, activeFilters, page, searchText, shape, catalogFil
       shape,
       catalogFilters,
     )
-    .then(data => ({
+    .then((data) => ({
       numberOfPages: data.numberOfPages,
       numberOfRecords: data.numberOfRecords,
       filters: formatFilters(dataset, data.filters),

@@ -12,7 +12,7 @@ export default function getErrorsForPath<T>(
   path: (string | number)[],
   exact = false,
 ): GraphQLFormattedError<T>[] {
-  return errors.filter(error => {
+  return errors.filter((error) => {
     // Ignore errors that do not have a path.
     if (error.path === undefined) {
       return false

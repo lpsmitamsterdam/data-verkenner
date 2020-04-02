@@ -15,7 +15,7 @@ const initialState = {
 }
 
 export const findLayer = (layers, id) =>
-  layers.find(mapLayer => {
+  layers.find((mapLayer) => {
     const mapLayerId = id.split('-')
 
     // The ID of the mapLayer when defined as part of a collection or as legendItem, is a combination of the IDs of the mapLayer and the collection it's used in
@@ -33,14 +33,14 @@ const generateLayer = (layers, overlay, url, params, type, bounds) => ({
   params,
   bounds,
 })
-export const getMapLayers = state => state.mapLayers.layers.items
-export const getAccessToken = state => state.user.accessToken
+export const getMapLayers = (state) => state.mapLayers.layers.items
+export const getAccessToken = (state) => state.user.accessToken
 
 export const getLayers = createSelector(
   [getMapOverlays, getAccessToken, getMapLayers],
   (overlays, token, layers) =>
     overlays
-      .map(overlay => {
+      .map((overlay) => {
         const layer = findLayer(layers, overlay.id)
         if (!layer) {
           return false
@@ -62,7 +62,7 @@ export const getLayers = createSelector(
         }
         return false
       })
-      .filter(layer => layer),
+      .filter((layer) => layer),
 )
 
 export default function MapLayersReducer(state = initialState, action) {

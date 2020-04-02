@@ -4,12 +4,12 @@ import { authenticateRequest, getUser } from '../../../shared/ducks/user/user'
 import { openFeedbackForm } from '../Modal/FeedbackModal'
 
 /* istanbul ignore next */
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   user: getUser(state),
 })
 
 /* istanbul ignore next */
-const mapDispatchToProps = dispatch => ({
+const mapDispatchToProps = (dispatch) => ({
   showFeedbackForm: openFeedbackForm,
   login: () => {
     dispatch(authenticateRequest('inloggen'))

@@ -3,7 +3,7 @@ const MB = 1024 * 1024
 const GB = 1024 * 1024 * 1024
 const TB = 1024 * 1024 * 1024 * 1024
 
-describe('The filesize filter', function() {
+describe('The filesize filter', function () {
   let filesizeFilter
   let localization
 
@@ -11,12 +11,12 @@ describe('The filesize filter', function() {
     localization = jasmine.createSpyObj('localizationFactory', ['toLocaleString'])
     angular.mock.module('dpShared', { localization })
 
-    angular.mock.inject(function($filter) {
+    angular.mock.inject(function ($filter) {
       filesizeFilter = $filter('filesize')
     })
 
     // simulate replacement of numbers from '1.7' to '1,5' as would be done by localization
-    localization.toLocaleString.and.callFake(number => number.replace(/\./g, ','))
+    localization.toLocaleString.and.callFake((number) => number.replace(/\./g, ','))
   })
 
   it('returns - on invalid input', () => {

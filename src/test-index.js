@@ -126,9 +126,9 @@ import '../modules/shared/filters/kebabcase.filter.test'
 // Import the templates and inject them into angular
 const templates = require.context('../modules', true, /\.html$/)
 const origInject = angular.mock.inject
-angular.mock.inject = callback => {
-  origInject($templateCache => {
-    templates.keys().forEach(key => {
+angular.mock.inject = (callback) => {
+  origInject(($templateCache) => {
+    templates.keys().forEach((key) => {
       // Remove the dot from './dir/template.html' and prepend with
       // 'modules' to get 'modules/dir/template.html'.
       const templateId = `modules${key.substr(1)}`

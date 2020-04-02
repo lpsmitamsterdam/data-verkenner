@@ -1,5 +1,5 @@
 import { authenticateRequest } from '../../../../src/shared/ducks/user/user'
-;(function() {
+;(function () {
   angular.module('dpShared').component('dpLoginLink', {
     template: require('./login-link.html'),
     bindings: {
@@ -15,7 +15,7 @@ import { authenticateRequest } from '../../../../src/shared/ducks/user/user'
   function DpLoginLinkController($scope, store) {
     const vm = this
 
-    vm.onClick = e => {
+    vm.onClick = (e) => {
       e.preventDefault()
       store.dispatch(authenticateRequest('inloggen'))
       window.auth.login()

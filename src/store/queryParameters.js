@@ -1,27 +1,20 @@
-import { routing } from '../app/routes'
-import { DATA_SEARCH_REDUCER } from '../shared/ducks/data-search/reducer'
 import {
   getActiveFilters,
+  getPage,
   getQuery,
   getSort,
-  getPage,
   REDUCER_KEY as SEARCH_REDUCER,
 } from '../app/pages/SearchPage/SearchPageDucks'
-import { getDataSelectionPage, getGeometryFilter } from '../shared/ducks/data-selection/selectors'
-import { DATA_SELECTION } from '../shared/ducks/data-selection/reducer'
+import { routing } from '../app/routes'
 import { initialState as mapInitialState, REDUCER_KEY as MAP } from '../map/ducks/map/constants'
-import {
-  initialState as filesInitialState,
-  REDUCER_KEY as FILES,
-} from '../shared/ducks/files/constants'
 import {
   getActiveBaseLayer,
   getCenter,
   getMapOverlays,
   getMapZoom,
-  isMapPanelActive,
-  getMarkerLocation,
   getMarkerIcon,
+  getMarkerLocation,
+  isMapPanelActive,
 } from '../map/ducks/map/selectors'
 import { initialState as panoramaInitialState } from '../panorama/ducks/constants'
 import { PANORAMA } from '../panorama/ducks/reducer'
@@ -33,8 +26,16 @@ import {
   getPanoramaPitch,
   getPanoramaTags,
 } from '../panorama/ducks/selectors'
+import { DATA_SEARCH_REDUCER } from '../shared/ducks/data-search/reducer'
 import { getDataSearchLocation, getSearchCategory } from '../shared/ducks/data-search/selectors'
 import { initialState as dataSelectionInitialState } from '../shared/ducks/data-selection/constants'
+import { DATA_SELECTION } from '../shared/ducks/data-selection/reducer'
+import { getDataSelectionPage, getGeometryFilter } from '../shared/ducks/data-selection/selectors'
+import {
+  initialState as filesInitialState,
+  REDUCER_KEY as FILES,
+} from '../shared/ducks/files/constants'
+import { getFileName } from '../shared/ducks/files/selectors'
 import {
   getFiltersWithoutShape,
   initialState as filterInitialState,
@@ -45,8 +46,8 @@ import {
   initialState as UIInitialState,
   isEmbedded,
   isEmbedPreview,
-  isPrintMode,
   isMapLinkVisible,
+  isPrintMode,
   UI,
 } from '../shared/ducks/ui/ui'
 import {
@@ -55,7 +56,6 @@ import {
 } from '../shared/services/coordinate-reference-system'
 import PARAMETERS from './parameters'
 import paramsRegistry from './params-registry'
-import { getFileName } from '../shared/ducks/files/selectors'
 
 const routesWithSearch = [
   routing.search.type,
@@ -65,6 +65,8 @@ const routesWithSearch = [
   routing.specialSearch.type,
   routing.publicationSearch.type,
   routing.collectionSearch.type,
+  routing.mapCollectionSearch.type,
+  routing.mapLayerSearch.type,
 ]
 
 const routesWithDataSelection = [
@@ -90,19 +92,19 @@ const routesWithCmsData = [
 
 /* istanbul ignore next */
 export default paramsRegistry
-  .addParameter(PARAMETERS.QUERY, routes => {
+  .addParameter(PARAMETERS.QUERY, (routes) => {
     routes.add(routesWithSearch, SEARCH_REDUCER, 'query', {
       selector: getQuery,
       defaultValue: '',
     })
   })
-  .addParameter(PARAMETERS.SORT, routes => {
+  .addParameter(PARAMETERS.SORT, (routes) => {
     routes.add(routesWithSearch, SEARCH_REDUCER, 'sort', {
       selector: getSort,
       defaultValue: '',
     })
   })
-  .addParameter(PARAMETERS.PAGE, routes => {
+  .addParameter(PARAMETERS.PAGE, (routes) => {
     routes
       .add(routesWithDataSelection, DATA_SELECTION, 'page', {
         defaultValue: dataSelectionInitialState.page,
@@ -113,27 +115,29 @@ export default paramsRegistry
         defaultValue: 1,
       })
   })
-  .addParameter(PARAMETERS.GEO, routes => {
+  .addParameter(PARAMETERS.GEO, (routes) => {
     routes.add(routesWithDataSelection, DATA_SELECTION, 'geometryFilter', {
       selector: getGeometryFilter,
       defaultValue: dataSelectionInitialState.geometryFilter,
       encode: ({ markers, description }) => {
         if (markers && description) {
           return JSON.stringify({
-            markers: markers.map(latLong => `${latLong[0]}:${latLong[1]}`).join('|'),
+            markers: markers.map((latLong) => `${latLong[0]}:${latLong[1]}`).join('|'),
             description,
           })
         }
         return undefined
       },
-      decode: geo => {
+      decode: (geo) => {
         let { geometryFilter } = dataSelectionInitialState
         if (geo) {
           const { markers, description } = JSON.parse(geo)
           geometryFilter = {
             markers:
               markers && markers.length
-                ? markers.split('|').map(latLng => latLng.split(':').map(str => parseFloat(str)))
+                ? markers
+                    .split('|')
+                    .map((latLng) => latLng.split(':').map((str) => parseFloat(str)))
                 : [],
             description,
           }
@@ -143,19 +147,19 @@ export default paramsRegistry
       },
     })
   })
-  .addParameter(PARAMETERS.VIEW, routes => {
+  .addParameter(PARAMETERS.VIEW, (routes) => {
     routes.add(routesWithMapActive, UI, 'viewMode', {
       selector: getViewMode,
       defaultValue: UIInitialState.viewMode,
     })
   })
-  .addParameter(PARAMETERS.CATEGORY, routes => {
+  .addParameter(PARAMETERS.CATEGORY, (routes) => {
     routes.add(routing.dataSearch.type, DATA_SEARCH_REDUCER, 'category', {
       defaultValue: dataSelectionInitialState.category,
       selector: getSearchCategory,
     })
   })
-  .addParameter(PARAMETERS.VIEW_CENTER, routes => {
+  .addParameter(PARAMETERS.VIEW_CENTER, (routes) => {
     routes.add(
       routesWithMapActive,
       MAP,
@@ -163,28 +167,28 @@ export default paramsRegistry
       {
         defaultValue: mapInitialState.viewCenter,
         decode: (val = mapInitialState.viewCenter.join(',')) =>
-          val.split(',').map(ltLng => normalizeCoordinate(parseFloat(ltLng), 7)),
-        encode: selectorResult =>
-          selectorResult.map(coordinate => normalizeCoordinate(coordinate, 7)).join(','),
+          val.split(',').map((ltLng) => normalizeCoordinate(parseFloat(ltLng), 7)),
+        encode: (selectorResult) =>
+          selectorResult.map((coordinate) => normalizeCoordinate(coordinate, 7)).join(','),
         selector: getCenter,
       },
       false,
     )
   })
-  .addParameter(PARAMETERS.ZOOM, routes => {
+  .addParameter(PARAMETERS.ZOOM, (routes) => {
     routes.add(
       routesWithMapActive,
       MAP,
       'zoom',
       {
         defaultValue: mapInitialState.zoom,
-        decode: val => parseFloat(val) || mapInitialState.zoom,
+        decode: (val) => parseFloat(val) || mapInitialState.zoom,
         selector: getMapZoom,
       },
       false,
     )
   })
-  .addParameter(PARAMETERS.LEGEND, routes => {
+  .addParameter(PARAMETERS.LEGEND, (routes) => {
     routes.add(
       routesWithMapActive,
       MAP,
@@ -196,7 +200,7 @@ export default paramsRegistry
       false,
     )
   })
-  .addParameter(PARAMETERS.HEADING, routes => {
+  .addParameter(PARAMETERS.HEADING, (routes) => {
     routes.add(
       routing.panorama.type,
       PANORAMA,
@@ -208,21 +212,21 @@ export default paramsRegistry
       false,
     )
   })
-  .addParameter(PARAMETERS.MAP_BACKGROUND, routes => {
+  .addParameter(PARAMETERS.MAP_BACKGROUND, (routes) => {
     routes.add(routesWithMapActive, MAP, 'baseLayer', {
       defaultValue: mapInitialState.baseLayer,
       selector: getActiveBaseLayer,
     })
   })
-  .addParameter(PARAMETERS.PANORAMA_TAGS, routes => {
+  .addParameter(PARAMETERS.PANORAMA_TAGS, (routes) => {
     routes.add(routing.panorama.type, PANORAMA, 'tags', {
       defaultValue: panoramaInitialState.tags,
       selector: getPanoramaTags,
-      encode: selectorResult => selectorResult.join(','),
-      decode: val => val && val.split(','),
+      encode: (selectorResult) => selectorResult.join(','),
+      decode: (val) => val && val.split(','),
     })
   })
-  .addParameter(PARAMETERS.PITCH, routes => {
+  .addParameter(PARAMETERS.PITCH, (routes) => {
     routes.add(
       routing.panorama.type,
       PANORAMA,
@@ -234,7 +238,7 @@ export default paramsRegistry
       false,
     )
   })
-  .addParameter(PARAMETERS.FILE, routes => {
+  .addParameter(PARAMETERS.FILE, (routes) => {
     routes.add(
       routing.constructionFile.type,
       FILES,
@@ -246,11 +250,11 @@ export default paramsRegistry
       true,
     )
   })
-  .addParameter(PARAMETERS.FILTERS, routes => {
+  .addParameter(PARAMETERS.FILTERS, (routes) => {
     routes
       .add([...routesWithDataSelection], FILTER, 'filters', {
         defaultValue: filterInitialState.filters,
-        decode: val => {
+        decode: (val) => {
           try {
             return JSON.parse(val)
           } catch (e) {
@@ -264,9 +268,9 @@ export default paramsRegistry
       .add(routesWithSearch, SEARCH_REDUCER, 'activeFilters', {
         selector: getActiveFilters,
         defaultValue: [],
-        decode: val =>
+        decode: (val) =>
           val
-            ? val.split('|').map(encodedFilters => {
+            ? val.split('|').map((encodedFilters) => {
                 const [type, filters] = encodedFilters.split(';')
                 const decodedFilters = filters.split('.')
 
@@ -285,22 +289,23 @@ export default paramsRegistry
             .join('|'),
       })
   })
-  .addParameter(PARAMETERS.DETAIL_REFERENCE, routes => {
+  .addParameter(PARAMETERS.DETAIL_REFERENCE, (routes) => {
     routes.add(
       routing.panorama.type,
       PANORAMA,
       'detailReference',
       {
         defaultValue: panoramaInitialState.detailReference,
-        decode: val => (val && val.length ? val.split(',') : panoramaInitialState.detailReference),
+        decode: (val) =>
+          val && val.length ? val.split(',') : panoramaInitialState.detailReference,
         selector: getDetailReference,
-        encode: selectorResult =>
+        encode: (selectorResult) =>
           selectorResult.length ? selectorResult.join() : panoramaInitialState.detailReference,
       },
       false,
     )
   })
-  .addParameter(PARAMETERS.PAGE_REFERENCE, routes => {
+  .addParameter(PARAMETERS.PAGE_REFERENCE, (routes) => {
     routes.add(
       routing.panorama.type,
       PANORAMA,
@@ -312,19 +317,19 @@ export default paramsRegistry
       false,
     )
   })
-  .addParameter(PARAMETERS.EMBED_PREVIEW, routes => {
+  .addParameter(PARAMETERS.EMBED_PREVIEW, (routes) => {
     routes.add(routesWithMapActive, UI, 'isEmbedPreview', {
       defaultValue: UIInitialState.isEmbedPreview,
       selector: isEmbedPreview,
     })
   })
-  .addParameter(PARAMETERS.EMBED, routes => {
+  .addParameter(PARAMETERS.EMBED, (routes) => {
     routes.add(routesWithMapActive, UI, 'isEmbed', {
       defaultValue: UIInitialState.isEmbed,
       selector: isEmbedded,
     })
   })
-  .addParameter(PARAMETERS.PRINT, routes => {
+  .addParameter(PARAMETERS.PRINT, (routes) => {
     routes.add(
       [
         ...routesWithMapActive,
@@ -340,40 +345,42 @@ export default paramsRegistry
       },
     )
   })
-  .addParameter(PARAMETERS.LAYERS, routes => {
+  .addParameter(PARAMETERS.LAYERS, (routes) => {
     routes.add(
       [...routesWithMapActive, ...routesWithSearch],
       MAP,
       'overlays',
       {
         defaultValue: mapInitialState.overlays,
-        decode: val => decodeLayers(val),
+        decode: (val) => decodeLayers(val),
         selector: getMapOverlays,
-        encode: selectorResult => {
+        encode: (selectorResult) => {
           if (!selectorResult) {
             return ''
           }
 
           return selectorResult
-            .map(overlay => `${overlay.id}:${overlay.isVisible ? 1 : 0}`)
+            .map((overlay) => `${overlay.id}:${overlay.isVisible ? 1 : 0}`)
             .join('|')
         },
       },
       false,
     )
   })
-  .addParameter(PARAMETERS.LOCATION, routes => {
+  .addParameter(PARAMETERS.LOCATION, (routes) => {
     routes
       .add(
         routing.panorama.type,
         PANORAMA,
         'location',
         {
-          decode: val =>
-            val ? val.split(',').map(string => parseFloat(string)) : panoramaInitialState.location,
+          decode: (val) =>
+            val
+              ? val.split(',').map((string) => parseFloat(string))
+              : panoramaInitialState.location,
           defaultValue: panoramaInitialState.location,
           selector: getPanoramaLocation,
-          encode: selectorResult =>
+          encode: (selectorResult) =>
             selectorResult ? selectorResult.join() : panoramaInitialState.location,
         },
         false,
@@ -381,7 +388,7 @@ export default paramsRegistry
       .add(routing.dataSearchGeo.type, DATA_SEARCH_REDUCER, 'geoSearch', {
         defaultValue: null,
         selector: getDataSearchLocation,
-        encode: selectorResult => {
+        encode: (selectorResult) => {
           if (selectorResult && selectorResult.latitude) {
             return `${selectorResult.latitude},${selectorResult.longitude}`
           }
@@ -390,7 +397,7 @@ export default paramsRegistry
           }
           return undefined
         },
-        decode: val => {
+        decode: (val) => {
           if (val) {
             const latLngObj = parseLocationString(val)
             return {
@@ -402,22 +409,22 @@ export default paramsRegistry
         },
       })
   })
-  .addParameter(PARAMETERS.MARKER, routes => {
+  .addParameter(PARAMETERS.MARKER, (routes) => {
     routes.add(
       routesWithMapActive,
       MAP,
       'marker',
       {
         defaultValue: mapInitialState.marker,
-        decode: val =>
-          val && val.split(',').map(ltLng => normalizeCoordinate(parseFloat(ltLng), 7)),
-        encode: value => value && value.position.join(','),
+        decode: (val) =>
+          val && val.split(',').map((ltLng) => normalizeCoordinate(parseFloat(ltLng), 7)),
+        encode: (value) => value && value.position.join(','),
         selector: getMarkerLocation,
       },
       false,
     )
   })
-  .addParameter(PARAMETERS.MARKER_ICON, routes => {
+  .addParameter(PARAMETERS.MARKER_ICON, (routes) => {
     routes.add(
       routesWithMapActive,
       MAP,
@@ -429,7 +436,7 @@ export default paramsRegistry
       false,
     )
   })
-  .addParameter(PARAMETERS.MAP_LINK, routes => {
+  .addParameter(PARAMETERS.MAP_LINK, (routes) => {
     routes.add(
       routesWithMapActive,
       UI,
@@ -447,7 +454,7 @@ export function decodeLayers(value) {
     return []
   }
 
-  return value.split('|').map(entry => {
+  return value.split('|').map((entry) => {
     const [id, visibility] = entry.split(':')
 
     return {

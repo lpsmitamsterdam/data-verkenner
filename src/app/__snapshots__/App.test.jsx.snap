@@ -2,7 +2,7 @@
 
 exports[`App should render the homepage 1`] = `
 <ThemeProvider>
-  <GlobalStyleComponent />
+  <Memo(GlobalStyleComponent) />
   <MatomoProvider
     value={MatomoTracker {}}
   >
@@ -22,6 +22,7 @@ exports[`App should render the homepage 1`] = `
           "maskTypename": false,
           "operations$": [Function],
           "preferGetMethod": false,
+          "queue": Array [],
           "reexecuteOperation": [Function],
           "requestPolicy": "cache-first",
           "results$": [Function],
@@ -58,7 +59,7 @@ exports[`App should render the homepage 1`] = `
 
 exports[`App should render the mapview 1`] = `
 <ThemeProvider>
-  <GlobalStyleComponent />
+  <Memo(GlobalStyleComponent) />
   <MatomoProvider
     value={MatomoTracker {}}
   >
@@ -78,6 +79,7 @@ exports[`App should render the mapview 1`] = `
           "maskTypename": false,
           "operations$": [Function],
           "preferGetMethod": false,
+          "queue": Array [],
           "reexecuteOperation": [Function],
           "requestPolicy": "cache-first",
           "results$": [Function],

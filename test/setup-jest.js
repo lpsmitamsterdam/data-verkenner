@@ -1,4 +1,5 @@
-import Enzyme, { shallow, render, mount } from 'enzyme'
+/* eslint-disable no-console */
+import Enzyme, { mount, render, shallow } from 'enzyme'
 import Adapter from 'enzyme-adapter-react-16'
 import 'leaflet'
 import 'leaflet-draw'
@@ -20,7 +21,7 @@ global.L = L
 global.fetch = require('jest-fetch-mock')
 
 // TODO DP-7140 Remove when we upgrade to React >= 16.9
-const originalConsoleError = message => {
+const originalConsoleError = (message) => {
   // eslint-disable-line
   // throw new Error(message) // eslint-disable-line
 }

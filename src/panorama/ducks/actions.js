@@ -11,7 +11,7 @@ import {
   SET_PANORAMA_TAGS,
 } from './constants'
 
-export const fetchPanoramaRequest = payload => ({
+export const fetchPanoramaRequest = (payload) => ({
   type: FETCH_PANORAMA_REQUEST,
   payload,
   meta: {
@@ -19,7 +19,7 @@ export const fetchPanoramaRequest = payload => ({
   },
 })
 
-export const fetchPanoramaHotspotRequest = payload => ({
+export const fetchPanoramaHotspotRequest = (payload) => ({
   type: FETCH_PANORAMA_HOTSPOT_REQUEST,
   payload,
   meta: {
@@ -27,7 +27,7 @@ export const fetchPanoramaHotspotRequest = payload => ({
   },
 })
 
-export const setPanoramaTags = payload => ({
+export const setPanoramaTags = (payload) => ({
   type: SET_PANORAMA_TAGS,
   payload,
   meta: {
@@ -42,14 +42,14 @@ export const fetchPanoramaRequestExternal = () => ({
   },
 })
 
-export const fetchPanoramaSuccess = payload => ({
+export const fetchPanoramaSuccess = (payload) => ({
   type: FETCH_PANORAMA_SUCCESS,
   payload,
   meta: {
     tracking: payload,
   },
 })
-export const fetchPanoramaError = error => ({
+export const fetchPanoramaError = (error) => ({
   type: FETCH_PANORAMA_ERROR,
   payload: error,
 })
@@ -60,7 +60,7 @@ export const closePanorama = () => ({
     tracking: true,
   },
 })
-export const setPanoramaLocation = payload => ({
+export const setPanoramaLocation = (payload) => ({
   type: SET_PANORAMA_LOCATION,
   payload,
   meta: {

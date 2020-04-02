@@ -1,4 +1,4 @@
-;(function() {
+;(function () {
   angular.module('dpDetail').directive('dpGlossaryMeta', dpGlossaryMetaDirective)
 
   function dpGlossaryMetaDirective() {
@@ -21,10 +21,10 @@
   function DpGlossaryMetaController(GLOSSARY) {
     const vm = this
 
-    this.$onInit = function() {
+    this.$onInit = function () {
       vm.metaFields = []
 
-      GLOSSARY.DEFINITIONS[vm.definition].meta.forEach(field => {
+      GLOSSARY.DEFINITIONS[vm.definition].meta.forEach((field) => {
         vm.metaFields.push({
           label: GLOSSARY.META[field].label,
           value: vm.apiData.results[field],

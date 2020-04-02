@@ -9,7 +9,7 @@ import LoginLinkContainer from '../Links/LoginLink/LoginLinkContainer'
 const SearchList = ({ categoryResults, limit, userScopes }) => {
   const results =
     categoryResults && categoryResults.results
-      ? categoryResults.results.map(result => ({
+      ? categoryResults.results.map((result) => ({
           ...result,
           linkTo: toDetailFromEndpoint(result.endpoint, VIEW_MODE.SPLIT),
         }))

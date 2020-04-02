@@ -11,19 +11,47 @@ export const LABELS = {
   DATA: 'Data',
   SPECIALS: 'In Beeld',
   COLLECTIONS: 'Dossiers',
+  MAP_COLLECTIONS: 'Kaartcollecties',
+  MAP_LAYERS: 'Kaartlagen',
 }
 
+// Sort order of the data results. These strings correspond to the labels defined in the typeahead API.
+export const SORT_ORDER_DATA = [
+  'Straatnamen',
+  'Adressen',
+  'Openbare ruimtes',
+  'Panden',
+  'Gebieden',
+  'Vestigingen',
+  'Maatschappelijke activiteiten',
+  'Kadastrale objecten',
+  'Kadastrale subjecten',
+  'Meetbouten',
+  'Monumenten',
+]
+
+// Sort order of the autosuggest results
+export const SORT_ORDER = [
+  LABELS.COLLECTIONS,
+  LABELS.MAP_LAYERS,
+  LABELS.MAP_COLLECTIONS,
+  ...SORT_ORDER_DATA,
+  LABELS.DATASETS,
+  LABELS.PUBLICATIONS,
+  LABELS.ARTICLES,
+]
+
 /**
- * Orders the array by the object's labels in the order defined the LABELS const
+ * Orders the array by the object's labels in the order defined the SORT_ORDER const
  * @param {Array} results
  * @returns {*[]}
  */
-export const orderAutoSuggestResults = results => {
-  const order = Object.values(LABELS)
+export const orderAutoSuggestResults = (results) => {
+  const order = Object.values(SORT_ORDER)
 
-  const dataPart = results.filter(category => !order.includes(category.label))
+  const dataPart = results.filter((category) => !order.includes(category.label))
   const orderedPart = order.reduce((acc, label) => {
-    const res = results.filter(category => category.label === label)
+    const res = results.filter((category) => category.label === label)
     if (res) {
       return [...acc, ...res]
     }
@@ -38,9 +66,9 @@ function formatData(categories) {
 
   let indexInTotal = -1
 
-  const indexedCategories = sortedCategories.map(category => ({
+  const indexedCategories = sortedCategories.map((category) => ({
     ...category,
-    content: category.content.map(suggestion => {
+    content: category.content.map((suggestion) => {
       indexInTotal += 1
       return {
         category: category.label,
@@ -66,8 +94,8 @@ function search(query) {
 
   if (uri) {
     return fetch(uri, { headers: getAuthHeaders() })
-      .then(response => response.json())
-      .then(response => formatData(response))
+      .then((response) => response.json())
+      .then((response) => formatData(response))
   }
   return {}
 }

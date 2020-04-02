@@ -1,5 +1,5 @@
 /* eslint-disable no-nested-ternary */
-import styled from '@datapunt/asc-core'
+import styled from 'styled-components'
 import { FooterLinkListItem, Link, Paragraph, themeSpacing } from '@datapunt/asc-ui'
 import React from 'react'
 import { openFeedbackForm } from '../Modal/FeedbackModal'

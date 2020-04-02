@@ -71,7 +71,7 @@ const mockFilledState = {
     category: 'Monumenten',
   },
 }
-const onInputEvent = { target: { value: 'd' }, persist: jest.fn() }
+const onInputEvent = { currentTarget: { value: 'd' }, persist: jest.fn() }
 
 const onSubmit = jest.fn()
 const onSuggestionActivate = jest.fn()

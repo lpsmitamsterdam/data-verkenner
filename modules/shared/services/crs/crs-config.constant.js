@@ -1,4 +1,4 @@
-;(function() {
+;(function () {
   angular.module('dpShared').constant('CRS_CONFIG', {
     RD: {
       code: 'EPSG:28992',

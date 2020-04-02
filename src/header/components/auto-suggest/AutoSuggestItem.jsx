@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import escapeStringRegexp from 'escape-string-regexp'
 
-const AutoSuggestItem = props => {
+const AutoSuggestItem = (props) => {
   const { isActive, onSuggestionSelection, query, content } = props
   const highlightedSuggestion =
     content &&

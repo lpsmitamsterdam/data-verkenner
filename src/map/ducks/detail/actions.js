@@ -4,12 +4,12 @@ import {
   FETCH_MAP_DETAIL_FAILURE,
 } from './constants'
 
-export const getMapDetail = payload => ({
+export const getMapDetail = (payload) => ({
   type: FETCH_MAP_DETAIL_REQUEST,
   payload,
 })
 
-export const fetchMapDetailFailure = error => ({
+export const fetchMapDetailFailure = (error) => ({
   type: FETCH_MAP_DETAIL_FAILURE,
   error,
 })

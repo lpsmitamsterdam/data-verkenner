@@ -1,7 +1,7 @@
 import { toPanoramaAndPreserveQuery } from '../../../../src/store/redux-first-router/actions'
 import { getDetailLocation } from '../../../../src/store/redux-first-router/selectors'
 import SHARED_CONFIG from '../../../../src/shared/services/shared-config/shared-config'
-;(function() {
+;(function () {
   angular.module('dpShared').component('dpPanoramaThumbnail', {
     bindings: {
       panorama: '<',
@@ -27,11 +27,11 @@ import SHARED_CONFIG from '../../../../src/shared/services/shared-config/shared-
       }
     }
 
-    this.$onInit = function() {
+    this.$onInit = function () {
       setLinkTo(vm.panorama)
     }
 
-    this.$onChanges = function() {
+    this.$onChanges = function () {
       setLinkTo(vm.panorama)
     }
   }

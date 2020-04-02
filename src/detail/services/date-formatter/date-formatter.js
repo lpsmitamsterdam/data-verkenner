@@ -29,13 +29,13 @@ const formatters = locale({
 })
 
 const tickFormatter = formatters.timeFormat.multi([
-  ['.%L', d => d.getMilliseconds()],
-  [':%S', d => d.getSeconds()],
-  ['%I:%M', d => d.getMinutes()],
-  ['%I %p', d => d.getHours()],
-  ['%a %d', d => d.getDay() && d.getDate() !== 1],
-  ['%b %d', d => d.getDate() !== 1],
-  ['%b', d => d.getMonth()],
+  ['.%L', (d) => d.getMilliseconds()],
+  [':%S', (d) => d.getSeconds()],
+  ['%I:%M', (d) => d.getMinutes()],
+  ['%I %p', (d) => d.getHours()],
+  ['%a %d', (d) => d.getDay() && d.getDate() !== 1],
+  ['%b %d', (d) => d.getDate() !== 1],
+  ['%b', (d) => d.getMonth()],
   ['%Y', () => true],
 ])
 

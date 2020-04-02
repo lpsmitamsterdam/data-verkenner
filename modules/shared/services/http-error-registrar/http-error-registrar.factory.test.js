@@ -20,7 +20,7 @@ describe('The http error registrar', () => {
 
     angular.mock.module('dpShared', { httpStatus })
 
-    angular.mock.inject(function(_$httpBackend_, _$http_, _$interval_, _$window_) {
+    angular.mock.inject(function (_$httpBackend_, _$http_, _$interval_, _$window_) {
       $httpBackend = _$httpBackend_
       $http = _$http_
       $interval = _$interval_
@@ -61,7 +61,7 @@ describe('The http error registrar', () => {
   })
 
   it('does not handle normal responses and requests', () => {
-    $http.get('http://api-domain.amsterdam.nl/200').then(data => {
+    $http.get('http://api-domain.amsterdam.nl/200').then((data) => {
       expect(data.data).toEqual(mockedData)
       expect(data.status).toBe(200)
       callbackCalled = true
@@ -75,7 +75,7 @@ describe('The http error registrar', () => {
   })
 
   it('does not handle an error that has already been handled locally', () => {
-    $http.get('http://api-domain.amsterdam.nl/404').catch(data => {
+    $http.get('http://api-domain.amsterdam.nl/404').catch((data) => {
       // Mark the error to be handled
       data.errorHandled = true
       callbackCalled = true
@@ -167,7 +167,7 @@ describe('The http error registrar', () => {
           }
         },
       },
-    }).catch(data => {
+    }).catch((data) => {
       expect(data.data).toEqual(mockedData)
       expect(data.status).toBe(-1)
       callbackCalled = true
@@ -192,7 +192,7 @@ describe('The http error registrar', () => {
       timeout: {
         then: angular.noop,
       },
-    }).catch(data => {
+    }).catch((data) => {
       expect(data.data).toEqual(mockedData)
       expect(data.status).toBe(-1)
       callbackCalled = true
@@ -208,7 +208,7 @@ describe('The http error registrar', () => {
 
   it('calls the local error handler before the global one', () => {
     const url = 'http://api-domain.amsterdam.nl/404'
-    $http.get(url).catch(data => {
+    $http.get(url).catch((data) => {
       callbackCalled = true
     })
 

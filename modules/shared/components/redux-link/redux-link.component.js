@@ -2,7 +2,7 @@ import toUrl from 'redux-first-router-link/dist/toUrl'
 import { selectLocationState } from 'redux-first-router'
 
 // Angular version of https://github.com/faceyspacey/redux-first-router-link
-;(function() {
+;(function () {
   angular.module('dpShared').component('dpReduxLink', {
     template: require('./redux-link.html'),
     transclude: true,
@@ -22,18 +22,18 @@ import { selectLocationState } from 'redux-first-router'
     const location = selectLocationState(store.getState())
     const { routesMap } = location
 
-    const updateLink = to => {
+    const updateLink = (to) => {
       vm.toAction = to
       vm.link = toUrl(to, routesMap)
     }
 
-    this.$onChanges = changes => {
+    this.$onChanges = (changes) => {
       if (changes.to) {
         updateLink(changes.to.currentValue)
       }
     }
 
-    vm.onClick = e => {
+    vm.onClick = (e) => {
       const isModified = e.metaKey || e.altKey || e.ctrlKey || e.shiftKey
       if (!isModified) {
         // don't let browser handle location change, dispatch action

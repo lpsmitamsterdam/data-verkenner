@@ -12,7 +12,7 @@ import { getPanoramaPreview } from '../../../panorama/ducks/preview/panorama-pre
 import LocationSearch from './LocationSearch'
 
 /* istanbul ignore next */
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   isLoading: isSearchLoading(state),
   user: getUser(state),
   searchResults: getMapListResults(state),

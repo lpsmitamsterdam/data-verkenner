@@ -7,25 +7,29 @@ import PARAMETERS from '../../../store/parameters'
 import {
   toArticleDetail,
   toArticleSearch,
+  toCollectionDetail,
+  toCollectionSearch,
   toDataSearch,
   toDatasetDetail,
   toDatasetSearch,
   toDataSuggestion,
+  toMapCollectionSearch,
+  toMapLayerSearch,
   toMapWithLegendOpen,
   toPublicationDetail,
   toPublicationSearch,
   toSearch,
   toSpecialSearch,
-  toCollectionDetail,
-  toCollectionSearch,
 } from '../../../store/redux-first-router/actions'
 import {
   isArticlePage,
+  isCollectionPage,
   isDataPage,
   isDatasetPage,
+  isMapCollectionPage,
+  isMapLayerPage,
   isPublicationPage,
   isSpecialPage,
-  isCollectionPage,
 } from '../../../store/redux-first-router/selectors'
 import {
   getActiveSuggestions,
@@ -38,7 +42,7 @@ import {
 } from '../../ducks/auto-suggest/auto-suggest'
 import HeaderSearch from './HeaderSearch'
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   activeSuggestion: getActiveSuggestions(state),
   displayQuery: getDisplayQuery(state),
   isDataPage: isDataPage(state),
@@ -47,6 +51,8 @@ const mapStateToProps = state => ({
   isPublicationPage: isPublicationPage(state),
   isSpecialPage: isSpecialPage(state),
   isCollectionPage: isCollectionPage(state),
+  isMapCollectionPage: isMapCollectionPage(state),
+  isMapLayerPage: isMapLayerPage(state),
   view: getViewMode(state),
   isMapActive: isMapPage(state),
   numberOfSuggestions: getNumberOfSuggestions(state),
@@ -61,7 +67,7 @@ const mapStateToProps = state => ({
   typedQuery: getTypedQuery(state),
 })
 
-const mapDispatchToProps = dispatch => ({
+const mapDispatchToProps = (dispatch) => ({
   ...bindActionCreators(
     {
       onCleanDatasetOverview: emptyFilters,
@@ -70,7 +76,7 @@ const mapDispatchToProps = dispatch => ({
     },
     dispatch,
   ),
-  onSearch: query =>
+  onSearch: (query) =>
     dispatch(
       toSearch(
         {
@@ -80,7 +86,7 @@ const mapDispatchToProps = dispatch => ({
         true,
       ),
     ),
-  onDatasetSearch: query =>
+  onDatasetSearch: (query) =>
     dispatch(
       toDatasetSearch(
         {
@@ -90,7 +96,7 @@ const mapDispatchToProps = dispatch => ({
         true,
       ),
     ),
-  onDataSearch: query =>
+  onDataSearch: (query) =>
     dispatch(
       toDataSearch(
         {
@@ -100,7 +106,7 @@ const mapDispatchToProps = dispatch => ({
         true,
       ),
     ),
-  onArticleSearch: query =>
+  onArticleSearch: (query) =>
     dispatch(
       toArticleSearch(
         {
@@ -110,7 +116,7 @@ const mapDispatchToProps = dispatch => ({
         true,
       ),
     ),
-  onPublicationSearch: query =>
+  onPublicationSearch: (query) =>
     dispatch(
       toPublicationSearch(
         {
@@ -120,7 +126,7 @@ const mapDispatchToProps = dispatch => ({
         true,
       ),
     ),
-  onSpecialSearch: query =>
+  onSpecialSearch: (query) =>
     dispatch(
       toSpecialSearch(
         {
@@ -130,7 +136,7 @@ const mapDispatchToProps = dispatch => ({
         true,
       ),
     ),
-  onCollectionSearch: query =>
+  onCollectionSearch: (query) =>
     dispatch(
       toCollectionSearch(
         {
@@ -140,8 +146,28 @@ const mapDispatchToProps = dispatch => ({
         true,
       ),
     ),
+  onMapCollectionSearch: (query) =>
+    dispatch(
+      toMapCollectionSearch(
+        {
+          [PARAMETERS.QUERY]: query,
+        },
+        false,
+        true,
+      ),
+    ),
+  onMapLayerSearch: (query) =>
+    dispatch(
+      toMapLayerSearch(
+        {
+          [PARAMETERS.QUERY]: query,
+        },
+        false,
+        true,
+      ),
+    ),
   openDataSuggestion: (suggestion, view) => dispatch(toDataSuggestion(suggestion, view)),
-  openDatasetSuggestion: suggestion => dispatch(toDatasetDetail(suggestion)),
+  openDatasetSuggestion: (suggestion) => dispatch(toDatasetDetail(suggestion)),
   openEditorialSuggestion: (suggestion, type) => {
     switch (type) {
       case CmsType.Article:
@@ -154,7 +180,7 @@ const mapDispatchToProps = dispatch => ({
         throw new Error(`Unable to open editorial suggestion, unknown type '${type}'.`)
     }
   },
-  openMapSuggestion: suggestion => dispatch(toMapWithLegendOpen(suggestion.layers)),
+  openMapSuggestion: (suggestion) => dispatch(toMapWithLegendOpen(suggestion.layers)),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(HeaderSearch)

@@ -1,5 +1,5 @@
 import React, { memo } from 'react'
-import styled from '@datapunt/asc-core'
+import styled from 'styled-components'
 import { useDispatch } from 'react-redux'
 import {
   breakpoint,
@@ -180,7 +180,7 @@ const SearchPageResults = ({
               page={page}
               pageSize={Math.ceil(totalCount / pageInfo.totalPages)}
               collectionSize={totalCount}
-              onPageChange={pageNumber => {
+              onPageChange={(pageNumber) => {
                 dispatch(
                   SEARCH_PAGE_CONFIG[currentPage].to(
                     {

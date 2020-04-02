@@ -1,4 +1,4 @@
-import styled from '@datapunt/asc-core'
+import styled from 'styled-components'
 import { breakpoint, styles, themeSpacing } from '@datapunt/asc-ui'
 import React from 'react'
 import RouterLink from 'redux-first-router-link'
@@ -100,7 +100,7 @@ const HighlightBlock = () => {
             {results &&
               results
                 .slice(1)
-                .map(result => (
+                .map((result) => (
                   <HighlightCard
                     key={result.id}
                     loading={loading}

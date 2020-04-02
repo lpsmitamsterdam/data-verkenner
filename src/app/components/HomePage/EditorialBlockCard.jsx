@@ -1,4 +1,4 @@
-import styled, { css } from '@datapunt/asc-core'
+import styled, { css } from 'styled-components'
 import {
   breakpoint,
   Card,
@@ -8,7 +8,6 @@ import {
   Image,
   Link,
   Paragraph,
-  Tag,
   themeColor,
   themeSpacing,
 } from '@datapunt/asc-ui'
@@ -16,6 +15,7 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import getImageFromCms from '../../utils/getImageFromCms'
 import focusOutline from '../shared/focusOutline'
+import getContentTypeLabel from '../../utils/getContentTypeLabel'
 
 const StyledHeading = styled(Heading)`
   margin-bottom: ${themeSpacing(2)};
@@ -69,38 +69,42 @@ const StyledCardMedia = styled(CardMedia)`
   max-width: 80px;
   align-self: flex-start;
 `
-const StyledTag = styled(Tag)`
-  display: inline;
-  margin-right: ${themeSpacing(1)};
-  line-height: 2em;
+const ContentType = styled(Paragraph)`
+  text-transform: uppercase;
+  color: ${themeColor('support', 'valid')};
+  font-size: 12px;
+  font-weight: bold;
+  line-height: 16px;
 `
 
-const SpecialCard = ({
+const EditorialBlockCard = ({
   loading,
   showError,
   shortTitle,
   title,
   specialType,
+  type,
   teaser,
   intro,
   teaserImage,
   linkProps,
+  showContentType,
 }) => {
+  const contentTypeLabel = type ? getContentTypeLabel(type, specialType) : null
+
   return (
     <StyledLink {...linkProps} linkType="blank">
       <StyledCard horizontal animateLoading={!showError} isLoading={loading} showError={showError}>
         <StyledCardContent>
+          {showContentType && contentTypeLabel && (
+            <div>
+              <ContentType data-test="contentType">{contentTypeLabel}</ContentType>
+            </div>
+          )}
           <StyledHeading forwardedAs="h4" styleAs="h3">
             {shortTitle || title}
           </StyledHeading>
-          <Paragraph>
-            {specialType && (
-              <StyledTag colorType="tint" colorSubtype="level3">
-                {specialType}
-              </StyledTag>
-            )}
-            {teaser || intro}
-          </Paragraph>
+          <Paragraph>{teaser || intro}</Paragraph>
         </StyledCardContent>
         <StyledCardMedia>
           {teaserImage && (
@@ -112,7 +116,7 @@ const SpecialCard = ({
   )
 }
 
-SpecialCard.defaultProps = {
+EditorialBlockCard.defaultProps = {
   loading: false,
   showError: false,
   shortTitle: '',
@@ -124,7 +128,7 @@ SpecialCard.defaultProps = {
   to: {},
 }
 
-SpecialCard.propTypes = {
+EditorialBlockCard.propTypes = {
   loading: PropTypes.bool,
   showError: PropTypes.bool,
   specialType: PropTypes.string,
@@ -136,4 +140,4 @@ SpecialCard.propTypes = {
   to: PropTypes.shape({}),
 }
 
-export default SpecialCard
+export default EditorialBlockCard

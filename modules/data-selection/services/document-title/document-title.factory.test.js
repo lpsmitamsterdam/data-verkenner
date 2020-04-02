@@ -1,12 +1,12 @@
 import * as dataSelectionConfig from '../../../../src/shared/services/data-selection/data-selection-config'
 
-describe('The dpDataSelectionDocumentTitle factory', function() {
+describe('The dpDataSelectionDocumentTitle factory', function () {
   let dpDataSelectionDocumentTitle
   let mockedBagState
   let mockedHrState
   let mockedFilters
 
-  beforeEach(function() {
+  beforeEach(function () {
     dataSelectionConfig.default = {
       datasets: {
         bag: {
@@ -36,7 +36,7 @@ describe('The dpDataSelectionDocumentTitle factory', function() {
     }
     angular.mock.module('dpDataSelection')
 
-    angular.mock.inject(function(_dpDataSelectionDocumentTitle_) {
+    angular.mock.inject(function (_dpDataSelectionDocumentTitle_) {
       dpDataSelectionDocumentTitle = _dpDataSelectionDocumentTitle_
     })
 
@@ -55,14 +55,14 @@ describe('The dpDataSelectionDocumentTitle factory', function() {
     mockedFilters = {}
   })
 
-  it('shows a different title based on the active view', function() {
+  it('shows a different title based on the active view', function () {
     expect(dpDataSelectionDocumentTitle.getTitle(mockedBagState, mockedFilters)).toMatch(/^Tabel/)
 
     mockedBagState.view = 'LIST'
     expect(dpDataSelectionDocumentTitle.getTitle(mockedBagState, mockedFilters)).toMatch(/^Lijst/)
   })
 
-  it('shows the surface of the current selection', function() {
+  it('shows the surface of the current selection', function () {
     mockedBagState.geometryFilter = {
       description: '1,95 km en 216.980,2 m&sup2;',
       markers: [{}, {}],
@@ -73,7 +73,7 @@ describe('The dpDataSelectionDocumentTitle factory', function() {
     )
   })
 
-  it('shows the title of the current dataset', function() {
+  it('shows the title of the current dataset', function () {
     expect(dpDataSelectionDocumentTitle.getTitle(mockedBagState, mockedFilters)).toBe(
       'Tabel adressen',
     )
@@ -83,7 +83,7 @@ describe('The dpDataSelectionDocumentTitle factory', function() {
     )
   })
 
-  it('optionally lists the (selected values of the) active filters', function() {
+  it('optionally lists the (selected values of the) active filters', function () {
     // One active filter
     mockedFilters.stadsdeel_naam = 'Oost'
     expect(dpDataSelectionDocumentTitle.getTitle(mockedBagState, mockedFilters)).toBe(
@@ -104,7 +104,7 @@ describe('The dpDataSelectionDocumentTitle factory', function() {
     // double space before "zonder postcode", the browser strips this
   })
 
-  it('respects the filter order from DATA_SELECTION_CONFIG', function() {
+  it('respects the filter order from DATA_SELECTION_CONFIG', function () {
     mockedFilters = {
       stadsdeel_naam: 'Oost',
       buurt_naam: 'Flevopark',

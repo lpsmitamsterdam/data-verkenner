@@ -14,19 +14,13 @@ describe('ToggleFullscreen', () => {
   describe('actions', () => {
     it('should trigger toggle off when clicked', () => {
       const wrapper = shallow(<ToggleFullscreen {...props} />)
-      wrapper
-        .find('IconButton')
-        .at(0)
-        .simulate('click')
+      wrapper.find('IconButton').at(0).simulate('click')
       expect(onToggleFullscreen).toHaveBeenCalled()
     })
 
     it('should trigger toggle on when clicked', () => {
       const wrapper = shallow(<ToggleFullscreen {...props} />)
-      wrapper
-        .find('IconButton')
-        .at(0)
-        .simulate('click')
+      wrapper.find('IconButton').at(0).simulate('click')
       expect(onToggleFullscreen).toHaveBeenCalled()
     })
 

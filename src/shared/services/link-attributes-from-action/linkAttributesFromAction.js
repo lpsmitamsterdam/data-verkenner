@@ -8,7 +8,7 @@ import toUrl from 'redux-first-router-link/dist/toUrl'
  *
  * @param {*} fn - the function to execute
  */
-export const withPreventDefault = fn => e => {
+export const withPreventDefault = (fn) => (e) => {
   const openInNewTab = e.ctrlKey || e.metaKey
   if (!openInNewTab) {
     e.preventDefault()
@@ -22,7 +22,7 @@ export const withPreventDefault = fn => e => {
  * @returns Returns the navigation attributes for an anchor link based on the
  *          redux navigation action
  */
-const linkAttributesFromAction = actionCreatorFn => {
+const linkAttributesFromAction = (actionCreatorFn) => {
   const state = window.reduxStore.getState()
   const { dispatch } = window.reduxStore
   const { routesMap } = selectLocationState(state)

@@ -18,26 +18,15 @@ describe('ConstructionFileDetail', () => {
 
   const setState = jest.fn()
   const useStateSpy = jest.spyOn(React, 'useState')
-  useStateSpy.mockImplementation(init => [init, setState])
+  useStateSpy.mockImplementation((init) => [init, setState])
 
   it('returns the component', () => {
     expect(component.at(0).exists()).toBeTruthy()
   })
 
   it('should set the title', () => {
-    expect(
-      component
-        .at(0)
-        .find('Heading')
-        .at(1),
-    ).toBeTruthy()
-    expect(
-      component
-        .at(0)
-        .find('Heading')
-        .at(1)
-        .props().children,
-    ).toBe(mockResults.titel)
+    expect(component.at(0).find('Heading').at(1)).toBeTruthy()
+    expect(component.at(0).find('Heading').at(1).props().children).toBe(mockResults.titel)
   })
 
   it('should render the subfiles', () => {
@@ -47,19 +36,10 @@ describe('ConstructionFileDetail', () => {
     }
 
     component = shallow(<ConstructionFileDetail results={mockResults} />)
-    expect(
-      component
-        .at(0)
-        .find('Gallery')
-        .at(0),
-    ).toBeTruthy()
-    expect(
-      component
-        .at(0)
-        .find('Gallery')
-        .at(0)
-        .props().title,
-    ).toBe(mockResults.documenten[0].subdossier_titel)
+    expect(component.at(0).find('Gallery').at(0)).toBeTruthy()
+    expect(component.at(0).find('Gallery').at(0).props().title).toBe(
+      mockResults.documenten[0].subdossier_titel,
+    )
   })
 
   it('should render the addresses', () => {
@@ -75,31 +55,13 @@ describe('ConstructionFileDetail', () => {
 
     component = shallow(<ConstructionFileDetail results={mockResults} />)
 
-    expect(
-      component
-        .at(0)
-        .find('.o-list')
-        .at(0),
-    ).toBeTruthy()
-    expect(
-      component
-        .at(0)
-        .find('.o-list li a')
-        .at(0),
-    ).toBeTruthy()
-    expect(
-      component
-        .at(0)
-        .find('.o-list li a')
-        .at(0)
-        .props().title,
-    ).toBe(mockAdres.nummeraanduidingen_label[0])
-    expect(
-      component
-        .at(0)
-        .find('.o-list li a')
-        .at(0)
-        .props().children,
-    ).toBe(mockAdres.nummeraanduidingen_label[0])
+    expect(component.at(0).find('.o-list').at(0)).toBeTruthy()
+    expect(component.at(0).find('.o-list li a').at(0)).toBeTruthy()
+    expect(component.at(0).find('.o-list li a').at(0).props().title).toBe(
+      mockAdres.nummeraanduidingen_label[0],
+    )
+    expect(component.at(0).find('.o-list li a').at(0).props().children).toBe(
+      mockAdres.nummeraanduidingen_label[0],
+    )
   })
 })

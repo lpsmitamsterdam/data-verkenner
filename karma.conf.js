@@ -77,7 +77,7 @@ const webpackConfig = {
   ],
 }
 
-module.exports = function(config) {
+module.exports = function (config) {
   config.set({
     plugins: ['@metahub/karma-jasmine-jquery', 'karma-*'],
     frameworks: ['jasmine-jquery', 'jasmine'],

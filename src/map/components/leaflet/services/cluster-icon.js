@@ -1,6 +1,6 @@
 import { divIcon, point } from 'leaflet'
 
-const createClusterIcon = cluster =>
+const createClusterIcon = (cluster) =>
   divIcon({
     html: `<div
               aria-label="Cluster met ${cluster.getChildCount()} onderdelen"

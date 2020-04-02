@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import styled, { css } from '@datapunt/asc-core'
+import styled, { css } from 'styled-components'
 import { Facebook, Twitter, Linkedin, Email, Print } from '@datapunt/asc-assets'
 import { ShareButton, themeSpacing } from '@datapunt/asc-ui'
 import { hasPrintMode, showPrintMode, sharePage, isPrintMode } from '../../../shared/ducks/ui/ui'
@@ -29,7 +29,7 @@ const ShareBar = ({
   printMode,
   ...otherProps
 }) => {
-  const handlePageShare = target => {
+  const handlePageShare = (target) => {
     openSharePage(target)
 
     const link = getShareUrl(target, window)
@@ -46,20 +46,31 @@ const ShareBar = ({
           onClick={() => handlePageShare('facebook')}
           hoverColor="#3b5999"
           iconSize={30}
+          title="Deel op Facebook"
         >
           <Facebook />
         </ShareButton>
-        <ShareButton type="button" onClick={() => handlePageShare('twitter')} hoverColor="#55acee">
+        <ShareButton
+          type="button"
+          onClick={() => handlePageShare('twitter')}
+          hoverColor="#55acee"
+          title="Deel op Twitter"
+        >
           <Twitter />
         </ShareButton>
-        <ShareButton type="button" onClick={() => handlePageShare('linkedin')} hoverColor="#0077B5">
+        <ShareButton
+          type="button"
+          onClick={() => handlePageShare('linkedin')}
+          hoverColor="#0077B5"
+          title="Deel op LinkedIn"
+        >
           <Linkedin />
         </ShareButton>
-        <ShareButton type="button" onClick={() => handlePageShare('email')}>
+        <ShareButton type="button" onClick={() => handlePageShare('email')} title="Deel via email">
           <Email />
         </ShareButton>
         {hasPrintButton && (
-          <ShareButton type="button" onClick={openPrintMode}>
+          <ShareButton type="button" onClick={openPrintMode} title="Print deze pagina">
             <Print />
           </ShareButton>
         )}
@@ -81,12 +92,12 @@ ShareBar.propTypes = {
   openPrintMode: PropTypes.func.isRequired,
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   hasPrintButton: hasPrintMode(state),
   printMode: isPrintMode(state),
 })
 
-const mapDispatchToProps = dispatch =>
+const mapDispatchToProps = (dispatch) =>
   bindActionCreators(
     {
       openSharePage: sharePage,

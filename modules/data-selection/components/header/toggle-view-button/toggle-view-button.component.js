@@ -1,6 +1,6 @@
 import { setViewMode, VIEW_MODE } from '../../../../../src/shared/ducks/ui/ui'
 import { VIEWS_TO_PARAMS } from '../../../../../src/shared/ducks/data-selection/constants'
-;(function() {
+;(function () {
   angular.module('dpDataSelection').component('dpDataSelectionToggleViewButton', {
     bindings: {
       view: '<',
@@ -16,7 +16,7 @@ import { VIEWS_TO_PARAMS } from '../../../../../src/shared/ducks/data-selection/
   function DpToggleViewButtonController($scope) {
     const vm = this
 
-    $scope.$watch('vm.view', function() {
+    $scope.$watch('vm.view', function () {
       if (vm.view === VIEWS_TO_PARAMS[VIEW_MODE.FULL]) {
         vm.targetLabel = 'Kaart weergeven'
         vm.targetHover = 'Resultaten op de kaart weergeven'

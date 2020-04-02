@@ -1,12 +1,12 @@
 const templates = require.context('..', true, /\.html$/)
 
-;(function() {
+;(function () {
   angular.module('atlas').run(runBlock)
 
   runBlock.$inject = ['$templateCache']
 
   function runBlock($templateCache) {
-    templates.keys().forEach(key => {
+    templates.keys().forEach((key) => {
       // Remove the dot from './dir/template.html' and prepend with
       // 'modules' to get 'modules/dir/template.html'.
       const templateId = `modules${key.substr(1)}`

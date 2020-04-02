@@ -6,11 +6,11 @@ export function fetchByPandId(pandId) {
   }
 
   const queryString = Object.keys(searchParams)
-    .map(key => `${encodeURIComponent(key)}=${encodeURIComponent(searchParams[key])}`)
+    .map((key) => `${encodeURIComponent(key)}=${encodeURIComponent(searchParams[key])}`)
     .join('&')
 
   return getByUrl(`${process.env.API_ROOT}monumenten/monumenten/?${queryString}`).then(
-    data => data.results,
+    (data) => data.results,
   )
 }
 
