@@ -72,6 +72,10 @@ const EditorialBlock = ({ title, list, showMoreProps = {}, showContentType = fal
                 </Column>
               ))
             : null}
+          {/* Todo: temporary fix for 2 or 5 items. hasMargin messes up the grid so columns don't have gutters, so we need to use justify-content="space-between" (default) in the row */}
+          {(specials.length === 2 || specials.length === 5) && (
+            <Column key="filler" wrap span={{ small: 1, medium: 2, big: 3, large: 4, xLarge: 4 }} />
+          )}
         </Row>
       </CardRow>
       {showMoreProps.to && showMoreProps.label && (
