@@ -1,7 +1,7 @@
 export enum FilterType {
-  Checkbox = 'checkbox',
-  Radio = 'radio',
-  Select = 'select',
+  Checkbox = 'CHECKBOX',
+  Radio = 'RADIO',
+  Select = 'SELECT',
 }
 
 export interface Filter {

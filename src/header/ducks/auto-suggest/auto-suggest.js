@@ -73,8 +73,7 @@ export default function AutoSuggestReducer(state = initialState, action) {
     case routing.publicationSearch.type:
     case routing.specialSearch.type:
     case routing.collectionSearch.type:
-    case routing.mapCollectionSearch.type:
-    case routing.mapLayerSearch.type:
+    case routing.mapSearch.type:
       return {
         ...enrichedState,
         typedQuery: get(action, `meta.query[${PARAMETERS.QUERY}]`),

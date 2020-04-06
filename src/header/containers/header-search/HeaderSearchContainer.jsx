@@ -13,8 +13,7 @@ import {
   toDatasetDetail,
   toDatasetSearch,
   toDataSuggestion,
-  toMapCollectionSearch,
-  toMapLayerSearch,
+  toMapSearch,
   toMapWithLegendOpen,
   toPublicationDetail,
   toPublicationSearch,
@@ -26,8 +25,6 @@ import {
   isCollectionPage,
   isDataPage,
   isDatasetPage,
-  isMapCollectionPage,
-  isMapLayerPage,
   isPublicationPage,
   isSpecialPage,
 } from '../../../store/redux-first-router/selectors'
@@ -51,8 +48,7 @@ const mapStateToProps = (state) => ({
   isPublicationPage: isPublicationPage(state),
   isSpecialPage: isSpecialPage(state),
   isCollectionPage: isCollectionPage(state),
-  isMapCollectionPage: isMapCollectionPage(state),
-  isMapLayerPage: isMapLayerPage(state),
+  isMapPage: isMapPage(state),
   view: getViewMode(state),
   isMapActive: isMapPage(state),
   numberOfSuggestions: getNumberOfSuggestions(state),
@@ -146,19 +142,9 @@ const mapDispatchToProps = (dispatch) => ({
         true,
       ),
     ),
-  onMapCollectionSearch: (query) =>
+  onMapSearch: (query) =>
     dispatch(
-      toMapCollectionSearch(
-        {
-          [PARAMETERS.QUERY]: query,
-        },
-        false,
-        true,
-      ),
-    ),
-  onMapLayerSearch: (query) =>
-    dispatch(
-      toMapLayerSearch(
+      toMapSearch(
         {
           [PARAMETERS.QUERY]: query,
         },

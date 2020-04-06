@@ -76,8 +76,7 @@ delete views[routing.dataSearch.type]
 delete views[routing.search.type]
 delete views[routing.datasetSearch.type]
 delete views[routing.collectionSearch.type]
-delete views[routing.mapCollectionSearch.type]
-delete views[routing.mapLayerSearch.type]
+delete views[routing.mapSearch.type]
 
 const trackViews = views
 
