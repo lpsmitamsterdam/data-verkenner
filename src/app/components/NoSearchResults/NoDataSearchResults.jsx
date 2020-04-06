@@ -61,6 +61,8 @@ const NoDataSearchResults = ({ query, unauthorized }) => {
       <Paragraph>Zoek gebieden op meetboutnummer of bouwblokcode.</Paragraph>
       <Heading as="h3">Monumenten</Heading>
       <Paragraph>Zoek monumenten op naam.</Paragraph>
+      <Heading as="h3">Bouwdossiers</Heading>
+      <Paragraph>Zoek bouwdossiers op stadsdeelcode met dossiernummer.</Paragraph>
       <br />
       <br />
       <Heading as="h2">Ingelogde medewerkers</Heading>
