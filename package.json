@@ -87,7 +87,7 @@
     "redux-saga": "0.16.0",
     "remove-markdown": "0.3.0",
     "reselect": "4.0.0",
-    "styled-components": "^5.0.1",
+    "styled-components": "^5.1.0",
     "urql": "^1.9.5"
   },
   "devDependencies": {
