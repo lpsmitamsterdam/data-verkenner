@@ -1,6 +1,6 @@
-import React from 'react'
-import { mount } from 'enzyme'
 import { ThemeProvider } from '@datapunt/asc-ui'
+import { render } from '@testing-library/react'
+import React from 'react'
 import Search from './Search'
 
 describe('Search', () => {
@@ -19,31 +19,23 @@ describe('Search', () => {
     jest.resetAllMocks()
   })
 
-  it('should shallow the searchbar and searchtoggle', () => {
-    const component = mount(
+  it('should not show the backdrop by default', () => {
+    const { getByTestId } = render(
       <ThemeProvider>
         <Search {...props} />
       </ThemeProvider>,
     )
-    expect(component.find('Styled(SearchBar)').exists()).toBe(true)
-    expect(component.find('SearchBarToggle').exists()).toBe(true)
 
-    const backDrop = component.find("[data-test='backDrop']")
-
-    expect(backDrop.exists()).toBe(true)
-    expect(backDrop).toHaveStyleRule('display', 'none')
+    expect(getByTestId('backDrop')).toHaveStyleRule('display', 'none')
   })
 
-  it('should set the backdrop when the parent component send the correct props', () => {
-    const component = mount(
+  it('should show the backdrop when the component receives the right props', () => {
+    const { getByTestId } = render(
       <ThemeProvider>
         <Search {...{ ...props, expanded: true }} />
       </ThemeProvider>,
     )
 
-    const backDrop = component.find("[data-test='backDrop']")
-
-    expect(backDrop.exists()).toBe(true)
-    expect(backDrop).toHaveStyleRule('display', 'initial')
+    expect(getByTestId('backDrop')).toHaveStyleRule('display', 'initial')
   })
 })
