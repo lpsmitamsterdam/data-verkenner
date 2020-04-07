@@ -27,6 +27,7 @@ export const endpointTypes = {
   adressenVerblijfsobject: 'bag/v1.1/verblijfsobject/',
   bedrijfsinvesteringszone: 'vsd/biz/',
   bekendmakingen: 'vsd/bekendmakingen/',
+  constructionFiles: 'stadsarchief/bouwdossier/',
   explosievenGevrijwaardGebied: 'milieuthemas/explosieven/gevrijwaardgebied/',
   explosievenInslag: 'milieuthemas/explosieven/inslagen/',
   explosievenUitgevoerdOnderzoek: 'milieuthemas/explosieven/uitgevoerdonderzoek/',
@@ -298,6 +299,13 @@ const servicesByEndpointType = {
         { label: 'Beschrijving', value: result.beschrijving, multiLine: true },
         { label: 'Meer informatie', value: result.url, link: result.url },
       ],
+    }),
+  },
+  [endpointTypes.constructionFiles]: {
+    mapDetail: (result) => ({
+      title: 'categoryLabels.constructionFiles.singular',
+      subTitle: result._display,
+      items: [],
     }),
   },
   [endpointTypes.explosievenGevrijwaardGebied]: {

@@ -1,7 +1,7 @@
+import { Heading, Link, List, Paragraph, themeSpacing, Typography } from '@datapunt/asc-ui'
 import React from 'react'
-import RouterLink from 'redux-first-router-link'
+import RouterLink, { To } from 'redux-first-router-link'
 import styled from 'styled-components'
-import { Heading, Paragraph, List, Typography, themeSpacing, Link } from '@datapunt/asc-ui'
 import { formatNoResultsMessage } from './utils'
 
 const StyledList = styled(List)`
@@ -14,11 +14,17 @@ const StyledTypgraphy = styled(Typography)`
   margin-bottom: 0;
 `
 
-const StyledListItem = ({ children }) => (
+const StyledListItem: React.FC = ({ children }) => (
   <StyledTypgraphy forwardedAs="li">{children}</StyledTypgraphy>
 )
 
-const NoSearchResults = ({ query, label = '', to = false }) => (
+export interface NoSearchResultsProps {
+  query: string
+  label?: string
+  to?: To
+}
+
+const NoSearchResults: React.FC<NoSearchResultsProps> = ({ query, label = '', to = false }) => (
   <>
     <Paragraph>{formatNoResultsMessage(query, label)}</Paragraph>
     <Heading as="h3">Zoeksuggesties</Heading>

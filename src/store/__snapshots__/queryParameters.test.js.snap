@@ -395,16 +395,7 @@ Object {
         "selector": [Function],
         "stateKey": "filters",
       },
-      "atlasRouter/MAP_COLLECTION_SEARCH": Object {
-        "addHistory": true,
-        "decode": [Function],
-        "defaultValue": Array [],
-        "encode": [Function],
-        "reducerKey": "search",
-        "selector": [Function],
-        "stateKey": "activeFilters",
-      },
-      "atlasRouter/MAP_LAYER_SEARCH": Object {
+      "atlasRouter/MAP_SEARCH": Object {
         "addHistory": true,
         "decode": [Function],
         "defaultValue": Array [],
@@ -584,16 +575,7 @@ Object {
         "selector": [Function],
         "stateKey": "overlays",
       },
-      "atlasRouter/MAP_COLLECTION_SEARCH": Object {
-        "addHistory": false,
-        "decode": [Function],
-        "defaultValue": Array [],
-        "encode": [Function],
-        "reducerKey": "map",
-        "selector": [Function],
-        "stateKey": "overlays",
-      },
-      "atlasRouter/MAP_LAYER_SEARCH": Object {
+      "atlasRouter/MAP_SEARCH": Object {
         "addHistory": false,
         "decode": [Function],
         "defaultValue": Array [],
@@ -1075,16 +1057,7 @@ Object {
         "selector": [Function],
         "stateKey": "page",
       },
-      "atlasRouter/MAP_COLLECTION_SEARCH": Object {
-        "addHistory": true,
-        "decode": [Function],
-        "defaultValue": 1,
-        "encode": [Function],
-        "reducerKey": "search",
-        "selector": [Function],
-        "stateKey": "page",
-      },
-      "atlasRouter/MAP_LAYER_SEARCH": Object {
+      "atlasRouter/MAP_SEARCH": Object {
         "addHistory": true,
         "decode": [Function],
         "defaultValue": 1,
@@ -1254,16 +1227,7 @@ Object {
         "selector": [Function],
         "stateKey": "isPrintMode",
       },
-      "atlasRouter/MAP_COLLECTION_SEARCH": Object {
-        "addHistory": true,
-        "decode": [Function],
-        "defaultValue": false,
-        "encode": [Function],
-        "reducerKey": "ui",
-        "selector": [Function],
-        "stateKey": "isPrintMode",
-      },
-      "atlasRouter/MAP_LAYER_SEARCH": Object {
+      "atlasRouter/MAP_SEARCH": Object {
         "addHistory": true,
         "decode": [Function],
         "defaultValue": false,
@@ -1366,16 +1330,7 @@ Object {
         "selector": [Function],
         "stateKey": "sort",
       },
-      "atlasRouter/MAP_COLLECTION_SEARCH": Object {
-        "addHistory": true,
-        "decode": [Function],
-        "defaultValue": "",
-        "encode": [Function],
-        "reducerKey": "search",
-        "selector": [Function],
-        "stateKey": "sort",
-      },
-      "atlasRouter/MAP_LAYER_SEARCH": Object {
+      "atlasRouter/MAP_SEARCH": Object {
         "addHistory": true,
         "decode": [Function],
         "defaultValue": "",
@@ -1466,16 +1421,7 @@ Object {
         "selector": [Function],
         "stateKey": "query",
       },
-      "atlasRouter/MAP_COLLECTION_SEARCH": Object {
-        "addHistory": true,
-        "decode": [Function],
-        "defaultValue": "",
-        "encode": [Function],
-        "reducerKey": "search",
-        "selector": [Function],
-        "stateKey": "query",
-      },
-      "atlasRouter/MAP_LAYER_SEARCH": Object {
+      "atlasRouter/MAP_SEARCH": Object {
         "addHistory": true,
         "decode": [Function],
         "defaultValue": "",

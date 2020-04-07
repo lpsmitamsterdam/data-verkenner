@@ -57,12 +57,7 @@ export const isCollectionPage = createSelector(
   (page) => page === PAGES.COLLECTION_DETAIL || page === PAGES.COLLECTION_SEARCH,
 )
 
-export const isMapCollectionPage = createSelector(
-  getPage,
-  (page) => page === PAGES.MAP_COLLECTION_SEARCH,
-)
-
-export const isMapLayerPage = createSelector(getPage, (page) => page === PAGES.MAP_LAYER_SEARCH)
+export const isMapPage = createSelector(getPage, (page) => page === PAGES.MAP_SEARCH)
 
 export const isDataSelectionPage = createSelector(
   getPage,

@@ -304,5 +304,7 @@ export const toPublicationSearch = toSearchOfType(routing.publicationSearch.type
 export const toArticleSearch = toSearchOfType(routing.articleSearch.type)
 export const toSpecialSearch = toSearchOfType(routing.specialSearch.type)
 export const toCollectionSearch = toSearchOfType(routing.collectionSearch.type)
-export const toMapCollectionSearch = toSearchOfType(routing.mapCollectionSearch.type)
-export const toMapLayerSearch = toSearchOfType(routing.mapLayerSearch.type)
+export const toMapSearch = toSearchOfType(routing.mapSearch.type)
+
+export const toMapSearchType = (type) =>
+  toMapSearch({ [PARAMETERS.FILTERS]: [{ type: 'map-type', values: [type] }] }, false, true)

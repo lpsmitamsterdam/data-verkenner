@@ -15,6 +15,10 @@ const categoryLabels = {
     singular: 'Bouwblok',
     plural: 'Bouwblokken',
   },
+  constructionFiles: {
+    singular: 'Bouwdossier',
+    plural: 'Bouwdossiers',
+  },
   explosief: {
     singular: 'Explosief',
     plural: 'Explosieven',

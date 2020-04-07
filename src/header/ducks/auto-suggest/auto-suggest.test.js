@@ -96,8 +96,7 @@ describe('AutoSuggestReducer Reducer', () => {
       routing.articleSearch.type,
       routing.publicationSearch.type,
       routing.collectionSearch.type,
-      routing.mapCollectionSearch.type,
-      routing.mapLayerSearch.type,
+      routing.mapSearch.type,
     ]
 
     tabRoutes.forEach((route) => {

@@ -3,7 +3,7 @@ import { useMatomo } from '@datapunt/matomo-tracker-react'
 import { clearAllBodyScrollLocks, enableBodyScroll } from 'body-scroll-lock'
 import React, { memo, useEffect, useState } from 'react'
 import ContentContainer from '../../components/ContentContainer/ContentContainer'
-import { isAllResultsPage, isDataSearchPage } from '../../pages'
+import { isAllResultsPage, isDataSearchPage, isMapSearchPage } from '../../pages'
 import useCompare from '../../utils/useCompare'
 import useDocumentTitle from '../../utils/useDocumentTitle'
 import useSelectors from '../../utils/useSelectors'
@@ -107,7 +107,7 @@ const SearchPage = ({ currentPage, query }) => {
               totalCount,
               results,
               currentPage,
-              isOverviewPage: !hasQuery,
+              isOverviewPage: isAllResultsPage(currentPage),
               sort,
               page,
               setShowFilter,
@@ -127,8 +127,8 @@ const SearchPage = ({ currentPage, query }) => {
  * @param activeFilters The currently active filter.
  */
 function isPaginatable(currentPage, activeFilters) {
-  // The data search page can only be paginated if a subset of data is selected.
-  if (isDataSearchPage(currentPage)) {
+  // The data and map search pages can only be paginated if a subset of data is selected.
+  if (isDataSearchPage(currentPage) || isMapSearchPage(currentPage)) {
     return activeFilters.length > 0
   }
 
