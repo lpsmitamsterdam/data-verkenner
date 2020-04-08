@@ -22,7 +22,7 @@ const CardContainer = styled.div`
 const CardWrapper = styled.div`
   width: 100%;
   margin-bottom: ${themeSpacing(6)};
-  @media screen and (${breakpoint('min-width', 'laptopL')}) {
+  @media screen and (${breakpoint('min-width', 'laptop')}) {
     width: calc(50% - (${themeSpacing(6)} / 2));
 
     &:nth-of-type(2n) {

@@ -48,15 +48,6 @@ const SEARCH_TYPES_CONFIG = {
     component: EditorialResults,
     hideOverviewHeading: false,
   },
-  [routing.mapSearch.page]: {
-    resolver: 'mapSearch',
-    query: mapSearchQuery,
-    to: toMapSearch,
-    label: routing.mapSearch.title,
-    type: TYPES.MAP,
-    component: MapSearchResults,
-    hideOverviewHeading: true,
-  },
   [routing.specialSearch.page]: {
     resolver: 'specialSearch',
     query: specialSearchQuery,
@@ -65,6 +56,15 @@ const SEARCH_TYPES_CONFIG = {
     type: CmsType.Special,
     component: EditorialResults,
     hideOverviewHeading: false,
+  },
+  [routing.mapSearch.page]: {
+    resolver: 'mapSearch',
+    query: mapSearchQuery,
+    to: toMapSearch,
+    label: routing.mapSearch.title,
+    type: TYPES.MAP,
+    component: MapSearchResults,
+    hideOverviewHeading: true,
   },
   [routing.dataSearch.page]: {
     resolver: 'dataSearch',
