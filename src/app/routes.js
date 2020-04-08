@@ -130,7 +130,7 @@ export const routing = {
     page: PAGES.ARTICLE_SEARCH,
   },
   specialSearch: {
-    title: 'In beeld',
+    title: 'Specials',
     path: `/${MAIN_PATHS.SPECIALS}/zoek/`,
     type: `${ROUTER_NAMESPACE}/${PAGES.SPECIAL_SEARCH}`,
     page: PAGES.SPECIAL_SEARCH,
