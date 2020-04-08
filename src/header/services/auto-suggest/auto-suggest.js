@@ -9,7 +9,7 @@ export const LABELS = {
   DATASETS: 'Datasets',
   ARTICLES: 'Artikelen',
   DATA: 'Data',
-  SPECIALS: 'In Beeld',
+  SPECIALS: 'Specials',
   COLLECTIONS: 'Dossiers',
   MAP: 'Kaarten',
 }
@@ -33,6 +33,7 @@ export const SORT_ORDER_DATA = [
 export const SORT_ORDER = [
   LABELS.COLLECTIONS,
   LABELS.MAP,
+  LABELS.SPECIALS,
   ...SORT_ORDER_DATA,
   LABELS.DATASETS,
   LABELS.PUBLICATIONS,
