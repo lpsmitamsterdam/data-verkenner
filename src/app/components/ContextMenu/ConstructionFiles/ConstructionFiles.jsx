@@ -9,7 +9,7 @@ import { sharePage, showPrintMode } from '../../../../shared/ducks/ui/ui'
 import useDownload from '../../../utils/useDownload'
 import getState from '../../../../shared/services/redux/get-state'
 
-const ConstructionFiles = ({ openSharePage, fileName, openPrintMode, onDownload }) => {
+const ConstructionFiles = ({ openSharePage, fileName, fileUrl, openPrintMode, onDownload }) => {
   const { accessToken } = getState().user
 
   const [loading, downloadFile] = useDownload()
@@ -50,10 +50,7 @@ const ConstructionFiles = ({ openSharePage, fileName, openPrintMode, onDownload 
         as="button"
         disabled={loading}
         download={`${fileName}_small`}
-        onClick={handleDownload(
-          'klein',
-          `https://acc.images.data.amsterdam.nl/iiif/2/edepot:${fileName}/full/800,/0/default.jpg`,
-        )}
+        onClick={handleDownload('klein', `${fileUrl}/full/800,/0/default.jpg`)}
         icon={
           <Icon inline size={24} padding={4}>
             <Download />
@@ -66,10 +63,7 @@ const ConstructionFiles = ({ openSharePage, fileName, openPrintMode, onDownload 
         as="button"
         disabled={loading}
         download={`${fileName}_large`}
-        onClick={handleDownload(
-          'groot',
-          `https://acc.images.data.amsterdam.nl/iiif/2/edepot:${fileName}/full/1600,/0/default.jpg`,
-        )}
+        onClick={handleDownload('groot', `${fileUrl}/full/1600,/0/default.jpg`)}
         icon={
           <Icon inline size={24} padding={4}>
             <Download />
@@ -83,10 +77,7 @@ const ConstructionFiles = ({ openSharePage, fileName, openPrintMode, onDownload 
         disabled={loading}
         download={`${fileName}_original`}
         divider
-        onClick={handleDownload(
-          'origineel',
-          `https://acc.images.data.amsterdam.nl/iiif/2/edepot:${fileName}/full/full/0/default.jpg`,
-        )}
+        onClick={handleDownload('origineel', `${fileUrl}/full/full/0/default.jpg`)}
         icon={
           <Icon inline size={24} padding={4}>
             <Download />
@@ -105,6 +96,7 @@ ConstructionFiles.propTypes = {
   openPrintMode: PropTypes.func.isRequired,
   onDownload: PropTypes.func.isRequired,
   fileName: PropTypes.string.isRequired,
+  fileUrl: PropTypes.string.isRequired,
 }
 
 const mapDispatchToProps = (dispatch) =>

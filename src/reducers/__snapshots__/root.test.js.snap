@@ -10,6 +10,7 @@ Object {
   "error": "error",
   "files": Object {
     "fileName": "",
+    "fileUrl": "",
     "type": "default",
   },
   "filter": "filter",
