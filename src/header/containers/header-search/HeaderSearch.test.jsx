@@ -5,6 +5,7 @@ import HeaderSearch from './HeaderSearch'
 import { extractIdEndpoint } from '../../../store/redux-first-router/actions'
 import useSlug from '../../../app/utils/useSlug'
 import { LABELS } from '../../services/auto-suggest/auto-suggest'
+import { CmsType } from '../../../shared/config/cms.config'
 
 jest.mock('../../../store/redux-first-router/actions')
 jest.mock('../../../app/utils/useSlug')
@@ -150,8 +151,11 @@ describe('The HeaderSearch component', () => {
     })
 
     it('opens a editorial page from the suggestions', () => {
+      extractIdEndpoint.mockReset()
+      extractIdEndpoint.mockImplementationOnce(() => ['', CmsType.Article, 'id3'])
+
       const suggestion = {
-        uri: 'jsonapi/node/article/GgCm07EqNVIpwQ',
+        uri: `jsonapi/node/${CmsType.Article}/GgCm07EqNVIpwQ`,
         label: 'foo',
         index: 1,
         category: 'Straatnamen',
@@ -167,7 +171,36 @@ describe('The HeaderSearch component', () => {
           id: 'id3',
           slug: 'foo',
         },
-        'id2',
+        CmsType.Article,
+        '',
+      )
+    })
+
+    it('opens a editorial page from the suggestions with a subtype', () => {
+      const MOCK_SUBTYPE = 'foo2'
+
+      extractIdEndpoint.mockReset()
+      extractIdEndpoint.mockImplementationOnce(() => ['', CmsType.Special, 'id3'])
+
+      const suggestion = {
+        uri: `jsonapi/node/${CmsType.Special}/GgCm07EqNVIpwQ`,
+        label: `foo (${MOCK_SUBTYPE})`,
+        index: 1,
+        category: 'Straatnamen',
+      }
+
+      const autosuggest = component.find('AutoSuggest')
+
+      // execute this.onSuggestionSelection()
+      autosuggest.props().onSuggestionSelection(suggestion)
+
+      expect(mockOpenEditorialSuggestion).toHaveBeenCalledWith(
+        {
+          id: 'id3',
+          slug: 'foo',
+        },
+        CmsType.Special,
+        MOCK_SUBTYPE,
       )
     })
   })
