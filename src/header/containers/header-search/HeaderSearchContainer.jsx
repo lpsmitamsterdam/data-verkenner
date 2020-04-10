@@ -19,6 +19,7 @@ import {
   toPublicationSearch,
   toSearch,
   toSpecialSearch,
+  toSpecialDetail,
 } from '../../../store/redux-first-router/actions'
 import {
   isArticlePage,
@@ -154,14 +155,16 @@ const mapDispatchToProps = (dispatch) => ({
     ),
   openDataSuggestion: (suggestion, view) => dispatch(toDataSuggestion(suggestion, view)),
   openDatasetSuggestion: (suggestion) => dispatch(toDatasetDetail(suggestion)),
-  openEditorialSuggestion: (suggestion, type) => {
+  openEditorialSuggestion: (suggestion, type, subType) => {
     switch (type) {
       case CmsType.Article:
         return dispatch(toArticleDetail(suggestion.id, suggestion.slug))
-      case CmsType.Publication:
-        return dispatch(toPublicationDetail(suggestion.id, suggestion.slug))
       case CmsType.Collection:
         return dispatch(toCollectionDetail(suggestion.id, suggestion.slug))
+      case CmsType.Publication:
+        return dispatch(toPublicationDetail(suggestion.id, suggestion.slug))
+      case CmsType.Special:
+        return dispatch(toSpecialDetail(suggestion.id, subType, suggestion.slug))
       default:
         throw new Error(`Unable to open editorial suggestion, unknown type '${type}'.`)
     }
