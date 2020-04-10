@@ -43,7 +43,7 @@
     "bbga_visualisatie_d3": "git+https://github.com/Amsterdam/bbga_visualisatie_d3.git#master",
     "body-scroll-lock": "^2.7.1",
     "classnames": "2.2.6",
-    "core-js": "3.6.4",
+    "core-js": "3.6.5",
     "d3": "3.5.17",
     "escape-string-regexp": "1.0.5",
     "file-saver": "^2.0.2",
