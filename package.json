@@ -88,7 +88,7 @@
     "remove-markdown": "0.3.0",
     "reselect": "4.0.0",
     "styled-components": "^5.1.0",
-    "urql": "^1.9.5"
+    "urql": "^1.9.6"
   },
   "devDependencies": {
     "@babel/core": "7.9.0",
