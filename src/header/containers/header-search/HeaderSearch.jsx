@@ -8,6 +8,7 @@ import { decodeLayers } from '../../../store/queryParameters'
 import { extractIdEndpoint } from '../../../store/redux-first-router/actions'
 import AutoSuggest from '../../components/auto-suggest/AutoSuggest'
 import { LABELS } from '../../services/auto-suggest/auto-suggest'
+import { CmsType } from '../../../shared/config/cms.config'
 
 class HeaderSearch extends React.Component {
   constructor(props) {
@@ -54,12 +55,17 @@ class HeaderSearch extends React.Component {
 
       openDatasetSuggestion({ id, slug, typedQuery })
 
-      // Suggestion of type article or publication
+      // Suggestion coming from the cms
     } else if (suggestion.uri.match(/jsonapi\/node\//)) {
       const [, type, id] = extractIdEndpoint(suggestion.uri)
       const slug = useSlug(suggestion.label)
 
-      openEditorialSuggestion({ id, slug }, type)
+      let subType = ''
+      if (type === CmsType.Special) {
+        ;[, subType] = suggestion.label.match(/\(([^()]*)\)$/)
+      }
+
+      openEditorialSuggestion({ id, slug }, type, subType)
     } else if (suggestion.type === 'map-layer' || suggestion.type === 'map-collection') {
       const { searchParams } = new URL(suggestion.uri, window.location.origin)
 
@@ -89,8 +95,7 @@ class HeaderSearch extends React.Component {
       isPublicationPage,
       isSpecialPage,
       isCollectionPage,
-      isMapCollectionPage,
-      isMapLayerPage,
+      isMapPage,
       typedQuery,
       onCleanDatasetOverview,
       onDatasetSearch,
@@ -100,20 +105,10 @@ class HeaderSearch extends React.Component {
       onPublicationSearch,
       onSpecialSearch,
       onCollectionSearch,
-      onMapCollectionSearch,
-      onMapLayerSearch,
+      onMapSearch,
     } = this.props
 
-    const {
-      ARTICLES,
-      DATASETS,
-      PUBLICATIONS,
-      DATA,
-      SPECIALS,
-      COLLECTIONS,
-      MAP_COLLECTIONS,
-      MAP_LAYERS,
-    } = LABELS
+    const { ARTICLES, DATASETS, PUBLICATIONS, DATA, SPECIALS, COLLECTIONS, MAP } = LABELS
 
     const searchAction = {
       [DATASETS]: onDatasetSearch,
@@ -122,8 +117,7 @@ class HeaderSearch extends React.Component {
       [DATA]: onDataSearch,
       [SPECIALS]: onSpecialSearch,
       [COLLECTIONS]: onCollectionSearch,
-      [MAP_COLLECTIONS]: onMapCollectionSearch,
-      [MAP_LAYERS]: onMapLayerSearch,
+      [MAP]: onMapSearch,
     }
 
     if (activeSuggestion.index === -1) {
@@ -144,10 +138,8 @@ class HeaderSearch extends React.Component {
           ? SPECIALS
           : isCollectionPage
           ? COLLECTIONS
-          : isMapCollectionPage
-          ? MAP_COLLECTIONS
-          : isMapLayerPage
-          ? MAP_LAYERS
+          : isMapPage
+          ? MAP
           : null)
 
       const actionFn = searchAction[searchType]
@@ -211,8 +203,7 @@ HeaderSearch.defaultProps = {
   isPublicationPage: false,
   isSpecialPage: false,
   isCollectionPage: false,
-  isMapCollectionPage: false,
-  isMapLayerPage: false,
+  isMapPage: false,
 }
 
 HeaderSearch.propTypes = {
@@ -230,8 +221,7 @@ HeaderSearch.propTypes = {
   isPublicationPage: PropTypes.bool,
   isSpecialPage: PropTypes.bool,
   isCollectionPage: PropTypes.bool,
-  isMapCollectionPage: PropTypes.bool,
-  isMapLayerPage: PropTypes.bool,
+  isMapPage: PropTypes.bool,
   isMapActive: PropTypes.bool.isRequired,
   numberOfSuggestions: PropTypes.number,
   onCleanDatasetOverview: PropTypes.func.isRequired,
@@ -241,8 +231,7 @@ HeaderSearch.propTypes = {
   onPublicationSearch: PropTypes.func.isRequired,
   onSpecialSearch: PropTypes.func.isRequired,
   onCollectionSearch: PropTypes.func.isRequired,
-  onMapCollectionSearch: PropTypes.func.isRequired,
-  onMapLayerSearch: PropTypes.func.isRequired,
+  onMapSearch: PropTypes.func.isRequired,
   openDataSuggestion: PropTypes.func.isRequired,
   openDatasetSuggestion: PropTypes.func.isRequired,
   openEditorialSuggestion: PropTypes.func.isRequired,

@@ -1,6 +1,6 @@
-import styled from 'styled-components'
 import { themeSpacing } from '@datapunt/asc-ui'
 import React from 'react'
+import styled from 'styled-components'
 import { DEFAULT_LOCALE } from '../../../shared/config/locale.config'
 import ErrorMessage from '../../components/ErrorMessage/ErrorMessage'
 import SearchLink from '../../components/Links/SearchLink/SearchLink'
@@ -28,7 +28,14 @@ const SearchResultsOverview = ({ query, totalCount, results, errors, loading }) 
       const resultItem = getSearchConfigByResolver(key)
 
       if (resultItem) {
-        const { label, component: ResultComponent, to, type, resolver } = resultItem
+        const {
+          label,
+          component: ResultComponent,
+          to,
+          type,
+          resolver,
+          hideOverviewHeading,
+        } = resultItem
 
         // Get the loading errors only, as we do not want to show unauthorized messages on the overview page.
         const matchingErrors = getLoadingErrors(
@@ -43,13 +50,15 @@ const SearchResultsOverview = ({ query, totalCount, results, errors, loading }) 
 
         return hasResults || (hasErrors && !hasNoMatchingFilters) ? (
           <ResultItem key={type}>
-            <SearchHeading
-              label={`${label}${
-                resultItemTotalCount > 0
-                  ? ` (${resultItemTotalCount.toLocaleString(DEFAULT_LOCALE)})`
-                  : ''
-              }`}
-            />
+            {!hideOverviewHeading && (
+              <SearchHeading
+                label={`${label}${
+                  resultItemTotalCount > 0
+                    ? ` (${resultItemTotalCount.toLocaleString(DEFAULT_LOCALE)})`
+                    : ''
+                }`}
+              />
+            )}
             <ResultsComponent>
               {hasResults ? (
                 <ResultComponent

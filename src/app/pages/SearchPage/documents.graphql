@@ -98,26 +98,16 @@ query collectionSearchQuery(
   }
 }
 
-query mapCollectionSearchQuery(
+query mapSearchQuery(
   $q: String
   $limit: Int
   $page: Int
+  $filters: [FilterInput!]
   $withPagination: Boolean!
 ) {
-  mapCollectionSearch(q: $q, input: { limit: $limit, page: $page }) {
-    ...MapCollectionFields
-    ...PageInfoFields
-  }
-}
-
-query mapLayerSearchQuery(
-  $q: String
-  $limit: Int
-  $page: Int
-  $withPagination: Boolean!
-) {
-  mapLayerSearch(q: $q, input: { limit: $limit, page: $page }) {
-    ...MapLayerFields
+  mapSearch(q: $q, input: { limit: $limit, page: $page, filters: $filters }) {
+    ...MapFields
+    ...FilterFields
     ...PageInfoFields
   }
 }
@@ -151,11 +141,8 @@ query searchQuery($q: String!, $limit: Int, $filters: [FilterInput!]) {
   collectionSearch(q: $q, input: { limit: $limit, filters: $filters }) {
     ...CMSFields
   }
-  mapCollectionSearch(q: $q, input: { limit: $limit }) {
-    ...MapCollectionFields
-  }
-  mapLayerSearch(q: $q, input: { limit: $limit }) {
-    ...MapLayerFields
+  mapSearch(q: $q, input: { limit: $limit, filters: $filters }) {
+    ...MapFields
   }
 }
 
@@ -178,10 +165,7 @@ query totalCountSearch($q: String!, $limit: Int) {
   collectionSearch(q: $q, input: { limit: $limit }) {
     totalCount
   }
-  mapCollectionSearch(q: $q, input: { limit: $limit }) {
-    totalCount
-  }
-  mapLayerSearch(q: $q, input: { limit: $limit }) {
+  mapSearch(q: $q, input: { limit: $limit }) {
     totalCount
   }
 }
@@ -247,31 +231,26 @@ fragment FilterFields on SearchResult {
   }
 }
 
-fragment MapCollectionFields on MapCollectionSearchResult {
+fragment MapFields on MapSearchResult {
   totalCount
   results {
-    id
-    title
-    href
-    mapLayers {
+    type
+    label
+    count
+    results {
       id
       title
-    }
-    meta {
-      thumbnail
+      href
+      mapLayers {
+        id
+        title
+      }
+      meta {
+        thumbnail
+      }
     }
   }
 }
-
-fragment MapLayerFields on MapLayerSearchResult {
-  totalCount
-  results {
-    id
-    title
-    href
-  }
-}
-
 
 fragment PageInfoFields on SearchResult {
   pageInfo @include(if: $withPagination) {

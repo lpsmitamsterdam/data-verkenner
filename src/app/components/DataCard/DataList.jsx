@@ -1,14 +1,14 @@
-import styled from 'styled-components'
-import { Icon, Link, themeSpacing, breakpoint } from '@datapunt/asc-ui'
+import { breakpoint, Link, themeSpacing } from '@datapunt/asc-ui'
 import React from 'react'
 import RouterLink from 'redux-first-router-link'
+import styled from 'styled-components'
+import { DEFAULT_LOCALE } from '../../../shared/config/locale.config'
+import { VIEW_MODE } from '../../../shared/ducks/ui/ui'
 import { toDataSearchType, toDetailFromEndpoint } from '../../../store/redux-first-router/actions'
+import ErrorMessage from '../ErrorMessage/ErrorMessage'
 import SearchLink from '../Links/SearchLink/SearchLink'
 import SearchHeading from '../SearchHeading/SearchHeading'
 import DataIcon from './DataIcon'
-import { VIEW_MODE } from '../../../shared/ducks/ui/ui'
-import ErrorMessage from '../ErrorMessage/ErrorMessage'
-import { DEFAULT_LOCALE } from '../../../shared/config/locale.config'
 
 const List = styled.ul`
   margin-bottom: ${({ hasMarginBottom }) => hasMarginBottom && themeSpacing(6)};
@@ -22,19 +22,6 @@ const StyledLink = styled(Link)`
   }
 `
 
-const StyledIcon = styled(Icon)`
-  width: 40px;
-  height: 40px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-right: ${themeSpacing(1)};
-
-  & svg {
-    width: 40px;
-    height: 40px;
-  }
-`
 const StyledErrorMessage = styled(ErrorMessage)`
   @media screen and ${breakpoint('min-width', 'mobileL')} {
     width: 50%;
@@ -45,11 +32,7 @@ const DataList = ({ type, label, count, results, withPagination }) => (
   <div>
     <SearchHeading
       label={`${label} (${count.toLocaleString(DEFAULT_LOCALE)})`}
-      icon={
-        <StyledIcon>
-          <DataIcon type={type} />
-        </StyledIcon>
-      }
+      icon={<DataIcon type={type} />}
     />
 
     {results ? (

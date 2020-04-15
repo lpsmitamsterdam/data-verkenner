@@ -13,21 +13,19 @@ import {
   toDatasetDetail,
   toDatasetSearch,
   toDataSuggestion,
-  toMapCollectionSearch,
-  toMapLayerSearch,
+  toMapSearch,
   toMapWithLegendOpen,
   toPublicationDetail,
   toPublicationSearch,
   toSearch,
   toSpecialSearch,
+  toSpecialDetail,
 } from '../../../store/redux-first-router/actions'
 import {
   isArticlePage,
   isCollectionPage,
   isDataPage,
   isDatasetPage,
-  isMapCollectionPage,
-  isMapLayerPage,
   isPublicationPage,
   isSpecialPage,
 } from '../../../store/redux-first-router/selectors'
@@ -51,8 +49,7 @@ const mapStateToProps = (state) => ({
   isPublicationPage: isPublicationPage(state),
   isSpecialPage: isSpecialPage(state),
   isCollectionPage: isCollectionPage(state),
-  isMapCollectionPage: isMapCollectionPage(state),
-  isMapLayerPage: isMapLayerPage(state),
+  isMapPage: isMapPage(state),
   view: getViewMode(state),
   isMapActive: isMapPage(state),
   numberOfSuggestions: getNumberOfSuggestions(state),
@@ -146,19 +143,9 @@ const mapDispatchToProps = (dispatch) => ({
         true,
       ),
     ),
-  onMapCollectionSearch: (query) =>
+  onMapSearch: (query) =>
     dispatch(
-      toMapCollectionSearch(
-        {
-          [PARAMETERS.QUERY]: query,
-        },
-        false,
-        true,
-      ),
-    ),
-  onMapLayerSearch: (query) =>
-    dispatch(
-      toMapLayerSearch(
+      toMapSearch(
         {
           [PARAMETERS.QUERY]: query,
         },
@@ -168,14 +155,16 @@ const mapDispatchToProps = (dispatch) => ({
     ),
   openDataSuggestion: (suggestion, view) => dispatch(toDataSuggestion(suggestion, view)),
   openDatasetSuggestion: (suggestion) => dispatch(toDatasetDetail(suggestion)),
-  openEditorialSuggestion: (suggestion, type) => {
+  openEditorialSuggestion: (suggestion, type, subType) => {
     switch (type) {
       case CmsType.Article:
         return dispatch(toArticleDetail(suggestion.id, suggestion.slug))
-      case CmsType.Publication:
-        return dispatch(toPublicationDetail(suggestion.id, suggestion.slug))
       case CmsType.Collection:
         return dispatch(toCollectionDetail(suggestion.id, suggestion.slug))
+      case CmsType.Publication:
+        return dispatch(toPublicationDetail(suggestion.id, suggestion.slug))
+      case CmsType.Special:
+        return dispatch(toSpecialDetail(suggestion.id, subType, suggestion.slug))
       default:
         throw new Error(`Unable to open editorial suggestion, unknown type '${type}'.`)
     }

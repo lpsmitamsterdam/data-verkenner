@@ -1,24 +1,24 @@
-import React, { memo } from 'react'
-import styled from 'styled-components'
-import { useDispatch } from 'react-redux'
 import {
   breakpoint,
   Button,
   Column,
-  Heading,
-  themeSpacing,
-  Divider,
-  themeColor,
   CompactPager,
+  Divider,
+  Heading,
+  themeColor,
+  themeSpacing,
 } from '@datapunt/asc-ui'
+import React, { memo } from 'react'
+import { useDispatch } from 'react-redux'
+import styled from 'styled-components'
+import { DEFAULT_LOCALE } from '../../../shared/config/locale.config'
 import PARAMETERS from '../../../store/parameters'
+import MaxSearchPageMessage from '../../components/PanelMessages/MaxSearchPageMessage'
 import PAGES from '../../pages'
 import SEARCH_PAGE_CONFIG, { EDITORIAL_SEARCH_PAGES } from './config'
-import { SearchResultsSkeleton, SearchResultsOverviewSkeleton } from './SearchResultsSkeleton'
 import SearchResultsOverview from './SearchResultsOverview'
+import { SearchResultsOverviewSkeleton, SearchResultsSkeleton } from './SearchResultsSkeleton'
 import SearchSort from './SearchSort'
-import { DEFAULT_LOCALE } from '../../../shared/config/locale.config'
-import MaxSearchPageMessage from '../../components/PanelMessages/MaxSearchPageMessage'
 
 const StyledHeading = styled(Heading)`
   margin-bottom: ${themeSpacing(4)};
@@ -103,6 +103,11 @@ const SearchPageResults = ({
 }) => {
   const dispatch = useDispatch()
   const allResultsPageActive = currentPage === PAGES.SEARCH
+  const pageConfig = SEARCH_PAGE_CONFIG[currentPage]
+
+  if (!pageConfig) {
+    return null
+  }
 
   const formatTitle = (label, count = null) => {
     // Handle an empty result.
@@ -117,13 +122,12 @@ const SearchPageResults = ({
 
     const countFormatted = count.toLocaleString(DEFAULT_LOCALE)
 
-    return hasQuery
-      ? `${label} met '${query}' (${countFormatted} resultaten)`
-      : `${label} (${countFormatted} resultaten)`
+    return `${label} ${hasQuery ? `met '${query}'` : ''} (${countFormatted} ${
+      count === 1 ? 'resultaat' : 'resultaten'
+    })`
   }
 
-  const ResultsComponent =
-    (SEARCH_PAGE_CONFIG[currentPage] && SEARCH_PAGE_CONFIG[currentPage].component) || null
+  const ResultsComponent = pageConfig.component ?? null
 
   return (
     <ResultColumn
@@ -131,9 +135,7 @@ const SearchPageResults = ({
       span={{ small: 12, medium: 12, big: 12, large: 7, xLarge: 8 }}
       push={{ small: 0, medium: 0, big: 0, large: 1, xLarge: 1 }}
     >
-      <StyledHeading>
-        {formatTitle(SEARCH_PAGE_CONFIG[currentPage].label, !fetching ? totalCount : null)}
-      </StyledHeading>
+      <StyledHeading>{formatTitle(pageConfig.label, !fetching ? totalCount : null)}</StyledHeading>
       <FilterWrapper>
         <FilterButton variant="primary" onClick={() => setShowFilter(true)} disabled={fetching}>
           Filteren
@@ -165,8 +167,8 @@ const SearchPageResults = ({
                   withPagination: pageInfo,
                   loading: fetching,
                   isOverviewPage,
-                  label: SEARCH_PAGE_CONFIG[currentPage].label,
-                  type: SEARCH_PAGE_CONFIG[currentPage].type,
+                  label: pageConfig.label,
+                  type: pageConfig.type,
                 }}
               />
             </SearchResultsWrapper>
@@ -182,7 +184,7 @@ const SearchPageResults = ({
               collectionSize={totalCount}
               onPageChange={(pageNumber) => {
                 dispatch(
-                  SEARCH_PAGE_CONFIG[currentPage].to(
+                  pageConfig.to(
                     {
                       [PARAMETERS.PAGE]: pageNumber,
                     },

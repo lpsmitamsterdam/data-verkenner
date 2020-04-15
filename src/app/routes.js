@@ -10,8 +10,7 @@ export const MAIN_PATHS = {
   PUBLICATIONS: 'publicaties',
   SPECIALS: 'specials',
   COLLECTIONS: 'dossiers',
-  MAP_COLLECTIONS: 'kaartcollecties',
-  MAP_LAYERS: 'kaartlagen',
+  MAP: 'kaarten',
 }
 
 export const routing = {
@@ -131,7 +130,7 @@ export const routing = {
     page: PAGES.ARTICLE_SEARCH,
   },
   specialSearch: {
-    title: 'In beeld',
+    title: 'Specials',
     path: `/${MAIN_PATHS.SPECIALS}/zoek/`,
     type: `${ROUTER_NAMESPACE}/${PAGES.SPECIAL_SEARCH}`,
     page: PAGES.SPECIAL_SEARCH,
@@ -166,17 +165,11 @@ export const routing = {
     type: `${ROUTER_NAMESPACE}/${PAGES.COLLECTION_SEARCH}`,
     page: PAGES.COLLECTION_SEARCH,
   },
-  mapCollectionSearch: {
-    title: 'Kaartcollecties',
-    path: `/${MAIN_PATHS.MAP_COLLECTIONS}/zoek/`,
-    type: `${ROUTER_NAMESPACE}/${PAGES.MAP_COLLECTION_SEARCH}`,
-    page: PAGES.MAP_COLLECTION_SEARCH,
-  },
-  mapLayerSearch: {
-    title: 'Kaartlagen',
-    path: `/${MAIN_PATHS.MAP_LAYERS}/zoek/`,
-    type: `${ROUTER_NAMESPACE}/${PAGES.MAP_LAYER_SEARCH}`,
-    page: PAGES.MAP_LAYER_SEARCH,
+  mapSearch: {
+    title: 'Kaarten',
+    path: `/${MAIN_PATHS.MAP}/zoek/`,
+    type: `${ROUTER_NAMESPACE}/${PAGES.MAP_SEARCH}`,
+    page: PAGES.MAP_SEARCH,
   },
 }
 

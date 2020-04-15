@@ -4,8 +4,7 @@ import {
   toCollectionSearch,
   toDataSearch,
   toDatasetSearch,
-  toMapCollectionSearch,
-  toMapLayerSearch,
+  toMapSearch,
   toPublicationSearch,
   toSearch,
   toSpecialSearch,
@@ -19,14 +18,12 @@ import {
   collectionSearchQuery,
   dataSearchQuery,
   datasetSearchQuery,
-  mapCollectionSearchQuery,
-  mapLayerSearchQuery,
+  mapSearchQuery,
   publicationSearchQuery,
   searchQuery,
   specialSearchQuery,
 } from './documents.graphql'
-import MapCollectionSearchResults from './MapCollectionSearchResults'
-import MapLayerSearchResults from './MapLayerSearchResults'
+import MapSearchResults from './MapSearchResults'
 
 export const MAX_RESULTS = 50
 export const DEFAULT_LIMIT = 10
@@ -37,8 +34,7 @@ export const TYPES = {
   SEARCH: 'search',
   DATA: 'data',
   DATASET: 'dataset',
-  MAP_COLLECTION: 'mapcollection',
-  MAP_LAYER: 'maplayer',
+  MAP: 'map',
 }
 
 // This object is used to define the sort order of the search page
@@ -50,22 +46,7 @@ const SEARCH_TYPES_CONFIG = {
     label: routing.collectionSearch.title,
     type: CmsType.Collection,
     component: EditorialResults,
-  },
-  [routing.mapLayerSearch.page]: {
-    resolver: 'mapLayerSearch',
-    query: mapLayerSearchQuery,
-    to: toMapLayerSearch,
-    label: routing.mapLayerSearch.title,
-    type: TYPES.MAP_LAYER,
-    component: MapLayerSearchResults,
-  },
-  [routing.mapCollectionSearch.page]: {
-    resolver: 'mapCollectionSearch',
-    query: mapCollectionSearchQuery,
-    to: toMapCollectionSearch,
-    label: routing.mapCollectionSearch.title,
-    type: TYPES.MAP_COLLECTION,
-    component: MapCollectionSearchResults,
+    hideOverviewHeading: false,
   },
   [routing.specialSearch.page]: {
     resolver: 'specialSearch',
@@ -74,6 +55,16 @@ const SEARCH_TYPES_CONFIG = {
     label: routing.specialSearch.title,
     type: CmsType.Special,
     component: EditorialResults,
+    hideOverviewHeading: false,
+  },
+  [routing.mapSearch.page]: {
+    resolver: 'mapSearch',
+    query: mapSearchQuery,
+    to: toMapSearch,
+    label: routing.mapSearch.title,
+    type: TYPES.MAP,
+    component: MapSearchResults,
+    hideOverviewHeading: true,
   },
   [routing.dataSearch.page]: {
     resolver: 'dataSearch',
@@ -82,6 +73,7 @@ const SEARCH_TYPES_CONFIG = {
     label: routing.dataSearch.title,
     type: TYPES.DATA,
     component: DataSearchResults,
+    hideOverviewHeading: false,
   },
   [routing.datasetSearch.page]: {
     resolver: 'datasetSearch',
@@ -90,6 +82,7 @@ const SEARCH_TYPES_CONFIG = {
     label: routing.datasetSearch.title,
     type: TYPES.DATASET,
     component: DatasetSearchResults,
+    hideOverviewHeading: false,
   },
   [routing.publicationSearch.page]: {
     resolver: 'publicationSearch',
@@ -98,6 +91,7 @@ const SEARCH_TYPES_CONFIG = {
     label: routing.publicationSearch.title,
     type: CmsType.Publication,
     component: EditorialResults,
+    hideOverviewHeading: false,
   },
   [routing.articleSearch.page]: {
     resolver: 'articleSearch',
@@ -106,6 +100,7 @@ const SEARCH_TYPES_CONFIG = {
     label: routing.articleSearch.title,
     type: CmsType.Article,
     component: EditorialResults,
+    hideOverviewHeading: false,
   },
 }
 
@@ -124,6 +119,7 @@ export default {
     query: searchQuery,
     label: routing.search.title,
     type: TYPES.SEARCH,
+    hideOverviewHeading: false,
   },
   ...SEARCH_TYPES_CONFIG,
 }
