@@ -21,10 +21,6 @@ describe('Video', () => {
     componentInstance.videoPlayer = videoPlayerMock
   })
 
-  it('should render', () => {
-    expect(component).toMatchSnapshot()
-  })
-
   describe('componentDidUpdate', () => {
     it('should play the video', () => {
       component.setProps({

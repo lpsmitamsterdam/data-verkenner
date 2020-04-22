@@ -25,7 +25,13 @@ const StyledColumn = styled(Column)`
 `
 
 const Animation = ({ contentLink, title, results }) => {
-  const { body, field_intro: intro, localeDateFormatted } = results
+  const {
+    body,
+    field_intro: intro,
+    localeDateFormatted,
+    field_subtitle_link: subtitleLink,
+  } = results
+  const subtitleUri = subtitleLink?.uri
 
   return (
     <>
@@ -51,7 +57,11 @@ const Animation = ({ contentLink, title, results }) => {
               src={contentLink.uri}
               type="video/mp4" // For now it's assumed the videos are always in MP4 format
               showControls
-            />
+            >
+              {subtitleUri && (
+                <track src={subtitleUri} kind="subtitles" srcLang="nl" label="Dutch" />
+              )}
+            </Video>
           )}
         </StyledColumn>
         <Column span={{ small: 1, medium: 4, big: 3, large: 6, xLarge: 6 }}>
