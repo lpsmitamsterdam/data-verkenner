@@ -71,7 +71,7 @@ describe('EditorialResults', () => {
     expect(editorialCard.exists()).toEqual(true)
     expect(editorialCard.props()).toMatchObject({
       image: props.coverImage, // Publications use a different image source
-      imageDimensions: [IMAGE_SIZE * 0.7, IMAGE_SIZE], // Publications have vertically aligned images
+      imageDimensions: [Math.ceil(IMAGE_SIZE * 0.7), IMAGE_SIZE], // Publications have vertically aligned images
     })
   })
 
