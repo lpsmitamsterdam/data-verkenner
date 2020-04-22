@@ -39,6 +39,7 @@ class Video extends React.Component {
     const { src, poster, type, showControls, children } = this.props
     return (
       <video
+        crossOrigin="anonymous"
         ref={(c) => {
           this.videoPlayer = c
         }}
