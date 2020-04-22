@@ -30,6 +30,7 @@ const Animation = ({ contentLink, title, results }) => {
     field_intro: intro,
     localeDateFormatted,
     field_subtitle_link: subtitleLink,
+    field_subtitle_default: enableSubtitleByDefault,
   } = results
   const subtitleUri = subtitleLink?.uri
 
@@ -59,7 +60,13 @@ const Animation = ({ contentLink, title, results }) => {
               showControls
             >
               {subtitleUri && (
-                <track src={subtitleUri} kind="subtitles" srcLang="nl" label="Dutch" />
+                <track
+                  default={!!enableSubtitleByDefault}
+                  src={subtitleUri}
+                  kind="subtitles"
+                  srcLang="nl"
+                  label="Dutch"
+                />
               )}
             </Video>
           )}
