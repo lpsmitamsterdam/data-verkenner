@@ -57,7 +57,7 @@ const normalizeObject = (data) => {
   // By default use the internal router, fallback on a div if there's no link.
   // If there's an externalUrl set, override the linkProps.
   let linkProps = to ? { to, forwardedAs: RouterLink } : { forwardedAs: 'div' }
-  const externalUrl = field_link && field_link.uri
+  const externalUrl = field_link?.uri?.replace(/&amp;/g, '&') // Drupal JSONapi encodes `&` in URLs, which React can't handle https://github.com/facebook/react/issues/6873#issuecomment-227906893
 
   linkProps = externalUrl ? { href: externalUrl, forwardedAs: 'a' } : linkProps
   linkProps = { ...linkProps, title } // Add the title attribute by default
