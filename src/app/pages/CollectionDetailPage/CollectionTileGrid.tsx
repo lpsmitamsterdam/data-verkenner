@@ -91,7 +91,9 @@ const CollectionTileGrid: React.FC<Props> = ({ results, loading, title, descript
         <Heading gutterBottom={20} as="h3" styleAs="h1">
           {title}
         </Heading>
-        <StyledParagraph strong>{description}</StyledParagraph>
+        {/*
+        // @ts-ignore */}
+        <StyledParagraph strong dangerouslySetInnerHTML={{ __html: description }} />
       </Tile>
     </FullColumnTileGridItem>
     {results.map((item, i) => {

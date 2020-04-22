@@ -36,18 +36,18 @@ class Video extends React.Component {
   }
 
   render() {
-    const { src, poster, type, showControls } = this.props
+    const { src, poster, type, showControls, children } = this.props
     return (
       <video
+        crossOrigin="anonymous"
         ref={(c) => {
           this.videoPlayer = c
         }}
         data-object-fit
         preload="metadata"
-        muted
+        muted={false}
         className="c-video__element"
         poster={poster}
-        loop
         controls={showControls}
       >
         <source
@@ -56,6 +56,7 @@ class Video extends React.Component {
             type,
           }}
         />
+        {children}
       </video>
     )
   }

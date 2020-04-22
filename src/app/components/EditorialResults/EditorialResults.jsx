@@ -85,7 +85,7 @@ const EditorialResults = ({
                   key={id}
                   image={type === CmsType.Publication ? coverImage : teaserImage}
                   imageDimensions={[
-                    type === CmsType.Publication ? IMAGE_SIZE * 0.7 : IMAGE_SIZE, // Publications have different image dimensions
+                    type === CmsType.Publication ? Math.ceil(IMAGE_SIZE * 0.7) : IMAGE_SIZE, // Publications have different image dimensions
                     IMAGE_SIZE,
                   ]}
                   to={to}
