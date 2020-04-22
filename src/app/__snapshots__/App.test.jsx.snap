@@ -25,6 +25,7 @@ exports[`App should render the homepage 1`] = `
           "reexecuteOperation": [Function],
           "requestPolicy": "cache-first",
           "results$": [Function],
+          "subscribeToDebugTarget": [Function],
           "suspense": false,
           "url": "https://acc.api.data.amsterdam.nl/cms_search/graphql/",
         }
@@ -81,6 +82,7 @@ exports[`App should render the mapview 1`] = `
           "reexecuteOperation": [Function],
           "requestPolicy": "cache-first",
           "results$": [Function],
+          "subscribeToDebugTarget": [Function],
           "suspense": false,
           "url": "https://acc.api.data.amsterdam.nl/cms_search/graphql/",
         }
