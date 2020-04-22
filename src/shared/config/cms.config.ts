@@ -73,6 +73,7 @@ const cmsConfig = {
     fields: [
       'field_content_link',
       'field_special_type',
+      'field_subtitle_link',
       'field_publication_date',
       ...SHARED_FIELDS,
     ],
