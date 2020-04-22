@@ -48,7 +48,6 @@ class Video extends React.Component {
         muted={false}
         className="c-video__element"
         poster={poster}
-        loop
         controls={showControls}
       >
         <source
