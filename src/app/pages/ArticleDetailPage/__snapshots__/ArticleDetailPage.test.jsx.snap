@@ -74,6 +74,11 @@ exports[`ArticleDetailPage should render the publication when there are results 
                     This is a title
                   </Styled(Heading)>
                   <Paragraph
+                    dangerouslySetInnerHTML={
+                      Object {
+                        "__html": undefined,
+                      }
+                    }
                     strong={true}
                   />
                   <CustomHTMLBlock

@@ -169,7 +169,7 @@ const ArticleDetailPage = ({ id }) => {
                             fields={byline && [{ id: 1, label: byline }]}
                           />
                         )}
-                        <Paragraph strong>{intro}</Paragraph>
+                        <Paragraph strong dangerouslySetInnerHTML={{ __html: intro }} />
                         {typeof body === 'string' && (
                           <CustomHTMLBlock body={body.replace('http://', 'https://')} />
                         )}
