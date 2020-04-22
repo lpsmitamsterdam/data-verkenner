@@ -43,7 +43,6 @@ class Video extends React.Component {
         ref={(c) => {
           this.videoPlayer = c
         }}
-        data-object-fit
         preload="metadata"
         muted={false}
         className="c-video__element"
