@@ -59,7 +59,7 @@ const Animation = ({ contentLink, title, results }) => {
               showControls
             >
               {subtitleUri && (
-                <track src={subtitleUri} kind="subtitles" srcLang="nl" label="Dutch" />
+                <track default src={subtitleUri} kind="subtitles" srcLang="nl" label="Dutch" />
               )}
             </Video>
           )}
