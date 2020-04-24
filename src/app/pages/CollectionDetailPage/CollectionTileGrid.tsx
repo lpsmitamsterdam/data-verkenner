@@ -7,7 +7,6 @@ import {
   themeColor,
   themeSpacing,
 } from '@datapunt/asc-ui'
-import RouterLink from 'redux-first-router-link'
 import { Tile, TileLabel } from '../../components/Tile'
 import { SizeOnBreakpoint, TileGridItem } from '../../components/TileGrid/TileGridStyle'
 import TileGrid from '../../components/TileGrid/TileGrid'
@@ -96,25 +95,27 @@ const CollectionTileGrid: React.FC<Props> = ({ results, loading, title, descript
         <StyledParagraph strong dangerouslySetInnerHTML={{ __html: description }} />
       </Tile>
     </FullColumnTileGridItem>
-    {results.map((item, i) => {
+    {results.map(({ id, linkProps, teaserImage, shortTitle, title: tileTitle }, i) => {
       // Only with 3 items, the first tile (the biggest) shouldn't have the compact style
       const Provider = results.length === 3 && i === 0 ? React.Fragment : CompactThemeProvider
       const span = GRID_ITEM_TEMPLATE[results.length][i]
+
       return (
-        <TileGridItem key={item.id} span={span}>
+        <TileGridItem key={id} span={span}>
           {/*
                     // @ts-ignore */}
           <Tile
-            isLoading={loading}
-            forwardedAs={RouterLink}
-            to={item.to}
-            span={span}
-            backgroundImage={item.teaserImage || '/assets/images/not_found_thumbnail.jpg'}
+            {...{
+              ...linkProps,
+              isLoading: loading,
+              span,
+              backgroundImage: teaserImage || '/assets/images/not_found_thumbnail.jpg',
+            }}
           >
             <TileLabel>
               <Provider>
                 <Paragraph strong gutterBottom={0}>
-                  {item.shortTitle || item.title}
+                  {shortTitle || tileTitle}
                 </Paragraph>
               </Provider>
             </TileLabel>
