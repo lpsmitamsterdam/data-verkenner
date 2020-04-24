@@ -1,4 +1,4 @@
-import { Row } from '@datapunt/asc-ui'
+import { Column, Row } from '@datapunt/asc-ui'
 import React from 'react'
 import { connect } from 'react-redux'
 import { getLocationPayload } from '../../../store/redux-first-router/selectors'
@@ -8,7 +8,7 @@ import { cmsConfig } from '../../../shared/config/config'
 import { toSpecialDetail } from '../../../store/redux-first-router/actions'
 import ContentContainer from '../../components/ContentContainer/ContentContainer'
 import { routing } from '../../routes'
-import Dashboard from './specials/Dashboard'
+import IFrame from '../../components/IFrame/IFrame'
 import Animation from './specials/Animation'
 import { SpecialType } from '../../../shared/config/cms.config'
 
@@ -37,8 +37,10 @@ const SpecialDetailPage = ({ id }) => {
           {specialType === SpecialType.Animation && (
             <Animation contentLink={contentLink} title={title} results={results} />
           )}
-          {specialType === SpecialType.Dashboard && (
-            <Dashboard contentLink={contentLink} title={title} />
+          {(specialType === SpecialType.Dashboard || specialType === SpecialType.Story) && (
+            <Column wrap span={{ small: 12, medium: 12, big: 12, large: 12, xLarge: 12 }}>
+              <IFrame contentLink={contentLink} title={title} />
+            </Column>
           )}
         </ContentContainer>
       </Row>
