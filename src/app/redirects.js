@@ -1,6 +1,6 @@
 import PARAMETERS from '../store/parameters'
 import { routing, MAIN_PATHS } from './routes'
-import { CONTENT_REDIRECT_LINKS } from '../shared/config/config'
+import { CONTENT_REDIRECT_LINKS, SHORTLINKS } from '../shared/config/config'
 import matomoInstance from './matomo'
 
 const { VIEW, VIEW_CENTER, LAYERS, LEGEND, ZOOM, EMBED } = PARAMETERS
@@ -101,6 +101,16 @@ const shortUrls = [
   {
     from: '/datablog/',
     to: 'https://amsterdam.github.io/datablog/',
+  },
+  {
+    from: '/dossier/economie/',
+    to: `/dossiers/dossier/corona-en-de-economie/${
+      SHORTLINKS.COLLECTIONS.ECONOMY.id[process.env.NODE_ENV]
+    }`,
+  },
+  {
+    from: '/dossier/toerisme/',
+    to: `/dossiers/dossier/toerisme/${SHORTLINKS.COLLECTIONS.TOURISM.id[process.env.NODE_ENV]}`,
   },
 ]
 
