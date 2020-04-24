@@ -3,6 +3,7 @@
   "fixturesFolder": "cypress/fixtures",
   "integrationFolder": "cypress/integration",
   "pluginsFile": "cypress/plugins/index.js",
+  "projectId": "k3sms4",
   "requestTimeout": 15000,
   "screenshotsFolder": "cypress/screenshots",
   "supportFile": "cypress/support/index.js",
