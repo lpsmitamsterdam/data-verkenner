@@ -21,7 +21,7 @@ describe('search module', () => {
       cy.wait('@typeaheadResults')
     })
 
-    it.only('should be able to navigate throught results with arrow keys', () => {
+    it('should be able to navigate throught results with arrow keys', () => {
       // Without wait, the test failt because it is too fast.
       cy.wait(500)
       cy.get(DATA_SEARCH.autoSuggestInput).type('{downarrow}{downarrow}')
