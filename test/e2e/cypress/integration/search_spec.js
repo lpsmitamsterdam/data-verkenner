@@ -1,4 +1,4 @@
-import { DATA_SEARCH, MAP, SEARCH, DATA_SELECTION_TABLE } from '../support/selectors'
+import { DATA_SEARCH, MAP, SEARCH } from '../support/selectors'
 
 describe('search module', () => {
   beforeEach(() => {
