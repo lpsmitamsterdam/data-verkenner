@@ -18,6 +18,11 @@ const Content = styled.div`
 
 const StyledAlertMessage = styled(AlertMessage)`
   z-index: 3;
+
+  /* Ensure outline is visible when element is in focus */
+  &:focus {
+    z-index: 999;
+  }
 `
 
 const NotificationAlert: React.FC = () => {
@@ -33,14 +38,14 @@ const NotificationAlert: React.FC = () => {
   }, [])
 
   if (!hide && !getCookie(COOKIE_NAME) && results) {
-    const { title, body, field_notification_type, field_position } =
+    const { title, body, field_notification_type, field_position, field_notification_title } =
       results?.data[0]?.attributes || {}
 
     if (body) {
       return field_position === 'header' ? (
         <StyledAlertMessage
           dismissible
-          heading={title}
+          heading={field_notification_title}
           compact
           level={field_notification_type || 'attention'}
           onDismiss={() => createCookie(COOKIE_NAME, '8')}
@@ -50,7 +55,7 @@ const NotificationAlert: React.FC = () => {
       ) : (
         <InfoModal
           id="infoModal"
-          {...{ open: !hide, title, body: body.value }}
+          {...{ open: !hide, title: field_notification_title ?? title, body: body.value }}
           closeModalAction={() => createCookie(COOKIE_NAME, '8')}
         />
       )
