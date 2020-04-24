@@ -1,16 +1,16 @@
 /* eslint-disable no-nested-ternary */
-import React from 'react'
+import { Enlarge, Minimise } from '@datapunt/asc-assets'
+import { GridContainer, GridItem, Heading, Link, themeColor, themeSpacing } from '@datapunt/asc-ui'
 import { PropTypes } from 'prop-types'
+import React from 'react'
 import RouterLink from 'redux-first-router-link'
-import styled from '@datapunt/asc-core'
-import { GridContainer, GridItem, Heading, themeSpacing, themeColor, Link } from '@datapunt/asc-ui'
-import { Minimise, Enlarge } from '@datapunt/asc-assets'
+import styled from 'styled-components'
+import Notification from '../../../shared/components/notification/Notification'
+import { SCOPES } from '../../../shared/services/auth/auth'
+import getState from '../../../shared/services/redux/get-state'
 import { toConstructionFileViewer } from '../../../store/redux-first-router/actions'
 import ActionButton from '../ActionButton/ActionButton'
 import IIIFThumbnail from '../IIIFThumbnail/IIIFThumbnail'
-import Notification from '../../../shared/components/notification/Notification'
-import getState from '../../../shared/services/redux/get-state'
-import { SCOPES } from '../../../shared/services/auth/auth'
 
 // This can be deleted when the Notifications will be refactored to be styled-components
 const StyledNotification = styled(Notification)`
