@@ -320,5 +320,23 @@
         "production": "9f02e2cd-b74d-474c-b251-c96e8416979d"
       }
     }
+  },
+  "SHORTLINKS": {
+    "COLLECTIONS": {
+      "ECONOMY":{
+        "id": {
+          "development": "6216c6bf-4ee1-4a72-a2a8-c00d8606e75b",
+          "acceptance": "6216c6bf-4ee1-4a72-a2a8-c00d8606e75b",
+          "production": "473ee7ce-1219-44f2-836e-90f63da7a751"
+        }
+      },
+      "TOURISM":{
+        "id": {
+          "development": "21d21e58-aff7-406c-a565-129e1fe1a7cb",
+          "acceptance": "21d21e58-aff7-406c-a565-129e1fe1a7cb",
+          "production": "fdcc54a1-5aa7-4ddf-af16-1c28a99b8c5f"
+        }
+      }
+    }
   }
 }
