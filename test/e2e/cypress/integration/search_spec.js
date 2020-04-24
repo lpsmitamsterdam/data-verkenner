@@ -24,16 +24,12 @@ describe('search module', () => {
     it('should be able to navigate throught results with arrow keys', () => {
       // Without wait, the test failt because it is too fast.
       cy.wait(500)
+      cy.get(DATA_SEARCH.autoSuggestInput).type('{downarrow}{downarrow}')
+      cy.get(DATA_SEARCH.autosuggestDropdownActive).should('contain', 'Cameratoezichtgebieden')
+      cy.get(SEARCH.input).should('have.value', 'Cameratoezichtgebieden')
       cy.get(DATA_SEARCH.autoSuggestInput).type('{downarrow}')
-      cy.get(DATA_SEARCH.autoSuggestDropdownCategories)
-        .eq(0)
-        .should('contain', 'Normaal Amsterdams Peil (NAP)')
-      cy.get(SEARCH.input).should('have.value', 'Normaal Amsterdams Peil (NAP)')
-
-      cy.get(DATA_SEARCH.autosuggestDropdownActive).contains('Normaal Amsterdams Peil (NAP)')
-      cy.get(DATA_SEARCH.autoSuggestInput).type('{downarrow}')
-      cy.get(DATA_SEARCH.autosuggestDropdownInActive).contains('Normaal Amsterdams Peil (NAP)')
-      cy.get(DATA_SEARCH.autosuggestDropdownActive).contains('Cameratoezichtgebieden')
+      cy.get(DATA_SEARCH.autosuggestDropdownInActive).contains('Cameratoezichtgebieden')
+      cy.get(DATA_SEARCH.autosuggestDropdownActive).contains('Reclamebelastingtarieven')
     })
 
     it('should go to the search result page when selecting the "..." option', () => {
@@ -45,7 +41,7 @@ describe('search module', () => {
     })
 
     it('should go to the detail page when selecting a result', () => {
-      cy.get(DATA_SEARCH.autoSuggestDropdownCategories).eq(0).click()
+      cy.get(DATA_SEARCH.autoSuggestDropdownCategories).eq(2).click()
       cy.wait('@graphql')
       cy.wait('@graphql')
       cy.url().should('include', '/data/?modus=kaart&lagen')

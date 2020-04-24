@@ -6,13 +6,16 @@ export const ADDRESS_PAGE = {
   detailPage: '.c-detail',
   iconCluster: '.o-highlight-cluster',
   iconMapMarker: '.leaflet-marker-icon',
+  linkVestigingen: '.qa-hr',
   mapContainer: '.qa-map-container',
   mapDetailResultHeader: '.map-detail-result__header-subtitle',
+  notification: '.notification__content',
   panoramaThumbnail: 'img.c-panorama-thumbnail--img',
   resultsList: 'ul.o-list',
   resultsListItem: '.qa-list-item-link',
   resultsPanel: '.qa-dashboard__column--right',
   resultsPanelTitle: '.qa-title',
+  tab: '.o-tabs__tab',
 }
 
 export const DATA_SEARCH = {
@@ -21,6 +24,7 @@ export const DATA_SEARCH = {
   autosuggestDropdownActive: '.auto-suggest__dropdown-item--active',
   autosuggestDropdownInActive: '.auto-suggest__dropdown-item--inactive',
   autoSuggestDropdownCategories: '.auto-suggest__dropdown-category li',
+  autoSuggestDropdownHighlighted: '.auto-suggest__dropdown__highlight',
   autoSuggestInput: '#auto-suggest__input',
   autoSuggestHeader: 'h4.qa-auto-suggest-header',
   headerTitle: '.o-header__title',
@@ -53,7 +57,9 @@ export const DATA_SELECTION_TABLE = {
 }
 
 export const DATA_SETS = {
+  datasetItem: '.resources-type__content-item',
   dataSetLink: '[data-test=DatasetCard]',
+  headerDataset: '.o-header__subtitle',
 }
 
 export const HEADER = {
@@ -61,6 +67,7 @@ export const HEADER = {
 }
 
 export const HEADER_MENU = {
+  buttonMenu: '[aria-label=Menu]',
   rootMobile: '[data-test=header-menu-mobile]',
   rootDefault: '[data-test=header-menu-default]',
   login: '[data-test=login]',
@@ -104,6 +111,7 @@ export const MAP = {
   mapDetailPanoramaHeader: '.map-search-results__header-pano',
   mapDetailPanoramaHeaderImage: 'img.map-detail-result__header-pano',
   mapSearchResultsCategoryHeader: '.map-search-results-category__header',
+  mapSearchResultsItem: '.map-search-results-item__name',
   mapSearchResultsPanel: '.map-search-results',
   mapSelectedObject: '.leaflet-interactive',
   mapOverlayPane: '.leaflet-overlay-pane',
@@ -122,6 +130,10 @@ export const PRINT = {
   buttonClosePrint: '.c-print-header__close',
   headerTitle: 'h1.c-print-header__title',
   printLink: '.qa-share-bar > div > button:nth(4) ',
+}
+
+export const PUBLICATIONS = {
+  sortDropdown: '[data-testid="sort-select"]',
 }
 
 export const SEARCH = {
