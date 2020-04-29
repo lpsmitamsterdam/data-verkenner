@@ -1,18 +1,18 @@
 import React from 'react'
 import { shallow } from 'enzyme'
-import Dashboard from './Dashboard'
-import setIframeSize from '../../../../shared/services/set-iframe-size/setIframeSize'
+import IFrame from './IFrame'
+import setIframeSize from '../../../shared/services/set-iframe-size/setIframeSize'
 
-jest.mock('../../../../shared/services/set-iframe-size/setIframeSize')
+jest.mock('../../../shared/services/set-iframe-size/setIframeSize')
 
-describe('Dashboard', () => {
+describe('IFrame', () => {
   const contentLink = { uri: 'https://this.is/a-link/this-is-a-slug' }
   const title = 'title'
 
   let component
 
   beforeEach(() => {
-    component = shallow(<Dashboard contentLink={contentLink} title={title} />)
+    component = shallow(<IFrame contentLink={contentLink} title={title} />)
 
     setIframeSize.mockImplementation(() => {})
   })
