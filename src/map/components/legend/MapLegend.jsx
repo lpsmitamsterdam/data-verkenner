@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from 'react'
+import React, { useMemo, useState } from 'react'
 import queryString from 'querystring'
 import { ChevronDown } from '@datapunt/asc-assets'
 
@@ -150,11 +150,6 @@ const MapLegend = ({
       ({ isVisible, legendItems }) =>
         !isVisible || legendItems.some(({ isVisible: legendVisibility }) => !legendVisibility),
     ) && !allInvisible
-
-  // Effect if all layers are unchecked manually within a collection
-  useEffect(() => {
-    handleSetOpen(!allInvisible)
-  }, [allInvisible])
 
   const handleOnChangeCollection = (e) => {
     // We want to check all the layers when user clicks on an indeterminate checkbox
