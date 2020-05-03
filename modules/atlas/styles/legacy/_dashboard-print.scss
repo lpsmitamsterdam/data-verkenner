@@ -28,10 +28,6 @@ $dashboard-heading-padding-print-version: 46px;
   padding-bottom: 0;
 }
 
-.c-dashboard__error {
-  position: initial;
-}
-
 .c-dashboard__column {
   width: 100%;
   margin: 0;
@@ -43,8 +39,7 @@ $dashboard-heading-padding-print-version: 46px;
     border: none;
   }
 
-  .c-dashboard__heading,
-  .c-dashboard__error {
+  .c-dashboard__heading {
     display: none;
   }
 

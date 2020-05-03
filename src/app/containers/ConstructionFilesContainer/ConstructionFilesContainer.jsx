@@ -8,9 +8,8 @@ import { getUser } from '../../../shared/ducks/user/user'
 import ConstructionFileDetail from '../../components/ConstructionFileDetail/ConstructionFileDetail'
 import { getLocationPayload } from '../../../store/redux-first-router/selectors'
 import LoadingIndicator from '../../../shared/components/loading-indicator/LoadingIndicator'
-import ErrorMessage from '../../components/PanelMessages/ErrorMessage/ErrorMessage'
+import ErrorAlert from '../../components/ErrorAlert/ErrorAlert'
 import { getByUrl } from '../../../shared/services/api/api'
-import './ConstructionFilesContainer.scss'
 import { ConstructionFiles as ContextMenu } from '../../components/ContextMenu'
 import useDocumentTitle from '../../utils/useDocumentTitle'
 import withGrid from '../../utils/withGrid'
@@ -91,7 +90,7 @@ const ConstructionFilesContainer = ({ fileName, fileUrl, endpoint }) => {
   const loadingTemplate = withGrid(<LoadingIndicator />)
 
   return errorMessage ? (
-    <ErrorMessage errorMessage={errorMessage} />
+    <ErrorAlert errorMessage={errorMessage} />
   ) : (
     <>
       {imageViewerActive && (

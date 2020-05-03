@@ -7,7 +7,6 @@ import { Button } from '@datapunt/asc-ui'
 import { Close, Enlarge, Minimise } from '@datapunt/asc-assets'
 import ViewerControls from '../ViewerControls/ViewerControls'
 import { resetFile } from '../../../shared/ducks/files/actions'
-import './ImageViewer.scss'
 import getState from '../../../shared/services/redux/get-state'
 
 /* istanbul ignore next */

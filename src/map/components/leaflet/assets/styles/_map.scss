@@ -79,4 +79,6 @@ $on-top-of-leaflet: 999;
 
 .c-map__wrapper {
   height: 100%;
+  width: 100%;
+  position: relative;
 }

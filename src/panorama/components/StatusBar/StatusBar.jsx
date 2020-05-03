@@ -1,6 +1,5 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import './StatusBar.scss'
 import { wgs84ToRd } from '../../../shared/services/coordinate-reference-system/crs-converter'
 import { dateToString } from '../../../shared/services/date-formatter/date-formatter'
 

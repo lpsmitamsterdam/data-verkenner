@@ -16,7 +16,6 @@ import { useSelector } from 'react-redux'
 import MAP_CONFIG from '../../services/map.config'
 import LoginLinkContainer from '../../../app/components/Links/LoginLink/LoginLinkContainer'
 
-import './_map-legend.scss'
 import { isPrintOrEmbedMode } from '../../../shared/ducks/ui/ui'
 
 const isAuthorised = (layer, user) =>

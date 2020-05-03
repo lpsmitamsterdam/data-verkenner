@@ -6,7 +6,6 @@ import { Container, themeColor } from '@datapunt/asc-ui'
 import { useMatomo } from '@datapunt/matomo-tracker-react'
 import useDocumentTitle from '../../utils/useDocumentTitle'
 import linkAttributesFromAction from '../../../shared/services/link-attributes-from-action/linkAttributesFromAction'
-import '../../../map/components/loading-indicator/LoadingIndicator.scss'
 import LoadingIndicator from '../../../shared/components/loading-indicator/LoadingIndicator'
 import getImageFromCms from '../../utils/getImageFromCms'
 

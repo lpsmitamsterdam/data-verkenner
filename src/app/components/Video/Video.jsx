@@ -2,7 +2,6 @@
 
 import React from 'react'
 import PropTypes from 'prop-types'
-import './Video.scss'
 
 class Video extends React.Component {
   constructor(...options) {

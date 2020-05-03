@@ -5,7 +5,6 @@ import { bindActionCreators } from 'redux'
 import throttle from 'lodash.throttle'
 import classNames from 'classnames'
 
-import './PanoramaContainer.scss'
 import {
   closePanorama,
   fetchPanoramaHotspotRequest,

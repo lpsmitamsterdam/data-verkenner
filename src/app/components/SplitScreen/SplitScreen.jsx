@@ -22,7 +22,8 @@ import PropTypes from 'prop-types' // TODO: refactor, test
         qa-dashboard__column--right
       `}
     >
-      {rightComponent}
+      {/* Quickfix: extra div to make sure layout doesn't break due to legacy css mess */}
+      <div>{rightComponent}</div>
     </div>
   </div>
 )

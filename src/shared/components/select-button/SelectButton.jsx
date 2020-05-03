@@ -1,8 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-import './_select-button.scss'
-
 class SelectButton extends React.Component {
   static getSelected(props) {
     return (

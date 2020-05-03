@@ -1,5 +1,4 @@
 import React from 'react'
-import './EmbedHeader.scss'
 
 /* istanbul ignore next */
 const EmbedHeader = ({ closeAction }) => {

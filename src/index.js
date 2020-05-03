@@ -1,6 +1,3 @@
-// For now simply import everything we need, from here
-import './header/wrappers/header-search/HeaderSearchWrapper'
-
 // All third party dependencies
 import './vendor'
 

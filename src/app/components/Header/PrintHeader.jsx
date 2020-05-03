@@ -1,5 +1,4 @@
 import React from 'react'
-import './PrintHeader.scss'
 
 const PrintHeader = ({ closeAction }) => (
   <div className="u-grid">

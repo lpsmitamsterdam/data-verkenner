@@ -1,8 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-import './_shape-summary.scss'
-
 const ShapeSummary = ({ shapeDistanceTxt, onClearDrawing }) => (
   <div className="shape-summary">
     <span className="shape-summary__label" aria-label={`Lijn: ${shapeDistanceTxt}`}>

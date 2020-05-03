@@ -15,10 +15,7 @@ const Content = styled.div`
     margin-bottom: 0;
   }
 `
-
 const StyledAlertMessage = styled(AlertMessage)`
-  z-index: 3;
-
   /* Ensure outline is visible when element is in focus */
   &:focus {
     z-index: 999;

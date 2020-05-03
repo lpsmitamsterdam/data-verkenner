@@ -1,8 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-import './_points-available.scss'
-
 const PointsAvailable = ({ markersLeft }) => {
   const label =
     markersLeft === 0

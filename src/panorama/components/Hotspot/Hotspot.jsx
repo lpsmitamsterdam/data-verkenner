@@ -1,6 +1,5 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import './Hotspot.scss'
 
 const Hotspot = ({ year, size, angle }) => (
   <div className="hotspot">

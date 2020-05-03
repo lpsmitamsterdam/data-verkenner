@@ -3,7 +3,6 @@ import PropTypes from 'prop-types'
 import { Divider, Button, Modal, TopBar, Heading, Paragraph } from '@datapunt/asc-ui'
 import { Close } from '@datapunt/asc-assets'
 import withModalBehaviour, { propTypes as modalPropTypes } from './withModalBehaviour'
-import './InfoModal.scss'
 import ModalBlock from './ModalBlock'
 
 const InfoModal = ({ open, handleClose, title, body }) => (

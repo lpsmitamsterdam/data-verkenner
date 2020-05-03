@@ -20,7 +20,6 @@ import {
   dedupExchange,
 } from 'urql'
 import { isContentPage, isSearchPage, isEditorialDetailPage } from './pages'
-import './_app.scss'
 import {
   hasOverflowScroll,
   isEmbedded,

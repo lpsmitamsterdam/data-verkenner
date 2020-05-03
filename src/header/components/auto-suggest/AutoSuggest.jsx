@@ -1,7 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import AutoSuggestCategory, { MORE_RESULTS_INDEX } from './AutoSuggestCategory'
-import './_auto-suggest.scss'
 import Search from './Search'
 
 const getSuggestionByIndex = (searchResults, suggestionIndex) =>

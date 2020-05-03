@@ -1,8 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-import './IconButton.scss'
-
 const IconButton = ({ title, icon, onClick, alignLeft, extraClass }) => (
   <button
     type="button"
