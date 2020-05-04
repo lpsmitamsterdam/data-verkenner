@@ -99,7 +99,10 @@ export function* doClosePanorama() {
   const detailReference = yield select(getDetailReference)
   const pageReference = yield select(getPageReference)
   const panoramaLocation = yield select(getPanoramaLocation)
-  const overlays = yield select(getMapOverlays)
+  let overlays = yield select(getMapOverlays)
+
+  // Filter out the panorama layers, as they should be closed
+  overlays = overlays?.filter(({ id }) => !id.startsWith('pano'))
 
   if (Array.isArray(detailReference) && detailReference.length) {
     yield put(
