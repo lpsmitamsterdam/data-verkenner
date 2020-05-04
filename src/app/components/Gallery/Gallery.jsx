@@ -2,7 +2,7 @@
 import React from 'react'
 import { PropTypes } from 'prop-types'
 import RouterLink from 'redux-first-router-link'
-import styled from '@datapunt/asc-core'
+import styled from 'styled-components'
 import { GridContainer, GridItem, Heading, themeSpacing, themeColor, Link } from '@datapunt/asc-ui'
 import { Minimise, Enlarge } from '@datapunt/asc-assets'
 import { toConstructionFileViewer } from '../../../store/redux-first-router/actions'
@@ -53,25 +53,25 @@ const StyledLink = styled(Link)`
 `
 
 // Todo: replace the "encodeURIComponent(file.match(/SU(.*)/g)" when files are on the proper server
-const Gallery = ({ title, allThumbnails, id, maxLength, access }) => {
-  const lessThumbnails = allThumbnails.slice(0, maxLength)
-  const [thumbnails, setThumbnails] = React.useState(lessThumbnails)
+const Gallery = ({ title, allFiles, id, maxLength, access }) => {
+  const lessFiles = allFiles.slice(0, maxLength)
+  const [files, setFiles] = React.useState(lessFiles)
 
   const { scopes } = getState().user
 
   const hasRights = scopes.includes(SCOPES['BD/R'])
   const hasExtendedRights = scopes.includes(SCOPES['BD/X'])
 
-  const hasMore = allThumbnails.length > maxLength
+  const hasMore = allFiles.length > maxLength
   const restricted = access === 'RESTRICTED'
 
   return (
     <GalleryGridContainer key={title} direction="column" gutterX={20}>
       <GridItem>
         <StyledHeading color="secondary" forwardedAs="h3">
-          {title} {hasMore && `(${allThumbnails.length})`}
+          {title} {hasMore && `(${allFiles.length})`}
         </StyledHeading>
-        {thumbnails && thumbnails.length ? (
+        {files && files.length ? (
           <>
             {!hasRights && !hasExtendedRights ? (
               <StyledNotification type="warning">
@@ -96,56 +96,51 @@ const Gallery = ({ title, allThumbnails, id, maxLength, access }) => {
               hasMarginBottom={hasMore}
               collapse
             >
-              {thumbnails.map((file) => {
-                const fileTitle = file.match(/[^/]*$/g)[0]
-                const fileName = file.replace(/\//g, '-') // Replace all forward slashes to create a filename that can be read by the server
-
-                return (
-                  <GridItem
-                    key={file}
-                    as="li"
-                    square
-                    width={[
-                      '100%',
-                      '100%',
-                      '100%',
-                      '50%',
-                      '50%',
-                      `${100 / 3}%`,
-                      `${100 / 6}%`,
-                      `${100 / 6}%`,
-                      '315px',
-                    ]}
+              {files.map(({ filename: fileName, url: fileUrl }) => (
+                <GridItem
+                  key={fileName}
+                  as="li"
+                  square
+                  width={[
+                    '100%',
+                    '100%',
+                    '100%',
+                    '50%',
+                    '50%',
+                    `${100 / 3}%`,
+                    `${100 / 6}%`,
+                    `${100 / 6}%`,
+                    '315px',
+                  ]}
+                >
+                  <StyledLink
+                    forwardedAs={RouterLink}
+                    to={toConstructionFileViewer(id, fileName, fileUrl)}
+                    title={fileName}
                   >
-                    <StyledLink
-                      forwardedAs={RouterLink}
-                      to={toConstructionFileViewer(id, fileName)}
-                      title={fileTitle}
-                    >
-                      <IIIFThumbnail
-                        src={
-                          hasExtendedRights || (!restricted && hasRights)
-                            ? `${process.env.IIIF_ROOT}iiif/2/edepot:${fileName}/square/300,300/0/default.jpg`
-                            : '/assets/images/not_found_thumbnail.jpg' // use the default not found image when user has no rights
-                        }
-                        title={fileTitle}
-                      />
-                    </StyledLink>
-                  </GridItem>
-                )
-              })}
+                    <IIIFThumbnail
+                      src={
+                        hasExtendedRights || (!restricted && hasRights)
+                          ? fileUrl
+                          : '/assets/images/not_found_thumbnail.jpg' // use the default not found image when user has no rights
+                      }
+                      title={fileName}
+                    />
+                  </StyledLink>
+                </GridItem>
+              ))}
             </StyledGridContainer>
             {hasMore &&
-              (allThumbnails.length !== thumbnails.length ? (
+              (allFiles.length !== files.length ? (
                 <ActionButton
                   iconLeft={<Enlarge />}
-                  onClick={() => setThumbnails(allThumbnails)}
-                  label={`Toon alle (${allThumbnails.length})`}
+                  onClick={() => setFiles(allFiles)}
+                  label={`Toon alle (${allFiles.length})`}
                 />
               ) : (
                 <ActionButton
                   iconLeft={<Minimise />}
-                  onClick={() => setThumbnails(lessThumbnails)}
+                  onClick={() => setFiles(lessFiles)}
                   label="Minder tonen"
                 />
               ))}
@@ -164,7 +159,12 @@ Gallery.defaultProps = {
 
 Gallery.propTypes = {
   title: PropTypes.string.isRequired,
-  allThumbnails: PropTypes.arrayOf(PropTypes.string).isRequired,
+  allFiles: PropTypes.arrayOf(
+    PropTypes.shape({
+      filename: PropTypes.string.isRequired,
+      url: PropTypes.string.isRequired,
+    }),
+  ).isRequired,
   id: PropTypes.string.isRequired,
   maxLength: PropTypes.number,
 }
