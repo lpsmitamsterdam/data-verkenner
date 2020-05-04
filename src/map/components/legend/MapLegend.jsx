@@ -1,7 +1,7 @@
 import React, { useMemo, useState } from 'react'
 import queryString from 'querystring'
 import { ChevronDown } from '@datapunt/asc-assets'
-
+import { useMatomo } from '@datapunt/matomo-tracker-react'
 import styled, { css } from 'styled-components'
 import {
   Paragraph,
@@ -99,6 +99,7 @@ const MapLegend = ({
   overlays,
 }) => {
   const ref = React.createRef()
+  const { trackEvent } = useMatomo()
 
   const isPrintOrEmbedView = useSelector(isPrintOrEmbedMode)
   const [isOpen, setOpen] = useState(isPrintOrEmbedView ?? false)
@@ -150,13 +151,32 @@ const MapLegend = ({
         !isVisible || legendItems.some(({ isVisible: legendVisibility }) => !legendVisibility),
     ) && !allInvisible
 
+  const handleLayerToggle = (checked, mapLayer) => {
+    onLayerToggle(mapLayer)
+
+    // Only track the event when the mapLayer gets checked
+    if (checked) {
+      // Sanitize the collection title to use it as action
+      const action = mapLayer.title.toLowerCase().replace(/[: ][ ]*/g, '_')
+
+      // eslint-disable-next-line no-unused-expressions
+      mapLayer?.legendItems.forEach(({ title: legendItemTitle }) =>
+        trackEvent({
+          category: 'kaartlaag',
+          action,
+          name: legendItemTitle,
+        }),
+      )
+    }
+  }
+
   const handleOnChangeCollection = (e) => {
     // We want to check all the layers when user clicks on an indeterminate checkbox
     if (!e.currentTarget.checked && collectionIndeterminate) {
       mapLayers
         .filter(({ isVisible }) => !isVisible)
         .forEach((mapLayer) => {
-          onLayerToggle(mapLayer)
+          handleLayerToggle(e.currentTarget.checked, mapLayer)
         })
 
       mapLayers.forEach((mapLayer) => {
@@ -170,7 +190,7 @@ const MapLegend = ({
       handleSetOpen(true)
     } else {
       activeMapLayers.forEach((mapLayer) => {
-        onLayerToggle(mapLayer)
+        handleLayerToggle(e.currentTarget.checked, mapLayer)
       })
       handleSetOpen(e.currentTarget.checked)
     }
@@ -270,7 +290,7 @@ const MapLegend = ({
                                         })
                                     : onLayerVisibilityToggle(mapLayer.id, !e.currentTarget.checked)
                                 }
-                                return onLayerToggle(mapLayer)
+                                return handleLayerToggle(e.currentTarget.checked, mapLayer)
                               }
                             }
                           />
