@@ -4,7 +4,7 @@ import styled from 'styled-components'
 import { Helmet } from 'react-helmet'
 import { useSelector } from 'react-redux'
 import EmbedIframeComponent from './components/EmbedIframe/EmbedIframe'
-import GeneralErrorMessage from './components/PanelMessages/ErrorMessage/ErrorMessageContainer'
+import ErrorAlert from './components/ErrorAlert/ErrorAlert'
 import { FeedbackModal } from './components/Modal'
 import PAGES, { isMapSplitPage, isSearchPage } from './pages'
 import LoadingIndicator from '../shared/components/loading-indicator/LoadingIndicator'
@@ -72,13 +72,11 @@ const AppBody = ({
       <Suspense fallback={<LoadingIndicator style={{ top: '200px' }} />}>
         <div className={`c-dashboard__body ${bodyClasses}`}>
           <NotificationAlert />
-          {visibilityError && (
-            <GeneralErrorMessage hasMaxWidth={hasGrid} {...{ isHomePage: homePage }} />
-          )}
+          {visibilityError && <ErrorAlert />}
           {embedPreviewMode ? (
             <EmbedIframeComponent />
           ) : (
-            <div className="u-grid u-full-height">
+            <div className="u-grid u-full-height u-overflow--y-auto">
               <div className="u-row u-full-height">
                 {isMapSplitPage(currentPage) && <MapSplitPage />}
 

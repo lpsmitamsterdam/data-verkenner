@@ -25,9 +25,11 @@ exports[`SplitScreen should render 1`] = `
         qa-dashboard__column--right
       "
   >
-    <span>
-      World
-    </span>
+    <div>
+      <span>
+        World
+      </span>
+    </div>
   </div>
 </div>
 `;
@@ -57,9 +59,11 @@ exports[`SplitScreen should render in print mode 1`] = `
         qa-dashboard__column--right
       "
   >
-    <span>
-      World
-    </span>
+    <div>
+      <span>
+        World
+      </span>
+    </div>
   </div>
 </div>
 `;

@@ -1,5 +1,4 @@
 import React from 'react'
-import './Icon.scss'
 
 export interface IconProps {
   icon: string

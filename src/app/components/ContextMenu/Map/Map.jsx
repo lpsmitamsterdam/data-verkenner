@@ -13,7 +13,6 @@ import {
   showEmbedPreview,
   showPrintMode,
 } from '../../../../shared/ducks/ui/ui'
-import './Map.scss'
 
 const Map = ({
   openSharePage,

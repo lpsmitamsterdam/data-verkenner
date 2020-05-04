@@ -1,7 +1,5 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-
-import './_draw-tool.scss'
 import drawToolConfig from '../../services/draw-tool/draw-tool.config'
 import ToggleDrawing from '../toggle-drawing/ToggleDrawingContainer'
 import ShapeSummary from '../shape-summary/ShapeSummaryContainer'

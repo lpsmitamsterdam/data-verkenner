@@ -1,5 +1,4 @@
 @import 'config';
-
 @import 'base/reset';
 @import 'base/typography';
 @import 'base/body';
@@ -37,14 +36,33 @@
 @import 'utilities/typography';
 @import 'utilities/width';
 
+@import '../../app/app';
+@import '../../map/map';
+@import '../../shared/components/notification/_notification';
+@import '../../shared/components/select-button/_select-button';
+@import '../../shared/components/loading-indicator/loading-indicator';
+@import '../../header/components/auto-suggest/auto-suggest';
+@import '../../app/components/ContextMenu/Map/Map';
+@import '../../app/components/Video/Video';
+@import '../../app/components/Icon/Icon';
+@import '../../app/components/EmbedIframe/embedIframe';
+@import '../../app/components/Header/EmbedHeader';
+@import '../../app/components/Header/PrintHeader';
+@import '../../app/components/IconButton/IconButton';
+@import '../../app/components/ImageViewer/ImageViewer';
+@import '../../app/components/Modal/InfoModal';
+@import '../../app/components/ViewerControls/ViewerControls';
+@import '../../app/components/DataSelection/DataSelectionTable/DataSelectionTable';
+@import '../../app/containers/ConstructionFilesContainer/ConstructionFilesContainer';
+@import '../../panorama/components/PanoramaToggle/PanoramaToggle';
+@import '../../panorama/components/StatusBar/StatusBar';
+@import '../../panorama/components/Hotspot/Hotspot';
+@import '../../panorama/containers/PanoramaContainer';
+
 .is-print-mode {
   @import 'base/reset-print';
 }
 
 .is-embed-preview {
   @import 'base/reset-embed-preview';
-}
-
-.is-embed {
-  @import 'base/reset-embed';
 }

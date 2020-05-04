@@ -55,10 +55,6 @@
     <link<% for (key in item) { %> <%= key %>="<%= item[key] %>"<% } %>>
     <% } %>
 
-    <% for (key in htmlWebpackPlugin.files.css) { %>
-    <link href="<%= htmlWebpackPlugin.files.css[key] %>" rel="stylesheet">
-    <% } %>
-
     <style>
       #root-loading-indicator {
         display: flex;

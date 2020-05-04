@@ -1,6 +1,5 @@
 import React from 'react'
 
-import './_loading-indicator.scss'
 import PropTypes from 'prop-types'
 import { Spinner } from '@datapunt/asc-ui'
 

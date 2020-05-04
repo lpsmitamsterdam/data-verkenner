@@ -1,6 +1,5 @@
 import React from 'react'
 import { getIframeUrl } from '../../../shared/services/embed-url/embed-url'
-import './_embedIframe.scss'
 
 const EmbedIframeComponent = () => (
   <iframe
