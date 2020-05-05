@@ -121,7 +121,7 @@ const Gallery = ({ title, allFiles, id, maxLength, access }) => {
                     <IIIFThumbnail
                       src={
                         hasExtendedRights || (!restricted && hasRights)
-                          ? fileUrl
+                          ? `${fileUrl}/square/180,180/0/default.jpg`
                           : '/assets/images/not_found_thumbnail.jpg' // use the default not found image when user has no rights
                       }
                       title={fileName}
