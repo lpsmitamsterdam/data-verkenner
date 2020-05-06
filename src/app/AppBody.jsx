@@ -25,7 +25,6 @@ const SpecialDetailPage = React.lazy(() => import('./pages/SpecialDetailPage'))
 const CollectionDetailPage = React.lazy(() => import('./pages/CollectionDetailPage'))
 const MapSplitPage = React.lazy(() => import('./pages/MapSplitPage'))
 const NotFoundPage = React.lazy(() => import('./pages/NotFoundPage'))
-const MovedPage = React.lazy(() => import('./pages/MovedPage'))
 const SearchPage = React.lazy(() => import('./pages/SearchPage/index'))
 
 // The Container from @datapunt/asc-ui isnt used here as the margins added do not match the ones in the design
@@ -54,7 +53,6 @@ const AppBody = ({
           {currentPage === PAGES.PUBLICATION_DETAIL && <PublicationDetailPage />}
           {currentPage === PAGES.COLLECTION_DETAIL && <CollectionDetailPage />}
           {currentPage === PAGES.ACTUALITY && <ActualityContainer />}
-          {currentPage === PAGES.MOVED && <MovedPage />}
           {currentPage === PAGES.NOT_FOUND && <NotFoundPage />}
           {isSearchPage(currentPage) && <SearchPage currentPage={currentPage} query={query} />}
         </Suspense>
