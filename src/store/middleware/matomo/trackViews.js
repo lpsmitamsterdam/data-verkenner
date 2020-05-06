@@ -26,14 +26,6 @@ views = {
         ]
       : []
   },
-  [routing.verplaatst.type]: function trackView({ href, title }) {
-    return [
-      MATOMO_CONSTANTS.TRACK_VIEW,
-      title, // PAGEVIEW -> VERPLAATS
-      href,
-      document.referrer,
-    ]
-  },
   [routing.dataDetail.type]: function trackView({
     firstAction = null,
     query = {},

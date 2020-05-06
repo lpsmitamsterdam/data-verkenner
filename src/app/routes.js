@@ -99,12 +99,6 @@ export const routing = {
     type: `${ROUTER_NAMESPACE}/${PAGES.LOGIN}`,
     page: PAGES.LOGIN,
   },
-  verplaatst: {
-    title: 'Pagina verplaatst',
-    path: '/verplaatst/',
-    type: `${ROUTER_NAMESPACE}/${PAGES.MOVED}`,
-    page: PAGES.MOVED,
-  },
   niet_gevonden: {
     title: 'Pagina niet gevonden',
     path: '/niet-gevonden/',
