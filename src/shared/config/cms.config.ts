@@ -21,8 +21,8 @@ export enum SpecialType {
 
 const cmsConfig = {
   ARTICLE: {
-    endpoint: (id: string) =>
-      `${process.env.CMS_ROOT}jsonapi/node/article/${id}?include=field_cover_image.field_media_image,field_related.field_teaser_image.field_media_image,field_downloads.field_file.field_media_file`,
+    endpoint: (id?: string) =>
+      `${process.env.CMS_ROOT}jsonapi/node/article/${id}?include=field_accordions,field_cover_image.field_media_image,field_related.field_teaser_image.field_media_image,field_downloads.field_file.field_media_file`,
     fields: [
       'field_downloads',
       'field_downloads.title',
@@ -45,6 +45,11 @@ const cmsConfig = {
       'field_related.field_teaser',
       'field_related.field_type',
       'field_related.type',
+      'field_accordions',
+      'field_accordions.field_accordion_content',
+      'field_accordions.field_accordion_intro',
+      'field_accordions.field_accordion_label',
+      'field_accordions.field_accordion_title',
       'field_type',
       ...SHARED_FIELDS,
     ],
