@@ -17,6 +17,8 @@ import {
   Paragraph,
   themeSpacing,
   breakpoint,
+  Accordion,
+  AccordionWrapper,
 } from '@datapunt/asc-ui'
 import React from 'react'
 import { connect } from 'react-redux'
@@ -69,6 +71,10 @@ const StyledHeading = styled(Heading)`
     `}
 `
 
+const StyledAccordionHeading = styled(Heading)`
+  margin-top: ${themeSpacing(7)};
+`
+
 const StyledContentContainer = styled(ContentContainer)`
   ${({ hasImage }) =>
     hasImage &&
@@ -101,6 +107,10 @@ const StyledEditorialResults = styled(EditorialResults)`
   margin-bottom: ${themeSpacing(25)};
 `
 
+const StyledAccordion = styled(Accordion)`
+  margin-top: ${themeSpacing(2)};
+`
+
 /* istanbul ignore next */
 const ArticleDetailPage = ({ id }) => {
   const { fetchData, results, loading, error } = useFromCMS(cmsConfig.ARTICLE, id)
@@ -119,6 +129,7 @@ const ArticleDetailPage = ({ id }) => {
     field_downloads: downloads,
     field_links: links,
     field_byline: byline,
+    field_accordions: accordions,
     slug,
     intro,
     field_type: articleType,
@@ -172,6 +183,34 @@ const ArticleDetailPage = ({ id }) => {
                         <Paragraph strong dangerouslySetInnerHTML={{ __html: intro }} />
                         {typeof body === 'string' && (
                           <CustomHTMLBlock body={body.replace('http://', 'https://')} />
+                        )}
+                        {accordions?.length && (
+                          <AccordionWrapper>
+                            {accordions.map(
+                              ({
+                                field_accordion_title: accordionTitle,
+                                field_accordion_content: accordionContent,
+                                field_accordion_intro: accordionIntro,
+                                field_accordion_label: accordionLabel,
+                              }) => (
+                                <>
+                                  {accordionTitle && (
+                                    <StyledAccordionHeading forwardedAs="h3">
+                                      {accordionTitle}
+                                    </StyledAccordionHeading>
+                                  )}
+                                  {accordionIntro?.processed && (
+                                    <CustomHTMLBlock body={accordionIntro.processed} />
+                                  )}
+                                  {accordionLabel && accordionContent?.processed && (
+                                    <StyledAccordion title={accordionLabel}>
+                                      <CustomHTMLBlock body={accordionContent.processed} />
+                                    </StyledAccordion>
+                                  )}
+                                </>
+                              ),
+                            )}
+                          </AccordionWrapper>
                         )}
                         {related && related.length ? (
                           <>
