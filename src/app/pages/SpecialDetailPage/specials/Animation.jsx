@@ -8,6 +8,7 @@ import {
   EditorialMetaList,
   themeColor,
   themeSpacing,
+  Link,
 } from '@datapunt/asc-ui'
 import styled from 'styled-components'
 import ShareBar from '../../../components/ShareBar/ShareBar'
@@ -31,6 +32,7 @@ const Animation = ({ contentLink, title, results }) => {
     localeDateFormatted,
     field_subtitle_link: subtitleLink,
     field_subtitle_default: enableSubtitleByDefault,
+    field_links: links,
   } = results
   const subtitleUri = subtitleLink?.uri
 
@@ -75,6 +77,12 @@ const Animation = ({ contentLink, title, results }) => {
           <EditorialContent>
             {intro && <Paragraph strong>{intro}</Paragraph>}
             {body && <CustomHTMLBlock body={body} />}
+            {links?.length &&
+              links.map(({ uri, title: linkTitle }) => (
+                <Link variant="with-chevron" href={uri} title={linkTitle} target="_blank">
+                  {linkTitle}
+                </Link>
+              ))}
           </EditorialContent>
         </Column>
       </Column>
