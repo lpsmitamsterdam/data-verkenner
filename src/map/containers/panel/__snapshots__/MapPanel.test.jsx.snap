@@ -45,7 +45,6 @@ exports[`MapPanel should render MapLegend if store contains active map layers 1`
       isMapPanelHandleVisible={true}
       onMapPanelHandleToggle={[Function]}
     >
-      <UpdateAlert />
       <MapType
         activeBaseLayer=""
         baseLayers={Object {}}
@@ -112,7 +111,6 @@ exports[`MapPanel should render MapType and MapLayers 1`] = `
       isMapPanelHandleVisible={true}
       onMapPanelHandleToggle={[Function]}
     >
-      <UpdateAlert />
       <MapType
         activeBaseLayer=""
         baseLayers={Object {}}

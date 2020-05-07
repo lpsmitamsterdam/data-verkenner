@@ -4,7 +4,6 @@ import { ChevronUp } from '@datapunt/asc-assets'
 import MapLegend from '../../components/legend/MapLegend'
 import MapPanelHandle from '../../components/panel-handle/MapPanelHandle'
 import MapType from '../../components/type/MapType'
-import UpdateAlert from '../../../app/components/UpdateAlert/UpdateAlert'
 
 const MapPanel = ({
   isMapPanelVisible,
@@ -64,7 +63,6 @@ const MapPanel = ({
           onMapPanelHandleToggle,
         }}
       >
-        <UpdateAlert />
         <MapType
           activeBaseLayer={activeBaseLayer}
           baseLayers={mapBaseLayers}
