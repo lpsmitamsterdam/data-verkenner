@@ -37,6 +37,10 @@ const StyledButton = styled(Button)`
   justify-content: center;
 `
 
+// StyledButton.displayName === 'Styled(Component)' since Button is wrapped around forwardRef, so let's set set the displayName manually so we can target it in tests
+StyledButton.displayName = 'StyledButton'
+StyledImage.displayName = 'StyledImage'
+
 const DocumentCover = ({ imageSrc, onClick, title, description, loading, ...otherProps }) => (
   <DocumentCoverStyle {...otherProps}>
     <DocumentCoverContentStyle>

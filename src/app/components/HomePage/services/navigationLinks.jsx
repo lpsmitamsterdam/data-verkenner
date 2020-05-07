@@ -15,7 +15,7 @@ const navigationLinks = [
     id: 0,
     to: toMapWithLegendOpen(),
     CardIcon: () => (
-      <Icon square size={32}>
+      <Icon square size={45}>
         <Map />
       </Icon>
     ),
@@ -26,7 +26,7 @@ const navigationLinks = [
     id: 1,
     to: toPanoramaAndPreserveQuery(undefined, undefined, undefined, 'home'),
     CardIcon: () => (
-      <Icon size={36}>
+      <Icon size={45}>
         <Pano />
       </Icon>
     ),
@@ -37,7 +37,7 @@ const navigationLinks = [
     id: 2,
     to: toPublicationSearch(),
     CardIcon: () => (
-      <Icon size={36}>
+      <Icon size={45}>
         <DocumentText />
       </Icon>
     ),
@@ -48,7 +48,7 @@ const navigationLinks = [
     id: 3,
     to: toDatasetSearch(),
     CardIcon: () => (
-      <Icon size={32}>
+      <Icon size={45}>
         <Data />
       </Icon>
     ),
@@ -62,7 +62,7 @@ const navigationLinks = [
       NAVIGATION_LINKS.DATA_IN_TABLES.slug,
     ),
     CardIcon: () => (
-      <Icon size={32}>
+      <Icon size={40}>
         <Table />
       </Icon>
     ),
@@ -76,7 +76,7 @@ const navigationLinks = [
       NAVIGATION_LINKS.DATA_SERVICES.slug,
     ),
     CardIcon: () => (
-      <Icon size={36}>
+      <Icon size={45}>
         <Api />
       </Icon>
     ),
