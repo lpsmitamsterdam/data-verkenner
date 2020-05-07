@@ -1,14 +1,14 @@
 /* eslint-disable camelcase */
 import React from 'react'
 import styled from 'styled-components'
-import { AlertMessage, Paragraph, Link } from '@datapunt/asc-ui'
+import { Alert, Paragraph, Link } from '@datapunt/asc-ui'
 import { useSelector } from 'react-redux'
 import { isEmbedded } from '../../../shared/ducks/ui/ui'
 import { createCookie, getCookie } from '../../../shared/services/cookie/cookie'
 
 const COOKIE_NAME = 'showUpdateAlert'
 
-const StyledAlertMessage = styled(AlertMessage)`
+const StyledAlert = styled(Alert)`
   z-index: 3;
   // IE11 fix
   & > div {
@@ -21,7 +21,7 @@ const UpdateAlert: React.FC = () => {
   const hide = useSelector(isEmbedded)
   if (!hide && !getCookie(COOKIE_NAME)) {
     return (
-      <StyledAlertMessage
+      <StyledAlert
         dismissible
         compact
         level="attention"
@@ -33,7 +33,7 @@ const UpdateAlert: React.FC = () => {
             Lees meer
           </Link>
         </Paragraph>
-      </StyledAlertMessage>
+      </StyledAlert>
     )
   }
 

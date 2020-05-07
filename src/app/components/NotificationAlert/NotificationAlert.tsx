@@ -1,7 +1,7 @@
 /* eslint-disable camelcase */
 import React from 'react'
 import styled from 'styled-components'
-import { AlertMessage } from '@datapunt/asc-ui'
+import { Alert } from '@datapunt/asc-ui'
 import { useSelector } from 'react-redux'
 import { isEmbedded } from '../../../shared/ducks/ui/ui'
 import useDataFetching from '../../utils/useDataFetching'
@@ -15,7 +15,7 @@ const Content = styled.div`
     margin-bottom: 0;
   }
 `
-const StyledAlertMessage = styled(AlertMessage)`
+const StyledAlert = styled(Alert)`
   /* Ensure outline is visible when element is in focus */
   &:focus {
     z-index: 999;
@@ -40,7 +40,7 @@ const NotificationAlert: React.FC = () => {
 
     if (body) {
       return field_position === 'header' ? (
-        <StyledAlertMessage
+        <StyledAlert
           dismissible
           heading={field_notification_title}
           compact
@@ -48,7 +48,7 @@ const NotificationAlert: React.FC = () => {
           onDismiss={() => createCookie(COOKIE_NAME, '8')}
         >
           <Content dangerouslySetInnerHTML={{ __html: body.value }} />
-        </StyledAlertMessage>
+        </StyledAlert>
       ) : (
         <InfoModal
           id="infoModal"
