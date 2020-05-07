@@ -77,6 +77,7 @@ const cmsConfig = {
   SPECIAL: {
     endpoint: (id: string) => `${process.env.CMS_ROOT}jsonapi/node/special/${id}`,
     fields: [
+      'field_links',
       'field_content_link',
       'field_special_type',
       'field_subtitle_link',
