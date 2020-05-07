@@ -2,6 +2,7 @@ import React from 'react'
 import { MenuInline, MenuToggle, MenuFlyOut, MenuItem, MenuButton } from '@datapunt/asc-ui'
 import { ChevronRight } from '@datapunt/asc-assets'
 import PropTypes from 'prop-types'
+import { useMatomo } from '@datapunt/matomo-tracker-react'
 import RouterLink from 'redux-first-router-link'
 import { toArticleDetail } from '../../../store/redux-first-router/actions'
 import truncateString from '../../../shared/services/truncateString/truncateString'
@@ -16,12 +17,26 @@ const components = {
 
 const HeaderMenu = ({ type, login, logout, user, showFeedbackForm, ...props }) => {
   const [menuOpen, setMenuOpen] = React.useState(false)
+  const { trackEvent } = useMatomo()
   const Menu = components[type]
   return (
     <Menu {...props} open={menuOpen} hasBackDrop onExpand={setMenuOpen}>
       <MenuFlyOut label="Onderdelen">
         {navigationLinks.map(({ id, title, to }) => (
-          <MenuButton as={RouterLink} iconLeft={<ChevronRight />} key={id} title={title} to={to}>
+          <MenuButton
+            onClick={() => {
+              trackEvent({
+                category: 'main-menu',
+                action: 'click',
+                name: title,
+              })
+            }}
+            as={RouterLink}
+            iconLeft={<ChevronRight />}
+            key={id}
+            title={title}
+            to={to}
+          >
             {title}
           </MenuButton>
         ))}
@@ -34,6 +49,13 @@ const HeaderMenu = ({ type, login, logout, user, showFeedbackForm, ...props }) =
             return (
               <MenuItem key={linkId}>
                 <MenuButton
+                  onClick={() => {
+                    trackEvent({
+                      category: 'main-menu',
+                      action: 'click',
+                      name: title,
+                    })
+                  }}
                   as={RouterLink}
                   iconLeft={<ChevronRight />}
                   title={title}
@@ -49,6 +71,11 @@ const HeaderMenu = ({ type, login, logout, user, showFeedbackForm, ...props }) =
         <MenuButton
           type="button"
           onClick={async () => {
+            trackEvent({
+              category: 'main-menu',
+              action: 'click',
+              name: 'Feedback',
+            })
             await setMenuOpen(false)
             showFeedbackForm()
           }}
@@ -60,6 +87,13 @@ const HeaderMenu = ({ type, login, logout, user, showFeedbackForm, ...props }) =
         <MenuItem>
           <MenuButton
             as={RouterLink}
+            onClick={() => {
+              trackEvent({
+                category: 'main-menu',
+                action: 'click',
+                name: HEADER_LINKS.HELP.title,
+              })
+            }}
             title={HEADER_LINKS.HELP.title}
             to={toArticleDetail(HEADER_LINKS.HELP.id[process.env.NODE_ENV], HEADER_LINKS.HELP.slug)}
           >
@@ -69,14 +103,35 @@ const HeaderMenu = ({ type, login, logout, user, showFeedbackForm, ...props }) =
       )}
       {!user.authenticated ? (
         <MenuItem>
-          <MenuButton type="button" onClick={login}>
+          <MenuButton
+            type="button"
+            onClick={(e) => {
+              login(e)
+              trackEvent({
+                category: 'main-menu',
+                action: 'click',
+                name: 'Inloggen',
+              })
+            }}
+          >
             Inloggen
           </MenuButton>
         </MenuItem>
       ) : (
         <MenuFlyOut data-test="login" label={truncateString(user.name, 9)}>
           <MenuItem>
-            <MenuButton type="button" onClick={logout} iconLeft={<ChevronRight />}>
+            <MenuButton
+              type="button"
+              onClick={(e) => {
+                logout(e)
+                trackEvent({
+                  category: 'main-menu',
+                  action: 'click',
+                  name: 'Uitloggen',
+                })
+              }}
+              iconLeft={<ChevronRight />}
+            >
               Uitloggen
             </MenuButton>
           </MenuItem>

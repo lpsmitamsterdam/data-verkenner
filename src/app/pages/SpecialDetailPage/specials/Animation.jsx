@@ -25,6 +25,11 @@ const StyledColumn = styled(Column)`
   }
 `
 
+const StyledLink = styled(Link)`
+  display: flex;
+  margin-bottom: ${themeSpacing(4)};
+`
+
 const Animation = ({ contentLink, title, results }) => {
   const {
     body,
@@ -79,9 +84,9 @@ const Animation = ({ contentLink, title, results }) => {
             {body && <CustomHTMLBlock body={body} />}
             {links?.length &&
               links.map(({ uri, title: linkTitle }) => (
-                <Link variant="with-chevron" href={uri} title={linkTitle} target="_blank">
+                <StyledLink variant="with-chevron" href={uri} title={linkTitle} target="_blank">
                   {linkTitle}
-                </Link>
+                </StyledLink>
               ))}
           </EditorialContent>
         </Column>
