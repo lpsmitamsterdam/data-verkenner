@@ -52,9 +52,12 @@ const StyledCardContainer = styled.div`
 
 const NavigationBlock = () => (
   <StyledCardContainer data-test="navigation-block">
-    {navigationLinks.map((linkProps) => (
-      <NavigationCard key={linkProps.id} {...linkProps} />
-    ))}
+    {navigationLinks
+      .filter(({ description }) => description) // only the ones with a description
+      .sort(({ id: idA }, { id: idB }) => idA - idB) // sort on id
+      .map((linkProps) => (
+        <NavigationCard key={linkProps.id} {...linkProps} />
+      ))}
   </StyledCardContainer>
 )
 

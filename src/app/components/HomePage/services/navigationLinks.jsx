@@ -7,9 +7,16 @@ import {
   toDatasetSearch,
   toMapWithLegendOpen,
   toPublicationSearch,
+  toCollectionSearch,
+  toSpecialSearch,
+  toArticleSearch,
+  toMapSearch,
 } from '../../../../store/redux-first-router/actions'
 import { NAVIGATION_LINKS } from '../../../../shared/config/config'
+import { routing as routes } from '../../../routes'
 
+// The id's also represent the order in which they are displayed in the NavigationBlock on the homepage
+// The order of how the items are placed in the array, is the order for the Menu
 const navigationLinks = [
   {
     id: 0,
@@ -32,28 +39,6 @@ const navigationLinks = [
     ),
     title: 'Panoramabeelden',
     description: 'Kijk 360 graden in het rond',
-  },
-  {
-    id: 2,
-    to: toPublicationSearch(),
-    CardIcon: () => (
-      <Icon size={45}>
-        <DocumentText />
-      </Icon>
-    ),
-    title: 'Publicaties',
-    description: 'Download factsheets en onderzoeksrapporten',
-  },
-  {
-    id: 3,
-    to: toDatasetSearch(),
-    CardIcon: () => (
-      <Icon size={45}>
-        <Data />
-      </Icon>
-    ),
-    title: 'Datasets',
-    description: 'Zoek en download databestanden',
   },
   {
     id: 4,
@@ -82,6 +67,48 @@ const navigationLinks = [
     ),
     title: NAVIGATION_LINKS.DATA_SERVICES.title,
     description: NAVIGATION_LINKS.DATA_SERVICES.description,
+  },
+  {
+    id: 6,
+    to: toCollectionSearch(),
+    title: routes.collectionSearch.title,
+  },
+  {
+    id: 7,
+    to: toSpecialSearch(),
+    title: routes.specialSearch.title,
+  },
+  {
+    id: 9,
+    to: toMapSearch(),
+    title: routes.mapSearch.title,
+  },
+  {
+    id: 3,
+    to: toDatasetSearch(),
+    CardIcon: () => (
+      <Icon size={45}>
+        <Data />
+      </Icon>
+    ),
+    title: routes.datasetSearch.title,
+    description: 'Zoek en download databestanden',
+  },
+  {
+    id: 2,
+    to: toPublicationSearch(),
+    CardIcon: () => (
+      <Icon size={45}>
+        <DocumentText />
+      </Icon>
+    ),
+    title: routes.publicationSearch.title,
+    description: 'Download factsheets en onderzoeksrapporten',
+  },
+  {
+    id: 8,
+    to: toArticleSearch(),
+    title: routes.articleSearch.title,
   },
 ]
 
