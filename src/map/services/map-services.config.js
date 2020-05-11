@@ -376,6 +376,7 @@ const servicesByEndpointType = {
         subTitle: result.id,
         items: [
           { label: 'Type', value: formatList(result.type) },
+          { label: 'Aantal', value: result.count },
           { label: 'Noodzaak', value: formatList(result.noodzaak) },
           { label: 'Uiterlijk', value: formatList(result.uiterlijk) },
           { label: 'Omschrijving', value: formatList(result.soortPaaltje) },
@@ -384,7 +385,6 @@ const servicesByEndpointType = {
           { label: 'Soort weg', value: formatList(result.soortWeg) },
           { label: 'Status', value: formatList(result.paaltjesWeg) },
           { label: 'Zichtbaarheid', value: formatList(result.zichtInDonker) },
-          { label: 'Aantal', value: result.count },
         ],
       }
     },
