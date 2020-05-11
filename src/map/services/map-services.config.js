@@ -384,9 +384,6 @@ const servicesByEndpointType = {
           { label: 'Soort weg', value: formatList(result.soortWeg) },
           { label: 'Status', value: formatList(result.paaltjesWeg) },
           { label: 'Zichtbaarheid', value: formatList(result.zichtInDonker) },
-          { label: 'Locatie', value: result.at },
-          { label: 'Straat', value: result.street },
-          { label: 'Gebied', value: result.area },
           { label: 'Aantal', value: result.count },
         ],
       }
