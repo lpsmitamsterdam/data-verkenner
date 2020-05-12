@@ -26,8 +26,8 @@ const HeaderMenu = ({ type, login, logout, user, showFeedbackForm, ...props }) =
           <MenuButton
             onClick={() => {
               trackEvent({
-                category: 'main-menu',
-                action: 'click',
+                category: 'navigation',
+                action: 'main-menu',
                 name: title,
               })
             }}
@@ -51,8 +51,8 @@ const HeaderMenu = ({ type, login, logout, user, showFeedbackForm, ...props }) =
                 <MenuButton
                   onClick={() => {
                     trackEvent({
-                      category: 'main-menu',
-                      action: 'click',
+                      category: 'navigation',
+                      action: 'main-menu',
                       name: title,
                     })
                   }}
@@ -72,8 +72,8 @@ const HeaderMenu = ({ type, login, logout, user, showFeedbackForm, ...props }) =
           type="button"
           onClick={async () => {
             trackEvent({
-              category: 'main-menu',
-              action: 'click',
+              category: 'navigation',
+              action: 'main-menu',
               name: 'Feedback',
             })
             await setMenuOpen(false)
@@ -89,8 +89,8 @@ const HeaderMenu = ({ type, login, logout, user, showFeedbackForm, ...props }) =
             as={RouterLink}
             onClick={() => {
               trackEvent({
-                category: 'main-menu',
-                action: 'click',
+                category: 'navigation',
+                action: 'main-menu',
                 name: HEADER_LINKS.HELP.title,
               })
             }}
@@ -108,9 +108,9 @@ const HeaderMenu = ({ type, login, logout, user, showFeedbackForm, ...props }) =
             onClick={(e) => {
               login(e)
               trackEvent({
-                category: 'main-menu',
-                action: 'click',
-                name: 'Inloggen',
+                category: 'navigation',
+                action: 'main-menu',
+                name: 'Login',
               })
             }}
           >
@@ -125,9 +125,9 @@ const HeaderMenu = ({ type, login, logout, user, showFeedbackForm, ...props }) =
               onClick={(e) => {
                 logout(e)
                 trackEvent({
-                  category: 'main-menu',
-                  action: 'click',
-                  name: 'Uitloggen',
+                  category: 'navigation',
+                  action: 'main-menu',
+                  name: 'Logout',
                 })
               }}
               iconLeft={<ChevronRight />}
