@@ -3,7 +3,7 @@ import SEARCH_CONFIG from './search-config'
 
 const geosearchFormatter = (allSearchResults) => {
   const allFeaturesFlattened = allSearchResults
-    .map((searchResult) => searchResult.features.map((feature) => feature.properties))
+    .map((searchResult) => searchResult.features?.map((feature) => feature.properties))
     .reduce((previous, current) => previous.concat(current), [])
 
   return SEARCH_CONFIG.COORDINATES_HIERARCHY.map((rawCategory) => {
@@ -12,7 +12,7 @@ const geosearchFormatter = (allSearchResults) => {
       singular: rawCategory.singular,
       plural: rawCategory.plural,
       results: allFeaturesFlattened
-        .filter((feature) => rawCategory.features.indexOf(feature.type) !== -1)
+        .filter((feature) => rawCategory.features.indexOf(feature?.type) !== -1)
         .sort((featureA, featureB) => {
           const indexA = rawCategory.features.indexOf(featureA.type)
           const indexB = rawCategory.features.indexOf(featureB.type)
