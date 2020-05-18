@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react'
+import React, { useMemo, useState, useEffect } from 'react'
 import queryString from 'querystring'
 import { ChevronDown } from '@datapunt/asc-assets'
 import { useMatomo } from '@datapunt/matomo-tracker-react'
@@ -195,6 +195,21 @@ const MapLegend = ({
       handleSetOpen(e.currentTarget.checked)
     }
   }
+
+  useEffect(() => {
+    // Open the panel when some of the layers are visible
+    if (
+      !isOpen &&
+      mapLayers.some(
+        ({ isVisible, legendItems }) =>
+          isVisible === true ||
+          (isVisible === true && // legenditems could be visible in another MapLegend
+            legendItems.some(({ isVisible: legendItemIsVisible }) => legendItemIsVisible === true)),
+      )
+    ) {
+      handleSetOpen(true)
+    }
+  }, [mapLayers, isOpen])
 
   return (
     <>
