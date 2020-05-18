@@ -203,8 +203,8 @@ const MapLegend = ({
       mapLayers.some(
         ({ isVisible, legendItems }) =>
           isVisible === true ||
-          (isVisible === true && // legenditems could be visible in another MapLegend
-            legendItems.some(({ isVisible: legendItemIsVisible }) => legendItemIsVisible === true)),
+          (isVisible === true &&
+            legendItems.some(({ isVisible: legendItemIsVisible }) => legendItemIsVisible === true)), // legenditems could be visible in another MapLegend
       )
     ) {
       handleSetOpen(true)
