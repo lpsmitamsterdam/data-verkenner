@@ -10,7 +10,7 @@
       </div>
     </dl>
 
-    <div class="u-margin__bottom--2" ng-repeat="item in vm.apiData.results.items" ng-if="item.type === 'table' && item.values.length > 0">
+    <div ng-repeat="item in vm.apiData.results.items" ng-if="item.type === 'table' && item.values.length > 0">
       <h3 class="o-header__subtitle qa-subtitle u-margin__bottom--1" ng-if="item.label">
         {{ item.label }}
       </h3>
