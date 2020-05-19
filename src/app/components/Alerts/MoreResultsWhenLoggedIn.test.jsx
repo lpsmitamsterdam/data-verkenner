@@ -12,6 +12,6 @@ describe('MoreResultsWhenLoggedIn', () => {
     const excludedResults = 'Lorem ipsum'
     const component = shallow(<MoreResultsWhenLoggedIn excludedResults={excludedResults} />)
 
-    expect(component.find('p').at(0).text()).toContain(': Lorem ipsum.')
+    expect(component.find('Paragraph').at(0).props().children).toContain(': Lorem ipsum.')
   })
 })

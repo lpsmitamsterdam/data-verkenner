@@ -2,6 +2,7 @@ import { shallow } from 'enzyme'
 import React from 'react'
 import { DetailResult, DetailResultItemType } from '../../types/details'
 import MapDetailResult from './MapDetailResult'
+import NotificationLevel from '../../../app/models/notification'
 
 describe('MapDetailResult', () => {
   let component
@@ -13,7 +14,7 @@ describe('MapDetailResult', () => {
 
   it('should display the notifications', () => {
     result = {
-      notifications: [{ level: 'alert', value: 'notification' }],
+      notifications: [{ level: NotificationLevel.Attention, value: 'notification' }],
       items: [],
     }
 
@@ -26,7 +27,7 @@ describe('MapDetailResult', () => {
       />,
     )
 
-    expect(component.find('Notification').exists()).toBeTruthy()
+    expect(component.find('Alert').exists()).toBeTruthy()
   })
 
   it('should not display the notifications without value', () => {
@@ -44,7 +45,7 @@ describe('MapDetailResult', () => {
       />,
     )
 
-    expect(component.find('Notification').exists()).toBeFalsy()
+    expect(component.find('Alert').exists()).toBeFalsy()
   })
 
   it('should display the items', () => {

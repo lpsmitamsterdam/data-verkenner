@@ -1,4 +1,4 @@
-import { NotificationLevel } from '../../shared/components/notification/Notification'
+import NotificationLevel from '../../app/models/notification'
 
 export interface DetailResult {
   title: string

@@ -1,17 +1,19 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`MoreResultsWhenLoggedIn should render everything 1`] = `
-<Styled(Notification)
-  type="info"
+<Alert
+  dismissible={true}
+  level="attention"
 >
-  <Styled(Heading)
+  <Heading
+    as="h1"
     forwardedAs="h3"
   >
     Meer resultaten na inloggen
-  </Styled(Heading)>
-  <p>
+  </Heading>
+  <Paragraph>
     Medewerkers/ketenpartners van Gemeente Amsterdam kunnen inloggen om meer te vinden. 
-  </p>
+  </Paragraph>
   <Connect(LoginLink) />
-</Styled(Notification)>
+</Alert>
 `;
