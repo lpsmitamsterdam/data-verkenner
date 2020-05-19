@@ -1,5 +1,5 @@
 import React, { Fragment } from 'react'
-import Notification from '../../../shared/components/notification/Notification'
+import { Alert } from '@datapunt/asc-ui'
 import {
   DetailResult,
   DetailResultItem,
@@ -39,13 +39,14 @@ const MapDetailResult: React.FC<MapDetailResultProps> = ({
         }
 
         return (
-          <Notification
+          <Alert
+            compact
             key={notification.value}
-            canClose={notification.canClose}
+            dismissible={notification.canClose}
             level={notification.level}
           >
             {notification.value}
-          </Notification>
+          </Alert>
         )
       })}
 

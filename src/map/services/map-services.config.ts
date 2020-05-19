@@ -19,6 +19,7 @@ import {
   winkelgebied,
 } from './normalize/normalize'
 import vestiging from './vestiging/vestiging'
+import NotificationLevel from '../../app/models/notification'
 
 export const endpointTypes = {
   adressenLigplaats: 'bag/v1.1/ligplaats/',
@@ -80,23 +81,23 @@ const servicesByEndpointType: { [type: string]: ServiceDefinition } = {
           type: DetailResultItemType.Default,
           label: 'Indicatie geconstateerd',
           value: result.indicatie_geconstateerd ? 'Ja' : 'Nee',
-          status: result.indicatie_geconstateerd ? 'alert' : '',
+          status: result.indicatie_geconstateerd ? NotificationLevel.Error : '',
         },
         {
           type: DetailResultItemType.Default,
           label: 'Aanduiding in onderzoek',
           value: result.aanduiding_in_onderzoek ? 'Ja' : 'Nee',
-          status: result.aanduiding_in_onderzoek ? 'alert' : '',
+          status: result.aanduiding_in_onderzoek ? NotificationLevel.Error : '',
         },
       ],
       notifications: [
         {
           value: result.indicatie_geconstateerd ? 'Indicatie geconstateerd' : false,
-          level: 'alert',
+          level: NotificationLevel.Error,
         },
         {
           value: result.aanduiding_in_onderzoek ? 'In onderzoek' : false,
-          level: 'alert',
+          level: NotificationLevel.Error,
         },
       ],
     }),
@@ -128,19 +129,19 @@ const servicesByEndpointType: { [type: string]: ServiceDefinition } = {
           type: DetailResultItemType.Default,
           label: 'Type adres',
           value: result.type_adres,
-          status: result.isNevenadres ? 'info' : '',
+          status: result.isNevenadres ? NotificationLevel.Attention : '',
         },
         {
           type: DetailResultItemType.Default,
           label: 'Indicatie geconstateerd',
           value: result.indicatie_geconstateerd ? 'Ja' : 'Nee',
-          status: result.indicatie_geconstateerd ? 'alert' : '',
+          status: result.indicatie_geconstateerd ? NotificationLevel.Error : '',
         },
         {
           type: DetailResultItemType.Default,
           label: 'Aanduiding in onderzoek',
           value: result.aanduiding_in_onderzoek ? 'Ja' : 'Nee',
-          status: result.aanduiding_in_onderzoek ? 'alert' : '',
+          status: result.aanduiding_in_onderzoek ? NotificationLevel.Error : '',
         },
         {
           type: DetailResultItemType.Default,
@@ -158,15 +159,15 @@ const servicesByEndpointType: { [type: string]: ServiceDefinition } = {
         },
         {
           value: result.isNevenadres ? 'Dit is een nevenadres' : false,
-          level: 'info',
+          level: NotificationLevel.Attention,
         },
         {
           value: result.indicatie_geconstateerd ? 'Indicatie geconstateerd' : false,
-          level: 'alert',
+          level: NotificationLevel.Error,
         },
         {
           value: result.aanduiding_in_onderzoek ? 'In onderzoek' : false,
-          level: 'alert',
+          level: NotificationLevel.Error,
         },
       ],
     }),
@@ -198,19 +199,19 @@ const servicesByEndpointType: { [type: string]: ServiceDefinition } = {
           type: DetailResultItemType.Default,
           label: 'Type adres',
           value: result.typeAdres,
-          status: result.isNevenadres ? 'info' : '',
+          status: result.isNevenadres ? NotificationLevel.Attention : '',
         },
         {
           type: DetailResultItemType.Default,
           label: 'Indicatie geconstateerd',
           value: result.indicatie_geconstateerd ? 'Ja' : 'Nee',
-          status: result.indicatie_geconstateerd ? 'alert' : '',
+          status: result.indicatie_geconstateerd ? NotificationLevel.Error : '',
         },
         {
           type: DetailResultItemType.Default,
           label: 'Aanduiding in onderzoek',
           value: result.aanduiding_in_onderzoek ? 'Ja' : 'Nee',
-          status: result.aanduiding_in_onderzoek ? 'alert' : '',
+          status: result.aanduiding_in_onderzoek ? NotificationLevel.Error : '',
         },
         {
           type: DetailResultItemType.Default,
@@ -227,17 +228,17 @@ const servicesByEndpointType: { [type: string]: ServiceDefinition } = {
         {
           type: DetailResultItemType.Default,
           value: result.isNevenadres ? 'Dit is een nevenadres' : false,
-          level: 'info',
+          level: NotificationLevel.Attention,
         },
         {
           type: DetailResultItemType.Default,
           value: result.indicatie_geconstateerd ? 'Indicatie geconstateerd' : false,
-          level: 'alert',
+          level: NotificationLevel.Error,
         },
         {
           type: DetailResultItemType.Default,
           value: result.aanduiding_in_onderzoek ? 'In onderzoek' : false,
-          level: 'alert',
+          level: NotificationLevel.Error,
         },
       ],
     }),
@@ -295,23 +296,23 @@ const servicesByEndpointType: { [type: string]: ServiceDefinition } = {
           type: DetailResultItemType.Default,
           label: 'Indicatie geconstateerd',
           value: result.indicatie_geconstateerd ? 'Ja' : 'Nee',
-          status: result.indicatie_geconstateerd ? 'alert' : '',
+          status: result.indicatie_geconstateerd ? NotificationLevel.Error : '',
         },
         {
           type: DetailResultItemType.Default,
           label: 'Aanduiding in onderzoek',
           value: result.aanduiding_in_onderzoek ? 'Ja' : 'Nee',
-          status: result.aanduiding_in_onderzoek ? 'alert' : '',
+          status: result.aanduiding_in_onderzoek ? NotificationLevel.Error : '',
         },
       ],
       notifications: [
         {
           value: result.indicatie_geconstateerd ? 'Indicatie geconstateerd' : false,
-          level: 'alert',
+          level: NotificationLevel.Error,
         },
         {
           value: result.aanduiding_in_onderzoek ? 'In onderzoek' : false,
-          level: 'alert',
+          level: NotificationLevel.Error,
         },
       ],
     }),
@@ -817,7 +818,7 @@ const servicesByEndpointType: { [type: string]: ServiceDefinition } = {
                   result.bijzondereRechtstoestand && result.bijzondereRechtstoestand.label
                     ? result.bijzondereRechtstoestand.label
                     : false,
-                status: 'alert',
+                status: NotificationLevel.Error,
               },
             ],
             notifications: [
@@ -826,13 +827,13 @@ const servicesByEndpointType: { [type: string]: ServiceDefinition } = {
                   result.bijzondereRechtstoestand && result.bijzondereRechtstoestand.label
                     ? result.bijzondereRechtstoestand.label
                     : false,
-                level: 'alert',
+                level: NotificationLevel.Error,
               },
               {
                 value: !result._display
                   ? 'Medewerkers/ketenpartners van Gemeente Amsterdam kunnen inloggen om maatschappelijke activiteiten en vestigingen te bekijken.'
                   : false,
-                level: 'info',
+                level: NotificationLevel.Attention,
               },
             ],
           }
@@ -843,7 +844,7 @@ const servicesByEndpointType: { [type: string]: ServiceDefinition } = {
               {
                 value:
                   'Medewerkers/ketenpartners van Gemeente Amsterdam kunnen inloggen om maatschappelijke activiteiten en vestigingen te bekijken.',
-                level: 'info',
+                level: NotificationLevel.Attention,
               },
             ],
           },
@@ -857,6 +858,7 @@ const servicesByEndpointType: { [type: string]: ServiceDefinition } = {
         {
           value:
             'De grenzen van dit winkelgebied zijn indicatief. Er kunnen geen rechten aan worden ontleend.',
+          level: NotificationLevel.Attention,
         },
       ],
       items: [
@@ -898,7 +900,7 @@ const servicesByEndpointType: { [type: string]: ServiceDefinition } = {
               {
                 value:
                   'Medewerkers/ketenpartners van Gemeente Amsterdam kunnen inloggen om kadastrale subjecten te bekijken. Om ook zakelijke rechten van natuurlijke personen te bekijken, moet je als medewerker bovendien speciale bevoegdheden hebben.',
-                level: 'info',
+                level: NotificationLevel.Attention,
               },
             ],
           },
@@ -919,7 +921,7 @@ const servicesByEndpointType: { [type: string]: ServiceDefinition } = {
               {
                 value:
                   'Medewerkers/ketenpartners van Gemeente Amsterdam kunnen inloggen om maatschappelijke activiteiten en vestigingen te bekijken.',
-                level: 'info',
+                level: NotificationLevel.Attention,
               },
             ],
           },

@@ -230,9 +230,13 @@ exports[`MapSearchResults rendering should render results 1`] = `
       className="map-search-results__list"
     >
       <li>
-        <Notification>
+        <Alert
+          compact={true}
+          dismissible={true}
+          level="attention"
+        >
           Geen details beschikbaar van: Layer 1, Layer 2
-        </Notification>
+        </Alert>
       </li>
       <MapSearchResultsCategory
         category={
@@ -447,9 +451,13 @@ exports[`MapSearchResults rendering should update results 2`] = `
       className="map-search-results__list"
     >
       <li>
-        <Notification>
+        <Alert
+          compact={true}
+          dismissible={true}
+          level="attention"
+        >
           Geen details beschikbaar van: Layer 3
-        </Notification>
+        </Alert>
       </li>
       <MapSearchResultsCategory
         category={
