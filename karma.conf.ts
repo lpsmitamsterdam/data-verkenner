@@ -108,15 +108,6 @@ export default (config: KarmaConfig) => {
     coverageIstanbulReporter: {
       reports: ['html', 'text-summary'],
       dir: path.join(__dirname, 'coverage-legacy'),
-      thresholds: {
-        emitWarning: false,
-        global: {
-          statements: 99,
-          lines: 99,
-          branches: 98,
-          functions: 99,
-        },
-      },
     },
     browsers: ['PhantomJS'],
     singleRun: true,
