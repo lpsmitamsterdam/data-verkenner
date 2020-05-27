@@ -11,11 +11,12 @@ import { Configuration, DefinePlugin } from 'webpack'
 // Some dependencies are written in ES2015+ syntax and will need to be included explicitly.
 // Adding them to this config will transpile and add polyfills to the code if necessary.
 const modernModules = [
-  path.resolve(__dirname, 'node_modules/@datapunt/asc-assets'),
-  path.resolve(__dirname, 'node_modules/@datapunt/asc-ui'),
-  path.resolve(__dirname, 'node_modules/body-scroll-lock'),
-  path.resolve(__dirname, 'node_modules/escape-string-regexp'),
-]
+  '@datapunt/asc-assets',
+  '@datapunt/asc-ui',
+  'body-scroll-lock',
+  'escape-string-regexp',
+  'redux-first-router',
+].map((entry) => `${path.resolve(__dirname, 'node_modules', entry)}/`)
 
 const env = dotenv.config().parsed ?? {}
 const envKeys = Object.entries(env).reduce((prev, [key, value]) => {
