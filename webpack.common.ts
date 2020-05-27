@@ -79,7 +79,7 @@ export function createConfig(options: CreateConfigOptions): Configuration {
       rules: [
         {
           test: /\.(t|j)sx?$/,
-          include: [srcPath, ...modernModules],
+          include: [srcPath, legacyPath, ...modernModules],
           use: {
             loader: 'babel-loader',
             options: {
