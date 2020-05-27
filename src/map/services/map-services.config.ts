@@ -31,7 +31,7 @@ export const endpointTypes = {
   adressenVerblijfsobject: 'bag/v1.1/verblijfsobject/',
   bedrijfsinvesteringszone: 'vsd/biz/',
   bekendmakingen: 'vsd/bekendmakingen/',
-  constructionFiles: 'stadsarchief/bouwdossier/',
+  constructionFiles: 'iiif-metadata/bouwdossier/',
   evenementen: 'vsd/evenementen/',
   explosievenGevrijwaardGebied: 'milieuthemas/explosieven/gevrijwaardgebied/',
   explosievenInslag: 'milieuthemas/explosieven/inslagen/',
