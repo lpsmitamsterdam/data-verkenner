@@ -8,6 +8,9 @@ import {
   styles,
   breakpoint,
   showAboveBackDrop,
+  MenuInline,
+  MenuToggle,
+  themeColor,
 } from '@datapunt/asc-ui'
 import HeaderSearchContainer from '../../../header/containers/header-search/HeaderSearchContainer'
 import HeaderMenuContainer from './HeaderMenuContainer'
@@ -53,8 +56,9 @@ const StyledHeader = styled(HeaderComponent)`
   }
 `
 
-const MenuDefault = (props) => <HeaderMenuContainer {...props} type="default" />
-const MenuMobile = (props) => <HeaderMenuContainer {...props} type="mobile" align="right" />
+const StyledMenuInline = styled(MenuInline)`
+  background-color: ${themeColor('tint', 'level2')};
+`
 
 const Header = ({
   homePage,
@@ -78,8 +82,18 @@ const Header = ({
           navigation={
             <>
               <HeaderSearchContainer />
-              <MenuDefault data-test="header-menu-default" showAt="laptopM" />
-              <MenuMobile data-test="header-menu-mobile" hideAt="laptopM" />
+              <HeaderMenuContainer
+                data-test="header-menu-default"
+                Component={StyledMenuInline}
+                type="default"
+                showAt="laptopM"
+              />
+              <HeaderMenuContainer
+                data-test="header-menu-mobile"
+                Component={MenuToggle}
+                hideAt="laptopM"
+                align="right"
+              />
             </>
           }
         />

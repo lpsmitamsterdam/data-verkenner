@@ -1,5 +1,5 @@
 import React from 'react'
-import { MenuInline, MenuToggle, MenuFlyOut, MenuItem, MenuButton } from '@datapunt/asc-ui'
+import { MenuFlyOut, MenuItem, MenuButton } from '@datapunt/asc-ui'
 import { ChevronRight } from '@datapunt/asc-assets'
 import PropTypes from 'prop-types'
 import { useMatomo } from '@datapunt/matomo-tracker-react'
@@ -10,17 +10,11 @@ import navigationLinks from '../HomePage/services/navigationLinks'
 
 import { HEADER_LINKS } from '../../../shared/config/config'
 
-const components = {
-  default: MenuInline,
-  mobile: MenuToggle,
-}
-
-const HeaderMenu = ({ type, login, logout, user, showFeedbackForm, ...props }) => {
+const HeaderMenu = ({ Component, login, logout, user, showFeedbackForm, ...props }) => {
   const [menuOpen, setMenuOpen] = React.useState(false)
   const { trackEvent } = useMatomo()
-  const Menu = components[type]
   return (
-    <Menu {...props} open={menuOpen} hasBackDrop onExpand={setMenuOpen}>
+    <Component {...props} open={menuOpen} hasBackDrop onExpand={setMenuOpen}>
       <MenuFlyOut label="Onderdelen">
         {navigationLinks.map(({ id, title, to }) => (
           <MenuButton
@@ -137,15 +131,15 @@ const HeaderMenu = ({ type, login, logout, user, showFeedbackForm, ...props }) =
           </MenuItem>
         </MenuFlyOut>
       )}
-    </Menu>
+    </Component>
   )
 }
 
 HeaderMenu.propTypes = {
+  Component: PropTypes.element.isRequired,
   login: PropTypes.func.isRequired,
   logout: PropTypes.func.isRequired,
   showFeedbackForm: PropTypes.func.isRequired,
-  type: PropTypes.string.isRequired,
   user: PropTypes.shape({}).isRequired,
 }
 
