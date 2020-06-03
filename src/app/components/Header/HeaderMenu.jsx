@@ -1,20 +1,39 @@
 import React from 'react'
-import { MenuFlyOut, MenuItem, MenuButton } from '@datapunt/asc-ui'
+import {
+  MenuInline,
+  MenuToggle,
+  MenuFlyOut,
+  MenuItem,
+  MenuButton,
+  themeColor,
+} from '@datapunt/asc-ui'
 import { ChevronRight } from '@datapunt/asc-assets'
 import PropTypes from 'prop-types'
 import { useMatomo } from '@datapunt/matomo-tracker-react'
 import RouterLink from 'redux-first-router-link'
+import styled from 'styled-components'
 import { toArticleDetail } from '../../../store/redux-first-router/actions'
 import truncateString from '../../../shared/services/truncateString/truncateString'
 import navigationLinks from '../HomePage/services/navigationLinks'
 
 import { HEADER_LINKS } from '../../../shared/config/config'
 
-const HeaderMenu = ({ Component, login, logout, user, showFeedbackForm, ...props }) => {
+const StyledMenuInline = styled(MenuInline)`
+  background-color: ${({ tall, theme }) =>
+    tall ? themeColor('tint', 'level2')({ theme }) : themeColor('tint', 'level1')({ theme })};
+`
+
+const components = {
+  default: StyledMenuInline,
+  mobile: MenuToggle,
+}
+
+const HeaderMenu = ({ type, login, logout, user, showFeedbackForm, ...props }) => {
   const [menuOpen, setMenuOpen] = React.useState(false)
   const { trackEvent } = useMatomo()
+  const Menu = components[type]
   return (
-    <Component {...props} open={menuOpen} hasBackDrop onExpand={setMenuOpen}>
+    <Menu {...props} open={menuOpen} hasBackDrop onExpand={setMenuOpen}>
       <MenuFlyOut label="Onderdelen">
         {navigationLinks.map(({ id, title, to }) => (
           <MenuButton
@@ -131,15 +150,15 @@ const HeaderMenu = ({ Component, login, logout, user, showFeedbackForm, ...props
           </MenuItem>
         </MenuFlyOut>
       )}
-    </Component>
+    </Menu>
   )
 }
 
 HeaderMenu.propTypes = {
-  Component: PropTypes.element.isRequired,
   login: PropTypes.func.isRequired,
   logout: PropTypes.func.isRequired,
   showFeedbackForm: PropTypes.func.isRequired,
+  type: PropTypes.string.isRequired,
   user: PropTypes.shape({}).isRequired,
 }
 
