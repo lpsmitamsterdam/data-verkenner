@@ -17,6 +17,7 @@ import truncateString from '../../../shared/services/truncateString/truncateStri
 import navigationLinks from '../HomePage/services/navigationLinks'
 
 import { HEADER_LINKS } from '../../../shared/config/config'
+import CONSTANTS from '../../../shared/config/constants'
 
 const StyledMenuInline = styled(MenuInline)`
   background-color: ${({ tall, theme }) =>
@@ -33,7 +34,13 @@ const HeaderMenu = ({ type, login, logout, user, showFeedbackForm, ...props }) =
   const { trackEvent } = useMatomo()
   const Menu = components[type]
   return (
-    <Menu {...props} open={menuOpen} hasBackDrop onExpand={setMenuOpen}>
+    <Menu
+      {...props}
+      open={menuOpen}
+      hasBackDrop
+      onExpand={setMenuOpen}
+      backdropOpacity={CONSTANTS.BACKDROP_OPACITY}
+    >
       <MenuFlyOut label="Onderdelen">
         {navigationLinks.map(({ id, title, to }) => (
           <MenuButton

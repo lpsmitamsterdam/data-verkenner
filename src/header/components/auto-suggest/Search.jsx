@@ -8,6 +8,7 @@ import {
   breakpoint,
   showAboveBackDrop,
 } from '@datapunt/asc-ui'
+import CONSTANTS from '../../../shared/config/constants'
 
 const Z_INDEX_OFFSET = 2 // Set a custom offset
 
@@ -50,6 +51,7 @@ const Search = ({
       </StyledSearchBar>
       {expanded && (
         <BackDrop
+          backdropOpacity={CONSTANTS.BACKDROP_OPACITY}
           data-testid="backDrop"
           expanded={expanded}
           onClick={onBlur}
