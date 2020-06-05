@@ -1,4 +1,4 @@
-import { DATA_SELECTION_TABLE, HOMEPAGE, MAP, TABLES } from '../support/selectors'
+import { DATA_SELECTION_TABLE, HOMEPAGE, LINKS, MAP, TABLES } from '../support/selectors'
 
 describe('parcel-ownership (eigendommen) module', () => {
   describe('user should be able to navigate to the parcel-ownership from the homepage', () => {
@@ -13,7 +13,7 @@ describe('parcel-ownership (eigendommen) module', () => {
   describe('not authenticated', () => {
     beforeEach(() => {
       cy.hidePopup()
-      cy.visit('data/brk/kadastrale-objecten/')
+      cy.visit(LINKS.kadastraleObjecten)
     })
 
     describe('user should not be able to view the kadaster data', () => {
@@ -49,7 +49,7 @@ describe('parcel-ownership (eigendommen) module', () => {
 
     describe('user should be able to view the eigendommen', () => {
       beforeEach(() => {
-        cy.visit('/data/brk/kadastrale-objecten/')
+        cy.visit(LINKS.kadastraleObjecten)
         cy.wait('@getDataselectieBrk')
       })
 

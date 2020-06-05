@@ -35,18 +35,10 @@ Cypress.Commands.add('checkFirstLinkInSearchResults', (searchResult) => {
 
 Cypress.Commands.add('searchAndCheck', (searchTerm, result, result2) => {
   cy.checkAutoSuggestFirstOfAll(searchTerm, result)
-  if (result2 === undefined) {
-    cy.checkFirstLinkInSearchResults(result)
-  } else {
-    cy.checkFirstLinkInSearchResults(result2)
-  }
+  cy.checkFirstLinkInSearchResults(result2 || result)
 })
 
 Cypress.Commands.add('searchInCategoryAndCheckFirst', (searchTerm, category, result, result2) => {
   cy.checkAutoSuggestFirstofCategory(searchTerm, category, result)
-  if (result2 === undefined) {
-    cy.checkFirstLinkInSearchResults(result)
-  } else {
-    cy.checkFirstLinkInSearchResults(result2)
-  }
+  cy.checkFirstLinkInSearchResults(result2 || result)
 })

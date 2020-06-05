@@ -95,7 +95,7 @@ describe('Search results', () => {
         'Eerste Jan van der Heijdenstraat 2',
       )
     })
-    it.skip("Should search: 'Westerdok' in category 'Openbare ruimtes' and check if first autosuggestitem and searchresult are: 'Westerdok'", () => {
+    it("Should search: 'Westerdok' in category 'Openbare ruimtes' and check if first autosuggestitem and searchresult are: 'Westerdok'", () => {
       cy.searchInCategoryAndCheckFirst('Westerdok', 'Openbare ruimtes', 'Westerdok')
     })
     it("Should search: 'Bijenkorf' in category 'Pand' and check if first autosuggestitem and searchresult are: 'De Bijenkorf'", () => {
@@ -143,18 +143,11 @@ describe('Search results', () => {
     after(() => {
       cy.logout()
     })
-    it.skip("Should search: 'Centraal stomerij' in category 'Maatschappelijke activiteit' and check if first autosuggestitem and searchresult are: 'Centraal Stomerij - Overtoom 79H'", () => {
+    it("Should search: 'Centraal stomerij' in category 'Maatschappelijke activiteit' and check if first autosuggestitem and searchresult are: 'Centraal Stomerij - Overtoom 79H'", () => {
       cy.searchInCategoryAndCheckFirst(
         'Centraal stomerij',
         'Maatschappelijke activiteit',
         'Centraal Stomerij - Overtoom 79H',
-      )
-    })
-    it.skip("Should search: 'Linea' in category 'Kadastrale subjecten' and check if first autosuggestitem and searchresult are: 'Ondervereniging Van Eigenaars Woningen Linneauspad 2-18 Te Amsterdam'", () => {
-      cy.searchInCategoryAndCheckFirst(
-        'Linea',
-        'Kadastrale subjecten',
-        'Ondervereniging Van Eigenaars Woningen Linneauspad 2-18 Te Amsterdam',
       )
     })
   })
@@ -174,12 +167,6 @@ describe('Search results', () => {
     it("Should search: 'Toerisme' in category 'Artikel' and check if first autosuggestitem and searchresult are: 'Dossier: Toerisme'", () => {
       cy.checkAutoSuggestFirstofCategory('Toerisme', 'Artikelen', 'Toerisme onder druk?')
       cy.checkFirstCardInSearchResults('Dossiers', 'Toerisme')
-    })
-    it.skip("Should search: 'Drugs' in category 'Artikel' and check if first autosuggestitem and searchresult are: 'Drugsoverlast Zuidoost daalt", () => {
-      cy.checkAutoSuggestFirstofCategory('Drugs', 'Artikelen', 'Drugsoverlast Zuidoost daalt')
-      cy.get('[class*=SearchHeading__StyledHeading]').contains('Dossiers').should('be.visible')
-      //   cy.get('[class*=EditorialCard__StyledHeading]').first().should('have.text', 'Toerisme')
-      // })
     })
     it("Should search: 'Staat van de stad' in category 'Artikelen' and check autosuggest: 'Staat van de Stad' and search result: 'Dossier: corona en de economie'", () => {
       cy.checkAutoSuggestFirstofCategory(

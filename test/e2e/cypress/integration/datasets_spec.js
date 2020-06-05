@@ -168,7 +168,7 @@ describe('datasets module', () => {
     })
   })
 
-  describe.skip('Create, change and delete a dataset', () => {
+  describe('Create, change and delete a dataset', () => {
     beforeEach(() => {
       cy.server()
       cy.hidePopup()

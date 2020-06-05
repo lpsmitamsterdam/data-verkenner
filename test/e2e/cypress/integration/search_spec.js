@@ -22,8 +22,6 @@ describe('search module', () => {
     })
 
     it('should be able to navigate throught results with arrow keys', () => {
-      // Without wait, the test fails
-      cy.wait(500)
       cy.get(DATA_SEARCH.autoSuggestInput).type('{downarrow}{downarrow}{downarrow}')
       cy.get(DATA_SEARCH.autosuggestDropdownItemActive).should('contain', 'Bodemkwaliteit')
       cy.get(SEARCH.input).should('have.value', 'Bodemkwaliteit')

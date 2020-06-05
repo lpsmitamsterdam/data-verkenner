@@ -105,6 +105,10 @@ export const HOMEPAGE = {
   specialBlock: '[data-test=special-block]',
 }
 
+export const LINKS = {
+  kadastraleObjecten: 'data/brk/kadastrale-objecten/',
+}
+
 export const MAP = {
   buttonEnlarge: 'button.map-preview-panel__button[title="Volledige weergave tonen"]',
   checkboxBurgerlijkeGemeente: '#onrzk-bgem',
