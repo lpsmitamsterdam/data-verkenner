@@ -48,19 +48,17 @@ describe('parcel-ownership (eigendommen) module', () => {
     })
 
     describe('user should be able to view the eigendommen', () => {
-      describe('should navigate from the homepage', () => {
-        beforeEach(() => {
-          cy.visit('/data/brk/kadastrale-objecten/')
-          cy.wait('@getDataselectieBrk')
-        })
+      beforeEach(() => {
+        cy.visit('/data/brk/kadastrale-objecten/')
+        cy.wait('@getDataselectieBrk')
+      })
 
-        it('should not show a notification', () => {
-          cy.get(TABLES.warningPanel).should('not.exist').and('not.be.visible')
-        })
+      it('should not show a notification', () => {
+        cy.get(TABLES.warningPanel).should('not.exist').and('not.be.visible')
+      })
 
-        it('should show the table with results', () => {
-          cy.get(DATA_SELECTION_TABLE.content).should('exist').and('be.visible')
-        })
+      it('should show the table with results', () => {
+        cy.get(DATA_SELECTION_TABLE.content).should('exist').and('be.visible')
       })
     })
 
