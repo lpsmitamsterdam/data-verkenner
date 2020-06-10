@@ -17,7 +17,12 @@ const moduleDependencies = [
 angular.module('atlas', moduleDependencies).config(['$provide', urlChangeProvider])
 
 // Allow https://github.com/angular/angular.js/blob/master/CHANGELOG.md#breaking-changes
-angular.UNSAFE_restoreLegacyJqLiteXHTMLReplacement()
+try {
+  angular.UNSAFE_restoreLegacyJqLiteXHTMLReplacement()
+} catch (e) {
+  // eslint-disable-next-line no-console, angular/log
+  console.warn(e)
+}
 
 urlChangeProvider.$inject = ['$provide']
 /* istanbul ignore next */
