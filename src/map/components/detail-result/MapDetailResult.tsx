@@ -51,7 +51,7 @@ const MapDetailResult: React.FC<MapDetailResultProps> = ({
       })}
 
       <ul className="map-detail-result__list">
-        {result.items.map((item, index) => renderItem(item, index))}
+        {result.items?.map((item, index) => renderItem(item, index))}
       </ul>
     </MapDetailResultWrapper>
   )

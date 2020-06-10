@@ -50,7 +50,7 @@ const StyledLink = styled(Link)`
       text-decoration: underline;}
 
     ${styles.IconStyle} {
-      ${svgFill(themeColor('secondary'))};
+      ${svgFill(themeColor('main', 'secondary'))};
     }
   }
 

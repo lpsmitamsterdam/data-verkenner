@@ -1,3 +1,4 @@
+/* eslint-disable no-param-reassign */
 // cypress/support/hooks.js
 
 // private helpers

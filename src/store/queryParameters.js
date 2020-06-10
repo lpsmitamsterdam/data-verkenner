@@ -460,6 +460,27 @@ export default paramsRegistry
     )
   })
 
+export function decodeLocation(value) {
+  if (!value) {
+    return {}
+  }
+
+  const [lat, lng] = value.split(',')
+
+  return {
+    lat: parseFloat(lat),
+    lng: parseFloat(lng),
+  }
+}
+
+export function encodeLocation({ lat, lng }) {
+  if (!lat || !lng) {
+    return ''
+  }
+
+  return `${lat},${lng}`
+}
+
 export function decodeLayers(value) {
   if (!value) {
     return []
@@ -473,4 +494,12 @@ export function decodeLayers(value) {
       isVisible: visibility === '1',
     }
   })
+}
+
+export function encodeLayers(values) {
+  if (!values || !values.length > 0) {
+    return []
+  }
+
+  return values.map(({ id, isVisible }) => `${id}:${isVisible ? 1 : 0}`).join('|')
 }

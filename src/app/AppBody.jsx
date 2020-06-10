@@ -41,6 +41,9 @@ const CollectionDetailPage = React.lazy(() =>
 const MapSplitPage = React.lazy(() =>
   import(/* webpackChunkName: "MapSplitPage" */ './pages/MapSplitPage'),
 )
+const MapContainer = React.lazy(() =>
+  import(/* webpackChunkName: "MapContainer" */ './pages/MapPage/MapContainer'),
+)
 const NotFoundPage = React.lazy(() =>
   import(/* webpackChunkName: "NotFoundPage" */ './pages/NotFoundPage'),
 )
@@ -79,6 +82,7 @@ const AppBody = ({
           {currentPage === PAGES.COLLECTION_DETAIL && <CollectionDetailPage />}
           {currentPage === PAGES.ACTUALITY && <ActualityContainer />}
           {currentPage === PAGES.NOT_FOUND && <NotFoundPage />}
+
           {isSearchPage(currentPage) && <SearchPage currentPage={currentPage} query={query} />}
         </Suspense>
       </AppContainer>
@@ -86,30 +90,36 @@ const AppBody = ({
     </>
   ) : (
     <>
-      <Helmet>
-        {/* The viewport must be reset for "old" pages that don't incorporate the grid.
+      <Suspense fallback={<LoadingIndicator style={{ top: '200px' }} />}>
+        {currentPage === PAGES.MAP ? (
+          <MapContainer />
+        ) : (
+          <>
+            <Helmet>
+              {/* The viewport must be reset for "old" pages that don't incorporate the grid.
         1024 is an arbirtrary number as the browser doesn't actually care about the exact number,
         but only needs to know it's significantly bigger than the actual viewport */}
-        <meta name="viewport" content="width=1024, user-scalable=yes" />
-      </Helmet>
-      <Suspense fallback={<LoadingIndicator style={{ top: '200px' }} />}>
-        <div className={`c-dashboard__body ${bodyClasses}`}>
-          <NotificationAlert />
-          {visibilityError && <ErrorAlert />}
-          {embedPreviewMode ? (
-            <EmbedIframeComponent />
-          ) : (
-            <div className="u-grid u-full-height u-overflow--y-auto">
-              <div className="u-row u-full-height">
-                {isMapSplitPage(currentPage) && <MapSplitPage />}
+              <meta name="viewport" content="width=1024, user-scalable=yes" />
+            </Helmet>
+            <div className={`c-dashboard__body ${bodyClasses}`}>
+              <NotificationAlert />
+              {visibilityError && <ErrorAlert />}
+              {embedPreviewMode ? (
+                <EmbedIframeComponent />
+              ) : (
+                <div className="u-grid u-full-height u-overflow--y-auto">
+                  <div className="u-row u-full-height">
+                    {isMapSplitPage(currentPage) && <MapSplitPage />}
 
-                {currentPage === PAGES.CONSTRUCTION_FILE && <ConstructionFilesContainer />}
+                    {currentPage === PAGES.CONSTRUCTION_FILE && <ConstructionFilesContainer />}
 
-                {currentPage === PAGES.DATASET_DETAIL && <DatasetDetailContainer />}
-              </div>
+                    {currentPage === PAGES.DATASET_DETAIL && <DatasetDetailContainer />}
+                  </div>
+                </div>
+              )}
             </div>
-          )}
-        </div>
+          </>
+        )}
         <FeedbackModal id="feedbackModal" />
       </Suspense>
     </>
