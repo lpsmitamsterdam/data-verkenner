@@ -16,6 +16,9 @@ const moduleDependencies = [
 // eslint-disable-next-line angular/di
 angular.module('atlas', moduleDependencies).config(['$provide', urlChangeProvider])
 
+// Allow https://github.com/angular/angular.js/blob/master/CHANGELOG.md#breaking-changes
+angular.UNSAFE_restoreLegacyJqLiteXHTMLReplacement()
+
 urlChangeProvider.$inject = ['$provide']
 /* istanbul ignore next */
 function urlChangeProvider($provide) {
