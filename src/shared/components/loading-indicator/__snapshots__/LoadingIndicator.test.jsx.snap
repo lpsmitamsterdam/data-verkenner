@@ -4,8 +4,7 @@ exports[`LoadingIndicator should render everything 1`] = `
 <div
   className="loading-indicator"
 >
-  <Spinner
-    color="secondary"
+  <Styled(Spinner)
     size={36}
   />
 </div>
