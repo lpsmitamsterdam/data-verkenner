@@ -11,6 +11,7 @@ import MapPanelContainer from '../../../../map/containers/panel/MapPanelContaine
 import MapPreviewPanelContainer from '../../../../map/containers/preview-panel/MapPreviewPanelContainer'
 import DrawTool from './DrawTool'
 import { MarkerGroup } from '../types'
+import MapContext from '../MapContext'
 
 type StyledViewerContainerProps = {
   left?: string
@@ -73,6 +74,7 @@ const ViewerContainer: React.FC<Props> = ({
   isLoading,
   ...otherProps
 }) => {
+  const { detailUrl } = useContext(MapContext)
   const { drawerPosition, draggable } = useContext(MapPanelContext)
   const height = parseInt(drawerPosition, 10) < window.innerHeight / 2 ? '50%' : drawerPosition
 
@@ -88,6 +90,7 @@ const ViewerContainer: React.FC<Props> = ({
               <MapPanelContainerWrapper>
                 <MapPanelContainer />
               </MapPanelContainerWrapper>
+
               {/* Todo: attach state to map reducer */}
               <BaseLayerToggle />
             </BottomLeftHolder>
@@ -130,7 +133,7 @@ const ViewerContainer: React.FC<Props> = ({
                 setMarkerGroups={setMarkerGroups}
                 markerGroupsRef={markerGroupsRef}
               />
-              <MapPreviewPanelContainer />
+              {detailUrl && <MapPreviewPanelContainer />}
             </>
           }
         />
