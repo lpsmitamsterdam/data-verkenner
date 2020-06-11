@@ -10,7 +10,8 @@ export const MAIN_PATHS = {
   PUBLICATIONS: 'publicaties',
   SPECIALS: 'specials',
   COLLECTIONS: 'dossiers',
-  MAP: 'kaarten',
+  MAPS: 'kaarten',
+  MAP: 'kaart',
 }
 
 export const routing = {
@@ -82,7 +83,7 @@ export const routing = {
   },
   constructionFile: {
     title: 'Bouwdossier',
-    path: `/${MAIN_PATHS.DATA}/stadsarchief/bouwdossier/:id/`,
+    path: `/${MAIN_PATHS.DATA}/bouwdossiers/bouwdossier/:id/`,
     type: `${ROUTER_NAMESPACE}/${PAGES.CONSTRUCTION_FILE}`,
     useHooks: true, // indicate to skip legacy documentHead and piwik middleware
     page: PAGES.CONSTRUCTION_FILE,
@@ -161,9 +162,15 @@ export const routing = {
   },
   mapSearch: {
     title: 'Kaarten',
-    path: `/${MAIN_PATHS.MAP}/zoek/`,
+    path: `/${MAIN_PATHS.MAPS}/zoek/`,
     type: `${ROUTER_NAMESPACE}/${PAGES.MAP_SEARCH}`,
     page: PAGES.MAP_SEARCH,
+  },
+  map: {
+    title: 'Kaart',
+    path: `/${MAIN_PATHS.MAP}/`,
+    type: `${ROUTER_NAMESPACE}/${PAGES.MAP}`,
+    page: PAGES.MAP,
   },
 }
 

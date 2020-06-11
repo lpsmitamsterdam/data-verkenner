@@ -20,7 +20,6 @@ const MapPanel = ({
   user,
   printMode,
   zoomLevel,
-  isMapPanelHandleVisible,
 }) => (
   <section
     aria-label={
@@ -59,7 +58,7 @@ const MapPanel = ({
     <div className="scroll-wrapper">
       <MapPanelHandle
         {...{
-          isMapPanelHandleVisible,
+          isMapPanelHandleVisible: true, // TODO: find out if we actually need these (and from where its used)
           onMapPanelHandleToggle,
         }}
       >

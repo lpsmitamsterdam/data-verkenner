@@ -1,8 +1,8 @@
+import NotificationLevel from '../../../app/models/notification'
 import { DEFAULT_LOCALE } from '../../../shared/config/locale.config'
 import formatDate from '../../../shared/services/date-formatter/date-formatter'
 import formatNumber from '../../../shared/services/number-formatter/number-formatter'
 import { NORMAL_PAND_STATUSSES, NORMAL_VBO_STATUSSES } from '../map-search/status-labels'
-import NotificationLevel from '../../../app/models/notification'
 
 export const YEAR_UNKNOWN = 1005 // The API returns 1005 when a year is unknown
 
@@ -131,7 +131,8 @@ export const bekendmakingen = (result) => {
 
 export const explosieven = (result) => {
   const additionalFields = {
-    date: formatDate(new Date(result.datum)),
+    datum: result.datum ? new Date(result.datum) : null,
+    datum_inslag: result.datum_inslag ? new Date(result.datum_inslag) : null,
   }
 
   return normalize(result, additionalFields)

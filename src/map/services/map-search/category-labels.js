@@ -16,8 +16,8 @@ const categoryLabels = {
     plural: 'Bouwblokken',
   },
   constructionFiles: {
-    singular: 'Bouwdossier',
-    plural: 'Bouwdossiers',
+    singular: 'Bouw- en omgevingsdossier',
+    plural: 'Bouw- en omgevingsdossiers',
   },
   explosief: {
     singular: 'Explosief',
@@ -106,6 +106,10 @@ const categoryLabels = {
   straatnamen: {
     singular: 'Straatnaam',
     plural: 'Straatnamen',
+  },
+  unesco: {
+    singular: 'UNESCO',
+    plural: 'UNESCO',
   },
   vastgoed: {
     singular: 'Vastgoed',

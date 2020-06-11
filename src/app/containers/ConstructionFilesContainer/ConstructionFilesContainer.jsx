@@ -1,8 +1,9 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
-import { Heading } from '@datapunt/asc-ui'
+import { Heading, themeSpacing, Row } from '@datapunt/asc-ui'
 import { useMatomo } from '@datapunt/matomo-tracker-react'
+import styled from 'styled-components'
 import { getFileName, getFileUrl } from '../../../shared/ducks/files/selectors'
 import { getUser } from '../../../shared/ducks/user/user'
 import ConstructionFileDetail from '../../components/ConstructionFileDetail/ConstructionFileDetail'
@@ -10,16 +11,19 @@ import { getLocationPayload } from '../../../store/redux-first-router/selectors'
 import LoadingIndicator from '../../../shared/components/loading-indicator/LoadingIndicator'
 import ErrorAlert from '../../components/ErrorAlert/ErrorAlert'
 import { getByUrl } from '../../../shared/services/api/api'
-import { ConstructionFiles as ContextMenu } from '../../components/ContextMenu'
 import useDocumentTitle from '../../utils/useDocumentTitle'
-import withGrid from '../../utils/withGrid'
 
 const ImageViewer = React.lazy(() =>
   import(/* webpackChunkName: "ImageViewer" */ '../../components/ImageViewer/ImageViewer'),
 )
 
+const StyledRow = styled(Row)`
+  justify-content: center;
+  margin: ${themeSpacing(5)};
+`
+
 const ERROR_MESSAGE =
-  'Er kunnen door een technische storing helaas geen bouwdossiers worden getoond. Probeer het later nog eens.'
+  'Er kunnen door een technische storing helaas geen bouw- en omgevingsdossiers worden getoond. Probeer het later nog eens.'
 
 const ConstructionFilesContainer = ({ fileName, fileUrl, endpoint }) => {
   const [results, setResults] = React.useState(null)
@@ -81,32 +85,33 @@ const ConstructionFilesContainer = ({ fileName, fileUrl, endpoint }) => {
   const onDownloadFile = (size) => {
     trackEvent({
       documentTitle,
-      action: 'Download-bouwtekening',
-      name: `bouwtekening-download-${size}`,
+      category: 'download-bouwtekening',
+      action: `bouwtekening-download-${size}`,
       value: fileName,
     })
   }
 
-  const noResultsTemplate = withGrid(<Heading as="em">Geen resultaten gevonden</Heading>)
+  const noResultsTemplate = (
+    <StyledRow>
+      <Heading as="em">Geen resultaten gevonden</Heading>
+    </StyledRow>
+  )
 
-  const loadingTemplate = withGrid(<LoadingIndicator />)
+  const loadingTemplate = (
+    <StyledRow>
+      <LoadingIndicator />
+    </StyledRow>
+  )
 
   return errorMessage ? (
     <ErrorAlert errorMessage={errorMessage} />
   ) : (
     <>
-      {imageViewerActive && (
-        <ImageViewer
-          {...{ fileName, fileUrl, title }}
-          contextMenu={
-            <ContextMenu onDownload={onDownloadFile} fileName={fileName} fileUrl={fileUrl} />
-          }
-        />
-      )}
+      {imageViewerActive && <ImageViewer {...{ fileName, fileUrl, title, onDownloadFile }} />}
       {loading && loadingTemplate}
       {!loading &&
         !fileName &&
-        (results ? <ConstructionFileDetail results={results} /> : noResultsTemplate)}
+        (results ? <ConstructionFileDetail {...results} /> : noResultsTemplate)}
     </>
   )
 }

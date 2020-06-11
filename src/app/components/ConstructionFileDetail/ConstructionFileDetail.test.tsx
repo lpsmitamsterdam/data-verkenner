@@ -7,14 +7,14 @@ jest.mock('../../../shared/services/link-attributes-from-action/linkAttributesFr
 describe('ConstructionFileDetail', () => {
   let mockResults = {
     titel: 'title',
-    documenten: null,
+    documenten: [],
     datering: 'date',
     dossier_type: 'fileType',
     dossiernr: 1,
     stadsdeel: 'district',
     adressen: [],
   }
-  let component = shallow(<ConstructionFileDetail results={mockResults} />)
+  let component = shallow(<ConstructionFileDetail {...mockResults} />)
 
   const setState = jest.fn()
   const useStateSpy = jest.spyOn(React, 'useState')
@@ -25,8 +25,8 @@ describe('ConstructionFileDetail', () => {
   })
 
   it('should set the title', () => {
-    expect(component.at(0).find('Heading').at(1)).toBeTruthy()
-    expect(component.at(0).find('Heading').at(1).props().children).toBe(mockResults.titel)
+    expect(component.at(0).find('Heading').at(0)).toBeTruthy()
+    expect(component.at(0).find('Heading').at(0).props().children).toBe(mockResults.titel)
   })
 
   it('should render the subfiles', () => {
@@ -35,10 +35,16 @@ describe('ConstructionFileDetail', () => {
       documenten: [{ subdossier_titel: 'documenten', bestanden: [] }],
     }
 
-    component = shallow(<ConstructionFileDetail results={mockResults} />)
+    component = shallow(<ConstructionFileDetail {...mockResults} />)
+
+    expect(component.at(0).find('[data-testid="DocumentsHeading"]').at(0)).toBeTruthy()
+    expect(
+      component.at(0).find('[data-testid="DocumentsHeading"]').at(0).props().children,
+    ).toContain(mockResults.documenten[0].subdossier_titel)
+
     expect(component.at(0).find('Gallery').at(0)).toBeTruthy()
-    expect(component.at(0).find('Gallery').at(0).props().title).toBe(
-      mockResults.documenten[0].subdossier_titel,
+    expect(component.at(0).find('Gallery').at(0).props().allFiles).toBe(
+      mockResults.documenten[0].bestanden,
     )
   })
 
@@ -46,6 +52,8 @@ describe('ConstructionFileDetail', () => {
     const mockAdres = {
       nummeraanduidingen: ['1234'],
       nummeraanduidingen_label: ['foo'],
+      verblijfsobjecten: [],
+      verblijfsobjecten_label: [],
     }
 
     mockResults = {
@@ -53,15 +61,15 @@ describe('ConstructionFileDetail', () => {
       adressen: [mockAdres],
     }
 
-    component = shallow(<ConstructionFileDetail results={mockResults} />)
+    component = shallow(<ConstructionFileDetail {...mockResults} />)
 
-    expect(component.at(0).find('.o-list').at(0)).toBeTruthy()
-    expect(component.at(0).find('.o-list li a').at(0)).toBeTruthy()
-    expect(component.at(0).find('.o-list li a').at(0).props().title).toBe(
+    expect(component.at(0).find('List').at(0)).toBeTruthy()
+    expect(component.at(0).find('Link').at(0)).toBeTruthy()
+    expect(component.at(0).find('Link').at(0).props().title).toBe(
       mockAdres.nummeraanduidingen_label[0],
     )
-    expect(component.at(0).find('.o-list li a').at(0).props().children).toBe(
-      mockAdres.nummeraanduidingen_label[0],
+    expect(component.at(0).find('Link').at(0).props().children).toEqual(
+      <span>{mockAdres.nummeraanduidingen_label[0]}</span>,
     )
   })
 })

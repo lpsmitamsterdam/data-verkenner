@@ -1,3 +1,4 @@
+import NotificationLevel from '../../../app/models/notification'
 import formatDate from '../../../shared/services/date-formatter/date-formatter'
 import {
   adressenPand,
@@ -11,6 +12,7 @@ import {
   monument,
   napPeilmerk,
   oplaadpunten,
+  parkeervak,
   parkeerzones,
   reclamebelasting,
   societalActivities,
@@ -18,7 +20,6 @@ import {
   winkelgebied,
   YEAR_UNKNOWN,
 } from './normalize'
-import NotificationLevel from '../../../app/models/notification'
 
 jest.mock('../../../shared/services/date-formatter/date-formatter')
 
@@ -334,6 +335,32 @@ ${input.gebruiksdoel[1]}`,
     })
   })
 
+  describe('normalizes "explosieven"', () => {
+    it('parses the dates', () => {
+      const input = {
+        datum: '2019-12-12',
+        datum_inslag: '2019-12-16',
+      }
+
+      const output = explosieven(input)
+
+      expect(output.datum.getTime()).toEqual(new Date('2019-12-12').getTime())
+      expect(output.datum_inslag.getTime()).toEqual(new Date('2019-12-16').getTime())
+    })
+
+    it('ingores the dates when empty', () => {
+      const input = {
+        datum: null,
+        datum_inslag: null,
+      }
+
+      const output = explosieven(input)
+
+      expect(output.datum).toEqual(null)
+      expect(output.datum_inslag).toEqual(null)
+    })
+  })
+
   describe('normalizes "bekendmakingen', () => {
     let input
     let output
@@ -377,20 +404,7 @@ ${input.gebruiksdoel[1]}`,
     let input
     let output
     let date
-    it('for "explosieven', () => {
-      date = '12 december 2019'
-      formatDate.mockImplementationOnce(() => date)
 
-      input = {
-        datum: 'datum',
-      }
-
-      output = explosieven(input)
-
-      expect(output).toMatchObject({
-        date,
-      })
-    })
     it('for "evenementen', () => {
       date = '11 december 2019'
       formatDate.mockImplementation(() => date)
@@ -643,6 +657,28 @@ ${input.gebruiksdoel[1]}`,
 
     it('should pass along other properties', () => {
       expect(grexProject({ planstatus: 'A', oppervlakte: 12, foo: 'bar' }).foo).toEqual('bar')
+    })
+  })
+
+  describe('normalizes "parkeervakken"', () => {
+    it('returns the formatted days', () => {
+      const output = parkeervak({
+        regimes: [{ dagen: ['ma', 'di', 'do'], beginTijd: '00:00:00', eindTijd: '12:00:00' }],
+      })
+
+      expect(output).toMatchObject({
+        regimes: [{ dagenFormatted: 'ma, di, do' }],
+      })
+    })
+
+    it('returns the formatted time', () => {
+      const output = parkeervak({
+        regimes: [{ beginTijd: '00:00:00', eindTijd: '12:00:00', dagen: [] }],
+      })
+
+      expect(output).toMatchObject({
+        regimes: [{ tijdstip: '00:00 - 12:00', dagen: [] }],
+      })
     })
   })
 })

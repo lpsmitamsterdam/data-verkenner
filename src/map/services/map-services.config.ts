@@ -1,3 +1,4 @@
+import NotificationLevel from '../../app/models/notification'
 import { DetailResult, DetailResultItemType } from '../types/details'
 import adressenNummeraanduiding from './adressen-nummeraanduiding/adressen-nummeraanduiding'
 import categoryLabels from './map-search/category-labels'
@@ -13,14 +14,13 @@ import {
   monument,
   napPeilmerk,
   oplaadpunten,
+  parkeervak,
   parkeerzones,
   reclamebelasting,
   vastgoed,
   winkelgebied,
-  parkeervak,
 } from './normalize/normalize'
 import vestiging from './vestiging/vestiging'
-import NotificationLevel from '../../app/models/notification'
 
 export const endpointTypes = {
   adressenLigplaats: 'bag/v1.1/ligplaats/',
@@ -397,7 +397,12 @@ const servicesByEndpointType: { [type: string]: ServiceDefinition } = {
       title: 'Inslag',
       subTitle: result._display,
       items: [
-        { type: DetailResultItemType.Default, label: 'Datum van inslag', value: result.date },
+        { type: DetailResultItemType.Default, label: 'Datum', value: result.datum },
+        {
+          type: DetailResultItemType.Default,
+          label: 'Datum van inslag',
+          value: result.datum_inslag,
+        },
         { type: DetailResultItemType.Default, label: 'Soort handeling', value: result.type },
         { type: DetailResultItemType.Default, label: 'Bron', value: result.bron, multiLine: true },
         { type: DetailResultItemType.Default, label: 'Opmerkingen', value: result.opmerkingen },
@@ -716,6 +721,7 @@ const servicesByEndpointType: { [type: string]: ServiceDefinition } = {
           headings: [
             { label: 'Dagen', key: 'dagenFormatted' },
             { label: 'Tijdstip', key: 'tijdstip' },
+            { label: 'Type', key: 'eTypeDescription' },
             { label: 'Bord', key: 'bord' },
           ],
           values: result.regimes,

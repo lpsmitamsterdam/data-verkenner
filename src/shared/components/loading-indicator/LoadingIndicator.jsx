@@ -1,7 +1,7 @@
 import React from 'react'
-
+import styled from 'styled-components'
 import PropTypes from 'prop-types'
-import { Spinner } from '@datapunt/asc-ui'
+import { Spinner, svgFill, themeColor } from '@datapunt/asc-ui'
 
 const LoadingIndicator = ({ IconComponent, ...otherProps }) => (
   <div className="loading-indicator" {...otherProps}>
@@ -9,8 +9,12 @@ const LoadingIndicator = ({ IconComponent, ...otherProps }) => (
   </div>
 )
 
+const StyledSpinner = styled(Spinner)`
+  ${svgFill(themeColor('secondary'))}
+`
+
 LoadingIndicator.defaultProps = {
-  IconComponent: <Spinner size={36} color="secondary" />,
+  IconComponent: <StyledSpinner size={36} />,
 }
 
 LoadingIndicator.propTypes = {
