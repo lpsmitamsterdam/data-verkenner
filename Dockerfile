@@ -13,12 +13,12 @@ COPY public /app/public
 #  * Changing git URL because network is blocking git protocol...
 RUN git config --global url."https://".insteadOf git:// && \
     git config --global url."https://github.com/".insteadOf git@github.com: && \
-#    npm config set registry https://nexus.data.amsterdam.nl/repository/npm-group/ && \
+    #    npm config set registry https://nexus.data.amsterdam.nl/repository/npm-group/ && \
     PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true \
     npm --production=false \
-        --unsafe-perm \
-        --verbose \
-        ci
+    --unsafe-perm \
+    --verbose \
+    ci
 
 RUN npm run generate:sitemap
 
@@ -27,16 +27,16 @@ COPY src /app/src
 COPY modules /app/modules
 COPY scripts /app/scripts
 COPY .babelrc \
-     .eslintrc.js \
-     .eslintignore \
-     .prettierrc \
-     .prettierignore \
-      index.ejs \
-      webpack.* \
-      tsconfig.json \
-      tsconfig.webpack.json \
-      favicon.png \
-      /app/
+    .eslintrc.js \
+    .eslintignore \
+    .prettierrc \
+    .prettierignore \
+    index.ejs \
+    webpack.* \
+    tsconfig.json \
+    tsconfig.webpack.json \
+    favicon.png \
+    /app/
 
 ARG NODE_ENV=${NODE_ENV}
 RUN npm run build:${NODE_ENV}
@@ -44,8 +44,8 @@ RUN echo "build= `date`" > /app/dist/version.txt
 
 # Test dependencies
 COPY karma.conf.ts \
-     jest.config.js \
-     /app/
+    jest.config.js \
+    /app/
 COPY test /app/test
 
 

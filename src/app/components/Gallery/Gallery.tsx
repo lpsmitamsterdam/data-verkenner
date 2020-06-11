@@ -17,11 +17,7 @@ const StyledAlert = styled(Alert)`
 
 const GalleryContainer = styled.div`
   border-bottom: 1px solid ${themeColor('tint', 'level3')};
-  padding: ${themeSpacing(10, 5)};
-`
-
-const StyledHeading = styled(Heading)`
-  margin-bottom: ${themeSpacing(3)};
+  padding: ${themeSpacing(5, 5, 10, 5)};
 `
 
 const StyledRow = styled(Row)`
@@ -63,14 +59,13 @@ const StyledLink = styled(Link)`
 `
 
 type GalleryProps = {
-  title: string
   allFiles: Array<ConstructionFileImage>
   id: string
   access: 'RESTRICTED' | 'PUBLIC'
 }
 const MAX_LENGTH = 6
 
-const Gallery: React.FC<GalleryProps> = ({ title, allFiles, id, access }) => {
+const Gallery: React.FC<GalleryProps> = ({ allFiles, id, access }) => {
   const lessFiles = allFiles.slice(0, MAX_LENGTH)
   const [files, setFiles] = React.useState(lessFiles)
 
@@ -83,30 +78,28 @@ const Gallery: React.FC<GalleryProps> = ({ title, allFiles, id, access }) => {
   const restricted = access === 'RESTRICTED'
 
   return (
-    <GalleryContainer key={title}>
-      <StyledHeading color="secondary" forwardedAs="h3">
-        {title} {hasMore && `(${allFiles.length})`}
-      </StyledHeading>
+    <GalleryContainer key={id}>
       {files.length ? (
         <>
           {!hasRights && !hasExtendedRights ? (
             <StyledAlert level={NotificationLevel.Attention} dismissible>
-              Medewerkers/ketenpartners van Gemeente Amsterdam kunnen inloggen om bouwdossiers te
-              bekijken.
+              Medewerkers/ketenpartners van Gemeente Amsterdam kunnen inloggen om bouw- en
+              omgevingsdossiers te bekijken.
             </StyledAlert>
           ) : (
             restricted &&
             !hasExtendedRights && (
               <StyledAlert level={NotificationLevel.Attention} dismissible>
                 Medewerkers/ketenpartners van Gemeente Amsterdam met extra bevoegdheden kunnen
-                inloggen om alle bouwdossiers te bekijken.
+                inloggen om alle bouw- en omgevingsdossiers te bekijken.
               </StyledAlert>
             )
           )}
 
-          <StyledRow hasMarginBottom={hasMore} hasMargin={false}>
+          <StyledRow hasMarginBottom={hasMore} hasMargin={false} hasMaxWidth={false}>
             {files.map(({ filename: fileName, url: fileUrl }) => {
-              const disabled = (!hasRights && !hasExtendedRights) || (restricted && !hasRights)
+              const disabled =
+                (!hasRights && !hasExtendedRights) || (restricted && !hasExtendedRights)
 
               return (
                 <StyledColumn

@@ -11,7 +11,6 @@ import { getLocationPayload } from '../../../store/redux-first-router/selectors'
 import LoadingIndicator from '../../../shared/components/loading-indicator/LoadingIndicator'
 import ErrorAlert from '../../components/ErrorAlert/ErrorAlert'
 import { getByUrl } from '../../../shared/services/api/api'
-import { ConstructionFiles as ContextMenu } from '../../components/ContextMenu'
 import useDocumentTitle from '../../utils/useDocumentTitle'
 
 const ImageViewer = React.lazy(() =>
@@ -24,7 +23,7 @@ const StyledRow = styled(Row)`
 `
 
 const ERROR_MESSAGE =
-  'Er kunnen door een technische storing helaas geen bouwdossiers worden getoond. Probeer het later nog eens.'
+  'Er kunnen door een technische storing helaas geen bouw- en omgevingsdossiers worden getoond. Probeer het later nog eens.'
 
 const ConstructionFilesContainer = ({ fileName, fileUrl, endpoint }) => {
   const [results, setResults] = React.useState(null)
@@ -86,8 +85,8 @@ const ConstructionFilesContainer = ({ fileName, fileUrl, endpoint }) => {
   const onDownloadFile = (size) => {
     trackEvent({
       documentTitle,
-      action: 'Download-bouwtekening',
-      name: `bouwtekening-download-${size}`,
+      category: 'download-bouwtekening',
+      action: `bouwtekening-download-${size}`,
       value: fileName,
     })
   }
@@ -108,14 +107,7 @@ const ConstructionFilesContainer = ({ fileName, fileUrl, endpoint }) => {
     <ErrorAlert errorMessage={errorMessage} />
   ) : (
     <>
-      {imageViewerActive && (
-        <ImageViewer
-          {...{ fileName, fileUrl, title }}
-          contextMenu={
-            <ContextMenu onDownload={onDownloadFile} fileName={fileName} fileUrl={fileUrl} />
-          }
-        />
-      )}
+      {imageViewerActive && <ImageViewer {...{ fileName, fileUrl, title, onDownloadFile }} />}
       {loading && loadingTemplate}
       {!loading &&
         !fileName &&
