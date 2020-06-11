@@ -35,12 +35,14 @@ const StyledLink = styled(Link)`
   width: 100%;
   height: 100%;
   position: relative;
+  display: inline-block;
 
   ${({ disabled }: { disabled: boolean }) =>
     disabled &&
     css`
       pointer-events: none;
       cursor: default;
+      display: inline-block; // to make disable pointer-events on IE
     `}
 
   // To make the link square
