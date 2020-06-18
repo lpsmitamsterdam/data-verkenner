@@ -1,16 +1,11 @@
 import React, { useContext } from 'react'
-import {
-  ViewerContainer as ViewerContainerComponent,
-  Spinner,
-  themeSpacing,
-} from '@datapunt/asc-ui'
+import { ViewerContainer as ViewerContainerComponent, Spinner } from '@datapunt/asc-ui'
 import styled, { css } from 'styled-components'
 import { Overlay } from '@datapunt/arm-core/lib/components/MapPanel/constants'
-import { BaseLayerToggle, Zoom, mapPanelComponents } from '@datapunt/arm-core'
-import MapPanelContainer from '../../../../map/containers/panel/MapPanelContainer'
-import MapPreviewPanelContainer from '../../../../map/containers/preview-panel/MapPreviewPanelContainer'
+import { Zoom, mapPanelComponents } from '@datapunt/arm-core'
+import MapPreviewPanelContainer from '../MapPreviewPanelContainer'
 import DrawTool from './DrawTool'
-import { MarkerGroup } from '../types'
+import BaseLayerToggle from './BaseLayerToggle'
 import MapContext from '../MapContext'
 
 type StyledViewerContainerProps = {
@@ -42,8 +37,6 @@ type Props = {
   setCurrentOverlay: (overlay: Overlay) => void
   showDesktopVariant: boolean
   setShowDrawTool: (arg: boolean) => void
-  setMarkerGroups: (arg: MarkerGroup[]) => void
-  markerGroupsRef: React.RefObject<any>
   isLoading: boolean
 }
 
@@ -51,27 +44,13 @@ const BottomLeftHolder = styled.div`
   display: flex;
 `
 
-// This can be deleted once we use the new MapDrawer / MapPanel
-const MapPanelContainerWrapper = styled.div`
-  bottom: 20px;
-  margin-right: ${themeSpacing(2)};
-
-  & > section {
-    left: 0;
-    bottom: 0;
-    position: relative;
-    max-height: 80vh;
-  }
-`
-
 const ViewerContainer: React.FC<Props> = ({
   currentOverlay,
   setCurrentOverlay,
   showDesktopVariant,
   setShowDrawTool,
-  setMarkerGroups,
-  markerGroupsRef,
   isLoading,
+  showDrawTool,
   ...otherProps
 }) => {
   const { detailUrl } = useContext(MapContext)
@@ -87,10 +66,6 @@ const ViewerContainer: React.FC<Props> = ({
           height={height}
           topLeft={
             <BottomLeftHolder>
-              <MapPanelContainerWrapper>
-                <MapPanelContainer />
-              </MapPanelContainerWrapper>
-
               {/* Todo: attach state to map reducer */}
               <BaseLayerToggle />
             </BottomLeftHolder>
@@ -99,15 +74,7 @@ const ViewerContainer: React.FC<Props> = ({
           bottomLeft={
             <MapPanelLegendButton {...{ showDesktopVariant, currentOverlay, setCurrentOverlay }} />
           }
-          topRight={
-            <>
-              <DrawTool
-                onToggle={setShowDrawTool}
-                setMarkerGroups={setMarkerGroups}
-                markerGroupsRef={markerGroupsRef}
-              />
-            </>
-          }
+          topRight={<DrawTool onToggle={setShowDrawTool} />}
         />
       ) : (
         <StyledViewerContainer
@@ -120,19 +87,12 @@ const ViewerContainer: React.FC<Props> = ({
           bottomRight={<Zoom />}
           bottomLeft={
             <BottomLeftHolder>
-              <MapPanelContainerWrapper>
-                <MapPanelContainer />
-              </MapPanelContainerWrapper>
               <BaseLayerToggle />
             </BottomLeftHolder>
           }
           topRight={
             <>
-              <DrawTool
-                onToggle={setShowDrawTool}
-                setMarkerGroups={setMarkerGroups}
-                markerGroupsRef={markerGroupsRef}
-              />
+              <DrawTool isOpen={showDrawTool} onToggle={setShowDrawTool} />
               {detailUrl && <MapPreviewPanelContainer />}
             </>
           }
