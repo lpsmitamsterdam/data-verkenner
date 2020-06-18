@@ -21,23 +21,6 @@ const urls = {
   vestiging: `${routing.data.path}handelsregister/vestiging/id000003579875/?modus=gesplitst`,
   vestigingenTabel: `${routing.data.path}hr/vestigingen?${VIEW}=volledig&${LEGEND}=false&${ZOOM}=11`,
 }
-  address: `/data/bag/verblijfsobject/id0363010000749400?${LEGEND}=false&${ZOOM}=16`,
-  business: `/data/brk/object/idNL.KAD.OnroerendeZaak.11460666170000?${LEGEND}=false&${ZOOM}=16`,
-  gemeentelijkeBeperking: `/data/wkpb/beperking/id9230`,
-  geoSearch: `/data/geozoek?${LOCATION}=52.3736166%2C4.8943521`,
-  ligplaats: `/data/bag/ligplaats/id0363020000881621`,
-  maatschappelijkeActiviteit: `/data/handelsregister/maatschappelijkeactiviteit/id01029509`,
-  map: `/data/?${VIEW_CENTER}=52.3731081%2C4.8932945&${VIEW}=kaart&${LEGEND}=false`,
-  monument: `/data/monumenten/monumenten/idc115314a-59d4-4574-bfe9-1f7df5cb20c4`,
-  monumentComplex: `/data/monumenten/complexen/id182a9861-4052-4127-8300-6450cd75b6a5`,
-  natuurlijk: `/data/brk/subject/idNL.KAD.Persoon.171720901`,
-  nietNatuurlijk: `/data/brk/subject/idNL.KAD.Persoon.423186718`,
-  pand: `/data/bag/pand/id0363100012168052`,
-  parkeervak: `/data/parkeervakken/parkeervakken/id121403487278/`,
-  standplaats: `/data/bag/standplaats/id0363030000930866`,
-  vestiging: `/data/handelsregister/vestiging/id000003579875/?modus=gesplitst`,
-  vestigingenTabel: `/data/hr/vestigingen?${VIEW}=volledig&${LEGEND}=false&${ZOOM}=11`,
-}
 
 const values = {
   aantekeningen: 'Aantekeningen',
