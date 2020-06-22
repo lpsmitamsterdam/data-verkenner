@@ -92,7 +92,11 @@ const ViewerContainer: React.FC<Props> = ({
           }
           topRight={
             <>
-              <DrawTool isOpen={showDrawTool} onToggle={setShowDrawTool} />
+              <DrawTool
+                isOpen={showDrawTool}
+                onToggle={setShowDrawTool}
+                setCurrentOverlay={setCurrentOverlay}
+              />
               {detailUrl && <MapPreviewPanelContainer />}
             </>
           }

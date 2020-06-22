@@ -133,7 +133,7 @@ const MapPage: React.FC = () => {
               )}
               {currentOverlay === Overlay.Legend && (
                 <MapLegend
-                  stackOrder={2}
+                  stackOrder={3}
                   animate
                   onClose={() => {
                     setCurrentOverlay(location ? Overlay.Results : Overlay.None)
@@ -150,7 +150,7 @@ const MapPage: React.FC = () => {
                 />
               )}
               <DrawContent {...{ showDrawTool, currentOverlay, setShowDrawTool }} />
-              <MapLegend stackOrder={1} />
+              <MapLegend />
             </MapPanelOrDrawer>
             <ViewerContainer
               {...{

@@ -3,7 +3,7 @@ import React, { useContext, useEffect } from 'react'
 import { useMapInstance } from '@datapunt/react-maps'
 import { DrawTool as DrawToolComponent } from '@datapunt/arm-draw'
 import { mapPanelComponents, usePanToLatLng } from '@datapunt/arm-core'
-import { SnapPoint } from '../types'
+import { Overlay, SnapPoint } from '../types'
 import DataSelectionContext from '../DataSelectionContext'
 
 type extraLayerTypes = {
@@ -31,6 +31,7 @@ type MarkerGroup = {
 
 type Props = {
   onToggle: (showDrawing: boolean) => void
+  setCurrentOverlay: (overlay: Overlay) => void
   setMarkerGroups: (markerGroups: MarkerGroup[]) => void
   setDataSelectionResults: (results: any) => void
   markerGroupsRef: React.RefObject<MarkerGroup[]>
@@ -80,7 +81,7 @@ const bindDistanceAndAreaToTooltip = (layer: ExtendedLayer, toolTipText) => {
   layer.bindTooltip(toolTipText, { direction: 'bottom' }).openTooltip()
 }
 
-const DrawTool: React.FC<Props> = ({ onToggle, isOpen }) => {
+const DrawTool: React.FC<Props> = ({ onToggle, isOpen, setCurrentOverlay }) => {
   const { setPositionFromSnapPoint, variant } = useContext(MapPanelContext)
   const { fetchData, fetchMapVisualization, mapVisualization, removeDataSelection } = useContext(
     DataSelectionContext,
@@ -148,6 +149,9 @@ const DrawTool: React.FC<Props> = ({ onToggle, isOpen }) => {
       }}
       isOpen={isOpen}
       onToggle={onToggle}
+      onDrawStart={() => {
+        setCurrentOverlay(Overlay.Results)
+      }}
     />
   )
 }
