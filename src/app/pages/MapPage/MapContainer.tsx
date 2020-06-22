@@ -9,6 +9,8 @@ import {
   decodeLayers,
   encodeLocation,
   decodeLocation,
+  encodeBounds,
+  decodeBounds,
 } from '../../../store/queryParameters'
 import getState from '../../../shared/services/redux/get-state'
 import MapPage from './MapPage'
@@ -21,18 +23,12 @@ import MapContext, {
   Location,
   Geometry,
   Overlay,
+  DrawingGeometry,
 } from './MapContext'
 import MAP_CONFIG from '../../../map/services/map.config'
 import { createUrlWithToken } from '../../../shared/services/api/api'
-
-function getParam(param: string): string {
-  if (typeof window !== 'undefined') {
-    const searchParams = new URLSearchParams(window.location.search)
-    return searchParams.get(param) || ''
-  }
-
-  return ''
-}
+import getParam from '../../utils/getParam'
+import PARAMETERS from '../../../store/parameters'
 
 function setParams(param: string, value: string) {
   if (typeof window !== 'undefined') {
@@ -54,11 +50,12 @@ type Action =
   | { type: 'getPanelLayers'; payload: Array<Object> }
   | { type: 'getMapLayers'; payload: Array<MapLayer> }
   | { type: 'setActiveMapLayers'; payload: Array<ActiveMapLayer> }
-  | { type: 'setVisibleMapLayers'; payload: ActiveMapLayer }
+  | { type: 'setVisibleMapLayer'; payload: ActiveMapLayer }
   | { type: 'setOverlays'; payload: Array<Overlay> }
   | { type: 'setLocation'; payload: Location }
   | { type: 'setDetailUrl'; payload: string }
   | { type: 'setGeometry'; payload: Geometry }
+  | { type: 'setDrawingGeometry'; payload: DrawingGeometry }
 
 const reducer = (state: MapState, action: Action): MapState => {
   switch (action.type) {
@@ -102,7 +99,7 @@ const reducer = (state: MapState, action: Action): MapState => {
               })),
             ],
       }
-    case 'setVisibleMapLayers':
+    case 'setVisibleMapLayer':
       // TODO: simplify this in the new MapPanel
       return {
         ...state,
@@ -132,6 +129,11 @@ const reducer = (state: MapState, action: Action): MapState => {
         ...state,
         geometry: action.payload,
       }
+    case 'setDrawingGeometry':
+      return {
+        ...state,
+        drawingGeometry: action.payload,
+      }
     default:
       return state
   }
@@ -142,7 +144,7 @@ const MapContextProvider: React.FC<MapContextProps> = ({ children }) => {
 
   function setActiveBaseLayer(payload: string) {
     dispatch({ type: 'setActiveBaseLayer', payload })
-    setParams('achtergrond', payload)
+    setParams(PARAMETERS.MAP_BACKGROUND, payload)
   }
 
   // Add auto type generation
@@ -150,22 +152,15 @@ const MapContextProvider: React.FC<MapContextProps> = ({ children }) => {
     dispatch({ type: 'setActiveMapLayers', payload })
   }
 
-  function setVisibleMapLayers(id: string, isVisible: boolean) {
-    dispatch({ type: 'setVisibleMapLayers', payload: { id, isVisible: !isVisible } })
+  function setVisibleMapLayer(id: string, isVisible: boolean) {
+    dispatch({ type: 'setVisibleMapLayer', payload: { id, isVisible: !isVisible } })
     setParams('lagen', encodeLayers([...state.activeMapLayers, { id, isVisible: !isVisible }]))
-  }
-
-  function setMapPanelVisible(isVisible: boolean) {
-    dispatch({ type: 'setMapPanelVisible', payload: isVisible })
-    setParams('legenda', isVisible.toString())
   }
 
   function setLocation(payload: Location | null) {
     dispatch({ type: 'setLocation', payload })
 
-    if (payload) {
-      setParams('locatie', encodeLocation(payload))
-    }
+    if (payload) setParams(PARAMETERS.LOCATION, encodeLocation(payload))
   }
 
   function setDetailUrl(payload: string) {
@@ -179,8 +174,10 @@ const MapContextProvider: React.FC<MapContextProps> = ({ children }) => {
     }
   }
 
-  function toggleMapPanel() {
-    setMapPanelVisible(!state.isMapPanelVisible)
+  function setDrawingGeometry(payload: DrawingGeometry) {
+    dispatch({ type: 'setDrawingGeometry', payload })
+
+    if (payload) setParams(PARAMETERS.DRAWING_GEOMETRY, encodeBounds(payload))
   }
 
   async function getBaseLayers() {
@@ -274,22 +271,24 @@ const MapContextProvider: React.FC<MapContextProps> = ({ children }) => {
   }
 
   // Load the state from the query parameters
-  React.useEffect(() => {
-    const isMapHandleVisible = getParam('legenda')
-    const activeMapLayers = getParam('lagen')
-    const location = getParam('locatie')
-    const detailUrl = getParam('detailUrl')
+  const activeMapLayers = getParam(PARAMETERS.LAYERS)
+  const location = getParam(PARAMETERS.LOCATION)
+  const detailUrl = getParam('detailUrl')
+  const baseLayer = getParam(PARAMETERS.MAP_BACKGROUND)
+  const drawingGeometry = getParam(PARAMETERS.DRAWING_GEOMETRY)
 
-    if (isMapHandleVisible) setMapPanelVisible(isMapHandleVisible === 'true')
+  React.useEffect(() => {
+    if (baseLayer) setActiveBaseLayer(baseLayer)
     if (activeMapLayers) setActiveMapLayers(decodeLayers(activeMapLayers))
     // @ts-ignore fix the destruction of the location from the url
     if (location) setLocation(decodeLocation(location))
     if (detailUrl) setDetailUrl(detailUrl)
-  }, [])
+    if (drawingGeometry) setDrawingGeometry(decodeBounds(drawingGeometry))
+  }, [baseLayer, activeMapLayers, location, detailUrl, drawingGeometry])
 
   // This can be refactored if the mapLayers are added in batches
   React.useEffect(() => {
-    if (state.activeMapLayers) setParams('lagen', encodeLayers(state.activeMapLayers))
+    if (state.activeMapLayers.length) setParams('lagen', encodeLayers(state.activeMapLayers))
   }, [state.activeMapLayers])
 
   return (
@@ -298,11 +297,11 @@ const MapContextProvider: React.FC<MapContextProps> = ({ children }) => {
         ...state,
         setActiveBaseLayer,
         setActiveMapLayers,
-        setVisibleMapLayers,
+        setVisibleMapLayer,
         setLocation,
         setDetailUrl,
         setGeometry,
-        toggleMapPanel,
+        setDrawingGeometry,
         getBaseLayers,
         getPanelLayers,
         getMapLayers,

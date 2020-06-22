@@ -1,25 +1,24 @@
-import { ChevronUp } from '@datapunt/asc-assets'
-import PropTypes from 'prop-types'
 import React from 'react'
+import { ChevronUp } from '@datapunt/asc-assets'
 import MapLegend from '../../components/legend/MapLegend'
 import MapPanelHandle from '../../components/panel-handle/MapPanelHandle'
 import MapType from '../../components/type/MapType'
 
 const MapPanel = ({
-  isMapPanelVisible,
   activeBaseLayer,
-  mapBaseLayers,
   onBaseLayerToggle,
-  panelLayers,
   onMapPanelHandleToggle,
-  activeMapLayers,
   onMapPanelToggle,
   onLayerToggle,
   onLayerVisibilityToggle,
   overlays,
-  user,
   printMode,
-  zoomLevel,
+  activeMapLayers = [],
+  isMapPanelVisible = true,
+  mapBaseLayers = {},
+  panelLayers = [],
+  user = {},
+  zoomLevel = 0,
 }) => (
   <div
     aria-label={
@@ -62,7 +61,7 @@ const MapPanel = ({
           onMapPanelHandleToggle,
         }}
       >
-        {mapBaseLayers && (
+        {mapBaseLayers?.aerial?.length && mapBaseLayers?.topo?.length && (
           <MapType
             activeBaseLayer={activeBaseLayer}
             baseLayers={mapBaseLayers}
@@ -95,25 +94,6 @@ MapPanel.defaultProps = {
   panelLayers: [],
   user: {},
   zoomLevel: 0,
-}
-
-MapPanel.propTypes = {
-  activeBaseLayer: PropTypes.string.isRequired,
-  activeMapLayers: PropTypes.array, // eslint-disable-line
-  isMapPanelHandleVisible: PropTypes.bool.isRequired,
-  isMapPanelVisible: PropTypes.bool,
-  printMode: PropTypes.bool.isRequired,
-  map: PropTypes.object, // eslint-disable-line
-  mapBaseLayers: PropTypes.object, // eslint-disable-line
-  panelLayers: PropTypes.arrayOf(PropTypes.object),
-  onBaseLayerToggle: PropTypes.func.isRequired,
-  onLayerToggle: PropTypes.func.isRequired,
-  onLayerVisibilityToggle: PropTypes.func.isRequired,
-  onMapPanelHandleToggle: PropTypes.func.isRequired,
-  onMapPanelToggle: PropTypes.func.isRequired,
-  overlays: PropTypes.arrayOf(PropTypes.object).isRequired,
-  user: PropTypes.shape({}),
-  zoomLevel: PropTypes.number,
 }
 
 export default MapPanel

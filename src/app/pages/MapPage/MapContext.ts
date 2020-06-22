@@ -24,6 +24,10 @@ export type Geometry = {
   coordinates: Array<Array<string>>
 }
 
+export type SimpleGeometry = { lat: number; lng: number }
+
+export type DrawingGeometry = Array<SimpleGeometry>
+
 export type Overlay = {
   type: string
   url: string
@@ -43,14 +47,16 @@ export type MapState = {
   location?: Location
   detailUrl?: string
   geometry?: Geometry
+  drawingGeometry?: DrawingGeometry
 }
 
 export type MapContextProps = {
   setActiveBaseLayer: (ActiveBaseLayer: string) => void
   setActiveMapLayers: (ActiveMapLayer: Array<ActiveMapLayer>) => void
-  setVisibleMapLayers: (mapLayers: Array<MapLayer>) => void
+  setVisibleMapLayer: (id: string, isVisible: boolean) => void
   setLocation: (location: Location) => void
   setGeometry: (geometry: Geometry) => void
+  setDrawingGeometry: (drawingGeometery: DrawingGeometry) => void
   setDetailUrl: (url: string) => void
   getBaseLayers: () => void
   getPanelLayers: () => void
@@ -72,8 +78,9 @@ export const initialState: MapContextProps = {
   zoomLevel: 11,
   setActiveBaseLayer: () => {},
   setActiveMapLayers: () => {},
-  setVisibleMapLayers: () => {},
+  setVisibleMapLayer: () => {},
   setGeometry: () => {},
+  setDrawingGeometry: () => {},
   setLocation: () => {},
   setDetailUrl: () => {},
   getBaseLayers: () => {},
