@@ -90,7 +90,7 @@ const DrawTool: React.FC<Props> = ({ onToggle, isOpen, setCurrentOverlay }) => {
     const latLngs = layer.getLatLngs()
     if (
       !drawingGeometry ||
-      (!drawingGeometry &&
+      (drawingGeometry &&
         drawingGeometry.map((latLng) => L.latLng(latLng)).toString() !== latLngs[0].toString())
     ) {
       setDrawingGeometry(latLngs[0])
