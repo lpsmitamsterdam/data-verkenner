@@ -89,8 +89,9 @@ const DrawTool: React.FC<Props> = ({ onToggle, isOpen, setCurrentOverlay }) => {
   const getData = async (layer: ExtendedLayer, distanceText: string) => {
     const latLngs = layer.getLatLngs()
     if (
-      drawingGeometry &&
-      drawingGeometry.map((latLng) => L.latLng(latLng)).toString() !== latLngs[0].toString()
+      !drawingGeometry ||
+      (!drawingGeometry &&
+        drawingGeometry.map((latLng) => L.latLng(latLng)).toString() !== latLngs[0].toString())
     ) {
       setDrawingGeometry(latLngs[0])
     }
@@ -182,7 +183,7 @@ const DrawTool: React.FC<Props> = ({ onToggle, isOpen, setCurrentOverlay }) => {
           removeDataSelection(editLayerIds)
         }
       }}
-      isOpen={isOpen}
+      isOpen={isOpen || drawingGeometry}
       onToggle={onToggle}
       drawnItem={initalDrawnItem}
       onDrawStart={() => {
