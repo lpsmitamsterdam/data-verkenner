@@ -267,7 +267,7 @@ const DataSelectionResults: React.FC<Props> = ({ currentOverlay, setShowDrawTool
                       isOpen: true,
                     }
                   : {})}
-                title={`Polygoon ${i + 1}: ${mapData?.distanceText}`}
+                title={`Selectie ${i + 1}: ${mapData?.distanceText}`}
                 onMouseEnter={() => {
                   if (mapData?.layer) {
                     mapData.layer.setStyle({
