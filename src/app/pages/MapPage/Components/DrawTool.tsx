@@ -1,23 +1,20 @@
-import L, { LatLng, LatLngTuple, Polygon, Polyline } from 'leaflet'
-import React, { useContext, useEffect } from 'react'
+import L, { LatLng, LatLngTuple, Polygon } from 'leaflet'
+import React, { useContext, useEffect, useMemo } from 'react'
 import { useMapInstance } from '@datapunt/react-maps'
-import { DrawTool as DrawToolComponent } from '@datapunt/arm-draw'
+import {
+  DrawTool as DrawToolComponent,
+  PolygonType,
+  PolylineType,
+  ExtendedLayer,
+} from '@datapunt/arm-draw'
 import { mapPanelComponents, usePanToLatLng } from '@datapunt/arm-core'
-import { SnapPoint } from '../types'
+import { themeColor, ascDefaultTheme } from '@datapunt/asc-ui'
+import { Overlay, SnapPoint } from '../types'
 import DataSelectionContext from '../DataSelectionContext'
-
-type extraLayerTypes = {
-  id: string
-  editing: {
-    _enabled: boolean
-    disable: () => void
-  }
-}
-
-type PolygonType = extraLayerTypes & Polygon
-type PolylineType = extraLayerTypes & Polyline
-
-export type ExtendedLayer = PolygonType | PolylineType
+import MapContext, { SimpleGeometry } from '../MapContext'
+import getParam from '../../../utils/getParam'
+import { decodeBounds } from '../../../../store/queryParameters'
+import PARAMETERS from '../../../../store/parameters'
 
 type MarkerGroup = {
   id: string
@@ -30,7 +27,9 @@ type MarkerGroup = {
 }
 
 type Props = {
+  isOpen: boolean
   onToggle: (showDrawing: boolean) => void
+  setCurrentOverlay: (overlay: Overlay) => void
   setMarkerGroups: (markerGroups: MarkerGroup[]) => void
   setDataSelectionResults: (results: any) => void
   markerGroupsRef: React.RefObject<MarkerGroup[]>
@@ -76,26 +75,37 @@ const setDistance = (layer: ExtendedLayer) => {
   return toolTipText
 }
 
-const bindDistanceAndAreaToTooltip = (layer: ExtendedLayer, toolTipText) => {
+const bindDistanceAndAreaToTooltip = (layer: ExtendedLayer, toolTipText: string) => {
   layer.bindTooltip(toolTipText, { direction: 'bottom' }).openTooltip()
 }
 
-const DrawTool: React.FC<Props> = ({ onToggle, isOpen }) => {
+const DrawTool: React.FC<Props> = ({ onToggle, isOpen, setCurrentOverlay }) => {
   const { setPositionFromSnapPoint, variant } = useContext(MapPanelContext)
   const { fetchData, fetchMapVisualization, mapVisualization, removeDataSelection } = useContext(
     DataSelectionContext,
   )
+  const { drawingGeometry, setDrawingGeometry } = useContext(MapContext)
+
   const mapInstance = useMapInstance()
   const { pan } = usePanToLatLng()
 
   const getData = async (layer: ExtendedLayer, distanceText: string) => {
+    const latLngs = layer.getLatLngs()
+    if (
+      !drawingGeometry ||
+      (drawingGeometry &&
+        drawingGeometry.map((latLng) => L.latLng(latLng)).toString() !== latLngs[0].toString())
+    ) {
+      setDrawingGeometry(latLngs[0])
+    }
+
     if (layer instanceof Polygon) {
       setPositionFromSnapPoint(SnapPoint.Halfway)
-      const latLngs = layer.getLatLngs() as LatLng[][]
-      const firstDrawingPoint = latLngs[0][0]
+
+      const firstDrawingPoint = latLngs[0]
       await fetchMapVisualization(latLngs, layer.id)
       await fetchData(
-        layer.getLatLngs() as LatLng[][],
+        latLngs,
         layer.id,
         {
           size: 20,
@@ -112,6 +122,7 @@ const DrawTool: React.FC<Props> = ({ onToggle, isOpen }) => {
 
   const editVertex = async (e: L.DrawEvents.EditVertex) => {
     const layer = e.poly as ExtendedLayer
+
     const distanceText = setDistance(layer)
     bindDistanceAndAreaToTooltip(layer, distanceText)
     await getData(layer, distanceText)
@@ -131,11 +142,43 @@ const DrawTool: React.FC<Props> = ({ onToggle, isOpen }) => {
     }
   }, [mapInstance])
 
+  const setInitialDrawing = (polybounds: Array<SimpleGeometry>) => {
+    function createPolyline(coordinates: Array<SimpleGeometry>): PolylineType {
+      const bounds = (coordinates.map(({ lat, lng }) => [lat, lng]) as unknown) as LatLng[]
+
+      return L.polyline(bounds, {
+        color: themeColor('support', 'invalid')({ theme: ascDefaultTheme }),
+        bubblingMouseEvents: false,
+      }) as PolylineType
+    }
+
+    function createPolygon(coordinates: Array<SimpleGeometry>): PolygonType {
+      const bounds = (coordinates.map(({ lat, lng }) => [lat, lng]) as unknown) as LatLng[]
+
+      return L.polygon(bounds, {
+        color: themeColor('support', 'invalid')({ theme: ascDefaultTheme }),
+        bubblingMouseEvents: false,
+      }) as PolygonType
+    }
+
+    return polybounds.length > 2 ? createPolygon(polybounds) : createPolyline(polybounds)
+  }
+
+  const initalDrawnItem = useMemo(() => {
+    // Get the drawing geometry from the url here, before the context is updated to prevent newly drawm geometries to be pushed to the DrawToolComponent
+    const initialDrawingGeometry = getParam(PARAMETERS.DRAWING_GEOMETRY)
+
+    if (initialDrawingGeometry) return setInitialDrawing(decodeBounds(initialDrawingGeometry))
+
+    return null
+  }, [])
+
   return (
     <DrawToolComponent
       onDrawEnd={async (layer: ExtendedLayer) => {
         const distanceText = setDistance(layer)
         bindDistanceAndAreaToTooltip(layer, distanceText)
+
         await getData(layer, distanceText)
       }}
       onDelete={(layersInEditMode: Array<ExtendedLayer>) => {
@@ -146,8 +189,12 @@ const DrawTool: React.FC<Props> = ({ onToggle, isOpen }) => {
           removeDataSelection(editLayerIds)
         }
       }}
-      isOpen={isOpen}
+      isOpen={isOpen || drawingGeometry}
       onToggle={onToggle}
+      drawnItem={initalDrawnItem}
+      onDrawStart={() => {
+        setCurrentOverlay(Overlay.Results)
+      }}
     />
   )
 }

@@ -84,7 +84,10 @@ const ViewerContainer: React.FC<Props> = ({
           topLeft={
             <MapPanelLegendButton {...{ showDesktopVariant, currentOverlay, setCurrentOverlay }} />
           }
-          bottomRight={<Zoom />}
+          bottomRight={
+            // TODO: make it possible to get and set the zoom level fromo the component
+            <Zoom />
+          }
           bottomLeft={
             <BottomLeftHolder>
               <BaseLayerToggle />
@@ -92,7 +95,11 @@ const ViewerContainer: React.FC<Props> = ({
           }
           topRight={
             <>
-              <DrawTool isOpen={showDrawTool} onToggle={setShowDrawTool} />
+              <DrawTool
+                isOpen={showDrawTool}
+                onToggle={setShowDrawTool}
+                setCurrentOverlay={setCurrentOverlay}
+              />
               {detailUrl && <MapPreviewPanelContainer />}
             </>
           }
