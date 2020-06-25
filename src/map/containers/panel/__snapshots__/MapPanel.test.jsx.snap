@@ -52,7 +52,7 @@ exports[`MapPanel should render MapLegend if store contains active map layers 1`
             "aerial": Array [
               Object {},
             ],
-            "topo": Array [
+            "topography": Array [
               Object {},
             ],
           }
@@ -127,7 +127,7 @@ exports[`MapPanel should render MapType and MapLayers 1`] = `
             "aerial": Array [
               Object {},
             ],
-            "topo": Array [
+            "topography": Array [
               Object {},
             ],
           }
