@@ -35,9 +35,8 @@
     <% } %>
 
     <% for (let item of htmlWebpackPlugin.options.styles) { %>
-      <!-- Make sure that non-critical styles are not blocking the page load -->
-      <link rel="preload" href="<%= item %>" as="style" onload="this.onload=null;this.rel='stylesheet'">
-      <noscript><link rel="stylesheet" href="<%= item %>"></noscript>
+      <link rel="preload" href="<%= item %>" as="style">
+      <link rel="stylesheet" href="<%= item %>">
     <% } %>
 
     <style>
