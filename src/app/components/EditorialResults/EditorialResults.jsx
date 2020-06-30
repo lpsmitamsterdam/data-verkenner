@@ -91,7 +91,7 @@ const EditorialResults = ({
                   to={to}
                   title={cardLabel}
                   description={teaser}
-                  date={!specialType && dateLocale}
+                  date={dateLocale}
                   showContentType={showContentType}
                   highlighted={highlighted}
                 />
