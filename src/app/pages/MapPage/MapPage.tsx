@@ -1,6 +1,7 @@
 import React, { useEffect, useMemo, useState } from 'react'
 import styled, { createGlobalStyle } from 'styled-components'
-import { hooks } from '@datapunt/asc-ui'
+import { Alert, Heading, hooks, Link } from '@datapunt/asc-ui'
+import RouterLink from 'redux-first-router-link'
 import { TileLayer } from '@datapunt/react-maps'
 import { NonTiledLayer } from '@datapunt/arm-nontiled'
 import { BaseLayer, constants, Map, mapPanelComponents } from '@datapunt/arm-core'
@@ -16,6 +17,8 @@ import handleMapClick from './utils/handleMapClick'
 import MAP_CONFIG from '../../../map/services/map.config'
 import DataSelectionProvider from './DataSelectionProvider'
 import DrawContent from './Components/DrawContent'
+import NotificationLevel from '../../models/notification'
+import { toMap } from '../../../store/redux-first-router/actions'
 
 const { MapPanel, MapPanelDrawer, MapPanelProvider } = mapPanelComponents
 const { DEFAULT_AMSTERDAM_MAPS_OPTIONS } = constants
@@ -82,96 +85,104 @@ const MapPage: React.FC = () => {
   }, [activeMapLayers])
 
   return (
-    <MapView>
-      <GlobalStyle />
-      <StyledMap
-        options={{
-          ...DEFAULT_AMSTERDAM_MAPS_OPTIONS,
-          center: location || DEFAULT_AMSTERDAM_MAPS_OPTIONS.center,
-        }}
-        events={{
-          loading: () => setIsLoading(true),
-          load: () => setIsLoading(false),
-        }}
-      >
-        <BaseLayer
-          baseLayer={
-            // TODO: Fix bug that prevents the client to set a value for the baseLayer
-            activeBaseLayer
-          }
-        />
-        {geometry && <GeoJSON geometry={geometry} />}
-        {tmsLayers.map(({ url, overlayOptions: options, id }) => (
-          <TileLayer
-            key={id}
-            url={url}
-            options={options}
-            events={{
-              loading: () => setIsLoading(true),
-              load: () => setIsLoading(false),
-            }}
-          />
-        ))}
-        {nonTmsLayers.map(({ url, overlayOptions: options, id }) => (
-          <NonTiledLayer
-            key={id}
-            url={url}
-            options={options}
-            events={{
-              loading: () => setIsLoading(true),
-              load: () => setIsLoading(false),
-            }}
-          />
-        ))}
-        <MapPanelProvider
-          mapPanelSnapPositions={MAP_PANEL_SNAP_POSITIONS}
-          variant={showDesktopVariant ? 'panel' : 'drawer'}
-          initialPosition={SnapPoint.Closed}
-          topOffset={50}
+    <>
+      <Alert level={NotificationLevel.Attention} dismissible>
+        <Heading as="h3">Let op: Deze nieuwe interactieve kaart is nog in aanbouw.</Heading>
+        <Link to={toMap()} as={RouterLink} variant="with-chevron" darkBackground>
+          Naar de oude kaart
+        </Link>
+      </Alert>
+      <MapView>
+        <GlobalStyle />
+        <StyledMap
+          options={{
+            ...DEFAULT_AMSTERDAM_MAPS_OPTIONS,
+            center: location || DEFAULT_AMSTERDAM_MAPS_OPTIONS.center,
+          }}
+          events={{
+            loading: () => setIsLoading(true),
+            load: () => setIsLoading(false),
+          }}
         >
-          <DataSelectionProvider>
-            <MapPanelOrDrawer>
-              {!showDrawTool && (
-                <PointSearchMarker
-                  onClick={(e) => handleMapClick(e, setLocation, setDetailUrl, overlays)}
-                  currentLatLng={location}
-                />
-              )}
-              {currentOverlay === Overlay.Legend && (
-                <MapLegend
-                  stackOrder={3}
-                  animate
-                  onClose={() => {
-                    setCurrentOverlay(location ? Overlay.Results : Overlay.None)
-                  }}
-                />
-              )}
-              {!showDrawTool && location && (
-                <PointSearchResults
-                  {...{
-                    setLocation,
-                    currentOverlay,
-                    location,
-                  }}
-                />
-              )}
-              <DrawContent {...{ showDrawTool, currentOverlay, setShowDrawTool }} />
-              <MapLegend />
-            </MapPanelOrDrawer>
-            <ViewerContainer
-              {...{
-                setCurrentOverlay,
-                currentOverlay,
-                showDesktopVariant,
-                isLoading,
-                setShowDrawTool,
-                showDrawTool,
+          <BaseLayer
+            baseLayer={
+              // TODO: Fix bug that prevents the client to set a value for the baseLayer
+              activeBaseLayer
+            }
+          />
+          {geometry && <GeoJSON geometry={geometry} />}
+          {tmsLayers.map(({ url, overlayOptions: options, id }) => (
+            <TileLayer
+              key={id}
+              url={url}
+              options={options}
+              events={{
+                loading: () => setIsLoading(true),
+                load: () => setIsLoading(false),
               }}
             />
-          </DataSelectionProvider>
-        </MapPanelProvider>
-      </StyledMap>
-    </MapView>
+          ))}
+          {nonTmsLayers.map(({ url, overlayOptions: options, id }) => (
+            <NonTiledLayer
+              key={id}
+              url={url}
+              options={options}
+              events={{
+                loading: () => setIsLoading(true),
+                load: () => setIsLoading(false),
+              }}
+            />
+          ))}
+          <MapPanelProvider
+            mapPanelSnapPositions={MAP_PANEL_SNAP_POSITIONS}
+            variant={showDesktopVariant ? 'panel' : 'drawer'}
+            initialPosition={SnapPoint.Closed}
+            topOffset={50}
+          >
+            <DataSelectionProvider>
+              <MapPanelOrDrawer>
+                {!showDrawTool && (
+                  <PointSearchMarker
+                    onClick={(e) => handleMapClick(e, setLocation, setDetailUrl, overlays)}
+                    currentLatLng={location}
+                  />
+                )}
+                {currentOverlay === Overlay.Legend && (
+                  <MapLegend
+                    stackOrder={3}
+                    animate
+                    onClose={() => {
+                      setCurrentOverlay(location ? Overlay.Results : Overlay.None)
+                    }}
+                  />
+                )}
+                {!showDrawTool && location && (
+                  <PointSearchResults
+                    {...{
+                      setLocation,
+                      currentOverlay,
+                      location,
+                    }}
+                  />
+                )}
+                <DrawContent {...{ showDrawTool, currentOverlay, setShowDrawTool }} />
+                <MapLegend />
+              </MapPanelOrDrawer>
+              <ViewerContainer
+                {...{
+                  setCurrentOverlay,
+                  currentOverlay,
+                  showDesktopVariant,
+                  isLoading,
+                  setShowDrawTool,
+                  showDrawTool,
+                }}
+              />
+            </DataSelectionProvider>
+          </MapPanelProvider>
+        </StyledMap>
+      </MapView>
+    </>
   )
 }
 
