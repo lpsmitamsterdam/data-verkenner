@@ -6,7 +6,7 @@ const BOUNDS = [BOUNDING_BOX.COORDINATES.southWest, BOUNDING_BOX.COORDINATES.nor
 const defaultConfig = {
   BASE_LAYER_OPTIONS: {
     tms: true,
-    minZoom: 8,
+    minZoom: 7,
     maxZoom: 16,
     bounds: BOUNDS,
   },
