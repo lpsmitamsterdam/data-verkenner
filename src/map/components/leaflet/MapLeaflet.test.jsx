@@ -23,7 +23,7 @@ describe('MapLeaflet component', () => {
         [52.50536, 5.10737],
       ],
       maxZoom: 16,
-      minZoom: 8,
+      minZoom: 7,
       subdomains: ['acc.t1', 'acc.t2', 'acc.t3', 'acc.t4'],
       tms: true,
     },

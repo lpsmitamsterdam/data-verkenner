@@ -16,7 +16,7 @@ exports[`LeafletContainer LeafletContainer snapshot should render correct 1`] = 
           ],
         ],
         "maxZoom": 16,
-        "minZoom": 8,
+        "minZoom": 7,
         "subdomains": Array [
           "acc.t1",
           "acc.t2",
@@ -249,7 +249,7 @@ exports[`LeafletContainer LeafletContainer snapshot should render different base
           ],
         ],
         "maxZoom": 16,
-        "minZoom": 8,
+        "minZoom": 7,
         "subdomains": Array [
           "acc.t1",
           "acc.t2",
