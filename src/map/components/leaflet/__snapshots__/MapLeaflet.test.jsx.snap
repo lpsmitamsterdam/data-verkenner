@@ -64,7 +64,7 @@ exports[`MapLeaflet component should render brkMarkers 1`] = `
         ]
       }
       maxZoom={16}
-      minZoom={8}
+      minZoom={7}
       onLoad={[Function]}
       onLoading={[Function]}
       subdomains={
@@ -198,7 +198,7 @@ exports[`MapLeaflet component should render clusters 1`] = `
         ]
       }
       maxZoom={16}
-      minZoom={8}
+      minZoom={7}
       onLoad={[Function]}
       onLoading={[Function]}
       subdomains={
@@ -363,7 +363,7 @@ exports[`MapLeaflet component should render clusters 2`] = `
         ]
       }
       maxZoom={16}
-      minZoom={8}
+      minZoom={7}
       onLoad={[Function]}
       onLoading={[Function]}
       subdomains={
@@ -528,7 +528,7 @@ exports[`MapLeaflet component should render map with base layer and update base 
         ]
       }
       maxZoom={16}
-      minZoom={8}
+      minZoom={7}
       onLoad={[Function]}
       onLoading={[Function]}
       subdomains={
@@ -654,7 +654,7 @@ exports[`MapLeaflet component should render map with base layer and update base 
         ]
       }
       maxZoom={16}
-      minZoom={8}
+      minZoom={7}
       onLoad={[Function]}
       onLoading={[Function]}
       subdomains={
@@ -780,7 +780,7 @@ exports[`MapLeaflet component should render map with coordinates in lat/lon 1`] 
         ]
       }
       maxZoom={16}
-      minZoom={8}
+      minZoom={7}
       onLoad={[Function]}
       onLoading={[Function]}
       subdomains={
@@ -876,7 +876,7 @@ exports[`MapLeaflet component should render map with coordinates in lat/lon 2`] 
         ]
       }
       maxZoom={16}
-      minZoom={8}
+      minZoom={7}
       onLoad={[Function]}
       onLoading={[Function]}
       subdomains={
@@ -1115,7 +1115,7 @@ exports[`MapLeaflet component should render map with coordinates in lat/lon 3`] 
         ]
       }
       maxZoom={16}
-      minZoom={8}
+      minZoom={7}
       onLoad={[Function]}
       onLoading={[Function]}
       subdomains={
@@ -1319,7 +1319,7 @@ exports[`MapLeaflet component should render map with geoJSON with RD coordinates
         ]
       }
       maxZoom={16}
-      minZoom={8}
+      minZoom={7}
       onLoad={[Function]}
       onLoading={[Function]}
       subdomains={
@@ -1415,7 +1415,7 @@ exports[`MapLeaflet component should render map with geoJSON with RD coordinates
         ]
       }
       maxZoom={16}
-      minZoom={8}
+      minZoom={7}
       onLoad={[Function]}
       onLoading={[Function]}
       subdomains={
@@ -1539,7 +1539,7 @@ exports[`MapLeaflet component should render map with geoJSON with RD coordinates
         ]
       }
       maxZoom={16}
-      minZoom={8}
+      minZoom={7}
       onLoad={[Function]}
       onLoading={[Function]}
       subdomains={
@@ -1664,7 +1664,7 @@ exports[`MapLeaflet component should render map with geoJSON with RD coordinates
         ]
       }
       maxZoom={16}
-      minZoom={8}
+      minZoom={7}
       onLoad={[Function]}
       onLoading={[Function]}
       subdomains={
@@ -1864,7 +1864,7 @@ exports[`MapLeaflet component should render map with without layers and add/remo
         ]
       }
       maxZoom={16}
-      minZoom={8}
+      minZoom={7}
       onLoad={[Function]}
       onLoading={[Function]}
       subdomains={
@@ -1960,7 +1960,7 @@ exports[`MapLeaflet component should render map with without layers and add/remo
         ]
       }
       maxZoom={16}
-      minZoom={8}
+      minZoom={7}
       onLoad={[Function]}
       onLoading={[Function]}
       subdomains={
@@ -2070,7 +2070,7 @@ exports[`MapLeaflet component should render map with without layers and add/remo
         ]
       }
       maxZoom={16}
-      minZoom={8}
+      minZoom={7}
       onLoad={[Function]}
       onLoading={[Function]}
       subdomains={
@@ -2166,7 +2166,7 @@ exports[`MapLeaflet component should render markers 1`] = `
         ]
       }
       maxZoom={16}
-      minZoom={8}
+      minZoom={7}
       onLoad={[Function]}
       onLoading={[Function]}
       subdomains={
@@ -2694,7 +2694,7 @@ exports[`MapLeaflet component should render markers 2`] = `
         ]
       }
       maxZoom={16}
-      minZoom={8}
+      minZoom={7}
       onLoad={[Function]}
       onLoading={[Function]}
       subdomains={

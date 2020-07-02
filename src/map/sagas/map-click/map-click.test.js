@@ -51,7 +51,7 @@ describe('switchClickAction', () => {
     {
       category: 'Geografie: onroerende zaken',
       maxZoom: 16,
-      minZoom: 8,
+      minZoom: 7,
       legendItems: [{ id: 'bgem', noDetail: true }],
       noDetail: true,
       title: 'Kadastrale perceelsgrenzen',
@@ -78,7 +78,7 @@ describe('switchClickAction', () => {
   const matchingPanelLayer = {
     id: 'kot',
     maxZoom: 16,
-    minZoom: 8,
+    minZoom: 7,
     legendItems: [{ id: 'kot', noDetail: true }],
     noDetail: true,
     title: 'Kadastrale perceelsgrenzen',

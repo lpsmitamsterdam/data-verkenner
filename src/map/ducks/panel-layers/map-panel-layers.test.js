@@ -91,7 +91,7 @@ describe('selectors', () => {
             },
           ],
           maxZoom: 16,
-          minZoom: 8,
+          minZoom: 7,
           title: 'Foo Layer',
           url: '/maps/layer',
           noDetail: true,
