@@ -49,7 +49,7 @@ describe('PublicationDetailPage', () => {
       setDocumentTitle: jest.fn(),
       href,
     }))
-    useMatomo.mockImplementation(() => ({ trackPageView: jest.fn(), href }))
+    useMatomo.mockImplementation(() => ({ trackPageView: jest.fn(), trackEvent: jest.fn(), href }))
     useDownload.mockImplementation(() => ['', mockDownloadFile])
 
     store = configureMockStore()({

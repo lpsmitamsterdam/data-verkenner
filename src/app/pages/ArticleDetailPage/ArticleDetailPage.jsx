@@ -22,6 +22,7 @@ import {
 } from '@datapunt/asc-ui'
 import React from 'react'
 import { connect } from 'react-redux'
+import { useMatomo } from '@datapunt/matomo-tracker-react'
 import { getLocationPayload } from '../../../store/redux-first-router/selectors'
 import useFromCMS from '../../utils/useFromCMS'
 import EditorialPage from '../../components/EditorialPage/EditorialPage'
@@ -117,7 +118,6 @@ const StyledLink = styled(Link)`
   }
 `
 
-/* istanbul ignore next */
 const ArticleDetailPage = ({ id }) => {
   const { fetchData, results, loading, error } = useFromCMS(cmsConfig.ARTICLE, id)
   const [, downloadFile] = useDownload()
@@ -143,6 +143,8 @@ const ArticleDetailPage = ({ id }) => {
   } = results || {}
 
   const image = getImageFromCms(coverImage, 1200, 600)
+
+  const { trackEvent } = useMatomo()
 
   React.useEffect(() => {
     if (error) {
@@ -245,7 +247,14 @@ const ArticleDetailPage = ({ id }) => {
                                 <ListItem key={key}>
                                   <DownloadLink
                                     forwardedAs="button"
-                                    onClick={() => downloadFile(`${process.env.CMS_ROOT}${url}`)}
+                                    onClick={() => {
+                                      trackEvent({
+                                        category: 'Download',
+                                        action: 'artikel-download',
+                                        value: fileName,
+                                      })
+                                      downloadFile(`${process.env.CMS_ROOT}${url}`)
+                                    }}
                                     variant="with-chevron"
                                   >
                                     <ListItemContent>
