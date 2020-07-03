@@ -29,11 +29,6 @@ import handleMapClick from './utils/handleMapClick'
 
 const { DEFAULT_AMSTERDAM_MAPS_OPTIONS } = constants
 
-const StyledMap = styled(Map)`
-  width: 100%;
-  height: 100%;
-`
-
 const MapView = styled.div`
   height: calc(100% - 50px);
   position: relative;
@@ -101,7 +96,7 @@ const MapPage: React.FC = () => {
       </Alert>
       <MapView>
         <GlobalStyle />
-        <StyledMap
+        <Map
           options={{
             ...DEFAULT_AMSTERDAM_MAPS_OPTIONS,
             center: location || DEFAULT_AMSTERDAM_MAPS_OPTIONS.center,
@@ -187,7 +182,7 @@ const MapPage: React.FC = () => {
               />
             </DataSelectionProvider>
           </MapPanelProvider>
-        </StyledMap>
+        </Map>
       </MapView>
     </>
   )
