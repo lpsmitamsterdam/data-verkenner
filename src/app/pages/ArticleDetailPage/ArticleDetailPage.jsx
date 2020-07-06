@@ -251,7 +251,7 @@ const ArticleDetailPage = ({ id }) => {
                                       trackEvent({
                                         category: 'Download',
                                         action: 'artikel-download',
-                                        value: fileName,
+                                        name: fileName,
                                       })
                                       downloadFile(`${process.env.CMS_ROOT}${url}`)
                                     }}

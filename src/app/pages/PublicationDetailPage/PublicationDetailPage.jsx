@@ -92,7 +92,7 @@ const PublicationDetailPage = ({ id }) => {
                       trackEvent({
                         category: 'Download',
                         action: 'publicatie-download',
-                        value: title,
+                        name: title,
                       })
                       downloadFile(`${process.env.CMS_ROOT}${fileUrl && fileUrl.substring(1)}`)
                     }}
