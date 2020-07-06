@@ -1,9 +1,11 @@
+import { Alert, Link, Paragraph } from '@datapunt/asc-ui'
 import { useMatomo } from '@datapunt/matomo-tracker-react'
 import PropTypes from 'prop-types'
 import React, { Suspense } from 'react'
 import { Helmet } from 'react-helmet'
 import { useSelector } from 'react-redux'
 import styled from 'styled-components'
+import RouterLink from 'redux-first-router-link'
 import EmbedIframeComponent from './components/EmbedIframe/EmbedIframe'
 import ErrorAlert from './components/ErrorAlert/ErrorAlert'
 import LoadingSpinner from './components/LoadingSpinner/LoadingSpinner'
@@ -11,6 +13,8 @@ import { FeedbackModal } from './components/Modal'
 import NotificationAlert from './components/NotificationAlert/NotificationAlert'
 import PAGES, { isMapSplitPage, isSearchPage } from './pages'
 import { getQuery } from './pages/SearchPage/SearchPageDucks'
+import isIE from './utils/isIE'
+import { toArticleDetail } from '../store/redux-first-router/actions'
 
 const HomePage = React.lazy(() => import(/* webpackChunkName: "HomePage" */ './pages/HomePage'))
 const ActualityContainer = React.lazy(() =>
@@ -57,6 +61,13 @@ const AppContainer = styled.div`
   min-height: 50vh; // IE11: Makes sure the loading indicator is displayed in the Container
 `
 
+const StyledAlert = styled(Alert)`
+  /* Ensure outline is visible when element is in focus */
+  &:focus {
+    z-index: 999;
+  }
+`
+
 const StyledLoadingSpinner = styled(LoadingSpinner)`
   position: absolute;
   top: 200px;
@@ -79,6 +90,25 @@ const AppBody = ({
     <>
       <AppContainer id="main" className="main-container">
         <NotificationAlert />
+        {isIE && (
+          <StyledAlert level="attention">
+            <Paragraph>
+              <strong>Let op: </strong>Let op: deze website ondersteunt Internet Explorer niet
+              langer. We raden je aan een andere browser te gebruiken.
+            </Paragraph>{' '}
+            <Link
+              as={RouterLink}
+              to={toArticleDetail(
+                '11206c96-91d6-4f6a-9666-68e577797865',
+                'internet-explorer-binnenkort-niet-meer-ondersteund',
+              )}
+              variant="with-chevron"
+              darkBackground
+            >
+              Klik voor meer uitleg.
+            </Link>
+          </StyledAlert>
+        )}
         <Suspense fallback={<StyledLoadingSpinner />}>
           {homePage && <HomePage />}
           {currentPage === PAGES.ARTICLE_DETAIL && <ArticleDetailPage />}
