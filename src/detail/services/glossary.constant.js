@@ -375,6 +375,22 @@ const GLOSSARY = {
       url: null,
       meta: [],
     },
+    PRECARIOSHIPS: {
+      ...categoryLabels.precarioShips,
+      description: '',
+    },
+    PRECARIOCOMVESSELS: {
+      ...categoryLabels.precarioComVessels,
+      description: '',
+    },
+    PRECARIOPASSVESSELS: {
+      ...categoryLabels.precarioPassVessels,
+      description: '',
+    },
+    PRECARIOTERRACES: {
+      ...categoryLabels.precarioTerraces,
+      description: '',
+    },
     ROLLAAG: {
       singular: 'Rollaag',
       plural: 'Rollagen',
@@ -418,6 +434,10 @@ const GLOSSARY = {
       url:
         'https://www.amsterdam.nl/stelselpedia/brk-index/catalog-brk-levering/kadastraal-subject/',
       meta: ['id'],
+    },
+    TUNNELS: {
+      ...categoryLabels.tunnels,
+      description: '',
     },
     UITGEVOERDONDERZOEK: {
       singular: 'Reeds uitgevoerd CE onderzoek',

@@ -95,7 +95,7 @@ describe('EditorialResults', () => {
           slug: props.slug,
         },
       },
-      date: false, // Specials have no display date
+      date: props.dateLocale,
     })
   })
 })

@@ -225,7 +225,9 @@ const EditorialCard: React.FC<EditorialCardProps> = ({
           {date && (
             <div>
               <MetaText as="time" data-test="metaText" datetime={date}>
-                {date}
+                {specialType === SpecialType.Dashboard || specialType === SpecialType.Story
+                  ? `Laatst gewijzigd: ${date}`
+                  : date}
               </MetaText>
             </div>
           )}

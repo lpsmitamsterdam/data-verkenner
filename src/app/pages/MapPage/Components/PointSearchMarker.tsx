@@ -1,14 +1,12 @@
-import { LatLng, LeafletMouseEvent } from 'leaflet'
+import { MapPanelContext, Marker as ARMMarker, usePanToLatLng } from '@datapunt/arm-core'
 import { useMapInstance } from '@datapunt/react-maps'
-import { usePanToLatLng, mapPanelComponents, Marker as ARMMarker } from '@datapunt/arm-core'
+import { LatLngLiteral, LeafletMouseEvent } from 'leaflet'
 import React, { useContext, useEffect } from 'react'
 import { SnapPoint } from '../types'
 
-const { MapPanelContext } = mapPanelComponents
-
 const PointSearchMarker: React.FC<{
   onClick: (e: LeafletMouseEvent) => void
-  currentLatLng: LatLng | null
+  currentLatLng: LatLngLiteral | null
 }> = ({ onClick, currentLatLng }) => {
   const {
     drawerPosition,
@@ -31,7 +29,7 @@ const PointSearchMarker: React.FC<{
     return () => {
       mapInstance.off('click', clickHandler)
     }
-  }, [mapInstance])
+  }, [mapInstance, onClick])
 
   // Use this logic to automatically pan the map to the center of the marker when the drawer is positioned in the middle
   useEffect(() => {

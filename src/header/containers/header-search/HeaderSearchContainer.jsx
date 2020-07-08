@@ -1,35 +1,19 @@
+/* eslint-disable no-nested-ternary */
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { CmsType } from '../../../shared/config/cms.config'
 import { emptyFilters } from '../../../shared/ducks/filters/filters'
-import { getViewMode, isMapPage } from '../../../shared/ducks/ui/ui'
-import PARAMETERS from '../../../store/parameters'
+import { getViewMode, isMapActive } from '../../../shared/ducks/ui/ui'
 import {
   toArticleDetail,
-  toArticleSearch,
   toCollectionDetail,
-  toCollectionSearch,
-  toDataSearch,
   toDatasetDetail,
-  toDatasetSearch,
   toDataSuggestion,
-  toMapSearch,
   toMapWithLegendOpen,
   toPublicationDetail,
-  toPublicationSearch,
-  toSearch,
-  toSpecialSearch,
   toSpecialDetail,
 } from '../../../store/redux-first-router/actions'
-import {
-  isArticlePage,
-  isCollectionPage,
-  isDataPage,
-  isDatasetPage,
-  isPublicationPage,
-  isSpecialPage,
-  isMapPage as isMapSearchPage,
-} from '../../../store/redux-first-router/selectors'
+import { getPage } from '../../../store/redux-first-router/selectors'
 import {
   getActiveSuggestions,
   getAutoSuggestSuggestions,
@@ -40,19 +24,13 @@ import {
   setActiveSuggestionAction,
 } from '../../ducks/auto-suggest/auto-suggest'
 import HeaderSearch from './HeaderSearch'
+import SearchType from '../../../app/pages/SearchPage/constants'
+import PAGES from '../../../app/pages'
 
 const mapStateToProps = (state) => ({
   activeSuggestion: getActiveSuggestions(state),
   displayQuery: getDisplayQuery(state),
-  isDataPage: isDataPage(state),
-  isDatasetPage: isDatasetPage(state),
-  isArticlePage: isArticlePage(state),
-  isPublicationPage: isPublicationPage(state),
-  isSpecialPage: isSpecialPage(state),
-  isCollectionPage: isCollectionPage(state),
-  isMapPage: isMapPage(state) || isMapSearchPage(state),
   view: getViewMode(state),
-  isMapActive: isMapPage(state),
   numberOfSuggestions: getNumberOfSuggestions(state),
   pageName: state.page ? state.page.name : '',
   // eslint-disable-next-line no-nested-ternary
@@ -63,6 +41,23 @@ const mapStateToProps = (state) => ({
     : '',
   suggestions: getAutoSuggestSuggestions(state),
   typedQuery: getTypedQuery(state),
+  pageType: isMapActive(state)
+    ? SearchType.Data
+    : getPage(state) === PAGES.DATA_SEARCH
+    ? SearchType.Data
+    : getPage(state) === PAGES.DATASET_SEARCH
+    ? SearchType.Dataset
+    : getPage(state) === PAGES.ARTICLE_SEARCH
+    ? CmsType.Article
+    : getPage(state) === PAGES.PUBLICATION_SEARCH
+    ? CmsType.Publication
+    : getPage(state) === PAGES.SPECIAL_SEARCH
+    ? CmsType.Special
+    : getPage(state) === PAGES.COLLECTION_SEARCH
+    ? CmsType.Collection
+    : getPage(state) === PAGES.MAP_SEARCH
+    ? SearchType.Map
+    : null,
 })
 
 const mapDispatchToProps = (dispatch) => ({
@@ -74,86 +69,6 @@ const mapDispatchToProps = (dispatch) => ({
     },
     dispatch,
   ),
-  onSearch: (query) =>
-    dispatch(
-      toSearch(
-        {
-          [PARAMETERS.QUERY]: query,
-        },
-        false,
-        true,
-      ),
-    ),
-  onDatasetSearch: (query) =>
-    dispatch(
-      toDatasetSearch(
-        {
-          [PARAMETERS.QUERY]: query,
-        },
-        false,
-        true,
-      ),
-    ),
-  onDataSearch: (query) =>
-    dispatch(
-      toDataSearch(
-        {
-          [PARAMETERS.QUERY]: query,
-        },
-        false,
-        true,
-      ),
-    ),
-  onArticleSearch: (query) =>
-    dispatch(
-      toArticleSearch(
-        {
-          [PARAMETERS.QUERY]: query,
-        },
-        false,
-        true,
-      ),
-    ),
-  onPublicationSearch: (query) =>
-    dispatch(
-      toPublicationSearch(
-        {
-          [PARAMETERS.QUERY]: query,
-        },
-        false,
-        true,
-      ),
-    ),
-  onSpecialSearch: (query) =>
-    dispatch(
-      toSpecialSearch(
-        {
-          [PARAMETERS.QUERY]: query,
-        },
-        false,
-        true,
-      ),
-    ),
-  onCollectionSearch: (query) =>
-    dispatch(
-      toCollectionSearch(
-        {
-          [PARAMETERS.QUERY]: query,
-        },
-        false,
-        true,
-      ),
-    ),
-  onMapSearch: (query) =>
-    dispatch(
-      toMapSearch(
-        {
-          [PARAMETERS.QUERY]: query,
-        },
-        false,
-        true,
-      ),
-    ),
   openDataSuggestion: (suggestion, view) => dispatch(toDataSuggestion(suggestion, view)),
   openDatasetSuggestion: (suggestion) => dispatch(toDatasetDetail(suggestion)),
   openEditorialSuggestion: (suggestion, type, subType) => {

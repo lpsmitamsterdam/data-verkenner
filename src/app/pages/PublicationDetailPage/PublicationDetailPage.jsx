@@ -9,6 +9,7 @@ import {
   Paragraph,
   Heading,
 } from '@datapunt/asc-ui'
+import { useMatomo } from '@datapunt/matomo-tracker-react'
 import { getLocationPayload } from '../../../store/redux-first-router/selectors'
 import useFromCMS from '../../utils/useFromCMS'
 import EditorialPage from '../../components/EditorialPage/EditorialPage'
@@ -24,6 +25,7 @@ import useDownload from '../../utils/useDownload'
 const PublicationDetailPage = ({ id }) => {
   const { fetchData, results, loading, error } = useFromCMS(cmsConfig.PUBLICATION, id)
   const [downloadLoading, downloadFile] = useDownload()
+  const { trackEvent } = useMatomo()
 
   React.useEffect(() => {
     fetchData()
@@ -86,9 +88,14 @@ const PublicationDetailPage = ({ id }) => {
                     description={`Download PDF (${fileSize})`}
                     loading={downloadLoading}
                     title={title}
-                    onClick={() =>
+                    onClick={() => {
+                      trackEvent({
+                        category: 'Download',
+                        action: 'publicatie-download',
+                        name: title,
+                      })
                       downloadFile(`${process.env.CMS_ROOT}${fileUrl && fileUrl.substring(1)}`)
-                    }
+                    }}
                   />
                 </Column>
                 <Column span={{ small: 1, medium: 4, big: 3, large: 6, xLarge: 6 }}>

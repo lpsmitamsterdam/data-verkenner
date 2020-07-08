@@ -1,20 +1,16 @@
-import React, { useContext } from 'react'
-import { ViewerContainer as ViewerContainerComponent, Spinner } from '@datapunt/asc-ui'
-import styled, { css } from 'styled-components'
+import { MapPanelContext, MapPanelLegendButton, Zoom } from '@datapunt/arm-core'
 import { Overlay } from '@datapunt/arm-core/lib/components/MapPanel/constants'
-import { Zoom, mapPanelComponents } from '@datapunt/arm-core'
-import MapPreviewPanelContainer from '../MapPreviewPanelContainer'
-import DrawTool from './DrawTool'
+import { Spinner, ViewerContainer as ViewerContainerComponent } from '@datapunt/asc-ui'
+import React, { useContext } from 'react'
+import styled, { css } from 'styled-components'
 import BaseLayerToggle from './BaseLayerToggle'
-import MapContext from '../MapContext'
+import DrawTool from './DrawTool'
 
 type StyledViewerContainerProps = {
   left?: string
   height?: string
   ignoreTransition: boolean
 }
-
-const { MapPanelLegendButton, MapPanelContext } = mapPanelComponents
 
 const StyledViewerContainer = styled(ViewerContainerComponent).attrs<StyledViewerContainerProps>(
   ({ height, left }) => ({
@@ -38,6 +34,7 @@ type Props = {
   showDesktopVariant: boolean
   setShowDrawTool: (arg: boolean) => void
   isLoading: boolean
+  showDrawTool: boolean
 }
 
 const BottomLeftHolder = styled.div`
@@ -53,7 +50,6 @@ const ViewerContainer: React.FC<Props> = ({
   showDrawTool,
   ...otherProps
 }) => {
-  const { detailUrl } = useContext(MapContext)
   const { drawerPosition, draggable } = useContext(MapPanelContext)
   const height = parseInt(drawerPosition, 10) < window.innerHeight / 2 ? '50%' : drawerPosition
 
@@ -94,14 +90,11 @@ const ViewerContainer: React.FC<Props> = ({
             </BottomLeftHolder>
           }
           topRight={
-            <>
-              <DrawTool
-                isOpen={showDrawTool}
-                onToggle={setShowDrawTool}
-                setCurrentOverlay={setCurrentOverlay}
-              />
-              {detailUrl && <MapPreviewPanelContainer />}
-            </>
+            <DrawTool
+              isOpen={showDrawTool}
+              onToggle={setShowDrawTool}
+              setCurrentOverlay={setCurrentOverlay}
+            />
           }
         />
       )}

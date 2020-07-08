@@ -1,20 +1,20 @@
-import L, { LatLng, LatLngTuple, Polygon } from 'leaflet'
-import React, { useContext, useEffect, useMemo } from 'react'
-import { useMapInstance } from '@datapunt/react-maps'
+import { MapPanelContext, usePanToLatLng } from '@datapunt/arm-core'
 import {
   DrawTool as DrawToolComponent,
+  ExtendedLayer,
   PolygonType,
   PolylineType,
-  ExtendedLayer,
 } from '@datapunt/arm-draw'
-import { mapPanelComponents, usePanToLatLng } from '@datapunt/arm-core'
-import { themeColor, ascDefaultTheme } from '@datapunt/asc-ui'
-import { Overlay, SnapPoint } from '../types'
-import DataSelectionContext from '../DataSelectionContext'
-import MapContext, { SimpleGeometry } from '../MapContext'
-import getParam from '../../../utils/getParam'
-import { decodeBounds } from '../../../../store/queryParameters'
+import { ascDefaultTheme, themeColor } from '@datapunt/asc-ui'
+import { useMapInstance } from '@datapunt/react-maps'
+import L, { LatLng, LatLngLiteral, LatLngTuple, Polygon } from 'leaflet'
+import React, { useContext, useEffect, useMemo } from 'react'
 import PARAMETERS from '../../../../store/parameters'
+import { decodeBounds } from '../../../../store/queryParameters'
+import getParam from '../../../utils/getParam'
+import DataSelectionContext from '../DataSelectionContext'
+import MapContext from '../MapContext'
+import { Overlay, SnapPoint } from '../types'
 
 type MarkerGroup = {
   id: string
@@ -34,8 +34,6 @@ type Props = {
   setDataSelectionResults: (results: any) => void
   markerGroupsRef: React.RefObject<MarkerGroup[]>
 }
-
-const { MapPanelContext } = mapPanelComponents
 
 const getTotalDistance = (latLngs: LatLng[]) => {
   return latLngs.reduce(
@@ -142,8 +140,8 @@ const DrawTool: React.FC<Props> = ({ onToggle, isOpen, setCurrentOverlay }) => {
     }
   }, [mapInstance])
 
-  const setInitialDrawing = (polybounds: Array<SimpleGeometry>) => {
-    function createPolyline(coordinates: Array<SimpleGeometry>): PolylineType {
+  const setInitialDrawing = (polybounds: LatLngLiteral[]) => {
+    function createPolyline(coordinates: LatLngLiteral[]): PolylineType {
       const bounds = (coordinates.map(({ lat, lng }) => [lat, lng]) as unknown) as LatLng[]
 
       return L.polyline(bounds, {
@@ -152,7 +150,7 @@ const DrawTool: React.FC<Props> = ({ onToggle, isOpen, setCurrentOverlay }) => {
       }) as PolylineType
     }
 
-    function createPolygon(coordinates: Array<SimpleGeometry>): PolygonType {
+    function createPolygon(coordinates: LatLngLiteral[]): PolygonType {
       const bounds = (coordinates.map(({ lat, lng }) => [lat, lng]) as unknown) as LatLng[]
 
       return L.polygon(bounds, {

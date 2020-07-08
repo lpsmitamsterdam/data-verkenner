@@ -47,9 +47,11 @@ describe('mapSearch service', () => {
       expect(data.results).toEqual([
         {
           categoryLabel: 'Explosief',
+          categoryLabelPlural: 'Explosieven',
           results: Array(13).fill({
             // !!!!IMPORTANT: UPDATE WITH +1 WHEN ADDING NEW GEOSEARCH
             categoryLabel: 'Explosief',
+            categoryLabelPlural: 'Explosieven',
             label: undefined,
             parent: undefined,
             statusLabel: 'verdacht gebied',
@@ -92,9 +94,11 @@ describe('mapSearch service', () => {
       expect(data.results).toEqual([
         {
           categoryLabel: 'Explosief',
+          categoryLabelPlural: 'Explosieven',
           results: Array(12).fill({
             // !!!!IMPORTANT: UPDATE WITH +1 WHEN ADDING NEW GEOSEARCH
             categoryLabel: 'Explosief',
+            categoryLabelPlural: 'Explosieven',
             label: undefined,
             parent: undefined,
             statusLabel: 'verdacht gebied',
