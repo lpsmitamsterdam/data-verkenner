@@ -3,6 +3,7 @@ import { breakpoint, perceivedLoading, themeColor, Link, themeSpacing } from '@d
 import { SizeOnBreakpoint } from '../TileGrid/TileGridStyle'
 import getImageFromCms from '../../utils/getImageFromCms'
 import TileLabel from './TileLabel'
+import environment from '../../../environment'
 
 type TileProps = {
   backgroundImage?: string
@@ -31,7 +32,7 @@ const Tile = styled(Link)<TileProps>`
             ([brkPoint, size]: [any, any]) => css`
               background-image: url(${backgroundImage
                 ? getImageFromCms(backgroundImage, 400, 300)
-                : `${process.env.ROOT}assets/images/not_found_thumbnail.jpg`});
+                : `${environment.ROOT}assets/images/not_found_thumbnail.jpg`});
               @media screen and ${breakpoint('min-width', brkPoint)} {
                 background-image: url(${backgroundImage
                   ? getImageFromCms(
@@ -39,7 +40,7 @@ const Tile = styled(Link)<TileProps>`
                       size[1] === 2 ? 600 : 300,
                       size[0] === 2 ? 600 : 300,
                     )
-                  : `${process.env.ROOT}assets/images/not_found_thumbnail.jpg`});
+                  : `${environment.ROOT}assets/images/not_found_thumbnail.jpg`});
               }
             `,
           )}

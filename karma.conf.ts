@@ -63,16 +63,6 @@ const webpackConfig: WebpackConfig = {
       },
     ],
   },
-  plugins: [
-    new webpack.EnvironmentPlugin([
-      'DEPLOY_ENV',
-      'IIIF_ROOT',
-      'API_ROOT',
-      'CMS_ROOT',
-      'GRAPHQL_ENDPOINT',
-      'ROOT',
-    ]),
-  ],
 }
 
 export default (config: KarmaConfig) => {
