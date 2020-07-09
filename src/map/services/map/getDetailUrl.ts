@@ -6,10 +6,6 @@ import environment from '../../../environment'
 export function getDetailUrl(serviceDefinition: ServiceDefinition, id: string) {
   const apiRoot = environment.API_ROOT
 
-  if (!apiRoot) {
-    throw new Error('Unable to format URL, missing API_ROOT environment variable.')
-  }
-
   // TODO: Remove this exception once the 'endpoint' type has been made required.
   if (!serviceDefinition.endpoint) {
     throw new Error('Unable to format URL, missing endpoint in service definition.')
