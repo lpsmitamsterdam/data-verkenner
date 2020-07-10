@@ -12,13 +12,13 @@ import {
   themeColor,
   themeSpacing,
 } from '@datapunt/asc-ui'
-import getImageFromCms from '../../utils/getImageFromCms'
+import getImageFromCms, { Resize } from '../../utils/getImageFromCms'
 import getContentTypeLabel from '../../utils/getContentTypeLabel'
 import { CmsType, SpecialType } from '../../../shared/config/cms.config'
 
 const notFoundImage = '/assets/images/not_found_thumbnail.jpg'
 
-const StyledHeading = styled(Heading)`
+const StyledHeading = styled(Heading)<{ compact: boolean }>`
   // By forwarding this component as h4, we need to overwrite the style rules in src/shared/styles/base/_typography.scss
   line-height: 22px;
   margin-bottom: ${({ compact }) => (compact ? themeSpacing(2) : themeSpacing(3))};
@@ -36,7 +36,7 @@ const ContentType = styled(Paragraph)`
   line-height: 16px;
 `
 
-const StyledCardContent = styled(CardContent)`
+const StyledCardContent = styled(CardContent)<{ highlighted: boolean }>`
   display: flex;
   flex-direction: column;
   padding: 0;
@@ -75,7 +75,7 @@ const StyledLink = styled(Link)`
   }
 `
 
-const StyledCard = styled(Card)`
+const StyledCard = styled(Card)<{ highlighted: boolean }>`
   align-items: stretch;
   background-color: inherit;
   pointer-events: none; /* Make sure the right anchor click is registered */
@@ -92,17 +92,20 @@ const StyledCard = styled(Card)`
   }
 `
 
-const StyledCardMedia = styled(CardMedia)`
-  ${({ vertical, imageDimensions }) => css`
+const StyledCardMedia = styled(CardMedia)<{
+  highlighted: boolean
+  vertical: boolean
+  imageDimensions: number[]
+}>`
+  ${({ vertical, imageDimensions, highlighted }) => css`
     flex: 1 0 auto;
     max-width: ${imageDimensions[0]}px;
     max-height: ${imageDimensions[1]}px;
 
-    ${({ highlighted }) =>
-      !highlighted &&
-      css`
-        border: 1px solid ${themeColor('tint', 'level3')};
-      `}
+    ${!highlighted &&
+    css`
+      border: 1px solid ${themeColor('tint', 'level3')};
+    `}
 
     &::before {
       padding-top: ${vertical ? '145%' : '100%'};
@@ -126,7 +129,7 @@ const MetaText = styled(Paragraph)`
   }
 `
 
-const getImageSize = (image, resize, imageSize) => {
+const getImageSize = (image: string, resize: Resize, imageSize: number) => {
   const small = Math.round(imageSize * 0.5)
   const medium = imageSize
 
@@ -185,7 +188,7 @@ const EditorialCard: React.FC<EditorialCardProps> = ({
   const contentTypeLabel = getContentTypeLabel(type, specialType)
 
   return (
-    <StyledLink {...{ title, linkType: 'blank', compact, ...otherProps }}>
+    <StyledLink {...{ title, linkType: 'blank', ...otherProps }}>
       <StyledCard horizontal highlighted={highlighted}>
         <StyledCardMedia
           imageDimensions={imageDimensions}
@@ -207,11 +210,7 @@ const EditorialCard: React.FC<EditorialCardProps> = ({
           )}
 
           <div>
-            <StyledHeading
-              forwardedAs={compact ? 'span' : 'h4'}
-              compact={compact}
-              hasMarginBottom={!!description}
-            >
+            <StyledHeading forwardedAs={compact ? 'span' : 'h4'} compact={compact}>
               {title}
             </StyledHeading>
           </div>
@@ -224,7 +223,7 @@ const EditorialCard: React.FC<EditorialCardProps> = ({
 
           {date && (
             <div>
-              <MetaText as="time" data-test="metaText" datetime={date}>
+              <MetaText forwardedAs="time" data-test="metaText" datetime={date}>
                 {specialType === SpecialType.Dashboard || specialType === SpecialType.Story
                   ? `Laatst gewijzigd: ${date}`
                   : date}

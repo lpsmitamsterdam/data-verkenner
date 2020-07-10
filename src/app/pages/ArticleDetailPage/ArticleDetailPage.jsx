@@ -35,8 +35,9 @@ import ShareBar from '../../components/ShareBar/ShareBar'
 import getImageFromCms from '../../utils/getImageFromCms'
 import EditorialResults from '../../components/EditorialResults'
 import useDownload from '../../utils/useDownload'
-import { EDITORIAL_FIELD_TYPE_VALUES } from '../../../normalizations/cms/useNormalizedCMSResults'
-import { CmsType } from '../../../shared/config/cms.config'
+import useNormalizedCMSResults, {
+  EDITORIAL_FIELD_TYPE_VALUES,
+} from '../../../normalizations/cms/useNormalizedCMSResults'
 import environment from '../../../environment'
 
 const ListItemContent = styled.div`
@@ -226,8 +227,7 @@ const ArticleDetailPage = ({ id }) => {
                             <Divider />
                             <StyledEditorialResults
                               headingLevel="h2"
-                              type={CmsType.Article}
-                              results={related}
+                              results={useNormalizedCMSResults(related)}
                               errors={[]}
                               title="Verder lezen"
                             />

@@ -6,7 +6,7 @@ import { CmsType } from '../../../shared/config/cms.config'
 describe('EditorialResults', () => {
   let component
 
-  const props = {
+  const result = {
     id: '1',
     specialType: false,
     slug: 'slug',
@@ -15,6 +15,7 @@ describe('EditorialResults', () => {
     dateLocale: 'locale',
     label: 'label',
     teaser: 'long text',
+    type: CmsType.Article,
   }
 
   it('should display the loading indicator', () => {
@@ -34,28 +35,31 @@ describe('EditorialResults', () => {
     expect(component.find('EditorialCard').exists()).toBe(false)
 
     // Should render two cards
-    component = shallow(<EditorialResults type={CmsType.Article} results={[{}, {}]} errors={[]} />)
+    component = shallow(
+      <EditorialResults type={CmsType.Article} results={[result, result]} errors={[]} />,
+    )
     expect(component.find('EditorialCard').exists()).toBe(true)
     expect(component.find('EditorialCard')).toHaveLength(2)
   })
 
   it('should set the correct props', () => {
-    component = shallow(<EditorialResults type={CmsType.Article} results={[props]} errors={[]} />)
+    component = shallow(<EditorialResults type={CmsType.Article} results={[result]} errors={[]} />)
 
     const editorialCard = component.find('EditorialCard')
 
     expect(editorialCard.exists()).toEqual(true)
     expect(editorialCard.props()).toMatchObject({
-      date: props.dateLocale,
-      description: props.teaser,
-      image: props.teaserImage,
+      date: result.dateLocale,
+      description: result.teaser,
+      image: result.teaserImage,
       imageDimensions: [IMAGE_SIZE, IMAGE_SIZE],
-      specialType: props.specialType,
-      title: props.label,
+      specialType: result.specialType,
+      title: result.label,
+      type: result.type,
       to: {
         payload: {
-          id: props.id,
-          slug: props.slug,
+          id: result.id,
+          slug: result.slug,
         },
       },
     })
@@ -63,14 +67,18 @@ describe('EditorialResults', () => {
 
   it('should set the correct props for publications', () => {
     component = shallow(
-      <EditorialResults type={CmsType.Publication} results={[props]} errors={[]} />,
+      <EditorialResults
+        type={CmsType.Publication}
+        results={[{ ...result, type: CmsType.Publication }]}
+        errors={[]}
+      />,
     )
 
     const editorialCard = component.find('EditorialCard')
 
     expect(editorialCard.exists()).toEqual(true)
     expect(editorialCard.props()).toMatchObject({
-      image: props.coverImage, // Publications use a different image source
+      image: result.coverImage, // Publications use a different image source
       imageDimensions: [Math.ceil(IMAGE_SIZE * 0.7), IMAGE_SIZE], // Publications have vertically aligned images
     })
   })
@@ -79,7 +87,7 @@ describe('EditorialResults', () => {
     component = shallow(
       <EditorialResults
         type={CmsType.Special}
-        results={[{ ...props, specialType: 'foo' }]}
+        results={[{ ...result, type: CmsType.Special, specialType: 'foo' }]}
         errors={[]}
       />,
     )
@@ -90,12 +98,12 @@ describe('EditorialResults', () => {
     expect(editorialCard.props()).toMatchObject({
       to: {
         payload: {
-          id: props.id,
+          id: result.id,
           type: 'foo', // The special type is important for constructing the route
-          slug: props.slug,
+          slug: result.slug,
         },
       },
-      date: props.dateLocale,
+      date: result.dateLocale,
     })
   })
 })
