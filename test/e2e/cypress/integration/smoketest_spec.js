@@ -29,6 +29,7 @@ describe('Smoketest', () => {
       cy.defineAddressDetailRoutes()
       cy.visit('/')
 
+      cy.get(DATA_SEARCH.searchBarFilter).select('Alle zoekresultaten')
       cy.get(SEARCH.input).focus().type('Dam 1{enter}')
 
       cy.wait('@getResults')
@@ -139,7 +140,7 @@ describe('Smoketest', () => {
       // Open details of Burgwallen-Oude Zijde'
       cy.contains('Burgwallen-Oude Zijde').click()
       cy.get(ADDRESS_PAGE.linkVestigingen).contains('In tabel weergeven').click()
-      // cy.wait('@getBuurtCombinatie')
+      cy.wait('@getBuurtCombinatie')
     })
     it('Should see no vestigingen or kadastrale objecten ', () => {
       // Check if vestigingen and kadstrale objecten are not visible, because user is not logged in
@@ -178,21 +179,22 @@ describe('Smoketest', () => {
       cy.server()
       cy.defineAddressDetailRoutes()
       cy.route(
-        '/dataselectie/hr/geolocation/?shape=[]&buurtcombinatie_naam=Burgwallen-Oude Zijde',
+        '/dataselectie/hr/geolocation/?shape=[]&buurtcombinatie_naam=Burgwallen-Oude+Zijde',
       ).as('getHrDataGeo')
       cy.route(
-        '/dataselectie/hr/?page=1&dataset=ves&shape=[]&buurtcombinatie_naam=Burgwallen-Oude Zijde',
+        '//dataselectie/hr/?page=1&dataset=ves&shape=[]&buurtcombinatie_naam=Burgwallen-Oude+Zijde',
       ).as('getHrData')
       cy.route(
-        '/dataselectie/brk/kot/?page=1&dataset=ves&shape=[]&buurtcombinatie_naam=Burgwallen-Oude Zijde',
+        '/dataselectie/brk/kot/?page=1&dataset=ves&shape=[]&buurtcombinatie_naam=Burgwallen-Oude+Zijde',
       ).as('getBRK')
       cy.route(
-        '/dataselectie/brk/?page=1&dataset=ves&shape=[]&buurtcombinatie_naam=Burgwallen-Oude Zijde',
+        '/dataselectie/brk/?page=1&dataset=ves&shape=[]&buurtcombinatie_naam=Burgwallen-Oude+Zijde',
       ).as('getBRK2')
       cy.route('/typeahead?q=dam 1').as('getResults')
       cy.route('/gebieden/buurt/?buurtcombinatie=3630012052036').as('getBuurtCombinatie')
 
       // Search for an address
+      cy.get(DATA_SEARCH.searchBarFilter).select('Alle zoekresultaten')
       cy.get(SEARCH.input).focus().type('Dam 1')
       cy.get(DATA_SEARCH.autoSuggestDropdownHighlighted).contains('Dam 1').click()
       cy.waitForAdressDetail()
@@ -231,7 +233,6 @@ describe('Smoketest', () => {
   })
   describe('Open dataset and publication', () => {
     beforeEach(() => {
-      // cy.viewport(1920, 1080)
       cy.hidePopup()
     })
     it('Should open a dataset', () => {
@@ -242,6 +243,7 @@ describe('Smoketest', () => {
       cy.route('/dcatd/datasets/*').as('getDataset')
       cy.visit('/')
 
+      cy.get(DATA_SEARCH.searchBarFilter).select('Alle zoekresultaten')
       cy.get(SEARCH.input).focus().type('Oost{enter}')
 
       cy.wait('@getResults')
@@ -262,10 +264,6 @@ describe('Smoketest', () => {
       cy.get('[role="dialog"]').find('[href*="/datasets/zoek/"]').click()
       cy.contains('resultaten tonen').click()
       cy.contains("Datasets met 'Oost' (")
-      cy.contains('Kaartlagen').should('not.be.visible')
-      cy.contains('Kaartcollecties').should('not.be.visible')
-      cy.contains('Publicaties').should('not.be.visible')
-      cy.contains('Artikelen').should('not.be.visible')
 
       // Open first dataset
       cy.get(DATA_SETS.dataSetLink).first().click()
@@ -284,7 +282,7 @@ describe('Smoketest', () => {
       cy.route('/jsonapi/node/publication/*').as('getPublication')
 
       // Search keyword Oost, results contain only datasets
-      cy.get(SEARCH.input).focus().type('Oost{enter}')
+      cy.get(SEARCH.input).focus().clear().type('Oost{enter}')
       cy.wait('@getResults')
       cy.contains("Datasets met 'Oost' (")
 

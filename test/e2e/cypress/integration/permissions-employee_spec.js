@@ -36,7 +36,7 @@ describe('employee permissions', () => {
       .should('be.visible')
   })
 
-  it('1. Should NOT show "Kadastrale subjecten" and "Vestigingen" in the results', () => {
+  it('1. Should show "Kadastrale subjecten" and "Vestigingen" in the results', () => {
     cy.route('/typeahead?q=bakker').as('getResults')
     cy.visit('/')
 

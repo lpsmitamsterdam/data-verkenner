@@ -12,6 +12,7 @@ describe('search module', () => {
     cy.hidePopup()
 
     cy.visit('/')
+    cy.get(DATA_SEARCH.searchBarFilter).select('Alle zoekresultaten')
     cy.get(DATA_SEARCH.autoSuggest).type('dam')
     cy.wait('@jsonapi')
   })
@@ -22,7 +23,10 @@ describe('search module', () => {
     })
 
     it('should be able to navigate throught results with arrow keys', () => {
-      cy.get(DATA_SEARCH.autoSuggestInput).type('{downarrow}{downarrow}{downarrow}')
+      cy.wait(1500)
+      cy.get(DATA_SEARCH.autoSuggestInput).type('{downarrow}{downarrow}{downarrow}{downarrow}', {
+        delay: 60,
+      })
       cy.get(DATA_SEARCH.autosuggestDropdownItemActive).should('contain', 'Bodemkwaliteit')
       cy.get(SEARCH.input).should('have.value', 'Bodemkwaliteit')
       cy.get(DATA_SEARCH.autoSuggestInput).type('{downarrow}')

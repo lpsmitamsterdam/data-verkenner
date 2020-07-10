@@ -80,36 +80,35 @@ describe('data search module', () => {
       .should('exist')
       .and('be.visible')
   })
+})
+describe('user should be able to submit', () => {
+  beforeEach(() => {
+    cy.server()
+    cy.route('POST', '/cms_search/graphql/').as('graphql')
+    cy.route('/jsonapi/node/list/*').as('jsonapi')
+    cy.hidePopup()
 
-  describe('user should be able to submit', () => {
-    beforeEach(() => {
-      cy.server()
-      cy.route('POST', '/cms_search/graphql/').as('graphql')
-      cy.route('/jsonapi/node/list/*').as('jsonapi')
-      cy.hidePopup()
+    cy.visit('/')
+    cy.get(SEARCH.input).trigger('focus')
+  })
 
-      cy.visit('/')
-      cy.get(SEARCH.input).trigger('focus')
-    })
+  it('should submit the search and give results', () => {
+    cy.get(SEARCH.input).type('Park')
+    cy.get(SEARCH.form).submit()
 
-    it('should submit the search and give results', () => {
-      cy.get(SEARCH.input).type('Park')
-      cy.get(SEARCH.form).submit()
+    cy.wait(['@graphql', '@graphql'])
+    cy.wait('@jsonapi')
 
-      cy.wait(['@graphql', '@graphql'])
-      cy.wait('@jsonapi')
+    cy.contains("Alle zoekresultaten met 'Park' (")
+  })
 
-      cy.contains("Alle zoekresultaten met 'Park' (")
-    })
+  it('should submit the search and give no results', () => {
+    cy.get(SEARCH.input).type('NORESULTS')
+    cy.get(DATA_SEARCH.autoSuggest).submit()
+    cy.wait(['@graphql', '@graphql'])
+    cy.wait('@jsonapi')
 
-    it('should submit the search and give no results', () => {
-      cy.get(SEARCH.input).type('NORESULTS')
-      cy.get(DATA_SEARCH.autoSuggest).submit()
-      cy.wait(['@graphql', '@graphql'])
-      cy.wait('@jsonapi')
-
-      cy.contains("Er zijn geen resultaten gevonden met 'NORESULTS'.").should('be.visible')
-      cy.contains('Maak de zoekcriteria eventueel minder specifiek.').should('be.visible')
-    })
+    cy.contains("Er zijn geen resultaten gevonden met 'NORESULTS'.").should('be.visible')
+    cy.contains('Maak de zoekcriteria eventueel minder specifiek.').should('be.visible')
   })
 })
