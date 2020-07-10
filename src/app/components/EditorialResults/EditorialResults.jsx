@@ -38,9 +38,9 @@ const EditorialResults = ({
   errors,
   label,
   loading,
-  type,
   className,
   isOverviewPage,
+  type: overviewType,
 }) => {
   const matchingErrors = getErrorsForPath(errors, ['articleSearch'])
   const hasLoadingError = getLoadingErrors(matchingErrors).length > 0
@@ -65,7 +65,10 @@ const EditorialResults = ({
                 teaserImage,
                 dateLocale,
                 label: cardLabel,
+                title, // For Drupal content
+                shortTitle, // For Drupal content
                 teaser,
+                type,
               } = result
 
               // The type SPECIALS has a different url structure
@@ -83,13 +86,13 @@ const EditorialResults = ({
                   type={type}
                   specialType={specialType}
                   key={id}
-                  image={type === CmsType.Publication ? coverImage : teaserImage}
+                  image={type === CmsType.Publication ? coverImage || teaserImage : teaserImage}
                   imageDimensions={[
                     type === CmsType.Publication ? Math.ceil(IMAGE_SIZE * 0.7) : IMAGE_SIZE, // Publications have different image dimensions
                     IMAGE_SIZE,
                   ]}
                   to={to}
-                  title={cardLabel}
+                  title={shortTitle || title || cardLabel}
                   description={teaser}
                   date={dateLocale}
                   showContentType={showContentType}
@@ -101,7 +104,7 @@ const EditorialResults = ({
             <NoSearchResults
               query={query}
               label={label}
-              to={EDITORIAL_OVERVIEW_ACTIONS[type](null, false, false, false)}
+              to={EDITORIAL_OVERVIEW_ACTIONS[overviewType](null, false, false, false)}
             />
           )}
           {!hasLoadingError && unauthorizedLabels.length > 0 && (
