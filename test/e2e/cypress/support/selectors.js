@@ -29,7 +29,6 @@ export const DATA_SEARCH = {
   autoSuggestInput: '#auto-suggest__input',
   autoSuggestHeader: 'h4.qa-auto-suggest-header',
   autoSuggestTip: '.auto-suggest__tip',
-  buttonSearch: '[aria-label="Search..."]',
   headerTitle: '.o-header__title',
   headerSubTitle: '.o-header__subtitle',
   infoNotification: '.notification--info',
@@ -41,6 +40,7 @@ export const DATA_SEARCH = {
   natuurlijkPersoon: 'dl.qa-natuurlijk-persoon',
   nietNatuurlijkPersoon: 'dl.qa-niet-natuurlijk-persoon',
   scrollWrapper: '.scroll-wrapper',
+  searchBarFilter: '[data-testid="SearchBarFilter"]',
   searchHeader: '.qa-search-header',
   searchResultsGrid: '.c-search-results',
   searchResultsCategory: '[class*=SearchHeading__StyledHeading]',
@@ -74,6 +74,10 @@ export const DRAWING = {
 }
 
 export const HEADER = {
+  headerTitle: '[class*= HeaderTitleStyle]',
+  logoAmsterdamShort: '[class*=AmsterdamLogoStyle__LogoShortStyle]',
+  logoAmsterdamTall: '[class*=AmsterdamLogoStyle__LogoTallStyle]',
+  logoAmsterdamTitle: '[class*=AmsterdamLogoStyle__LogoTitle]',
   root: '[data-test=header]',
 }
 
@@ -90,8 +94,21 @@ export const HEADINGS = {
 
 export const HOMEPAGE = {
   aboutBlock: '[data-test=about-block]',
+  aboutCard: '[class*=AboutBlock__StyledCardColumn]',
+  buttonSearch: '[data-testid="StyledSearchBar"] [aria-label="Search..."]',
+  buttonSearchMobile: '[class*=SearchBarToggleStyle] [class*=ToggleButtonStyle]',
+  buttonSearchMobileClose: '[class*=SearchBarToggleStyle]  [class*= ToggleButtonStyle]',
+  footerBlock: '[class*=FooterTop]',
   highlightBlock: '[data-test=highlight-block]',
+  highlightCard: '[class*=HighlightCard__StyledImageCard]',
   link: '[data-test=themes-block-link]',
+  menuDefault: '[data-test="header-menu-default"]',
+  menuItemOnderdelen: '[data-test=header-menu-default] > :nth-child(1) > [class*=ButtonStyle]',
+  menuItemOverOIS: '[data-test=header-menu-default] > :nth-child(2) > [class*=ButtonStyle]',
+  menuItemFeedback: '[data-test=header-menu-default] > :nth-child(3) > [class*=ButtonStyle]',
+  menuItemHelp: '[data-test=header-menu-default] > :nth-child(4) > [class*=ButtonStyle]',
+  menuItemInloggen: '[data-test=header-menu-default] > :nth-child(5) > [class*=ButtonStyle]',
+  menuMobile: '[data-test="header-menu-mobile"]',
   navigationBlock: '[data-test=navigation-block]',
   navigationBlockDataservices:
     '[data-test=navigation-block] > [href*="/artikelen/artikel/services/"]',
@@ -102,7 +119,16 @@ export const HOMEPAGE = {
   navigationBlockPublicaties: '[data-test=navigation-block] > [href*="/publicaties/zoek"]',
   navigationBlockTabellen: '[data-test=navigation-block] > [href*="/artikelen/artikel/tabellen/"]',
   organizationBlock: '[data-test=organization-block]',
+  organizationCardHeading: '[class*=OrganizationCard__StyledHeading]',
+  shareBar: '[class*="ShareBar__ShareBarContainer"]',
+  shareButton: '[data-testid="share-button"]',
+  shareButtonFacebook: '[title="Deel op Facebook"]',
+  shareButtonLinkedIn: '[title="Deel op LinkedIn"]',
+  shareButtonMail: '[title="Deel via email"]',
+  shareButtonTwitter: '[title="Deel op Twitter"]',
   specialBlock: '[data-test=special-block]',
+  themeLink: '[class*=ThemesBlock] > [class*=LinkContent]',
+  themesBlock: '[class*=ThemesBlock]',
 }
 
 export const LINKS = {
@@ -135,6 +161,11 @@ export const MAP = {
   checkboxVestigingOverige: '#vstgn-ovrg',
   contextMenu: '[data-test=context-menu]',
   contextMenuItemEmbed: '[data-test=context-menu-embed]',
+  buttonDropDownLuchtfoto: '.map-type__select--aerial > .select-button__icon-wrapper',
+  buttondropDownTopografie: '.map-type__select--topography > .select-button__icon-wrapper',
+  dropDownItem: '.select-button__drop-down-button',
+  dropDownLuchtfoto: '.map-type__select--aerial > .select-button__drop-down',
+  dropDownTopografie: '.map-type__select--topography > .select-button__drop-down',
   embedButton: '[data-test=embed-button]',
   iconMapMarker: '.leaflet-marker-icon.leaflet-zoom-animated.leaflet-interactive',
   imageLayer: '.leaflet-overlay-pane > .leaflet-image-layer',
@@ -146,10 +177,15 @@ export const MAP = {
   mapDetailPanoramaHeaderImage: 'img.map-detail-result__header-pano',
   mapDetailResultPanel: '.map-detail-result',
   mapLegend: '.map-legend',
+  mapLegendLabel: '[class*=LabelStyle__LabelTextStyle]',
+  mapLegendItemButton: '[class*=MapLegend__LayerButton]',
   mapLegendItems: '.map-legend__items',
   mapMaximize: '.rc-icon-button',
   mapOverlayPane: '.leaflet-overlay-pane',
   mapPanel: '.map-panel',
+  mapPanelHandle: '.map-panel-handle',
+  mapPanelBackground: '.map-type',
+  mapPanelBackgroundLabel: '.map-type [class*=HeadingStyle]',
   mapPreviewPanel: '.map-preview-panel',
   mapPreviewPanelVisible: '.map-preview-panel.map-preview-panel--visible',
   mapSearchResultsCategoryHeader: '.map-search-results-category__header',

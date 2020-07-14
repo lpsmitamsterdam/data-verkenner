@@ -120,7 +120,7 @@ describe('datasets module', () => {
     })
 
     it('should open the datasets results', () => {
-      cy.get(SEARCH.input).trigger('focus')
+      cy.get(DATA_SEARCH.searchBarFilter).select('Alle zoekresultaten')
       cy.get(SEARCH.input).type('Park')
       cy.get(DATA_SEARCH.autoSuggest).submit()
       cy.url().should('include', '/zoek/?term=Park')
@@ -136,10 +136,9 @@ describe('datasets module', () => {
       cy.get(DATA_SEARCH.autoSuggest).submit()
       cy.url().should('include', '/zoek/?term=NORESULTS')
       cy.wait(['@graphql', '@graphql'])
-
-      // Check if datasets are NOT visible
-      cy.contains('Datasets').should('not.be.visible')
+      cy.contains("Er zijn geen resultaten gevonden met 'NORESULTS'.").should('be.visible')
     })
+
     it('should show only datasets after filtering', () => {
       cy.server()
       cy.route(`typeahead?q=vergunningen`).as('typeaheadResults')
@@ -162,6 +161,7 @@ describe('datasets module', () => {
       cy.get(DATA_SEARCH.headerSubTitle).should('contain', 'Licentie').and('be.visible')
       cy.get(DATA_SETS.datasetItem).should('be.visible')
 
+      cy.get(DATA_SEARCH.searchBarFilter).select('Datasets')
       cy.get(SEARCH.input).type('Vergunningen{enter}')
 
       cy.contains("Datasets met 'Vergunningen' (").should('be.visible')
