@@ -1,3 +1,3 @@
 // @ts-ignore
-const isIE = !window.MSInputMethodContext && !!document.documentMode
+const isIE = !!document.documentMode
 export default isIE
