@@ -1,11 +1,11 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import { Provider } from 'react-redux'
-import App from './App'
+import environment from '../environment'
 import configureStore from '../store/store'
+import App from './App'
 import resolveRedirects from './redirects'
 import './sentry'
-import environment from '../environment'
 
 if ('serviceWorker' in navigator) {
   window.navigator.serviceWorker.getRegistrations().then((registrations) => {
@@ -27,7 +27,9 @@ resolveRedirects().then((hasToRedirect) => {
 
 function renderApp(store) {
   // eslint-disable-next-line no-undef,no-console
-  console.log(`CityData: version: ${VERSION}, build: ${environment.DEPLOY_ENV}`)
+  console.info(`CityData: version: ${VERSION}, build: ${environment.DEPLOY_ENV}`)
+  // eslint-disable-next-line no-console
+  console.info('Environment:', environment)
 
   ReactDOM.render(
     <Provider store={store}>
