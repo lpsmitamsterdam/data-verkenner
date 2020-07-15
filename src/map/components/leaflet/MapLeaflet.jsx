@@ -1,20 +1,12 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import ReactResizeDetector from 'react-resize-detector'
 import 'leaflet' // Required to define window.L before leaflet plugins are imported
-import 'leaflet.markercluster'
 import 'leaflet-draw'
 import 'leaflet-rotatedmarker'
+import 'leaflet.markercluster'
+import PropTypes from 'prop-types'
+import React from 'react'
 import { GeoJSON, Map, ScaleControl, TileLayer, ZoomControl } from 'react-leaflet'
-
-import CustomMarker from './custom/marker/CustomMarker'
-import ClusterGroup from './custom/cluster-group/ClusterGroup'
-import NonTiledLayer from './custom/non-tiled-layer'
-import geoJsonConfig from './services/geo-json-config.constant'
-import markerConfig from './services/marker-config.constant'
-import createClusterIcon from './services/cluster-icon'
-import { boundsToString, getBounds, isBoundsAPoint, isValidBounds } from './services/bounds'
-import LoadingIndicator from '../loading-indicator/LoadingIndicator'
+import ReactResizeDetector from 'react-resize-detector'
+import isIE from '../../../app/utils/isIE'
 import {
   dataSelectionType,
   DEFAULT_LAT,
@@ -25,15 +17,22 @@ import {
   panoramaOrientationType,
   panoramaPersonType,
 } from '../../ducks/map/constants'
-import RdGeoJson from './custom/geo-json/RdGeoJson'
 import MAP_CONFIG from '../../services/map.config'
-import searchIcon from './services/search-icon'
+import LoadingIndicator from '../loading-indicator/LoadingIndicator'
+import ClusterGroup from './custom/cluster-group/ClusterGroup'
+import RdGeoJson from './custom/geo-json/RdGeoJson'
+import CustomMarker from './custom/marker/CustomMarker'
+import NonTiledLayer from './custom/non-tiled-layer'
+import { boundsToString, getBounds, isBoundsAPoint, isValidBounds } from './services/bounds'
+import createClusterIcon from './services/cluster-icon'
 import dataSelectionIcon from './services/data-selection-icon'
 import detailIcon from './services/detail-icon'
-import { panoramaOrientationIcon, panoramaPersonIcon } from './services/panorama-icon'
+import geoJsonConfig from './services/geo-json-config.constant'
 import locationIcon from './services/location-icon'
+import markerConfig from './services/marker-config.constant'
+import { panoramaOrientationIcon, panoramaPersonIcon } from './services/panorama-icon'
+import searchIcon from './services/search-icon'
 
-const isIE = false || !!window.document.documentMode
 if (isIE) {
   // This solves inconsistency in the leaflet draw for IE11
   window.L.Browser.touch = false
