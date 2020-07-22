@@ -76,6 +76,7 @@ const DrawTool: React.FC<Props> = ({ onToggle, isOpen, setCurrentOverlay }) => {
     addDrawingGeometry,
     deleteDrawingGeometry,
     resetDrawingGeometries,
+    setLocation,
   } = useContext(MapContext)
 
   const mapInstance = useMapInstance()
@@ -117,6 +118,20 @@ const DrawTool: React.FC<Props> = ({ onToggle, isOpen, setCurrentOverlay }) => {
 
   const editVertex = async (e: L.DrawEvents.EditVertex) => {
     const layer = e.poly as ExtendedLayer
+
+    /**
+ * TODO: Update drawingGeometry in the URL and state after edit
+ * 
+ * The previous bounds for this layer should be deleted from the state, but how to get these bounds?
+ * The bounds are not available on the `e` object and are already updated on the feature group (e.g. drawnItemsGroup.getLayers)
+ * 
+ * If found, they can be deleted like this:
+ * 
+ * if (existingDrawingGeometry) {
+      deleteDrawingGeometry(existingDrawingGeometry[0][0])
+    }
+ * 
+ */
 
     const distanceText = setDistance(layer)
     bindDistanceAndAreaToTooltip(layer, distanceText)
@@ -212,6 +227,24 @@ const DrawTool: React.FC<Props> = ({ onToggle, isOpen, setCurrentOverlay }) => {
       }
     })
   }, [paramsRegistry.history])
+
+  useEffect(() => {
+    if (isOpen && drawnItemsGroup) {
+      // Delete the selected location when using the draw tool
+      setLocation(null)
+
+      // Add the layers from the featuregroup to the URL and state if the Drawtool gets reopened
+      drawnItemsGroup.eachLayer((layer) => {
+        // @ts-ignore getLatLngs is not found on layer, while it does work...
+        const latLngs = layer.getLatLngs()
+
+        // convert the geometry to match a type that only contains lat/lng
+        const drawingGeometry =
+          layer instanceof Polygon ? (latLngs[0] as LatLngLiteral[]) : (latLngs as LatLngLiteral[])
+        addDrawingGeometry(drawingGeometry)
+      })
+    }
+  }, [isOpen, drawnItemsGroup])
 
   return (
     <DrawToolComponent
