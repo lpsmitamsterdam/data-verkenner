@@ -386,8 +386,24 @@ const servicesByEndpointType: { [type: string]: ServiceDefinition } = {
               description: result.beschikbareAansluitingen.map((item: string) => item).join('\n'),
             },
             {
-              term: 'Beheerdersdeel',
+              term: 'Positie',
+              description: result.locatie || 'onbekend',
+            },
+            {
+              term: 'Beheerorganisatie',
               description: result.organisatie || 'onbekend',
+            },
+            {
+              term: 'Contactgegevens',
+              description: result.email || 'onbekend',
+            },
+            {
+              term: 'Licentie benodigd',
+              description: result.vergunningsplichtig ? 'Ja' : 'Nee',
+            },
+            {
+              term: 'Adresgegevens',
+              description: `${result.straat} ${result.huisnummer}, ${result.plaats}`,
             },
           ].filter(hasDescription),
         },
