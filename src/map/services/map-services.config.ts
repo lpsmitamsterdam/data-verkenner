@@ -32,6 +32,7 @@ export const endpointTypes = {
   adressenVerblijfsobject: 'bag/v1.1/verblijfsobject/',
   bedrijfsinvesteringszone: 'vsd/biz/',
   bekendmakingen: 'vsd/bekendmakingen/',
+  bouwstroompunten: 'bouwstroompunten/bouwstroompunten',
   constructionFiles: 'iiif-metadata/bouwdossier/',
   evenementen: 'vsd/evenementen/',
   explosievenGevrijwaardGebied: 'milieuthemas/explosieven/gevrijwaardgebied/',
@@ -361,6 +362,45 @@ const servicesByEndpointType: { [type: string]: ServiceDefinition } = {
             { term: 'Onderwerp', description: result.onderwerp },
             { term: 'Beschrijving', description: result.beschrijving },
             { term: 'Meer informatie', description: result.url, link: result.url },
+          ].filter(hasDescription),
+        },
+      ],
+    }),
+  },
+  [endpointTypes.bouwstroompunten]: {
+    type: 'bouwstroompunten/bouwstroompunten',
+    endpoint: 'v1/bouwstroompunten/bouwstroompunten',
+    mapDetail: (result) => ({
+      title: categoryLabels.bouwstroompunten.singular,
+      subTitle: result.bouwstroompuntId,
+      items: [
+        {
+          type: DetailResultItemType.DefinitionList,
+          entries: [
+            {
+              term: 'Capaciteit',
+              description: result.capaciteit || 'onbekend',
+            },
+            {
+              term: 'Beschikbare aansluiting(en)',
+              description: result.beschikbareAansluitingen.map((item: string) => item).join('\n'),
+            },
+            {
+              term: 'Beheerorganisatie',
+              description: result.organisatie || 'onbekend',
+            },
+            {
+              term: 'Contactgegevens',
+              description: result.email || 'onbekend',
+            },
+            {
+              term: 'Licentie benodigd',
+              description: result.vergunningsplichtig ? 'Ja' : 'Nee',
+            },
+            {
+              term: 'Adresgegevens',
+              description: `${result.straat} ${result.huisnummer}, ${result.plaats}`,
+            },
           ].filter(hasDescription),
         },
       ],
