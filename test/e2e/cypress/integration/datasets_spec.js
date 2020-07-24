@@ -96,8 +96,7 @@ describe('datasets module', () => {
       cy.get(`#${CSS.escape('theme-theme:bestuur')}`).check()
 
       // Count amount of Datasets again and check against previous
-      cy.wait('@graphql')
-      cy.wait(500)
+      cy.wait(800)
       cy.get('h1')
         .contains('Datasets')
         .then(($datasetsText) => {
@@ -258,7 +257,7 @@ describe('datasets module', () => {
       cy.contains('Metropoolregio Amsterdam')
       cy.contains('Gemeente Amsterdam, Onderzoek, Informatie en Statistiek')
     })
-    it.skip('Should create a new dataset', () => {
+    it('Should create a new dataset', () => {
       cy.server()
       cy.route('/dcatd/datasets').as('getDatasets')
       cy.route('POST', '/dcatd/datasets').as('postDataset')
@@ -319,7 +318,7 @@ describe('datasets module', () => {
       cy.url().should('include', '/zoek/?term=leeuw')
       cy.contains('Stand van de leeuwenpopulatie in het wallengebied van Amsterdam')
     })
-    it.skip('Should delete a dataset', () => {
+    it('Should delete a dataset', () => {
       cy.server()
       cy.route('/dcatd/datasets').as('getDatasets')
       cy.route('POST', '/dcatd/datasets/*').as('postDataset')

@@ -30,7 +30,7 @@ Cypress.Commands.add('checkAutoSuggestFirstofCategory', (searchTerm, category, r
 })
 
 Cypress.Commands.add('checkFirstInSearchResults', (category, result, selector) => {
-  cy.wait(1000)
+  cy.wait(1200)
   cy.get(DATA_SEARCH.searchResultsCategory).first().should('contain', category)
   cy.get(selector).first().should('have.text', result)
 })
