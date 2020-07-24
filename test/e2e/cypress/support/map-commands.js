@@ -1,4 +1,4 @@
-import { MAP, MAP_LAYERS } from './selectors'
+import { MAP } from './selectors'
 
 Cypress.Commands.add('checkAerialPhotos', () => {
   const aerial = [
