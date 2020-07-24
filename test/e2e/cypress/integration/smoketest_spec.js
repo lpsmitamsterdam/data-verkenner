@@ -1,7 +1,6 @@
 import {
   ADDRESS_PAGE,
   DATA_SEARCH,
-  DATA_SELECTION_TABLE,
   DATA_SETS,
   HEADER_MENU,
   HEADINGS,
@@ -111,9 +110,6 @@ describe('Smoketest', () => {
         .and('be.visible')
       cy.get(MAP.mapSearchResultsItem).should('contain', 'Dam').and('be.visible')
       cy.get(MAP.mapSearchResultsItem).should('contain', 'Damrak').and('be.visible')
-      // cy.get(MAP.mapSearchResultsCategoryHeader).should('contain', 'Winkelgebied')
-      // cy.get(MAP.mapSearchResultsItem).should('contain', 'Dam/Magna Plaza').and('be.visible')
-      // cy.get(MAP.mapSearchResultsCategoryHeader).should('contain', 'Bekendmaking')
       cy.get(MAP.mapSearchResultsCategoryHeader)
         .should('contain', 'Reclamebelastingtarief')
         .and('be.visible')
@@ -128,12 +124,10 @@ describe('Smoketest', () => {
       cy.get(MAP.mapMaximize).should('be.visible').click()
       cy.waitForGeoSearch()
       cy.get(MAP.mapSearchResultsPanel).should('be.visible')
-      // cy.waitForGeoSearch()
       cy.contains('0363100012168052').should('be.visible')
 
       // Open panorama view
       cy.get(MAP.mapDetailPanoramaHeader).click()
-      // CHECK TODO
       cy.get(PANORAMA.buttonClosePanorama).click()
       cy.waitForGeoSearch()
 
@@ -148,13 +142,13 @@ describe('Smoketest', () => {
         'Medewerkers/ketenpartners van Gemeente Amsterdam kunnen inloggen om maatschappelijke activiteiten en vestigingen te bekijken.',
       ).should('be.visible')
       cy.get(HEADINGS.dataSelectionHeading).should('contain', 'Vestigingen')
-      cy.get(DATA_SELECTION_TABLE.content).find('button').contains('Inloggen').should('be.visible')
+      cy.get(DATA_SEARCH.linklogin).should('be.visible')
       cy.get(TABLES.tableValue).should('not.be.visible')
       cy.contains('Kaart weergeven').click()
       cy.contains(
         'Medewerkers/ketenpartners van Gemeente Amsterdam kunnen inloggen om maatschappelijke activiteiten en vestigingen te bekijken.',
       ).should('be.visible')
-      cy.get(DATA_SELECTION_TABLE.content).find('button').contains('Inloggen').should('be.visible')
+      cy.get(DATA_SEARCH.linklogin).should('be.visible')
       cy.get(TABLES.tableValue).should('not.be.visible')
       cy.wait(1000)
       cy.get(ADDRESS_PAGE.tab).contains('Kadastrale objecten').click()
@@ -162,7 +156,7 @@ describe('Smoketest', () => {
       cy.get(TABLES.tableValue).should('not.be.visible')
       cy.contains('Tabel weergeven').click()
       cy.get(HEADINGS.dataSelectionHeading).should('contain', 'Kadastrale objecten')
-      cy.get(DATA_SELECTION_TABLE.content).find('button').contains('Inloggen').should('be.visible')
+      cy.get(DATA_SEARCH.linklogin).should('be.visible')
       cy.get(TABLES.tableValue).should('not.be.visible')
     })
   })
@@ -332,6 +326,7 @@ describe('Smoketest', () => {
       cy.contains("Datasets met 'Oost' (")
       cy.go('back')
       cy.contains("Alle zoekresultaten met 'Oost' (").should('be.visible')
+      cy.go('back')
       cy.go('back')
 
       // Back to the homepage

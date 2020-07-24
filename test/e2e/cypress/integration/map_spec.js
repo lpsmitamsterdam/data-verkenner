@@ -121,36 +121,15 @@ describe('map module', () => {
       cy.visit(`/${routing.data.path}?${VIEW_CENTER}=52.3731081%2C4.8932945&${VIEW}=kaart`)
       // the map-panel should have the class collapsed by default
       cy.get(MAP.mapPanel).should('have.class', 'map-panel--collapsed')
-      // expand the map-panel
       cy.get(MAP.toggleMapPanel).click()
       // the map panel should have the class expanded
       cy.get(MAP.mapPanel).should('have.class', 'map-panel--expanded')
       // the scroll wrapper should be visible when map panel is expanded
       cy.get(DATA_SEARCH.scrollWrapper).should('exist').and('be.visible')
-      // get Gebiedsindeling map-layer button
       cy.get('#Gebiedsindeling').check()
-      // check if the map has overlay panes
       cy.get(MAP.mapOverlayPane).children().should('exist')
-      // check if there is a canvas element inside the first overlay pane
       cy.get(MAP.mapOverlayPane).find('canvas').should('exist')
     })
-  })
-
-  describe('user should be able to open the map panel when collapsed', () => {
-    it('should add open the map panel component', () => {
-      cy.server()
-      cy.hidePopup()
-      cy.visit(`/${routing.data.path}?${VIEW}=kaart`)
-
-      cy.get(MAP.mapPanel).should('have.class', 'map-panel--collapsed')
-      cy.get(DATA_SEARCH.scrollWrapper).should('not.be.visible')
-      cy.get(MAP.toggleMapPanel).click()
-      cy.get(MAP.mapPanel).should('have.class', 'map-panel--expanded')
-      cy.get(DATA_SEARCH.scrollWrapper).should('exist').and('be.visible')
-    })
-  })
-
-  describe('Should see less when not logged in', () => {
     it('should add a layer to the map', () => {
       cy.server()
       cy.route('POST', '/cms_search/graphql/').as('graphql')
@@ -246,6 +225,23 @@ describe('map module', () => {
       cy.get(`#${CSS.escape('Onroerende zaken')}`).click()
       cy.get(MAP.imageLayer).should('not.exist')
     })
+  })
+
+  describe('user should be able to open the map panel when collapsed', () => {
+    it('should add open the map panel component', () => {
+      cy.server()
+      cy.hidePopup()
+      cy.visit(`/${routing.data.path}?${VIEW}=kaart`)
+
+      cy.get(MAP.mapPanel).should('have.class', 'map-panel--collapsed')
+      cy.get(DATA_SEARCH.scrollWrapper).should('not.be.visible')
+      cy.get(MAP.toggleMapPanel).click()
+      cy.get(MAP.mapPanel).should('have.class', 'map-panel--expanded')
+      cy.get(DATA_SEARCH.scrollWrapper).should('exist').and('be.visible')
+    })
+  })
+
+  describe('Should see less when not logged in', () => {
     it('should see no layers vestigingen on the map if not logged in', () => {
       cy.server()
       cy.route('POST', '/cms_search/graphql/').as('graphql')
