@@ -30,7 +30,7 @@ const StyledHeading = styled(Heading)<{ compact: boolean }>`
 
 const ContentType = styled(Paragraph)`
   text-transform: uppercase;
-  color: ${themeColor('support', 'valid')};
+  color: ${themeColor('primary')};
   font-size: 12px;
   font-weight: bold;
   line-height: 16px;

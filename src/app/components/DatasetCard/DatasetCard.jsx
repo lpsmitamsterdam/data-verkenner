@@ -61,7 +61,7 @@ const StyledParagraph = styled(Paragraph)`
 `
 
 const MetaText = styled(StyledParagraph)`
-  color: ${themeColor('tint', 'level5')};
+  color: ${themeColor('tint', 'level6')};
   font-size: 14px;
   line-height: 1.25;
 `
