@@ -76,8 +76,7 @@ const EditorialResults = ({
                 ? EDITORIAL_DETAIL_ACTIONS[type](id, specialType, slug)
                 : EDITORIAL_DETAIL_ACTIONS[type](id, slug)
 
-              const showContentType =
-                (isOverviewPage && type === CmsType.Collection) || !!specialType
+              const showContentType = (isOverviewPage && specialType) || !!specialType
               const highlighted = isOverviewPage && type === CmsType.Collection
 
               return (
