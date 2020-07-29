@@ -238,7 +238,7 @@ const EditorialCard: React.FC<EditorialCardProps> = ({
         <StyledCardContent highlighted={highlighted}>
           {showContentType && contentTypeLabel && (
             <div>
-              <ContentType data-test="contentType">{contentTypeLabel}</ContentType>
+              <ContentType data-testid="contentType">{contentTypeLabel}</ContentType>
             </div>
           )}
 
@@ -255,7 +255,7 @@ const EditorialCard: React.FC<EditorialCardProps> = ({
           )}
 
           {date && (
-            <MetaText as="time" data-test="metaText" dateTime={date}>
+            <MetaText as="time" data-testid="metaText" dateTime={date}>
               {specialType === SpecialType.Dashboard || specialType === SpecialType.Story
                 ? `Laatst gewijzigd: ${date}`
                 : date}

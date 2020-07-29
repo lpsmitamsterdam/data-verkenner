@@ -46,9 +46,9 @@ describe('EditorialCard', () => {
   })
 
   it('should display a content type if enabled', () => {
-    const { container, rerender } = render(<EditorialCard {...mockDataItem} />)
+    const { container, rerender, getByTestId } = render(<EditorialCard {...mockDataItem} />)
 
-    expect(container.querySelectorAll('[data-test="contentType"]').length).toBe(0)
+    expect(container.querySelectorAll('[data-testid="contentType"]').length).toBe(0)
 
     rerender(
       <EditorialCard
@@ -59,15 +59,15 @@ describe('EditorialCard', () => {
       />,
     )
 
-    expect(container.querySelector('[data-test="contentType"]')?.textContent).toBe(
-      SpecialType.Animation,
-    )
+    expect(getByTestId('contentType')?.textContent).toBe(SpecialType.Animation)
   })
 
   it("should display a date there's one provided", () => {
-    const { container, rerender } = render(<EditorialCard date="date" {...mockDataItem} />)
+    const { container, rerender, getByTestId } = render(
+      <EditorialCard date="date" {...mockDataItem} />,
+    )
 
-    expect(container.querySelector("[data-test='metaText']")?.textContent).toBe('date')
+    expect(getByTestId('metaText')?.textContent).toBe('date')
 
     rerender(
       <EditorialCard
