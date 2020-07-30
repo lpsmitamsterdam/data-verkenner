@@ -80,7 +80,6 @@ const SearchBar: React.FC<SearchBarProps> = ({
     id: 'auto-suggest__input',
     'data-test': 'search-input',
     placeholder: placeHolder,
-    label: placeHolder,
   }
 
   return (
@@ -96,6 +95,7 @@ const SearchBar: React.FC<SearchBarProps> = ({
           {...searchBarProps}
           aria-haspopup="true"
           aria-expanded={expanded}
+          label={placeHolder}
         >
           {children}
         </StyledSearchBar>
@@ -119,6 +119,7 @@ const SearchBar: React.FC<SearchBarProps> = ({
         aria-haspopup="true"
         aria-expanded={expanded}
         hasBackDrop
+        label={placeHolder}
       >
         {children}
       </SearchBarToggle>

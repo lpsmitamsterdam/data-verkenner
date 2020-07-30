@@ -1,5 +1,6 @@
 import {
   ascDefaultTheme,
+  breakpoint,
   Card,
   CardContent,
   CardMedia,
@@ -18,6 +19,92 @@ import getImageFromCms, { Resize } from '../../utils/getImageFromCms'
 
 const notFoundImage = '/assets/images/not_found_thumbnail.jpg'
 
+const getImageSize = (image: string, resize: Resize, imageSize: number) => {
+  const small = Math.round(imageSize * 0.5)
+  const medium = imageSize
+
+  const srcSet = {
+    srcSet: `${getImageFromCms(image, small, small, resize)} ${small}w,
+             ${getImageFromCms(image, medium, medium, resize)} ${medium}w`,
+  }
+
+  const sizes = {
+    sizes: `
+      ${ascDefaultTheme.breakpoints.mobileL('max-width')} ${small}px,
+      ${ascDefaultTheme.breakpoints.tabletM('max-width')} ${medium}px,
+    `,
+  }
+
+  return {
+    srcSet,
+    sizes,
+  }
+}
+
+interface CardMediaProps {
+  title: string
+  highlighted: boolean
+  image: string
+  imageDimensions: [number, number]
+}
+
+const StyledCardMedia = styled(CardMedia)<{
+  highlighted: boolean
+  vertical: boolean
+  imageDimensions: number[]
+}>`
+  @media screen and ${breakpoint('max-width', 'tabletM')} {
+    max-width: 80px;
+    max-height: 80px;
+    margin-right: ${themeSpacing(2)};
+  }
+  ${({ vertical, imageDimensions, highlighted }) => css`
+    flex: 1 0 auto;
+    max-width: ${imageDimensions[0]}px;
+    max-height: ${imageDimensions[1]}px;
+
+    ${!highlighted &&
+    css`
+      border: 1px solid ${themeColor('tint', 'level3')};
+    `}
+
+    &::before {
+      padding-top: ${vertical ? '145%' : '100%'};
+    }
+  `}
+`
+
+const CustomCardMedia: React.FC<CardMediaProps> = ({
+  title,
+  highlighted,
+  image,
+  imageDimensions,
+  ...otherProps
+}) => {
+  const imageIsVertical = imageDimensions[0] !== imageDimensions[1] // Image dimensions indicate whether the image is square or not
+  const { srcSet, sizes } = getImageSize(
+    image,
+    imageIsVertical ? 'fit' : 'fill',
+    imageIsVertical ? imageDimensions[1] : imageDimensions[0],
+  )
+
+  return (
+    <StyledCardMedia
+      imageDimensions={imageDimensions}
+      vertical={imageIsVertical}
+      highlighted={highlighted}
+      {...otherProps}
+    >
+      <Image
+        {...(image ? { ...srcSet, ...sizes } : {})}
+        src={getImageFromCms(image, imageDimensions[0], imageDimensions[1]) || notFoundImage}
+        alt={title}
+        square
+      />
+    </StyledCardMedia>
+  )
+}
+
 const StyledHeading = styled(Heading)<{ compact: boolean }>`
   // By forwarding this component as h4, we need to overwrite the style rules in src/shared/styles/base/_typography.scss
   line-height: 22px;
@@ -30,7 +117,7 @@ const StyledHeading = styled(Heading)<{ compact: boolean }>`
 
 const ContentType = styled(Paragraph)`
   text-transform: uppercase;
-  color: ${themeColor('support', 'valid')};
+  color: ${themeColor('primary')};
   font-size: 12px;
   font-weight: bold;
   line-height: 16px;
@@ -39,8 +126,7 @@ const ContentType = styled(Paragraph)`
 const StyledCardContent = styled(CardContent)<{ highlighted: boolean }>`
   display: flex;
   flex-direction: column;
-  padding: 0;
-  margin-left: ${themeSpacing(4)};
+  padding: ${themeSpacing(0, 0, 1, 0)};
   position: relative;
   min-height: 100%;
 
@@ -90,37 +176,25 @@ const StyledCard = styled(Card)<{ highlighted: boolean }>`
   &:last-child {
     margin-bottom: 0;
   }
-`
 
-const StyledCardMedia = styled(CardMedia)<{
-  highlighted: boolean
-  vertical: boolean
-  imageDimensions: number[]
-}>`
-  ${({ vertical, imageDimensions, highlighted }) => css`
-    flex: 1 0 auto;
-    max-width: ${imageDimensions[0]}px;
-    max-height: ${imageDimensions[1]}px;
-
-    ${!highlighted &&
-    css`
-      border: 1px solid ${themeColor('tint', 'level3')};
-    `}
-
-    &::before {
-      padding-top: ${vertical ? '145%' : '100%'};
+  ${StyledCardMedia} + ${StyledCardContent} {
+    @media screen and ${breakpoint('min-width', 'tabletM')} {
+      margin-left: ${themeSpacing(4)};
     }
-  `}
+  }
 `
 
 const IntroText = styled(Paragraph)`
   padding-bottom: ${themeSpacing(4)};
+  display: none;
+  @media screen and ${breakpoint('min-width', 'tabletM')} {
+    display: inline-block;
+  }
 `
 
 const MetaText = styled(Paragraph)`
   display: inline-block;
   color: ${themeColor('tint', 'level5')};
-  padding-bottom: ${themeSpacing(4)};
   font-size: 14px;
   line-height: 1.25;
   margin-top: auto;
@@ -128,28 +202,6 @@ const MetaText = styled(Paragraph)`
     text-transform: capitalize;
   }
 `
-
-const getImageSize = (image: string, resize: Resize, imageSize: number) => {
-  const small = Math.round(imageSize * 0.5)
-  const medium = imageSize
-
-  const srcSet = {
-    srcSet: `${getImageFromCms(image, small, small, resize)} ${small}w,
-             ${getImageFromCms(image, medium, medium, resize)} ${medium}w`,
-  }
-
-  const sizes = {
-    sizes: `
-      ${ascDefaultTheme.breakpoints.mobileL('max-width')} ${small}px,
-      ${ascDefaultTheme.breakpoints.tabletM('max-width')} ${medium}px,
-    `,
-  }
-
-  return {
-    srcSet,
-    sizes,
-  }
-}
 
 interface EditorialCardProps {
   title: string
@@ -182,11 +234,11 @@ const EditorialCard: React.FC<EditorialCardProps> = ({
   return (
     <StyledLink {...{ title, linkType: 'blank', ...otherProps }}>
       <StyledCard horizontal highlighted={highlighted}>
-        {image && renderCardMedia({ title, highlighted, image, imageDimensions })}
+        {image && <CustomCardMedia {...{ title, highlighted, image, imageDimensions }} />}
         <StyledCardContent highlighted={highlighted}>
           {showContentType && contentTypeLabel && (
             <div>
-              <ContentType data-test="contentType">{contentTypeLabel}</ContentType>
+              <ContentType data-testid="contentType">{contentTypeLabel}</ContentType>
             </div>
           )}
 
@@ -203,49 +255,15 @@ const EditorialCard: React.FC<EditorialCardProps> = ({
           )}
 
           {date && (
-            <div>
-              {/* @ts-ignore */}
-              <MetaText forwardedAs="time" data-test="metaText" datetime={date}>
-                {specialType === SpecialType.Dashboard || specialType === SpecialType.Story
-                  ? `Laatst gewijzigd: ${date}`
-                  : date}
-              </MetaText>
-            </div>
+            <MetaText as="time" data-testid="metaText" dateTime={date}>
+              {specialType === SpecialType.Dashboard || specialType === SpecialType.Story
+                ? `Laatst gewijzigd: ${date}`
+                : date}
+            </MetaText>
           )}
         </StyledCardContent>
       </StyledCard>
     </StyledLink>
-  )
-}
-
-interface CardMediaProps {
-  title: string
-  highlighted: boolean
-  image: string
-  imageDimensions: [number, number]
-}
-
-function renderCardMedia({ title, highlighted, image, imageDimensions }: CardMediaProps) {
-  const imageIsVertical = imageDimensions[0] !== imageDimensions[1] // Image dimensions indicate whether the image is square or not
-  const { srcSet, sizes } = getImageSize(
-    image,
-    imageIsVertical ? 'fit' : 'fill',
-    imageIsVertical ? imageDimensions[1] : imageDimensions[0],
-  )
-
-  return (
-    <StyledCardMedia
-      imageDimensions={imageDimensions}
-      vertical={imageIsVertical}
-      highlighted={highlighted}
-    >
-      <Image
-        {...(image ? { ...srcSet, ...sizes } : {})}
-        src={getImageFromCms(image, imageDimensions[0], imageDimensions[1]) || notFoundImage}
-        alt={title}
-        square
-      />
-    </StyledCardMedia>
   )
 }
 

@@ -15,6 +15,7 @@ import {
 import { NAVIGATION_LINKS } from '../../../../shared/config/config'
 import { routing as routes } from '../../../routes'
 import environment from '../../../../environment'
+import decodeHTML from '../../../utils/decodeHTML'
 
 // The id's also represent the order in which they are displayed in the NavigationBlock on the homepage
 // The order of how the items are placed in the array, is the order for the Menu
@@ -104,7 +105,7 @@ const navigationLinks = [
       </Icon>
     ),
     title: routes.publicationSearch.title,
-    description: 'Download factsheets en onderzoeksrapporten',
+    description: decodeHTML('Download factsheets en onderzoeks&shy;rapporten'),
   },
   {
     id: 8,

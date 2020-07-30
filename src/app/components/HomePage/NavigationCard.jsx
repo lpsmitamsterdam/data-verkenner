@@ -33,7 +33,6 @@ const StyledIcon = styled(Icon)`
 const StyledCard = styled(Card)`
   width: 100%;
   margin-bottom: 0;
-  height: ${themeSpacing(18)};
   pointer-events: none; /* FF 60 fix */
 `
 
@@ -88,7 +87,6 @@ const StyledParagraph = styled(Paragraph)`
   // Hard overwrite specifically for this component
   font-size: 14px;
   line-height: 17px;
-  height: 34px; // two times the line-height
   width: 100%;
   overflow: hidden; // make sure the text doesn't falls outside this Paragraph
 `
