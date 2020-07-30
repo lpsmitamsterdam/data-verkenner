@@ -61,7 +61,7 @@ Object {
       "atlasRouter/MAP": Object {
         "addHistory": true,
         "decode": [Function],
-        "defaultValue": null,
+        "defaultValue": "topografie",
         "encode": [Function],
         "reducerKey": null,
         "selector": [Function],
@@ -1428,7 +1428,7 @@ Object {
       "atlasRouter/MAP": Object {
         "addHistory": true,
         "decode": [Function],
-        "defaultValue": null,
+        "defaultValue": Array [],
         "encode": [Function],
         "reducerKey": null,
         "selector": [Function],

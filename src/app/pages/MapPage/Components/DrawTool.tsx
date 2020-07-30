@@ -7,7 +7,7 @@ import {
 } from '@datapunt/arm-draw'
 import { ascDefaultTheme, themeColor } from '@datapunt/asc-ui'
 import { useMapInstance } from '@datapunt/react-maps'
-import L, { LatLng, LatLngBoundsLiteral, LatLngLiteral, Polygon } from 'leaflet'
+import L, { LatLng, LatLngLiteral, Polygon } from 'leaflet'
 import React, { useContext, useEffect, useMemo } from 'react'
 import PARAMETERS from '../../../../store/parameters'
 import DataSelectionContext from '../DataSelectionContext'
@@ -72,7 +72,6 @@ const DrawTool: React.FC<Props> = ({ onToggle, isOpen, setCurrentOverlay }) => {
     removeDataSelection,
   } = useContext(DataSelectionContext)
   const {
-    drawingGeometries,
     addDrawingGeometry,
     deleteDrawingGeometry,
     resetDrawingGeometries,
@@ -116,26 +115,31 @@ const DrawTool: React.FC<Props> = ({ onToggle, isOpen, setCurrentOverlay }) => {
     }
   }
 
-  const editVertex = async (e: L.DrawEvents.EditVertex) => {
-    const layer = e.poly as ExtendedLayer
+  const addDrawingGeometriesFromMapInstance = () => {
+    // Add the layers from the featuregroup to the URL and state if the Drawtool gets reopened
+    drawnItemsGroup.eachLayer((layer) => {
+      // @ts-ignore getLatLngs is not found on layer, while it does work...
+      const latLngs = layer.getLatLngs()
 
-    /**
- * TODO: Update drawingGeometry in the URL and state after edit
- * 
- * The previous bounds for this layer should be deleted from the state, but how to get these bounds?
- * The bounds are not available on the `e` object and are already updated on the feature group (e.g. drawnItemsGroup.getLayers)
- * 
- * If found, they can be deleted like this:
- * 
- * if (existingDrawingGeometry) {
-      deleteDrawingGeometry(existingDrawingGeometry[0][0])
-    }
- * 
- */
+      // convert the geometry to match a type that only contains lat/lng
+      const drawingGeometry =
+        layer instanceof Polygon ? (latLngs[0] as LatLngLiteral[]) : (latLngs as LatLngLiteral[])
+      addDrawingGeometry(drawingGeometry)
+    })
+  }
+
+  const editVertex = async (e: L.DrawEvents.EditVertex) => {
+    // Clear all the drawing geometries from state
+    resetDrawingGeometries()
+
+    const layer = e.poly as ExtendedLayer
 
     const distanceText = setDistance(layer)
     bindDistanceAndAreaToTooltip(layer, distanceText)
     await getData(layer, distanceText)
+
+    // Add the layers from the featuregroup to the state again
+    addDrawingGeometriesFromMapInstance()
   }
 
   const onDeleteDrawing = (layersInEditMode: Array<ExtendedLayer>) => {
@@ -208,13 +212,6 @@ const DrawTool: React.FC<Props> = ({ onToggle, isOpen, setCurrentOverlay }) => {
     return null
   }, [])
 
-  useEffect(() => {
-    if (mapInstance && drawingGeometries?.length) {
-      // Center the map
-      mapInstance.fitBounds((drawingGeometries as unknown) as LatLngBoundsLiteral)
-    }
-  }, [mapInstance, drawingGeometries])
-
   // Look for changes in the history
   useEffect(() => {
     paramsRegistry.history.listen((_location: any, action: string) => {
@@ -234,15 +231,7 @@ const DrawTool: React.FC<Props> = ({ onToggle, isOpen, setCurrentOverlay }) => {
       setLocation(null)
 
       // Add the layers from the featuregroup to the URL and state if the Drawtool gets reopened
-      drawnItemsGroup.eachLayer((layer) => {
-        // @ts-ignore getLatLngs is not found on layer, while it does work...
-        const latLngs = layer.getLatLngs()
-
-        // convert the geometry to match a type that only contains lat/lng
-        const drawingGeometry =
-          layer instanceof Polygon ? (latLngs[0] as LatLngLiteral[]) : (latLngs as LatLngLiteral[])
-        addDrawingGeometry(drawingGeometry)
-      })
+      addDrawingGeometriesFromMapInstance()
     }
   }, [isOpen, drawnItemsGroup])
 
