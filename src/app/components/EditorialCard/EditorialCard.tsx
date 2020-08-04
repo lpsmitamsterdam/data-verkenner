@@ -105,6 +105,7 @@ const StyledHeading = styled(Heading)<{ compact: boolean }>`
   width: fit-content;
   display: inline-block;
   font-weight: bold;
+  word-break: break-word;
   ${({ compact }) =>
     compact &&
     css`
