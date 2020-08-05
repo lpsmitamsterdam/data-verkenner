@@ -332,11 +332,11 @@ class ParamsRegistry {
     const paramValue = encode ? encode(value) : value
 
     // Make sure the parameter is not updated when equal to current or default value
-    if (paramValue === url.searchParams.get(param) || paramValue === defaultValue) {
+    if (paramValue === url.searchParams.get(param)) {
       return
     }
 
-    if (paramValue) {
+    if (paramValue && paramValue !== defaultValue) {
       url.searchParams.set(param, paramValue)
     } else {
       url.searchParams.delete(param)

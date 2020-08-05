@@ -68,7 +68,7 @@ const MapPage: React.FC = () => {
     geometry,
   } = React.useContext(MapContext)
 
-  const handleToggleDrawTool = React.useCallback((show: boolean) => {
+  const handleToggleDrawTool = React.useCallback((show: boolean = false) => {
     setShowDrawTool(show)
 
     if (!show) {
@@ -167,9 +167,7 @@ const MapPage: React.FC = () => {
                 )}
                 {detailUrl && <DetailPanel detailUrl={detailUrl} />}
                 <DrawContent
-                  showDrawTool={showDrawTool}
-                  currentOverlay={currentOverlay}
-                  setShowDrawTool={setShowDrawTool}
+                  {...{ showDrawTool, currentOverlay, setShowDrawTool: handleToggleDrawTool }}
                 />
                 {!detailUrl && <LegendPanel />}
               </MapPanelOrDrawer>

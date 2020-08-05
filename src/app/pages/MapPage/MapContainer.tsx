@@ -1,6 +1,6 @@
 import { Geometry } from 'geojson'
 import { LatLngLiteral } from 'leaflet'
-import React, { useEffect } from 'react'
+import React from 'react'
 import {
   getMapBaseLayers as fetchBaseLayers,
   getMapLayers as fetchMapLayers,
@@ -33,7 +33,8 @@ type Action =
   | { type: 'setLocation'; payload: LatLngLiteral | null }
   | { type: 'setDetailUrl'; payload: string | null }
   | { type: 'setGeometry'; payload: Geometry }
-  | { type: 'addDrawingGeometry'; payload: LatLngLiteral[] | LatLngLiteral[][] }
+  | { type: 'addDrawingGeometry'; payload: LatLngLiteral[] }
+  | { type: 'addDrawingGeometries'; payload: LatLngLiteral[][] }
   | { type: 'deleteDrawingGeometry'; payload: LatLngLiteral[] }
   | { type: 'resetDrawingGeometries' }
 
@@ -109,18 +110,28 @@ const reducer = (state: MapState, action: Action): MapState => {
         ...state,
         geometry: action.payload,
       }
-    case 'addDrawingGeometry':
+    case 'addDrawingGeometry': {
+      if (
+        !state.drawingGeometries?.find(
+          (drawingGeometry) => JSON.stringify(drawingGeometry) === JSON.stringify(action.payload),
+        )
+      ) {
+        return {
+          ...state,
+          drawingGeometries: state.drawingGeometries?.length
+            ? [...state.drawingGeometries, action.payload]
+            : [action.payload],
+        }
+      }
+
+      return state
+    }
+    case 'addDrawingGeometries':
       return {
         ...state,
-        drawingGeometries: state.drawingGeometries?.length
-          ? ([...state.drawingGeometries, action.payload] as LatLngLiteral[][])
-          : ([
-              // The payload might be of type LatLngLiteral[] of LatLngLiteral[][]
-              ...(action.payload instanceof Array && action.payload[0] instanceof Array
-                ? action.payload
-                : [action.payload]),
-            ] as LatLngLiteral[][]),
+        drawingGeometries: action.payload,
       }
+
     case 'deleteDrawingGeometry':
       return {
         ...state,
@@ -166,8 +177,12 @@ const MapContextProvider: React.FC<MapContextProps> = ({ children }) => {
     dispatch({ type: 'setGeometry', payload })
   }
 
-  function addDrawingGeometry(payload: LatLngLiteral[] | LatLngLiteral[][]) {
+  function addDrawingGeometry(payload: LatLngLiteral[]) {
     dispatch({ type: 'addDrawingGeometry', payload })
+  }
+
+  function addDrawingGeometries(payload: LatLngLiteral[][]) {
+    dispatch({ type: 'addDrawingGeometries', payload })
   }
 
   function deleteDrawingGeometry(payload: LatLngLiteral[]) {
@@ -270,38 +285,19 @@ const MapContextProvider: React.FC<MapContextProps> = ({ children }) => {
   }
 
   // Load the state from the query parameters
-  const [location, drawingGeometries, activeBaseLayer, activeMapLayers, detailUrl] = getFromURL([
-    PARAMETERS.LOCATION,
+  const [drawingGeometries] = getFromURL([PARAMETERS.DRAWING_GEOMETRY])
+
+  // Watch for state or URL changes
+  watchForChanges(PARAMETERS.MAP_BACKGROUND, state.activeBaseLayer, setActiveBaseLayer)
+  watchForChanges(PARAMETERS.LOCATION, state.location, setLocation)
+  watchForChanges(
     PARAMETERS.DRAWING_GEOMETRY,
-    PARAMETERS.MAP_BACKGROUND,
-    PARAMETERS.LAYERS,
-    PARAMETERS.DETAIL,
-  ])
-
-  useEffect(() => {
-    watchForChanges(PARAMETERS.MAP_BACKGROUND, state.activeBaseLayer, setActiveBaseLayer)
-  }, [state.activeBaseLayer, activeBaseLayer])
-
-  useEffect(() => {
-    watchForChanges(PARAMETERS.LOCATION, state.location, setLocation)
-  }, [state.location, location])
-
-  useEffect(() => {
-    watchForChanges(
-      PARAMETERS.DRAWING_GEOMETRY,
-      state.drawingGeometries,
-      addDrawingGeometry,
-      !!drawingGeometries, // Only the last drawing state is stored in the history to avoid having to rerender the map to force leaflet-draw to delete drawings that dont exist in the state
-    )
-  }, [state.drawingGeometries, drawingGeometries])
-
-  useEffect(() => {
-    watchForChanges(PARAMETERS.LAYERS, state.activeMapLayers, setActiveMapLayers)
-  }, [state.activeMapLayers, activeMapLayers])
-
-  useEffect(() => {
-    watchForChanges(PARAMETERS.DETAIL, state.detailUrl, setDetailUrl)
-  }, [state.detailUrl, detailUrl])
+    state.drawingGeometries,
+    addDrawingGeometries,
+    !!drawingGeometries, // Only the last drawing state is stored in the history to avoid having to rerender the map to force leaflet-draw to delete drawings that dont exist in the state
+  )
+  watchForChanges(PARAMETERS.LAYERS, state.activeMapLayers, setActiveMapLayers)
+  watchForChanges(PARAMETERS.DETAIL, state.detailUrl, setDetailUrl)
 
   return (
     <MapContext.Provider
@@ -314,6 +310,7 @@ const MapContextProvider: React.FC<MapContextProps> = ({ children }) => {
         setDetailUrl,
         setGeometry,
         addDrawingGeometry,
+        addDrawingGeometries,
         deleteDrawingGeometry,
         resetDrawingGeometries,
         getBaseLayers,
