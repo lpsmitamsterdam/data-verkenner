@@ -98,7 +98,7 @@ function renderDefinitionListItem(item: DetailResultItemDefinitionList) {
         <div className="map-detail-result__item-label">{entry.term}</div>
         <div className="map-detail-result__item-value">
           {entry.link ? (
-            <Link href={entry.link} variant="with-chevron" target="_blank">
+            <Link href={entry.link} inList target="_blank">
               {entry.description}
             </Link>
           ) : (

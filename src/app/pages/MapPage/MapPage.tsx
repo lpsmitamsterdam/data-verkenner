@@ -99,7 +99,7 @@ const MapPage: React.FC = () => {
     <>
       <Alert level={NotificationLevel.Attention} dismissible>
         <Heading as="h3">Let op: Deze nieuwe interactieve kaart is nog in aanbouw.</Heading>
-        <Link to={toMap()} as={RouterLink} variant="with-chevron" darkBackground>
+        <Link to={toMap()} as={RouterLink} inList darkBackground>
           Naar de oude kaart
         </Link>
       </Alert>

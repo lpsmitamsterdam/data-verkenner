@@ -44,7 +44,7 @@ const StyledLink = styled(Link)`
 `
 
 const AboutCard = ({ loading, shortTitle, title, teaser, intro, linkProps }) => (
-  <StyledLink {...linkProps} linkType="blank">
+  <StyledLink {...linkProps} variant="blank">
     <StyledCard backgroundColor="level2" shadow isLoading={loading}>
       <StyledCardContent>
         <Heading as="h3">{shortTitle || title}</Heading>

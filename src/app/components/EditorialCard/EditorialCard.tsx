@@ -231,7 +231,7 @@ const EditorialCard: React.FC<EditorialCardProps> = ({
 
   return (
     // Don't use the title attribute here, as we already use a heading that can be read by screen readers
-    <StyledLink {...{ linkType: 'blank', ...otherProps }}>
+    <StyledLink {...{ variant: 'blank', ...otherProps }}>
       <StyledCard horizontal highlighted={highlighted}>
         <CustomCardMedia {...{ highlighted, image, imageDimensions }} />
         <StyledCardContent highlighted={highlighted}>
