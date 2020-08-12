@@ -54,7 +54,7 @@ const HighlightCard = ({
   teaserImage,
   styleAs,
 }) => (
-  <StyledLink {...linkProps} linkType="blank">
+  <StyledLink {...linkProps} variant="blank">
     <StyledImageCard
       backgroundImage={teaserImage}
       isLoading={loading || showError}

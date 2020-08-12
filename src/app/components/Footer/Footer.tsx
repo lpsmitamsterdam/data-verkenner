@@ -65,7 +65,7 @@ const Footer: React.FC = () => (
       <FooterBottom>
         <List>
           <ListItem>
-            <StyledLink variant="with-chevron" {...FOOTER_LINKS.PRIVACY}>
+            <StyledLink inList {...FOOTER_LINKS.PRIVACY}>
               {FOOTER_LINKS.PRIVACY.title}
             </StyledLink>
           </ListItem>

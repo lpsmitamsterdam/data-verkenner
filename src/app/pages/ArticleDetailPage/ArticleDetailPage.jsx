@@ -256,7 +256,7 @@ const ArticleDetailPage = ({ id }) => {
                                       })
                                       downloadFile(`${environment.CMS_ROOT}${url}`)
                                     }}
-                                    variant="with-chevron"
+                                    inList
                                   >
                                     <ListItemContent>
                                       <span>{fileName}</span>
@@ -274,7 +274,7 @@ const ArticleDetailPage = ({ id }) => {
                             <List>
                               {links.map(({ uri, title: linkTitle }) => (
                                 <ListItem key={uri}>
-                                  <StyledLink variant="with-chevron" href={`${uri}`}>
+                                  <StyledLink inList href={`${uri}`}>
                                     <span>{linkTitle}</span>
                                   </StyledLink>
                                 </ListItem>

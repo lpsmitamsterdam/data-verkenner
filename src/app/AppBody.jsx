@@ -103,7 +103,7 @@ const AppBody = ({
                 '11206c96-91d6-4f6a-9666-68e577797865',
                 'internet-explorer-binnenkort-niet-meer-ondersteund',
               )}
-              variant="with-chevron"
+              inList
               darkBackground
             >
               Klik voor meer uitleg.

@@ -130,7 +130,7 @@ const ThemesBlock: React.FC = () => {
             <li key={option.label}>
               <StyledLink
                 forwardedAs={RouterLink}
-                variant="with-chevron"
+                inList
                 {...({ to: toSearch({ [PARAMETERS.FILTERS]: filters }) } as any)}
               >
                 {option.label}

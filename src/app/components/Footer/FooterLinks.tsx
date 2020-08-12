@@ -39,19 +39,12 @@ const FooterLinks: React.FC<{ links: FooterLink[] }> = ({ children, links }) => 
                 as={RouterLink}
                 title={title}
                 to={toArticleDetail(linkId, slug)}
-                variant="with-chevron"
+                inList
               >
                 {title}
               </Link>
             ) : onClick ? (
-              <Link
-                darkBackground
-                type="button"
-                as={Button}
-                title={title}
-                variant="with-chevron"
-                onClick={onClick}
-              >
+              <Link darkBackground type="button" as={Button} title={title} inList onClick={onClick}>
                 Feedback geven
               </Link>
             ) : (
@@ -62,7 +55,7 @@ const FooterLinks: React.FC<{ links: FooterLink[] }> = ({ children, links }) => 
                 href={href}
                 rel="external noopener noreferrer"
                 target="_blank"
-                variant="with-chevron"
+                inList
               >
                 {title}
               </Link>

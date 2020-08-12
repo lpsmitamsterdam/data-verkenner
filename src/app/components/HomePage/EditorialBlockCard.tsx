@@ -105,7 +105,7 @@ const EditorialBlockCard: React.FC<
 
   return (
     // Don't use the title attribute here, as we already use a heading that can be read by screen readers
-    <StyledLink {...linkPropsWithoutTitle} linkType="blank">
+    <StyledLink {...linkPropsWithoutTitle} variant="blank">
       <StyledCard horizontal animateLoading={!showError} isLoading={loading} showError={showError}>
         <StyledCardContent>
           {showContentType && contentTypeLabel && (

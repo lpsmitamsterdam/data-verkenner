@@ -83,7 +83,7 @@ const DatasetCard = ({
       key: id,
       to,
       title: shortTitle,
-      linkType: 'blank',
+      variant: 'blank',
       ...otherProps,
     }}
   >

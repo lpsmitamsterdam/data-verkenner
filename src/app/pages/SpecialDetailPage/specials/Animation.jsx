@@ -84,7 +84,7 @@ const Animation = ({ contentLink, title, results }) => {
             {body && <CustomHTMLBlock body={body} />}
             {links?.length
               ? links.map(({ uri, title: linkTitle }) => (
-                  <StyledLink variant="with-chevron" href={uri} title={linkTitle} target="_blank">
+                  <StyledLink inList href={uri} title={linkTitle} target="_blank">
                     {linkTitle}
                   </StyledLink>
                 ))

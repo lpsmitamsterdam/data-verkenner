@@ -87,7 +87,7 @@ const StyledParagraph = styled(Paragraph)`
 `
 
 const NavigationCard = ({ CardIcon, to, title, description }) => (
-  <StyledLink forwardedAs={RouterLink} linkType="blank" to={to}>
+  <StyledLink forwardedAs={RouterLink} variant="blank" to={to}>
     <StyledCard horizontal>
       <StyledCardMedia backgroundColor="level2">
         <CardIcon />
