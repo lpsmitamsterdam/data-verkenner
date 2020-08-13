@@ -67,7 +67,7 @@ const Header = ({
       <HeaderWrapper isHomePage={homePage} data-test="header">
         <StyledHeader
           tall={homePage}
-          title="Data en informatie van de gemeente Amsterdam"
+          title="Data en informatie"
           homeLink="/"
           className="styled-header"
           fullWidth={!hasMaxWidth}
