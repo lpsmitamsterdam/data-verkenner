@@ -27,14 +27,11 @@ resolveRedirects().then((hasToRedirect) => {
 
 function renderApp(store) {
   // eslint-disable-next-line no-console
-  console.info(
+  console.log(
     `Dataportaal: version: ${process.env.VERSION}, deploy env: ${environment.DEPLOY_ENV}${
       process.env.GIT_COMMIT ? `, commit: ${process.env.GIT_COMMIT}` : ''
     }`,
   )
-
-  // eslint-disable-next-line no-console
-  console.info('Environment:', environment)
 
   ReactDOM.render(
     <Provider store={store}>
