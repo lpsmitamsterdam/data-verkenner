@@ -12,7 +12,7 @@ describe('datasets module', () => {
       cy.visit('/')
 
       cy.wait('@jsonapi')
-      cy.get('h4').should('be.visible').and('contain', 'Datasets')
+      cy.get('h3').should('be.visible').and('contain', 'Datasets')
     })
 
     it('should open the datasets catalogus without a filter and see results', () => {
@@ -29,6 +29,7 @@ describe('datasets module', () => {
     })
 
     it('should open a dataset', () => {
+      cy.route('/dcatd/datasets/*').as('getDataset')
       // click on the link to go to the datasets without a specified catalogus theme
       cy.get('[data-test=navigation-block] > [href="/datasets/zoek/"]').should('be.visible').click()
 
@@ -44,6 +45,7 @@ describe('datasets module', () => {
 
       // Open first result
       cy.get(DATA_SETS.dataSetLink).last().click()
+      cy.wait('@getDataset')
 
       // check detail titles
       cy.get('h3').should('be.visible').and('contain', 'Dataset')
@@ -58,7 +60,7 @@ describe('datasets module', () => {
     })
 
     it('should show the results of theme Bestuur', () => {
-      cy.get('h1').should('contain', 'Zoek op thema').and('be.visible')
+      cy.get('h2').should('contain', 'Zoek op thema').and('be.visible')
 
       // click on the link to go to the datasets with a specified catalogus theme
       cy.get('a[href*="/zoek/"]:contains("Bestuur")').click()
@@ -93,7 +95,7 @@ describe('datasets module', () => {
           Cypress.env('countDatasets', datasetsNumber)
         })
 
-      cy.get(`#${CSS.escape('theme-theme:bestuur')}`).check()
+      cy.get(`#${CSS.escape('theme-theme:bestuur')}`).check({ force: true })
 
       // Count amount of Datasets again and check against previous
       cy.wait(800)
@@ -135,12 +137,13 @@ describe('datasets module', () => {
       cy.get(DATA_SEARCH.autoSuggest).submit()
       cy.url().should('include', '/zoek/?term=NORESULTS')
       cy.wait(['@graphql', '@graphql'])
-      cy.contains("Er zijn geen resultaten gevonden met 'NORESULTS'.").should('be.visible')
+      cy.contains("Er zijn geen resultaten gevonden met 'NORESULTS'").should('be.visible')
     })
 
     it('should show only datasets after filtering', () => {
       cy.server()
       cy.route(`typeahead?q=vergunningen`).as('typeaheadResults')
+      cy.route('/dcatd/datasets/*').as('getDataset')
       cy.get(SEARCH.input).trigger('focus')
       cy.get(SEARCH.input).type('Vergunningen')
       cy.wait('@typeaheadResults')
@@ -150,6 +153,7 @@ describe('datasets module', () => {
         .children('li')
         .first()
         .click()
+      cy.wait('@getDataset')
 
       // Check if dataset is shown
       cy.get(DATA_SEARCH.headerSubTitle).should('contain', 'Dataset').and('be.visible')

@@ -57,7 +57,7 @@ Cypress.Commands.add('checkMapLayer', (layerName, checkboxId, amountOfLayers) =>
     .should('be.visible')
     .siblings(MAP.mapLegendCheckbox)
     .find(checkboxId)
-    .check()
+    .check({ force: true })
     .should('be.checked')
   cy.get(MAP.imageLayer).should('exist').and('have.length', amountOfLayers)
 })

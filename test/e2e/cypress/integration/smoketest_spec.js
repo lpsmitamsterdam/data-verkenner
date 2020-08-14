@@ -86,7 +86,7 @@ describe('Smoketest', () => {
       cy.waitForGeoSearch()
       cy.wait('@getNummeraanduiding')
       cy.wait('@getMonument')
-      cy.get(MAP.mapSearchResultsPanel).should('be.visible')
+      cy.get(MAP.mapSearchResultsPanel, { timeout: 80000 }).should('be.visible')
 
       // Check data in detail panel
       cy.get(MAP.mapSearchResultsCategoryHeader).should('contain', 'Pand').and('be.visible')
@@ -118,7 +118,7 @@ describe('Smoketest', () => {
       // Enlarge detailpanel
       cy.get(MAP.buttonEnlarge).click()
       cy.waitForGeoSearch()
-      cy.get(DATA_SEARCH.searchResultsGrid).should('be.visible')
+      cy.get(DATA_SEARCH.searchResultsGrid, { timeout: 80000 }).should('be.visible')
 
       // Maximize map again
       cy.get(MAP.mapMaximize).should('be.visible').click()
