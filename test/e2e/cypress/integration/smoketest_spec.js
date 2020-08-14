@@ -23,7 +23,7 @@ describe('Smoketest', () => {
       cy.route('/typeahead?q=dam 1').as('getResults')
       cy.route('POST', '/cms_search/graphql/').as('graphql')
       cy.route('/jsonapi/node/list/*').as('jsonapi')
-      cy.route('/gebieden/buurt/?buurtcombinatie=3630012052036').as('getBuurtCombinatie')
+      cy.route('/bag/v1.1/pand/*').as('getPand')
       cy.defineGeoSearchRoutes()
       cy.defineAddressDetailRoutes()
       cy.visit('/')
@@ -84,8 +84,6 @@ describe('Smoketest', () => {
       cy.wait(700)
       cy.get(MAP.mapContainer).click(1139, 424)
       cy.waitForGeoSearch()
-      cy.wait('@getNummeraanduiding')
-      cy.wait('@getMonument')
       cy.get(MAP.mapSearchResultsPanel, { timeout: 80000 }).should('be.visible')
 
       // Check data in detail panel
@@ -118,12 +116,15 @@ describe('Smoketest', () => {
       // Enlarge detailpanel
       cy.get(MAP.buttonEnlarge).click()
       cy.waitForGeoSearch()
+      cy.wait('@getPand')
       cy.get(DATA_SEARCH.searchResultsGrid, { timeout: 80000 }).should('be.visible')
 
       // Maximize map again
       cy.get(MAP.mapMaximize).should('be.visible').click()
+      cy.wait('@getNummeraanduiding')
+      cy.wait('@getMonument')
       cy.waitForGeoSearch()
-      cy.get(MAP.mapSearchResultsPanel).should('be.visible')
+      cy.get(MAP.mapSearchResultsPanel, { timeout: 80000 }).should('be.visible')
       cy.contains('0363100012168052').should('be.visible')
 
       // Open panorama view
@@ -132,9 +133,10 @@ describe('Smoketest', () => {
       cy.waitForGeoSearch()
 
       // Open details of Burgwallen-Oude Zijde'
-      cy.contains('Burgwallen-Oude Zijde').click()
-      cy.get(ADDRESS_PAGE.linkVestigingen).contains('In tabel weergeven').click()
-      cy.wait('@getBuurtCombinatie')
+      cy.contains('Burgwallen-Oude Zijde', { timeout: 80000 }).click()
+      cy.get(ADDRESS_PAGE.linkVestigingen, { timeout: 80000 })
+        .contains('In tabel weergeven')
+        .click()
     })
     it('Should see no vestigingen or kadastrale objecten ', () => {
       // Check if vestigingen and kadstrale objecten are not visible, because user is not logged in

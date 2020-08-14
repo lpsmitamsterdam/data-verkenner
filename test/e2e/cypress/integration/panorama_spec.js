@@ -1,4 +1,12 @@
-import { ADDRESS_PAGE, DATA_SEARCH, HOMEPAGE, MAP, MAP_LAYERS, TABLES, PANORAMA } from '../support/selectors'
+import {
+  ADDRESS_PAGE,
+  DATA_SEARCH,
+  HOMEPAGE,
+  MAP,
+  MAP_LAYERS,
+  TABLES,
+  PANORAMA,
+} from '../support/selectors'
 
 describe('panorama module', () => {
   beforeEach(() => {
