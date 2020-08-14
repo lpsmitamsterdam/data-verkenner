@@ -26,7 +26,7 @@ Cypress.Commands.add('checkMenuLink', (menuSelector, menu, menuItem, link) => {
     cy.get(menuSelector).click({ force: true })
   }
   cy.get(menuSelector).contains(menu).click({ force: true })
-  cy.get(menuSelector).find(`[Title="${menuItem}"]`).click({ force: true })
+  cy.get(menuSelector).find(`[title='${menuItem}']`).click({ force: true })
   cy.url().should('include', link)
   cy.go('back')
 })

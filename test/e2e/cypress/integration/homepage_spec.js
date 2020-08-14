@@ -22,7 +22,7 @@ describe('Homepage module', () => {
       it('Should check all header information', () => {
         cy.get(HEADER.root).should('be.visible')
         cy.checkLogo(size)
-        cy.get(HEADER.logoAmsterdamTitle).should('contain', 'Gemeente Amsterdam').and('be.visible')
+        cy.get(HEADER.logoAmsterdamTitle).should('contain', 'Data en informatie').and('be.visible')
         cy.get(HEADER.headerTitle).should('contain', 'Data en informatie').and('be.visible')
         cy.get(HEADER_MENU.rootDefault).should('exist')
         cy.get(SEARCH.form).should('be.visible')
@@ -40,7 +40,14 @@ describe('Homepage module', () => {
         cy.get(menuSelector).should('contain', 'Onderdelen')
 
         cy.checkMenuLink(menuSelector, 'Onderdelen', 'Kaart', '/data/?modus=kaart&legenda=true')
-        cy.checkMenuLink(menuSelector, 'Onderdelen', 'Panoramabeelden', 'data/panorama/')
+
+        // Cannot use checkMenuLink function for Panoramanbeelden. Targeting menu-item based on title is not possibel, there is a &shy character in the selector
+        cy.get(menuSelector).click({ force: true })
+        cy.get(menuSelector).contains('Onderdelen').click({ force: true })
+        cy.get(menuSelector).find('[href*="data/panorama/"]').click({ force: true })
+        cy.url().should('include', 'data/panorama/')
+        cy.go('back')
+
         cy.visit('/')
         cy.wait('@graphql')
         cy.checkMenuLink(menuSelector, 'Onderdelen', 'Tabellen', '/artikelen/artikel/tabellen/')
@@ -56,7 +63,6 @@ describe('Homepage module', () => {
         cy.checkMenuLink(menuSelector, 'Onderdelen', 'Datasets', '/datasets/zoek/')
         cy.checkMenuLink(menuSelector, 'Onderdelen', 'Publicaties', '/publicaties/zoek/')
         cy.checkMenuLink(menuSelector, 'Onderdelen', 'Artikelen', '/artikelen/zoek/')
-
         cy.checkMenuLink(
           menuSelector,
           'Over OIS',
@@ -88,7 +94,7 @@ describe('Homepage module', () => {
       it('Should check the highlight block', () => {
         cy.get(HOMEPAGE.highlightBlock).scrollIntoView().and('be.visible')
         cy.get(HOMEPAGE.highlightCard).should('have.length', '3')
-        cy.get('[title="Bekijk overzicht"]').should('be.visible').click()
+        cy.contains('Bekijk overzicht').click()
         cy.url().should('include', '/artikelen/zoek/')
         cy.go('back')
       })
@@ -111,7 +117,7 @@ describe('Homepage module', () => {
           .eq(0)
           .find('[class*=ColumnStyle] > a')
           .should('have.length', '4')
-        cy.get('[title="Overzicht alle dossiers"]').should('be.visible').click()
+        cy.contains('Overzicht alle dossiers').should('be.visible').click()
         cy.url().should('include', '/dossiers/zoek/')
         cy.go('back')
       })
@@ -154,11 +160,11 @@ describe('Homepage module', () => {
       it('Should check organisation block', () => {
         cy.get(HOMEPAGE.organizationBlock).scrollIntoView().and('be.visible')
         cy.get(HOMEPAGE.organizationCardHeading).contains('Over OIS')
-        cy.get('[title="Lees meer"]').eq(0).click()
+        cy.get('[title="Lees meer over Over OIS"]').click()
         cy.url().should('include', '/artikelen/artikel/over-onderzoek-informatie-en-statistiek/')
         cy.go('back')
         cy.get(HOMEPAGE.organizationCardHeading).contains('Onderzoek')
-        cy.get('[title="Lees meer"]').eq(1).click()
+        cy.get('[title="Lees meer over Onderzoek"]').click()
         cy.url().should('include', '/artikelen/artikel/onderzoek-door-ois/')
         cy.go('back')
         cy.get(HOMEPAGE.organizationCardHeading).contains('Panels en enquêtes')
@@ -170,19 +176,19 @@ describe('Homepage module', () => {
         cy.get(HOMEPAGE.aboutCard).should('have.length', '4', 10000)
         cy.get(HOMEPAGE.aboutCard)
           .eq(0)
-          .find('h4')
+          .find('h3')
           .contains('Amsterdam en data')
           .click({ force: true })
         cy.url().should('include', '/artikelen/artikel/amsterdam-en-data/')
         cy.go('back')
         cy.get(HOMEPAGE.aboutCard).should('have.length', '4', 10000)
-        cy.get(HOMEPAGE.aboutCard).eq(1).find('h4').contains('Bronnen').click({ force: true })
+        cy.get(HOMEPAGE.aboutCard).eq(1).find('h3').contains('Bronnen').click({ force: true })
         cy.url().should('include', '/artikelen/artikel/bronnen/')
         cy.go('back')
         cy.get(HOMEPAGE.aboutCard).should('have.length', '4', 10000)
         cy.get(HOMEPAGE.aboutCard)
           .eq(2)
-          .find('h4')
+          .find('h3')
           .contains('Wat kun je hier?')
           .click({ force: true })
         cy.url().should('include', '/artikelen/artikel/wat-kun-je-allemaal-op-deze-site/')
@@ -190,7 +196,7 @@ describe('Homepage module', () => {
         cy.get(HOMEPAGE.aboutCard).should('have.length', '4', 10000)
         cy.get(HOMEPAGE.aboutCard)
           .eq(3)
-          .find('h4')
+          .find('h3')
           .contains('Veelgestelde vragen')
           .click({ force: true })
         cy.url().should('include', '/artikelen/artikel/veelgestelde-vragen/')

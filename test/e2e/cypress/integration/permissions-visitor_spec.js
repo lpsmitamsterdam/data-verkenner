@@ -143,7 +143,7 @@ describe('visitor permissions', () => {
     cy.get(MAP.toggleMapPanel).click()
     cy.get(MAP.mapPanel).should('have.class', 'map-panel--expanded')
 
-    cy.get(MAP.checkboxVestigingen).check()
+    cy.get(MAP.checkboxVestigingen).check({ force: true })
     cy.get(MAP.legendNotification)
       .contains(values.legendPermissionNotification)
       .should('exist')

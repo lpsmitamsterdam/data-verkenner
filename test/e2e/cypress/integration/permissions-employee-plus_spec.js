@@ -135,9 +135,9 @@ describe('employee PLUS permissions', () => {
   it('6. Should allow a plus employee to view all map layers', () => {
     cy.visit(urls.map)
     cy.get(MAP.toggleMapPanel).click()
-    cy.get(MAP.checkboxGebiedsindeling).check()
-    cy.get(MAP.checkboxHoogte).check()
-    cy.get(MAP.checkboxVestigingen).check()
+    cy.get(MAP.checkboxGebiedsindeling).check({ force: true })
+    cy.get(MAP.checkboxHoogte).check({ force: true })
+    cy.get(MAP.checkboxVestigingen).check({ force: true })
     cy.get(MAP.legendNotification).should('not.contain', values.legendPermissionNotification)
   })
 

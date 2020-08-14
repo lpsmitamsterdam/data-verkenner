@@ -29,7 +29,7 @@ describe('Check if all map layers are visible when selected', () => {
     cy.checkMapLayer('Panden ouder dan 1960', MAP_LAYERS.checkboxOZPandenOuderDan1960, 28)
     cy.checkMapLayer('Panden naar bouwjaar', MAP_LAYERS.checkboxOZPandenNaarBouwjaar, 29)
 
-    cy.get(MAP_LAYERS.checkboxOnroerendeZaken).uncheck().should('not.be.checked')
+    cy.get(MAP_LAYERS.checkboxOnroerendeZaken).uncheck({ force: true }).should('not.be.checked')
     cy.get(MAP.imageLayer).should('not.exist')
   })
   it('Should check Gebiedsindeling layers', () => {
@@ -45,7 +45,7 @@ describe('Check if all map layers are visible when selected', () => {
       MAP_LAYERS.checkboxGIGrootstedelijkeGebieden,
       8,
     )
-    cy.get(MAP_LAYERS.checkboxGebiedsindeling).uncheck().should('not.be.checked')
+    cy.get(MAP_LAYERS.checkboxGebiedsindeling).uncheck({ force: true }).should('not.be.checked')
     cy.get(MAP.imageLayer).should('not.exist')
   })
   it('Should check Hoogte layers', () => {
@@ -58,7 +58,7 @@ describe('Check if all map layers are visible when selected', () => {
     cy.checkMapLayer('Meetbouten - Zaksnelheid', MAP_LAYERS.checkboxHoogteMeetboutenZaksnelheid, 5)
     cy.checkMapLayer('Meetbouten - Referentiepunten', MAP_LAYERS.checkboxHoogteReferentiepunten, 6)
 
-    cy.get(MAP_LAYERS.checkboxHoogte).uncheck().should('not.be.checked')
+    cy.get(MAP_LAYERS.checkboxHoogte).uncheck({ force: true }).should('not.be.checked')
     cy.get(MAP.imageLayer).should('not.exist')
   })
   it('Should check Parkeren layers', () => {
@@ -93,8 +93,9 @@ describe('Check if all map layers are visible when selected', () => {
       MAP_LAYERS.checkboxParkerenParkeervergunninggebieden,
       14,
     )
+    cy.checkMapLayer('Vrachtwagens', MAP_LAYERS.checkboxParkerenVrachtwagens, 15)
 
-    cy.get(MAP_LAYERS.checkboxParkeren).uncheck().should('not.be.checked')
+    cy.get(MAP_LAYERS.checkboxParkeren).uncheck({ force: true }).should('not.be.checked')
     cy.get(MAP.imageLayer).should('not.exist')
   })
   it('Should check Energie layers', () => {
@@ -103,7 +104,7 @@ describe('Check if all map layers are visible when selected', () => {
     cy.checkMapLayer('Aardgasvrij', MAP_LAYERS.checkboxEnergieAardgasvrij, 1)
     cy.checkMapLayer('Bouwstroompunten', MAP_LAYERS.checkboxEnergieBouwstroompunten, 2)
 
-    cy.get(MAP_LAYERS.checkboxEnergie).uncheck().should('not.be.checked')
+    cy.get(MAP_LAYERS.checkboxEnergie).uncheck({ force: true }).should('not.be.checked')
     cy.get(MAP.imageLayer).should('not.exist')
   })
   it('Should check Historische kaarten layers', () => {
@@ -113,18 +114,18 @@ describe('Check if all map layers are visible when selected', () => {
     cy.contains('1943 (1:1000, Dienst der Publieke Werken)').should('be.visible')
     cy.contains('1943 (1:2500, Dienst der Publieke Werken)').should('be.visible')
     cy.contains('1985 (1:1000, Dienst der Publieke Werken)').should('be.visible')
-    cy.get(MAP_LAYERS.checkboxHK1909).check().should('be.checked')
+    cy.get(MAP_LAYERS.checkboxHK1909).check({ force: true }).should('be.checked')
     cy.url('contains', '**hist-pw1909%3A1&legenda=true')
-    cy.get(MAP_LAYERS.checkboxHK19431000).check().should('be.checked')
+    cy.get(MAP_LAYERS.checkboxHK19431000).check({ force: true }).should('be.checked')
     cy.url('contains', '**hist-pw1909%3A1%7Chist-pw1943%3A1&legenda=true')
-    cy.get(MAP_LAYERS.checkboxHK194325000).check().should('be.checked')
+    cy.get(MAP_LAYERS.checkboxHK194325000).check({ force: true }).should('be.checked')
     cy.url('contains', '**hist-pw1909%3A1%7Chist-pw1943%3A1%7Chist-pw1943-2500%3A1&legenda=true')
-    cy.get(MAP_LAYERS.checkboxHK1985).check().should('be.checked')
+    cy.get(MAP_LAYERS.checkboxHK1985).check({ force: true }).should('be.checked')
     cy.url(
       'contains',
       '**hist-pw1909%3A1%7Chist-pw1943%3A1%7Chist-pw1943-2500%3A1%7Chist-pw1985%3A1&legenda=true',
     )
-    cy.get(MAP_LAYERS.checkboxHistorischeKaarten).uncheck().should('not.be.checked')
+    cy.get(MAP_LAYERS.checkboxHistorischeKaarten).uncheck({ force: true }).should('not.be.checked')
     cy.url('contains', '/data/?modus=kaart&legenda=true')
   })
   it('Should check OV-net layers', () => {
@@ -134,7 +135,7 @@ describe('Check if all map layers are visible when selected', () => {
     cy.contains('Metrolijn').should('be.visible')
     cy.contains('Tramlijn').should('be.visible')
 
-    cy.get(MAP_LAYERS.checkboxOVNet).uncheck().should('not.be.checked')
+    cy.get(MAP_LAYERS.checkboxOVNet).uncheck({ force: true }).should('not.be.checked')
     cy.get(MAP.imageLayer).should('not.exist')
   })
   it('Should check Milieuzones verkeer layers', () => {
@@ -146,7 +147,7 @@ describe('Check if all map layers are visible when selected', () => {
     cy.checkMapLayer('Touringcar', MAP_LAYERS.checkboxMVTouringcar, 4)
     cy.checkMapLayer('Vrachtauto', MAP_LAYERS.checkboxMVVrachtauto, 5)
 
-    cy.get(MAP_LAYERS.checkboxMilieuZonesVerkeer).uncheck().should('not.be.checked')
+    cy.get(MAP_LAYERS.checkboxMilieuZonesVerkeer).uncheck({ force: true }).should('not.be.checked')
     cy.get(MAP.imageLayer).should('not.exist')
   })
   it('Should check Oplaadpunten layers', () => {
@@ -159,7 +160,7 @@ describe('Check if all map layers are visible when selected', () => {
     cy.contains('Gewoon laadpunt (beschikbaar, ±15 min. geleden)').should('be.visible')
     cy.contains('Gewoon laadpunt (niet beschikbaar, ±15 min. geleden)').should('be.visible')
 
-    cy.get(MAP_LAYERS.checkboxOplaadpunten).uncheck().should('not.be.checked')
+    cy.get(MAP_LAYERS.checkboxOplaadpunten).uncheck({ force: true }).should('not.be.checked')
     cy.get(MAP.imageLayer).should('not.exist')
   })
   it('Should check Verkeer - Routes layers', () => {
@@ -177,7 +178,7 @@ describe('Check if all map layers are visible when selected', () => {
     cy.checkMapLayer('Fietspaaltjes', MAP_LAYERS.checkboxVRFietspaaltjes, 8)
     cy.checkMapLayer('Risicozones', MAP_LAYERS.checkboxVRRisicozones, 9)
 
-    cy.get(MAP_LAYERS.checkboxVerkeerRoutes).uncheck().should('not.be.checked')
+    cy.get(MAP_LAYERS.checkboxVerkeerRoutes).uncheck({ force: true }).should('not.be.checked')
     cy.get(MAP.imageLayer).should('not.exist')
   })
   it('Should check Gemeentelijke bekendmakingen layers', () => {
@@ -207,7 +208,9 @@ describe('Check if all map layers are visible when selected', () => {
     )
     cy.checkMapLayer('Overig', MAP_LAYERS.checkboxGBOverig, 19)
 
-    cy.get(MAP_LAYERS.checkboxGemeentelijkeBekendmakingen).uncheck().should('not.be.checked')
+    cy.get(MAP_LAYERS.checkboxGemeentelijkeBekendmakingen)
+      .uncheck({ force: true })
+      .should('not.be.checked')
     cy.get(MAP.imageLayer).should('not.exist')
   })
   it('Should check Afvalcontainers layers', () => {
@@ -220,11 +223,11 @@ describe('Check if all map layers are visible when selected', () => {
     cy.checkMapLayer('Textiel', MAP_LAYERS.checkboxAfvalTextiel, 5)
     cy.checkMapLayer('GFE', MAP_LAYERS.checkboxAfvalGFE, 6)
 
-    cy.get(MAP_LAYERS.checkboxAfvalcontainers).uncheck().should('not.be.checked')
+    cy.get(MAP_LAYERS.checkboxAfvalcontainers).uncheck({ force: true }).should('not.be.checked')
     cy.get(MAP.imageLayer).should('not.exist')
   })
   it('Should check Veiligheid en overlast layers', () => {
-    cy.checkMapLayerCategory('Veiligheid- en overlast')
+    cy.checkMapLayerCategory('Veiligheid en overlast')
 
     cy.checkMapLayer('Algemene overlastgebieden', MAP_LAYERS.checkboxVenOAlgemeen, 1)
     cy.checkMapLayer('Dealeroverlastgebieden', MAP_LAYERS.checkboxVenODealer, 2)
@@ -234,7 +237,9 @@ describe('Check if all map layers are visible when selected', () => {
     cy.checkMapLayer('Omgeving taxistandplaatsen', MAP_LAYERS.checkboxVenOTaxiStandplaats, 6)
     cy.checkMapLayer('Vuurwerkvrije zones', MAP_LAYERS.checkboxVenOVuurwerkvrij, 7)
 
-    cy.get(MAP_LAYERS.checkboxVeiligheidEnOverlast).uncheck().should('not.be.checked')
+    cy.get(MAP_LAYERS.checkboxVeiligheidEnOverlast)
+      .uncheck({ force: true })
+      .should('not.be.checked')
     cy.get(MAP.imageLayer).should('not.exist')
   })
   it('Should check Cultureel erfgoed layers', () => {
@@ -243,14 +248,14 @@ describe('Check if all map layers are visible when selected', () => {
     cy.checkMapLayer('Monumenten', MAP_LAYERS.checkboxCEMonumenten, 1)
     cy.checkMapLayer('Unesco werelderfgoedzones', MAP_LAYERS.checkboxCEUnesco, 2)
 
-    cy.get(MAP_LAYERS.checkboxCultureelErfgoed).uncheck().should('not.be.checked')
+    cy.get(MAP_LAYERS.checkboxCultureelErfgoed).uncheck({ force: true }).should('not.be.checked')
     cy.get(MAP.imageLayer).should('not.exist')
   })
   it('Should check Evenementen layers', () => {
     cy.checkMapLayerCategory('Evenementen')
 
     cy.checkMapLayer('Evenementen', MAP_LAYERS.checkboxEvenementenEvenementen, 1)
-    cy.get(MAP_LAYERS.checkboxEvenementen).uncheck().should('not.be.checked')
+    cy.get(MAP_LAYERS.checkboxEvenementen).uncheck({ force: true }).should('not.be.checked')
 
     cy.get(MAP.imageLayer).should('not.exist')
   })
@@ -258,11 +263,11 @@ describe('Check if all map layers are visible when selected', () => {
     cy.checkMapLayerCategory('Winkelgebieden')
 
     cy.checkMapLayer('Reclamebelastingtarieven', MAP_LAYERS.checkboxWGReclamebelastingtarieven, 3)
-    cy.get(MAP_LAYERS.checkboxWGWinkelgebieden).check().should('be.checked')
+    cy.get(MAP_LAYERS.checkboxWGWinkelgebieden).check({ force: true }).should('be.checked')
     cy.get(MAP.imageLayer).should('exist').and('have.length', 4)
     cy.checkMapLayer('Bedrijfsinvesteringszones', MAP_LAYERS.checkboxWGBedrijfsinvesteringszones, 5)
 
-    cy.get(MAP_LAYERS.checkboxWinkelgebieden).uncheck().should('not.be.checked')
+    cy.get(MAP_LAYERS.checkboxWinkelgebieden).uncheck({ force: true }).should('not.be.checked')
     cy.get(MAP.imageLayer).should('not.exist')
   })
   it('Should check Taxi layers', () => {
@@ -277,7 +282,7 @@ describe('Check if all map layers are visible when selected', () => {
     cy.checkMapLayer('Oplaadpunten - Snel laden', MAP_LAYERS.checkboxTaxiSnelLaden, 8)
     cy.checkMapLayer('Oplaadpunten - Gewoon laden', MAP_LAYERS.checkboxTaxiGewoonLaden, 10)
 
-    cy.get(MAP_LAYERS.checkboxTaxi).uncheck().should('not.be.checked')
+    cy.get(MAP_LAYERS.checkboxTaxi).uncheck({ force: true }).should('not.be.checked')
     cy.get(MAP.imageLayer).should('not.exist')
   })
   it('Should check Logistiek layers', () => {
@@ -288,8 +293,9 @@ describe('Check if all map layers are visible when selected', () => {
     cy.checkMapLayer('Milieuzones - Bestelauto', MAP_LAYERS.checkboxLMilieuzonesBestelauto, 6)
     cy.checkMapLayer('Wegen - Risicozones', MAP_LAYERS.checkboxLWegenRisicozones, 7)
     cy.checkMapLayer('Milieuzones - Vrachtauto', MAP_LAYERS.checkboxLMilieuzonesVrachtauto, 8)
+    cy.checkMapLayer('Parkeervakken vrachtwagens', MAP_LAYERS.checkboxLParkeervakkenVrachtwagens, 9)
 
-    cy.get(MAP_LAYERS.checkboxLogistiek).uncheck().should('not.be.checked')
+    cy.get(MAP_LAYERS.checkboxLogistiek).uncheck({ force: true }).should('not.be.checked')
     cy.get(MAP.imageLayer).should('not.exist')
   })
   it('Should check Ondergrond layers', () => {
@@ -326,7 +332,7 @@ describe('Check if all map layers are visible when selected', () => {
     )
     cy.checkMapLayer('Verzinkbare palen', MAP_LAYERS.checkboxOVerzinkbarePalen, 29)
 
-    cy.get(MAP_LAYERS.checkboxOndergrond).uncheck().should('not.be.checked')
+    cy.get(MAP_LAYERS.checkboxOndergrond).uncheck({ force: true }).should('not.be.checked')
     cy.get(MAP.imageLayer).should('not.exist')
   })
   it('Should check Bodemkwaliteit layers', () => {
@@ -341,7 +347,7 @@ describe('Check if all map layers are visible when selected', () => {
       4,
     )
 
-    cy.get(MAP_LAYERS.checkboxBodemkwaliteit).uncheck().should('not.be.checked')
+    cy.get(MAP_LAYERS.checkboxBodemkwaliteit).uncheck({ force: true }).should('not.be.checked')
     cy.get(MAP.imageLayer).should('not.exist')
   })
   it('Should check Explosieven layers', () => {
@@ -352,7 +358,7 @@ describe('Check if all map layers are visible when selected', () => {
     cy.checkMapLayer('Gevrijwaarde gebieden', MAP_LAYERS.checkboxEGevrijwaardeGeb, 3)
     cy.checkMapLayer('Uitgevoerde CE-onderzoeken', MAP_LAYERS.checkboxECEOnderzoeken, 4)
 
-    cy.get(MAP_LAYERS.checkboxExplosieven).uncheck().should('not.be.checked')
+    cy.get(MAP_LAYERS.checkboxExplosieven).uncheck({ force: true }).should('not.be.checked')
     cy.get(MAP.imageLayer).should('not.exist')
   })
   it('Should check Geluidszones layers', () => {
@@ -363,7 +369,7 @@ describe('Check if all map layers are visible when selected', () => {
     cy.checkMapLayer('Metro', MAP_LAYERS.checkBoxGZMetro, 3)
     cy.checkMapLayer('Schiphol - Ruimtelijke beperkingen', MAP_LAYERS.checkBoxGZSchiphol, 4)
 
-    cy.get(MAP_LAYERS.checkboxGeluidszones).uncheck().should('not.be.checked')
+    cy.get(MAP_LAYERS.checkboxGeluidszones).uncheck({ force: true }).should('not.be.checked')
     cy.get(MAP.imageLayer).should('not.exist')
   })
   it('Should check Schiphol layers', () => {
@@ -374,7 +380,7 @@ describe('Check if all map layers are visible when selected', () => {
     cy.checkMapLayer('Toetshoogte i.v.m. radar', MAP_LAYERS.checkboxSchipholTR, 3)
     cy.checkMapLayer('Vogelvrijwaringsgebied', MAP_LAYERS.checkboxSchipholVG, 4)
 
-    cy.get(MAP_LAYERS.checkboxSchiphol).uncheck().should('not.be.checked')
+    cy.get(MAP_LAYERS.checkboxSchiphol).uncheck({ force: true }).should('not.be.checked')
     cy.get(MAP.imageLayer).should('not.exist')
   })
   it('Should check Risicozones layers', () => {
@@ -404,7 +410,10 @@ describe('Check if all map layers are visible when selected', () => {
     cy.checkMapLayer('Tunnels gevaarlijke stoffen', MAP_LAYERS.checkboxRZTunnelsGS, 22)
     cy.checkMapLayer('U-routes', MAP_LAYERS.checkboxRZURoutes, 23)
 
-    cy.get(MAP_LAYERS.checkboxRisicoZones).scrollIntoView().uncheck().should('not.be.checked')
+    cy.get(MAP_LAYERS.checkboxRisicoZones)
+      .scrollIntoView()
+      .uncheck({ force: true })
+      .should('not.be.checked')
     cy.get(MAP.imageLayer).should('not.exist')
   })
   it('Should check Panoramabeelden layers', () => {
@@ -413,7 +422,7 @@ describe('Check if all map layers are visible when selected', () => {
     cy.checkMapLayer('Panoramabeelden', MAP_LAYERS.checkBoxPanoramabeeldenBeeldenPano, 5)
     cy.checkMapLayer('Panoramabeelden - WOZ', MAP_LAYERS.checkBoxPanoramabeeldenBeeldenWOZ, 9)
 
-    cy.get(MAP_LAYERS.checkBoxPanoramabeelden).uncheck().should('not.be.checked')
+    cy.get(MAP_LAYERS.checkBoxPanoramabeelden).uncheck({ force: true }).should('not.be.checked')
     cy.get(MAP.imageLayer).should('not.exist')
   })
   it('Should check Grondexploitaties layers', () => {
@@ -421,7 +430,7 @@ describe('Check if all map layers are visible when selected', () => {
 
     cy.checkMapLayer('Projecten', MAP_LAYERS.checkboxGrondEProjecten, 1)
 
-    cy.get(MAP_LAYERS.checkboxGrondexploitaties).uncheck().should('not.be.checked')
+    cy.get(MAP_LAYERS.checkboxGrondexploitaties).uncheck({ force: true }).should('not.be.checked')
     cy.get(MAP.imageLayer).should('not.exist')
   })
   it('Should check Vergunningen layers', () => {
@@ -430,7 +439,7 @@ describe('Check if all map layers are visible when selected', () => {
     cy.checkMapLayer('Vergunningen kamerverhuur', MAP_LAYERS.checkboxVergunningenKamerverhuur, 1)
     cy.checkMapLayer('Vergunningen Bed & Breakfast', MAP_LAYERS.checkboxVergunningenBedBreakfast, 2)
 
-    cy.get(MAP_LAYERS.checkboxVergunningen).uncheck().should('not.be.checked')
+    cy.get(MAP_LAYERS.checkboxVergunningen).uncheck({ force: true }).should('not.be.checked')
     cy.get(MAP.imageLayer).should('not.exist')
   })
   it('Should check Belastingen layers', () => {
@@ -454,7 +463,7 @@ describe('Check if all map layers are visible when selected', () => {
       11,
     )
 
-    cy.get(MAP_LAYERS.checkboxBelastingen).uncheck().should('not.be.checked')
+    cy.get(MAP_LAYERS.checkboxBelastingen).uncheck({ force: true }).should('not.be.checked')
     cy.get(MAP.imageLayer).should('not.exist')
   })
 })

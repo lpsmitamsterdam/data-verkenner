@@ -68,9 +68,7 @@ describe('trade-register (vestigingen) module', () => {
       it('should open the correct detail view', () => {
         cy.server()
         cy.route('/handelsregister/vestiging/*').as('getVestiging')
-
-        cy.get(TABLES.vestigingLink).first().click({ force: true })
-
+        cy.get('tr').eq(1).click()
         cy.wait('@getVestiging')
         cy.get(TABLES.detailPane).should('exist').and('be.visible')
       })
