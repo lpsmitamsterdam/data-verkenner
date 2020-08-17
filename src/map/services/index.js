@@ -23,14 +23,87 @@ export function getMapBaseLayers() {
 }
 
 export async function getMapLayers() {
-  const query = `{ mapLayerSearch(input: { limit: 9999 }) { results { id title url params layers external detailUrl detailParams { item, datasets } detailIsShape noDetail authScope type } } }`
+  const query = `{
+    mapLayerSearch(input: { limit: 9999 }) {
+      results {
+        id
+        title
+        legendItems {
+          ... on MapLayer {
+            id
+          }
+        }
+        url
+        params
+        layers
+        external
+        detailUrl
+        detailParams {
+          item
+          datasets
+        }
+        detailIsShape
+        noDetail
+        authScope
+        type
+      }
+    }
+  }`
+
   const { results: mapLayerResults } = await fetchMap('mapLayerSearch', query)
 
   return mapLayerResults
 }
 
 export async function getPanelLayers() {
-  const query = `{ mapCollectionSearch(input: { limit: 9999 }) { results { id title mapLayers { id title legendItems { ... on MapLayer { id title url params layers iconUrl imageRule notSelectable noDetail } ... on LegendItem { title iconUrl imageRule notSelectable } } authScope imageRule iconUrl url params layers detailUrl detailParams { item, datasets } detailIsShape type noDetail minZoom maxZoom } } } }`
+  const query = `{
+    mapCollectionSearch(input: { limit: 9999 }) {
+      results {
+        id
+        title
+        mapLayers {
+          id
+          title
+          legendItems {
+            ... on MapLayer {
+              id
+              title
+              url
+              params
+              layers
+              iconUrl
+              imageRule
+              notSelectable
+              noDetail
+            }
+            ... on LegendItem {
+              title
+              iconUrl
+              imageRule
+              notSelectable
+            }
+          }
+          authScope
+          imageRule
+          iconUrl
+          url
+          params
+          layers
+          detailUrl
+          detailParams {
+            item
+            datasets
+          }
+          detailIsShape
+          type
+          noDetail
+          minZoom
+          maxZoom
+        }
+      }
+    }
+  }`
+
   const { results: mapPanelLayerResults } = await fetchMap('mapCollectionSearch', query)
 
   return mapPanelLayerResults
