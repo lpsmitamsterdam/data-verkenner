@@ -38,7 +38,8 @@ const helpLinks: FooterLink[] = [
 
 const Footer: React.FC = () => (
   <CompactThemeProvider>
-    <FooterComponent id={IDS.footer}>
+    {/* Tabindex is IE11 fix for skipnavigation focus */}
+    <FooterComponent id={IDS.footer} tabIndex={-1}>
       <FooterTop>
         <Row>
           <Column wrap span={{ small: 1, medium: 2, big: 2, large: 4, xLarge: 4 }}>

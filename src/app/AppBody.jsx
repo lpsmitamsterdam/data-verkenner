@@ -57,7 +57,8 @@ const SearchPage = React.lazy(() =>
 )
 
 // The Container from @datapunt/asc-ui isnt used here as the margins added do not match the ones in the design
-const AppContainer = styled.main`
+// Tabindex is IE11 fix for skipnavigation focus
+const AppContainer = styled.main.attrs({ tabIndex: -1 })`
   flex-grow: 1;
   min-height: 50vh; // IE11: Makes sure the loading indicator is displayed in the Container
 `
