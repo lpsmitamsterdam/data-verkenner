@@ -34,6 +34,7 @@ export const endpointTypes = {
   bekendmakingen: 'vsd/bekendmakingen/',
   bouwstroompunten: 'bouwstroompunten/bouwstroompunten',
   constructionFiles: 'iiif-metadata/bouwdossier/',
+  covid_19: 'v1/covid_19',
   evenementen: 'vsd/evenementen/',
   explosievenGevrijwaardGebied: 'milieuthemas/explosieven/gevrijwaardgebied/',
   explosievenInslag: 'milieuthemas/explosieven/inslagen/',
@@ -457,6 +458,39 @@ const servicesByEndpointType: { [type: string]: ServiceDefinition } = {
       subTitle: result._display,
       items: [],
     }),
+  },
+  [endpointTypes.covid_19]: {
+    type: 'covid_19',
+    mapDetail: (result) => {
+      return {
+        title: 'COVID-19 Maatregelen',
+        subTitle: result.naam,
+        items: [
+          {
+            type: DetailResultItemType.DefinitionList,
+            entries: [
+              {
+                term: 'Soort maatregel',
+                description: result.type,
+              },
+              {
+                term: 'Tijd',
+                description: result.tijd,
+              },
+              {
+                term: 'Geldigheid',
+                description: result.geldigheid,
+              },
+              {
+                term: 'Besluit',
+                description: result.url,
+                link: result.url,
+              },
+            ].filter(hasDescription),
+          },
+        ],
+      }
+    },
   },
   [endpointTypes.explosievenGevrijwaardGebied]: {
     type: 'explosieven/gevrijwaardgebied',

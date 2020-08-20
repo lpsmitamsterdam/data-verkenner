@@ -24,6 +24,11 @@ export const pageEndpointTypeMapping = {
   'precariobelasting/passagiersvaartuigen/': 'v1/precariobelasting/passagiersvaartuigen/',
   'precariobelasting/terrassen/': 'v1/precariobelasting/terrassen/',
   'hoofdroutes/tunnels_gevaarlijke_stoffen/': 'v1/hoofdroutes/tunnels_gevaarlijke_stoffen/',
+  'covid_19/aanlegverbod/': 'v1/covid_19/aanlegverbod/',
+  'covid_19/straatartiestverbod/': 'v1/covid_19/straatartiestverbod/',
+  'covid_19/alcoholverkoopverbod/': 'v1/covid_19/alcoholverkoopverbod/',
+  'covid_19/mondmaskerverplichting/': 'v1/covid_19/mondmaskerverplichting/',
+  'covid_19/verbodparken/': 'v1/covid_19/verbodparken/',
 }
 
 export const pageTypeToEndpoint = (type, subtype, id) => {
