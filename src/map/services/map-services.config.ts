@@ -460,6 +460,7 @@ const servicesByEndpointType: { [type: string]: ServiceDefinition } = {
     }),
   },
   [endpointTypes.covid_19]: {
+    type: 'covid_19',
     mapDetail: (result) => {
       return {
         title: 'COVID-19 Maatregelen',
