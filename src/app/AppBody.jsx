@@ -88,77 +88,87 @@ const AppBody = ({
   const { enableLinkTracking } = useMatomo()
   enableLinkTracking()
 
-  return hasGrid ? (
+  return (
     <>
-      <AppContainer id={IDS.main} className="main-container">
-        <NotificationAlert />
-        {isIE && (
-          <StyledAlert level="attention">
-            <Paragraph>
-              <strong>Let op: </strong>Let op: deze website ondersteunt Internet Explorer niet
-              langer. We raden je aan een andere browser te gebruiken.
-            </Paragraph>{' '}
-            <Link
-              as={RouterLink}
-              to={toArticleDetail(
-                '11206c96-91d6-4f6a-9666-68e577797865',
-                'internet-explorer-binnenkort-niet-meer-ondersteund',
-              )}
-              inList
-              darkBackground
-            >
-              Klik voor meer uitleg.
-            </Link>
-          </StyledAlert>
-        )}
-        <Suspense fallback={<StyledLoadingSpinner />}>
-          {homePage && <HomePage />}
-          {currentPage === PAGES.ARTICLE_DETAIL && <ArticleDetailPage />}
-          {currentPage === PAGES.SPECIAL_DETAIL && <SpecialDetailPage />}
-          {currentPage === PAGES.PUBLICATION_DETAIL && <PublicationDetailPage />}
-          {currentPage === PAGES.COLLECTION_DETAIL && <CollectionDetailPage />}
-          {currentPage === PAGES.ACTUALITY && <ActualityContainer />}
-          {currentPage === PAGES.NOT_FOUND && <NotFoundPage />}
+      <Helmet>
+        {/* In case html lang is set (for example EditorialPage),
+        it will remove the lang-attribute when that component is unmounted,
+        so we need to set the default language on a higher level */}
+        <html lang="nl" />
+      </Helmet>
+      {hasGrid ? (
+        <>
+          <AppContainer id={IDS.main} className="main-container">
+            <NotificationAlert />
+            {isIE && (
+              <StyledAlert level="attention">
+                <Paragraph>
+                  <strong>Let op: </strong>Let op: deze website ondersteunt Internet Explorer niet
+                  langer. We raden je aan een andere browser te gebruiken.
+                </Paragraph>{' '}
+                <Link
+                  as={RouterLink}
+                  to={toArticleDetail(
+                    '11206c96-91d6-4f6a-9666-68e577797865',
+                    'internet-explorer-binnenkort-niet-meer-ondersteund',
+                  )}
+                  inList
+                  darkBackground
+                >
+                  Klik voor meer uitleg.
+                </Link>
+              </StyledAlert>
+            )}
+            <Suspense fallback={<StyledLoadingSpinner />}>
+              {homePage && <HomePage />}
+              {currentPage === PAGES.ARTICLE_DETAIL && <ArticleDetailPage />}
+              {currentPage === PAGES.SPECIAL_DETAIL && <SpecialDetailPage />}
+              {currentPage === PAGES.PUBLICATION_DETAIL && <PublicationDetailPage />}
+              {currentPage === PAGES.COLLECTION_DETAIL && <CollectionDetailPage />}
+              {currentPage === PAGES.ACTUALITY && <ActualityContainer />}
+              {currentPage === PAGES.NOT_FOUND && <NotFoundPage />}
 
-          {isSearchPage(currentPage) && <SearchPage currentPage={currentPage} query={query} />}
-        </Suspense>
-      </AppContainer>
-      <FeedbackModal id="feedbackModal" />
-    </>
-  ) : (
-    <>
-      <Suspense fallback={<StyledLoadingSpinner />}>
-        {currentPage === PAGES.MAP ? (
-          <MapContainer />
-        ) : (
-          <>
-            <Helmet>
-              {/* The viewport must be reset for "old" pages that don't incorporate the grid.
+              {isSearchPage(currentPage) && <SearchPage currentPage={currentPage} query={query} />}
+            </Suspense>
+          </AppContainer>
+          <FeedbackModal id="feedbackModal" />
+        </>
+      ) : (
+        <>
+          <Suspense fallback={<StyledLoadingSpinner />}>
+            {currentPage === PAGES.MAP ? (
+              <MapContainer />
+            ) : (
+              <>
+                <Helmet>
+                  {/* The viewport must be reset for "old" pages that don't incorporate the grid.
         1024 is an arbirtrary number as the browser doesn't actually care about the exact number,
         but only needs to know it's significantly bigger than the actual viewport */}
-              <meta name="viewport" content="width=1024, user-scalable=yes" />
-            </Helmet>
-            <div className={`c-dashboard__body ${bodyClasses}`}>
-              <NotificationAlert />
-              {visibilityError && <ErrorAlert />}
-              {embedPreviewMode ? (
-                <EmbedIframeComponent />
-              ) : (
-                <div className="u-grid u-full-height u-overflow--y-auto">
-                  <div className="u-row u-full-height">
-                    {isMapSplitPage(currentPage) && <MapSplitPage />}
+                  <meta name="viewport" content="width=1024, user-scalable=yes" />
+                </Helmet>
+                <div className={`c-dashboard__body ${bodyClasses}`}>
+                  <NotificationAlert />
+                  {visibilityError && <ErrorAlert />}
+                  {embedPreviewMode ? (
+                    <EmbedIframeComponent />
+                  ) : (
+                    <div className="u-grid u-full-height u-overflow--y-auto">
+                      <div className="u-row u-full-height">
+                        {isMapSplitPage(currentPage) && <MapSplitPage />}
 
-                    {currentPage === PAGES.CONSTRUCTION_FILE && <ConstructionFilesContainer />}
+                        {currentPage === PAGES.CONSTRUCTION_FILE && <ConstructionFilesContainer />}
 
-                    {currentPage === PAGES.DATASET_DETAIL && <DatasetDetailContainer />}
-                  </div>
+                        {currentPage === PAGES.DATASET_DETAIL && <DatasetDetailContainer />}
+                      </div>
+                    </div>
+                  )}
                 </div>
-              )}
-            </div>
-          </>
-        )}
-        <FeedbackModal id="feedbackModal" />
-      </Suspense>
+              </>
+            )}
+            <FeedbackModal id="feedbackModal" />
+          </Suspense>
+        </>
+      )}
     </>
   )
 }

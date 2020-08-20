@@ -25,13 +25,14 @@ const SpecialDetailPage = ({ id }) => {
     }
   }, [error])
 
-  const { field_content_link: contentLink, slug, specialType, title } = results || {}
+  const { field_content_link: contentLink, slug, specialType, title, field_language: lang } =
+    results || {}
   const documentTitle = title && `Special: ${title}`
 
   const linkAction = toSpecialDetail(id, specialType, slug)
 
   return (
-    <EditorialPage {...{ documentTitle, linkAction }} loading={loading}>
+    <EditorialPage {...{ documentTitle, linkAction, lang }} loading={loading}>
       <Row>
         <ContentContainer>
           {specialType === SpecialType.Animation && (

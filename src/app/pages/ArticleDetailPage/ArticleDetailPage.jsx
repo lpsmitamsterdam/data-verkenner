@@ -141,6 +141,7 @@ const ArticleDetailPage = ({ id }) => {
     slug,
     intro,
     field_type: articleType,
+    field_language: lang,
     related,
   } = results || {}
 
@@ -163,7 +164,7 @@ const ArticleDetailPage = ({ id }) => {
 
   return (
     <EditorialPage
-      {...{ documentTitle, loading, linkAction, title }}
+      {...{ documentTitle, loading, linkAction, title, lang }}
       image={coverImage}
       description={intro}
     >
