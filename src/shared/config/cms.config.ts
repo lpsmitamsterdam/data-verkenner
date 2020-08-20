@@ -3,7 +3,7 @@ import environment from '../../environment'
 
 const { HOMEPAGE: HOMEPAGE_LINKS } = require('./content-links.json')
 
-const SHARED_FIELDS = ['field_intro', 'field_cover_image.field_media_image.uri']
+const SHARED_FIELDS = ['field_intro', 'field_cover_image.field_media_image.uri', 'field_language']
 
 export enum CmsType {
   Article = 'article',

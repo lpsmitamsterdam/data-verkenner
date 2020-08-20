@@ -48,6 +48,7 @@ const PublicationDetailPage = ({ id }) => {
     field_file_type: fileType,
     field_publication_source: source,
     field_intro: intro,
+    field_language: lang,
     slug,
   } = results || {}
 
@@ -55,7 +56,7 @@ const PublicationDetailPage = ({ id }) => {
   const linkAction = toPublicationDetail(id, slug)
 
   return (
-    <EditorialPage {...{ documentTitle, loading, linkAction }} description={intro}>
+    <EditorialPage {...{ documentTitle, loading, linkAction, lang }} description={intro}>
       {!loading && (
         <Column wrap="true" span={{ small: 1, medium: 4, big: 6, large: 12, xLarge: 12 }}>
           <ContentContainer>
