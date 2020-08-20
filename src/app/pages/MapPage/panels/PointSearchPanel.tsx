@@ -153,7 +153,7 @@ function renderResultItems(results: MapSearchResult[]) {
     <ShowMore limit={RESULT_LIMIT}>
       {results.map((result) => (
         // TODO: Actually link to the details page for the result.
-        <ResultLink key={result.type + result.label} href="/" variant="with-chevron">
+        <ResultLink key={result.type + result.label} href="/" inList>
           {result.label}
           {result.statusLabel && (
             <>

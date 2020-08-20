@@ -24,6 +24,7 @@ const EditorialPage = ({
   description,
   image,
   title,
+  lang,
 }) => {
   const { setDocumentTitle } = useDocumentTitle()
   const { trackPageView } = useMatomo()
@@ -44,6 +45,7 @@ const EditorialPage = ({
   return (
     <Container>
       <Helmet>
+        <html lang={lang || 'nl'} />
         {canonical && <link rel="canonical" href={canonical} />}
         {description && <meta name="description" content={description} />}
 

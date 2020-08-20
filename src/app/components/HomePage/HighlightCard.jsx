@@ -10,7 +10,6 @@ import {
 import PropTypes from 'prop-types'
 import React from 'react'
 import styled from 'styled-components'
-import focusOutline from '../shared/focusOutline'
 
 const HighlightCardHeadingStyle = styled(Typography)`
   margin: 0;
@@ -38,8 +37,6 @@ const StyledLink = styled(Link)`
 
     ${styles.ImageCardStyle} {
       position: relative;
-
-      ${focusOutline()}
     }
   }
 `
@@ -57,7 +54,7 @@ const HighlightCard = ({
   teaserImage,
   styleAs,
 }) => (
-  <StyledLink {...linkProps} linkType="blank">
+  <StyledLink {...linkProps} variant="blank">
     <StyledImageCard
       backgroundImage={teaserImage}
       isLoading={loading || showError}

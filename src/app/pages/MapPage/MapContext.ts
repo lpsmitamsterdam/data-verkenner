@@ -1,6 +1,5 @@
-import { MapLayer as MapLayerProps } from '@datapunt/arm-core/es/constants'
 import { Geometry } from 'geojson'
-import { LatLngLiteral } from 'leaflet'
+import { LatLngLiteral, TileLayerOptions, WMSOptions } from 'leaflet'
 import { createContext } from 'react'
 
 export type ActiveMapLayer = {
@@ -8,20 +7,86 @@ export type ActiveMapLayer = {
   isVisible: boolean
 }
 
-export type MapLayer = {
+// TODO: Generate these types from the GraphQL schema.
+export interface MapLayer {
+  __typename: 'MapLayer'
   id: string
-  external?: string
-  url: string
+  title: string
+  type: MapLayerType
+  noDetail: boolean
+  minZoom: number
+  maxZoom: number
+  layers?: string[]
+  url?: string
+  params?: string
+  detailUrl: string
+  detailParams?: DetailParams
+  detailIsShape?: boolean
+  iconUrl?: string
+  imageRule?: string
+  notSelectable: boolean
+  external?: boolean
+  bounds: [number[]]
   authScope?: string
-  layers: Array<string>
-} & MapLayerProps
-
-export type Overlay = {
-  type: string
-  url: string
-  overlayOptions: Object
-  id: string
+  category?: string
+  legendItems?: MapLayerLegendItem[]
+  meta: Meta
+  href: string
 }
+
+type MapLayerLegendItem = MapLayer | LegendItem
+
+interface Meta {
+  description?: string
+  themes: Theme[]
+  datasetIds?: number[]
+  thumbnail?: string
+  date?: string
+}
+
+interface Theme {
+  id: string
+  title: string
+}
+
+interface LegendItem {
+  __typename: 'LegendItem'
+  title: string
+  iconUrl?: string
+  imageRule?: string
+  notSelectable: boolean
+}
+
+export interface DetailParams {
+  item: string
+  datasets: string
+}
+
+export type MapLayerType = 'wms' | 'tms'
+
+export interface WmsOverlay {
+  type: 'wms'
+  id: string
+  url: string
+  options: WMSOptions
+  layer: MapLayer
+  params?: {
+    [key: string]: string
+  }
+}
+
+export interface TmsOverlay {
+  type: 'tms'
+  id: string
+  url: string
+  options: TileLayerOptions
+  layer: MapLayer
+  params?: {
+    [key: string]: string
+  }
+}
+
+export type Overlay = WmsOverlay | TmsOverlay
 
 export type MapState = {
   baseLayers: Array<Object> // TODO: Add auto typegeneration

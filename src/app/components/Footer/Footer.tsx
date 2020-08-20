@@ -14,7 +14,7 @@ import {
 } from '@datapunt/asc-ui'
 import React from 'react'
 import styled from 'styled-components'
-import { FOOTER_LINKS } from '../../../shared/config/config'
+import { FOOTER_LINKS, IDS } from '../../../shared/config/config'
 import { openFeedbackForm } from '../Modal/FeedbackModal'
 import FooterLinks, { FooterLink } from './FooterLinks'
 
@@ -38,7 +38,8 @@ const helpLinks: FooterLink[] = [
 
 const Footer: React.FC = () => (
   <CompactThemeProvider>
-    <FooterComponent>
+    {/* Tabindex is IE11 fix for skipnavigation focus */}
+    <FooterComponent id={IDS.footer} tabIndex={-1}>
       <FooterTop>
         <Row>
           <Column wrap span={{ small: 1, medium: 2, big: 2, large: 4, xLarge: 4 }}>
@@ -65,7 +66,7 @@ const Footer: React.FC = () => (
       <FooterBottom>
         <List>
           <ListItem>
-            <StyledLink variant="with-chevron" {...FOOTER_LINKS.PRIVACY}>
+            <StyledLink inList {...FOOTER_LINKS.PRIVACY}>
               {FOOTER_LINKS.PRIVACY.title}
             </StyledLink>
           </ListItem>

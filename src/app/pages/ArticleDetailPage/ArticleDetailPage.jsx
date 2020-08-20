@@ -141,6 +141,7 @@ const ArticleDetailPage = ({ id }) => {
     slug,
     intro,
     field_type: articleType,
+    field_language: lang,
     related,
   } = results || {}
 
@@ -163,7 +164,7 @@ const ArticleDetailPage = ({ id }) => {
 
   return (
     <EditorialPage
-      {...{ documentTitle, loading, linkAction, title }}
+      {...{ documentTitle, loading, linkAction, title, lang }}
       image={coverImage}
       description={intro}
     >
@@ -256,7 +257,7 @@ const ArticleDetailPage = ({ id }) => {
                                       })
                                       downloadFile(`${environment.CMS_ROOT}${url}`)
                                     }}
-                                    variant="with-chevron"
+                                    inList
                                   >
                                     <ListItemContent>
                                       <span>{fileName}</span>
@@ -274,7 +275,7 @@ const ArticleDetailPage = ({ id }) => {
                             <List>
                               {links.map(({ uri, title: linkTitle }) => (
                                 <ListItem key={uri}>
-                                  <StyledLink variant="with-chevron" href={`${uri}`}>
+                                  <StyledLink inList href={`${uri}`}>
                                     <span>{linkTitle}</span>
                                   </StyledLink>
                                 </ListItem>

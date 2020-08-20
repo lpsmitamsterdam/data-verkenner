@@ -1,4 +1,12 @@
-import { ADDRESS_PAGE, DATA_SEARCH, HOMEPAGE, MAP, TABLES, PANORAMA } from '../support/selectors'
+import {
+  ADDRESS_PAGE,
+  DATA_SEARCH,
+  HOMEPAGE,
+  MAP,
+  MAP_LAYERS,
+  TABLES,
+  PANORAMA,
+} from '../support/selectors'
 
 describe('panorama module', () => {
   beforeEach(() => {
@@ -59,7 +67,7 @@ describe('panorama module', () => {
     it('should set the panoramabeelden as active layers in the map-panel legenda', () => {
       // open the the map panel (closed initially)
       cy.get(MAP.toggleMapPanel).click()
-      cy.get(MAP.checkboxPanoramabeelden).should('have.attr', 'checked')
+      cy.get(MAP_LAYERS.checkBoxPanoramabeeldenBeeldenPano).should('be.checked')
     })
 
     it('should set the layers in the leaflet map', () => {

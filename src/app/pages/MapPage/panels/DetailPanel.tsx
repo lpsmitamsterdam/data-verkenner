@@ -125,7 +125,7 @@ function renderDefinitionListItem(item: DetailResultItemDefinitionList) {
       {item.entries.map(({ term, description, link }) => (
         <DefinitionListItem term={term}>
           {link ? (
-            <Link href={link} variant="with-chevron" target="_blank">
+            <Link href={link} inList target="_blank">
               {description}
             </Link>
           ) : (

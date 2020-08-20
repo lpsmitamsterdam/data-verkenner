@@ -74,11 +74,7 @@ const CollectionDetailPage: React.FC = () => {
           />
           <StyledCardListBlock {...{ results: listResults, loading }} />
           {results?.field_link?.uri && (
-            <Link
-              variant="with-chevron"
-              href={results?.field_link?.uri}
-              title={results?.field_link?.title}
-            >
+            <Link inList href={results?.field_link?.uri} title={results?.field_link?.title}>
               {results?.field_link?.title || `Meer over ${results?.title}`}
             </Link>
           )}

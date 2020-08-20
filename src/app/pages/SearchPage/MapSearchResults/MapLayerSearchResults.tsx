@@ -20,7 +20,7 @@ const MapLayerSearchResults: React.FC<MapLayerSearchResultsProps> = ({ results }
     <ul>
       {results.map((result) => (
         <li key={result.id}>
-          <StyledLink variant="with-chevron" href={result.href}>
+          <StyledLink inList href={result.href}>
             {result.title}
           </StyledLink>
         </li>

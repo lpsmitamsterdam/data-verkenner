@@ -145,7 +145,7 @@ const ConstructionFileDetail: React.FC<ConstructionFileDetailProps> = ({
               <ListItem key={addressId}>
                 <Link
                   as={RouterLink}
-                  variant="with-chevron"
+                  inList
                   to={toDataDetail([addressId, 'bag', type])}
                   title={term}
                 >

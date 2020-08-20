@@ -11,7 +11,6 @@ import {
 } from '@datapunt/asc-ui'
 import PropTypes from 'prop-types'
 import React from 'react'
-import focusOutline from '../shared/focusOutline'
 
 const StyledCard = styled(Card)`
   width: 100%;
@@ -41,13 +40,11 @@ const StyledLink = styled(Link)`
   &:focus {
     background: none;
     position: relative;
-
-    ${focusOutline()}
   }
 `
 
 const AboutCard = ({ loading, shortTitle, title, teaser, intro, linkProps }) => (
-  <StyledLink {...linkProps} linkType="blank">
+  <StyledLink {...linkProps} variant="blank">
     <StyledCard backgroundColor="level2" shadow isLoading={loading}>
       <StyledCardContent>
         <Heading as="h3">{shortTitle || title}</Heading>

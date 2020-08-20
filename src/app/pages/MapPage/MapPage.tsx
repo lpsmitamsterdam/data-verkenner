@@ -13,7 +13,6 @@ import { TileLayer } from '@datapunt/react-maps'
 import React, { useEffect, useMemo, useState } from 'react'
 import RouterLink from 'redux-first-router-link'
 import styled, { createGlobalStyle } from 'styled-components'
-import MAP_CONFIG from '../../../map/services/map.config'
 import { toMap } from '../../../store/redux-first-router/actions'
 import NotificationLevel from '../../models/notification'
 import DrawContent from './Components/DrawContent'
@@ -21,7 +20,7 @@ import GeoJSON from './Components/GeoJSON'
 import PointSearchMarker from './Components/PointSearchMarker'
 import ViewerContainer from './Components/ViewerContainer'
 import DataSelectionProvider from './DataSelectionProvider'
-import MapContext from './MapContext'
+import MapContext, { TmsOverlay, WmsOverlay } from './MapContext'
 import DetailPanel from './panels/DetailPanel'
 import LegendPanel from './panels/LegendPanel'
 import PointSearchPanel from './panels/PointSearchPanel'
@@ -76,8 +75,8 @@ const MapPage: React.FC = () => {
     }
   }, [])
 
-  const tmsLayers = overlays.filter((overlay) => overlay.type === MAP_CONFIG.MAP_LAYER_TYPES.TMS)
-  const nonTmsLayers = overlays.filter((overlay) => overlay.type !== MAP_CONFIG.MAP_LAYER_TYPES.TMS)
+  const tmsLayers = overlays.filter((overlay): overlay is TmsOverlay => overlay.type === 'tms')
+  const wmsLayers = overlays.filter((overlay): overlay is WmsOverlay => overlay.type === 'wms')
 
   useEffect(() => {
     if (currentOverlay !== Overlay.Legend) {
@@ -99,7 +98,7 @@ const MapPage: React.FC = () => {
     <>
       <Alert level={NotificationLevel.Attention} dismissible>
         <Heading as="h3">Let op: Deze nieuwe interactieve kaart is nog in aanbouw.</Heading>
-        <Link to={toMap()} as={RouterLink} variant="with-chevron" darkBackground>
+        <Link to={toMap()} as={RouterLink} inList darkBackground>
           Naar de oude kaart
         </Link>
       </Alert>
@@ -122,7 +121,7 @@ const MapPage: React.FC = () => {
             }
           />
           {geometry && <GeoJSON geometry={geometry} />}
-          {tmsLayers.map(({ overlayOptions: options, id }) => (
+          {tmsLayers.map(({ options, id }) => (
             <TileLayer
               key={id}
               options={options}
@@ -132,8 +131,8 @@ const MapPage: React.FC = () => {
               }}
             />
           ))}
-          {nonTmsLayers.map(({ url, overlayOptions: options, id }) => (
-            <NonTiledLayer key={id} url={url} options={options} />
+          {wmsLayers.map(({ url, options, id, params }) => (
+            <NonTiledLayer key={id} url={url} options={options} params={params} />
           ))}
           <MapPanelProvider
             mapPanelSnapPositions={MAP_PANEL_SNAP_POSITIONS}

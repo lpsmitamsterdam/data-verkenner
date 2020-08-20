@@ -92,7 +92,7 @@ function renderResult(result: PromiseResult<PanoramaThumbnail | null>) {
   return (
     <>
       <PreviewImage src={result.value.url} alt="Voorvertoning van panoramabeeld" />
-      <PreviewLink href="/" variant="with-chevron">
+      <PreviewLink href="/" inList>
         Bekijk panoramabeeld
       </PreviewLink>
     </>

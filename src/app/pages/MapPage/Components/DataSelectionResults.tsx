@@ -303,7 +303,7 @@ const DataSelectionResults: React.FC<Props> = ({ currentOverlay, setShowDrawTool
                         <Link
                           to={config[type].toDetailAction(locationId)}
                           as={ResultLink}
-                          variant="with-chevron"
+                          inList
                           key={locationId}
                           onMouseEnter={() => {
                             if (marker) {

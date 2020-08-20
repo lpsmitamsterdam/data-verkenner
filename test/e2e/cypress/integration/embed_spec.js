@@ -30,7 +30,7 @@ describe('embed module', () => {
     cy.get(MAP.imageLayer).should('exist')
     cy.get(MAP.mapLegend).should('be.visible')
     cy.get('[type=checkbox]').should('have.length', 12).and('be.checked')
-    cy.get('#themtaxi-oplsnl').uncheck()
+    cy.get('#themtaxi-oplsnl').uncheck({ force: true })
     cy.get('[type=checkbox]').should('have.length', 10)
   })
 })
