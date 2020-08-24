@@ -1,3 +1,4 @@
+import { initialState } from './constants'
 import {
   mapClear,
   mapEmptyGeometry,
@@ -14,7 +15,6 @@ import {
   updatePan,
   updateZoom,
 } from './actions'
-import { initialState } from './constants'
 import reducer from './reducer'
 
 describe('Map Reducer', () => {
@@ -185,13 +185,23 @@ describe('Map Reducer', () => {
       overlays: [{ id: '1' }, { id: '2' }, { id: '3' }],
     }
 
-    const newOverlay = {
+    let newOverlay = {
       legendItems: [{ id: '3' }],
     }
 
     // The legendItem is selectable, so must be removed
     expect(reducer(state, toggleMapOverlay(newOverlay))).toEqual({
       overlays: [{ id: '1' }, { id: '2' }],
+    })
+
+    newOverlay = {
+      id: '2',
+      legendItems: [{ id: '3', notSelectable: true }],
+    }
+
+    // The legendItem is NOT selectable, so the parent must be removed
+    expect(reducer(state, toggleMapOverlay(newOverlay))).toEqual({
+      overlays: [{ id: '1' }, { id: '3' }],
     })
   })
 
@@ -200,13 +210,23 @@ describe('Map Reducer', () => {
       overlays: [{ id: '2' }, { id: '3' }],
     }
 
-    const newOverlay = {
+    let newOverlay = {
       legendItems: [{ id: '4' }],
     }
 
     // The legendItem is selectable, so must be added
     expect(reducer(state, toggleMapOverlay(newOverlay))).toEqual({
       overlays: [{ id: '2' }, { id: '3' }, { id: '4', isVisible: true }],
+    })
+
+    newOverlay = {
+      id: '1',
+      legendItems: [{ id: '3', notSelectable: true }],
+    }
+
+    // The legendItem is NOT selectable, so the parent must be added
+    expect(reducer(state, toggleMapOverlay(newOverlay))).toEqual({
+      overlays: [{ id: '2' }, { id: '3' }, { id: '1', isVisible: true }],
     })
   })
 
