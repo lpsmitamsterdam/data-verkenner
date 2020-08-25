@@ -471,7 +471,7 @@ const servicesByEndpointType: { [type: string]: ServiceDefinition } = {
             entries: [
               {
                 term: 'Soort maatregel',
-                description: result.type,
+                description: result.omschrijving,
               },
               {
                 term: 'Tijd',
