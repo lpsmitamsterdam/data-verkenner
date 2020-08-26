@@ -44,7 +44,7 @@ export const toggleMapOverlay = (payload) => ({
   type: TOGGLE_MAP_OVERLAY,
   payload: {
     mapLayers:
-      payload.legendItems && payload.legendItems.length > 0
+      payload.legendItems?.length > 0 && payload.legendItems.every((legendItem) => legendItem.id)
         ? payload.legendItems.map((legendItem) => legendItem.id)
         : [payload.id],
   },
