@@ -466,4 +466,75 @@ describe('Check if all map layers are visible when selected', () => {
     cy.get(MAP_LAYERS.checkboxBelastingen).uncheck({ force: true }).should('not.be.checked')
     cy.get(MAP.imageLayer).should('not.exist')
   })
+
+  it.only('should asdasd', () => {
+    const promise = new Promise(async (resolve) => {
+      const res = await fetch('https://acc.api.data.amsterdam.nl/cms_search/graphql/', {
+        headers: {
+          accept: '*/*',
+          'accept-language': 'en-GB,en-US;q=0.9,en;q=0.8,nl;q=0.7',
+          'cache-control': 'no-cache',
+          'content-type': 'application/json',
+          pragma: 'no-cache',
+          'sec-fetch-dest': 'empty',
+          'sec-fetch-mode': 'cors',
+          'sec-fetch-site': 'same-site',
+        },
+        referrer: 'https://acc.data.amsterdam.nl/',
+        referrerPolicy: 'strict-origin',
+        body:
+          '{"query":"{\\n    mapLayerSearch(input: { limit: 9999 }) {\\n      results {\\n        id\\n        title\\n        legendItems {\\n          ... on MapLayer {\\n            __typename\\n            id\\n          }\\n        }\\n        url\\n        params\\n        layers\\n        external\\n        detailUrl\\n        detailParams {\\n          item\\n          datasets\\n        }\\n        detailIsShape\\n        noDetail\\n        authScope\\n        type\\n      }\\n    }\\n  }"}',
+        method: 'POST',
+        mode: 'cors',
+        credentials: 'omit',
+      }).then((res) => res.json())
+
+      const { results: layers } = res.data.mapLayerSearch
+      const result = await layers
+        .filter(({ url }) => url && url.startsWith('/'))
+        .map(({ url, layers, id }) => {
+          const query = {
+            service: 'WMS',
+            request: 'GetMap',
+            version: '1.1.1',
+            layers,
+            format: 'image/png',
+            transparent: 'true',
+            identify: 'false',
+            srs: 'EPSG:28992',
+            width: '1326',
+            height: '973',
+            bbox: '111289.3026017888,480758.2304247047,129109.84580896495,493828.3796077176',
+          }
+
+          const searchParams = new URLSearchParams(query)
+          return fetch(`https://map.data.amsterdam.nl${url}?${searchParams.toString()}`)
+            .then((res) => {
+              if (res.headers.get('content-type') !== 'image/png') {
+                console.warn(
+                  "This layer doesn't receive an image",
+                  id,
+                  res.headers.get('content-type'),
+                )
+                return `This layer doesn't receive an image: ${id}, received type: ${res.headers.get(
+                  'content-type',
+                )}`
+              }
+              return undefined
+            })
+            .catch((e) => `Fetching this layer failed: ${id}, received error: ${e}`)
+        })
+
+      const resolvedResult = await Promise.all(result)
+      const possibleFailedLayers = resolvedResult.filter((r) => r)
+
+      console.log(possibleFailedLayers)
+
+      resolve({
+        possibleFailedLayers,
+      })
+    })
+
+    cy.wrap(promise, { timeout: 30000 }).its('possibleFailedLayers').should('have.length', 0)
+  })
 })
