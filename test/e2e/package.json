@@ -15,8 +15,8 @@
     "watch": "node ./cypress-watch.js"
   },
   "dependencies": {
-    "cypress": "^4.12.1",
-    "prettier": "^2.0.5",
+    "cypress": "^5.0.0",
+    "prettier": "^2.1.0",
     "typescript": "^3.9.7"
   }
 }
