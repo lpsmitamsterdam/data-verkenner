@@ -98,7 +98,7 @@ describe('Check if all map layers are visible when selected', () => {
     cy.get(MAP_LAYERS.checkboxParkeren).uncheck({ force: true }).should('not.be.checked')
     cy.get(MAP.imageLayer).should('not.exist')
   })
-  it.only('Should check Energie layers', () => {
+  it('Should check Energie layers', () => {
     cy.checkMapLayerCategory('Energie')
 
     cy.checkMapLayer('Aardgasvrij', MAP_LAYERS.checkboxEnergieAardgasvrij, 1)
