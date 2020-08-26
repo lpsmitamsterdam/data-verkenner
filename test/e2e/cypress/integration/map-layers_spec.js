@@ -98,7 +98,7 @@ describe('Check if all map layers are visible when selected', () => {
     cy.get(MAP_LAYERS.checkboxParkeren).uncheck({ force: true }).should('not.be.checked')
     cy.get(MAP.imageLayer).should('not.exist')
   })
-  it('Should check Energie layers', () => {
+  it.only('Should check Energie layers', () => {
     cy.checkMapLayerCategory('Energie')
 
     cy.checkMapLayer('Aardgasvrij', MAP_LAYERS.checkboxEnergieAardgasvrij, 1)
@@ -245,8 +245,8 @@ describe('Check if all map layers are visible when selected', () => {
   it('Should check Cultureel erfgoed layers', () => {
     cy.checkMapLayerCategory('Cultureel erfgoed')
 
-    cy.checkMapLayer('Monumenten', MAP_LAYERS.checkboxCEMonumenten, 1)
-    cy.checkMapLayer('Unesco werelderfgoedzones', MAP_LAYERS.checkboxCEUnesco, 2)
+    cy.checkMapLayer('Monumenten', MAP_LAYERS.checkboxCEMonumenten, 2)
+    cy.checkMapLayer('Unesco werelderfgoedzones', MAP_LAYERS.checkboxCEUnesco, 3)
 
     cy.get(MAP_LAYERS.checkboxCultureelErfgoed).uncheck({ force: true }).should('not.be.checked')
     cy.get(MAP.imageLayer).should('not.exist')
@@ -315,22 +315,22 @@ describe('Check if all map layers are visible when selected', () => {
     cy.checkMapLayer('Explosieven - Gevrijwaarde gebieden', MAP_LAYERS.checkboxOExplosievenGG, 7)
     cy.checkMapLayer('Explosieven - Verdachte gebieden', MAP_LAYERS.checkboxOExplosievenVG, 8)
     cy.checkMapLayer('Gemeentelijke beperkingen (WKPB)', MAP_LAYERS.checkboxOWKPB, 17)
-    cy.checkMapLayer('LPG-stations - Risicozones', MAP_LAYERS.checkboxOLPGStations, 18)
-    cy.checkMapLayer('LPG-tanks - Risicozones', MAP_LAYERS.checkboxOLPGTanks, 19)
-    cy.checkMapLayer('LPG-vulpunten - Risicozones', MAP_LAYERS.checkboxOLPGVulpunten, 20)
-    cy.checkMapLayer('LPG-afleverzuilen - Risicozones', MAP_LAYERS.checkboxOLPGAfleverzuilen, 21)
-    cy.checkMapLayer('Explosieven - Inslagen', MAP_LAYERS.checkboxOExplosieven, 22)
-    cy.checkMapLayer('Grondmonsters', MAP_LAYERS.checkboxOGrondmonsters, 23)
-    cy.checkMapLayer('Grondmonsters asbest', MAP_LAYERS.checkboxOGrondmonstersA, 24)
-    cy.checkMapLayer('Grondwatermonsters', MAP_LAYERS.checkboxOGrondwatermonsters, 25)
-    cy.checkMapLayer('Meetbouten - Zaksnelheid', MAP_LAYERS.checkboxOMeetboutenZaksnelheid, 26)
-    cy.checkMapLayer('Meetbouten - Status', MAP_LAYERS.checkboxOMeetboutenStatus, 27)
+    cy.checkMapLayer('LPG-stations - Risicozones', MAP_LAYERS.checkboxOLPGStations, 19)
+    cy.checkMapLayer('LPG-tanks - Risicozones', MAP_LAYERS.checkboxOLPGTanks, 22)
+    cy.checkMapLayer('LPG-vulpunten - Risicozones', MAP_LAYERS.checkboxOLPGVulpunten, 25)
+    cy.checkMapLayer('LPG-afleverzuilen - Risicozones', MAP_LAYERS.checkboxOLPGAfleverzuilen, 27)
+    cy.checkMapLayer('Explosieven - Inslagen', MAP_LAYERS.checkboxOExplosieven, 28)
+    cy.checkMapLayer('Grondmonsters', MAP_LAYERS.checkboxOGrondmonsters, 29)
+    cy.checkMapLayer('Grondmonsters asbest', MAP_LAYERS.checkboxOGrondmonstersA, 30)
+    cy.checkMapLayer('Grondwatermonsters', MAP_LAYERS.checkboxOGrondwatermonsters, 31)
+    cy.checkMapLayer('Meetbouten - Zaksnelheid', MAP_LAYERS.checkboxOMeetboutenZaksnelheid, 32)
+    cy.checkMapLayer('Meetbouten - Status', MAP_LAYERS.checkboxOMeetboutenStatus, 33)
     cy.checkMapLayer(
       'Meetbouten - Referentiepunten',
       MAP_LAYERS.checkboxOMeetboutenReferentiepunten,
-      28,
+      34,
     )
-    cy.checkMapLayer('Verzinkbare palen', MAP_LAYERS.checkboxOVerzinkbarePalen, 29)
+    cy.checkMapLayer('Verzinkbare palen', MAP_LAYERS.checkboxOVerzinkbarePalen, 35)
 
     cy.get(MAP_LAYERS.checkboxOndergrond).uncheck({ force: true }).should('not.be.checked')
     cy.get(MAP.imageLayer).should('not.exist')
@@ -364,10 +364,10 @@ describe('Check if all map layers are visible when selected', () => {
   it('Should check Geluidszones layers', () => {
     cy.checkMapLayerCategory('Geluidszones')
 
-    cy.checkMapLayer('Industrie', MAP_LAYERS.checkBoxGZIndustrie, 1)
-    cy.checkMapLayer('Spoorwegen', MAP_LAYERS.checkBoxGZSpoorwegen, 2)
-    cy.checkMapLayer('Metro', MAP_LAYERS.checkBoxGZMetro, 3)
-    cy.checkMapLayer('Schiphol - Ruimtelijke beperkingen', MAP_LAYERS.checkBoxGZSchiphol, 4)
+    cy.checkMapLayer('Industrie', MAP_LAYERS.checkBoxGZIndustrie, 2)
+    cy.checkMapLayer('Spoorwegen', MAP_LAYERS.checkBoxGZSpoorwegen, 3)
+    cy.checkMapLayer('Metro', MAP_LAYERS.checkBoxGZMetro, 4)
+    cy.checkMapLayer('Schiphol - Ruimtelijke beperkingen', MAP_LAYERS.checkBoxGZSchiphol, 5)
 
     cy.get(MAP_LAYERS.checkboxGeluidszones).uncheck({ force: true }).should('not.be.checked')
     cy.get(MAP.imageLayer).should('not.exist')
@@ -386,29 +386,29 @@ describe('Check if all map layers are visible when selected', () => {
   it('Should check Risicozones layers', () => {
     cy.checkMapLayerCategory('Risicozones')
 
-    cy.checkMapLayer('LPG-vulpunten', MAP_LAYERS.checkboxRZLPGVulpunten, 1)
-    cy.checkMapLayer('LPG-afleverzuilen', MAP_LAYERS.checkboxRZLPGAfleverzuilen, 2)
-    cy.checkMapLayer('LPG-tanks', MAP_LAYERS.checkboxRZLPGTanks, 3)
-    cy.checkMapLayer('LPG-stations', MAP_LAYERS.checkboxRZLPGStations, 4)
-    cy.checkMapLayer('Spoorwegen', MAP_LAYERS.checkboxRZSpoorwegen, 5)
-    cy.checkMapLayer('Vaarwegen', MAP_LAYERS.checkboxRZVaarwegen, 6)
-    cy.checkMapLayer('Wegen', MAP_LAYERS.checkboxRZWegen, 7)
-    cy.checkMapLayer('Veiligheidsafstanden', MAP_LAYERS.checkboxRZVeiligheidsafstanden, 13)
+    cy.checkMapLayer('LPG-vulpunten', MAP_LAYERS.checkboxRZLPGVulpunten, 3)
+    cy.checkMapLayer('LPG-afleverzuilen', MAP_LAYERS.checkboxRZLPGAfleverzuilen, 5)
+    cy.checkMapLayer('LPG-tanks', MAP_LAYERS.checkboxRZLPGTanks, 8)
+    cy.checkMapLayer('LPG-stations', MAP_LAYERS.checkboxRZLPGStations, 10)
+    cy.checkMapLayer('Spoorwegen', MAP_LAYERS.checkboxRZSpoorwegen, 11)
+    cy.checkMapLayer('Vaarwegen', MAP_LAYERS.checkboxRZVaarwegen, 12)
+    cy.checkMapLayer('Wegen', MAP_LAYERS.checkboxRZWegen, 13)
+    cy.checkMapLayer('Veiligheidsafstanden', MAP_LAYERS.checkboxRZVeiligheidsafstanden, 19)
     cy.checkMapLayer(
       'Bedrijven - Bronnen en risicozones',
       MAP_LAYERS.checkboxRZBedrijvenBronnen,
-      14,
+      21,
     )
     cy.checkMapLayer(
       'Bedrijven - Invloedsgebieden',
       MAP_LAYERS.checkboxRZBedrijvenInvloedsgebieden,
-      14,
+      21,
     )
-    cy.checkMapLayer('Bedrijven - Terreingrenzen', MAP_LAYERS.checkboxRZBedrijvenTerreingrenzen, 15)
-    cy.checkMapLayer('Aardgasbuisleidingen', MAP_LAYERS.checkboxRZAardgasbuisleidingen, 20)
-    cy.checkMapLayer('Routes gevaarlijke stoffen', MAP_LAYERS.checkboxRZRoutesGS, 21)
-    cy.checkMapLayer('Tunnels gevaarlijke stoffen', MAP_LAYERS.checkboxRZTunnelsGS, 22)
-    cy.checkMapLayer('U-routes', MAP_LAYERS.checkboxRZURoutes, 23)
+    cy.checkMapLayer('Bedrijven - Terreingrenzen', MAP_LAYERS.checkboxRZBedrijvenTerreingrenzen, 23)
+    cy.checkMapLayer('Aardgasbuisleidingen', MAP_LAYERS.checkboxRZAardgasbuisleidingen, 28)
+    cy.checkMapLayer('Routes gevaarlijke stoffen', MAP_LAYERS.checkboxRZRoutesGS, 29)
+    cy.checkMapLayer('Tunnels gevaarlijke stoffen', MAP_LAYERS.checkboxRZTunnelsGS, 30)
+    cy.checkMapLayer('U-routes', MAP_LAYERS.checkboxRZURoutes, 31)
 
     cy.get(MAP_LAYERS.checkboxRisicoZones)
       .scrollIntoView()
@@ -466,75 +466,9 @@ describe('Check if all map layers are visible when selected', () => {
     cy.get(MAP_LAYERS.checkboxBelastingen).uncheck({ force: true }).should('not.be.checked')
     cy.get(MAP.imageLayer).should('not.exist')
   })
-
-  it.only('should asdasd', () => {
-    const promise = new Promise(async (resolve) => {
-      const res = await fetch('https://acc.api.data.amsterdam.nl/cms_search/graphql/', {
-        headers: {
-          accept: '*/*',
-          'accept-language': 'en-GB,en-US;q=0.9,en;q=0.8,nl;q=0.7',
-          'cache-control': 'no-cache',
-          'content-type': 'application/json',
-          pragma: 'no-cache',
-          'sec-fetch-dest': 'empty',
-          'sec-fetch-mode': 'cors',
-          'sec-fetch-site': 'same-site',
-        },
-        referrer: 'https://acc.data.amsterdam.nl/',
-        referrerPolicy: 'strict-origin',
-        body:
-          '{"query":"{\\n    mapLayerSearch(input: { limit: 9999 }) {\\n      results {\\n        id\\n        title\\n        legendItems {\\n          ... on MapLayer {\\n            __typename\\n            id\\n          }\\n        }\\n        url\\n        params\\n        layers\\n        external\\n        detailUrl\\n        detailParams {\\n          item\\n          datasets\\n        }\\n        detailIsShape\\n        noDetail\\n        authScope\\n        type\\n      }\\n    }\\n  }"}',
-        method: 'POST',
-        mode: 'cors',
-        credentials: 'omit',
-      }).then((res) => res.json())
-
-      const { results: layers } = res.data.mapLayerSearch
-      const result = await layers
-        .filter(({ url }) => url && url.startsWith('/'))
-        .map(({ url, layers, id }) => {
-          const query = {
-            service: 'WMS',
-            request: 'GetMap',
-            version: '1.1.1',
-            layers,
-            format: 'image/png',
-            transparent: 'true',
-            identify: 'false',
-            srs: 'EPSG:28992',
-            width: '1326',
-            height: '973',
-            bbox: '111289.3026017888,480758.2304247047,129109.84580896495,493828.3796077176',
-          }
-
-          const searchParams = new URLSearchParams(query)
-          return fetch(`https://map.data.amsterdam.nl${url}?${searchParams.toString()}`)
-            .then((res) => {
-              if (res.headers.get('content-type') !== 'image/png') {
-                console.warn(
-                  "This layer doesn't receive an image",
-                  id,
-                  res.headers.get('content-type'),
-                )
-                return `This layer doesn't receive an image: ${id}, received type: ${res.headers.get(
-                  'content-type',
-                )}`
-              }
-              return undefined
-            })
-            .catch((e) => `Fetching this layer failed: ${id}, received error: ${e}`)
-        })
-
-      const resolvedResult = await Promise.all(result)
-      const possibleFailedLayers = resolvedResult.filter((r) => r)
-
-      console.log(possibleFailedLayers)
-
-      resolve({
-        possibleFailedLayers,
-      })
-    })
-
-    cy.wrap(promise, { timeout: 30000 }).its('possibleFailedLayers').should('have.length', 0)
+})
+describe('Check if all map layers are fetched by an url', () => {
+  it('should check if all layers are working', () => {
+    cy.checkAllLayers()
   })
 })
