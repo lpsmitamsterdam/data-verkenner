@@ -245,8 +245,8 @@ describe('Check if all map layers are visible when selected', () => {
   it('Should check Cultureel erfgoed layers', () => {
     cy.checkMapLayerCategory('Cultureel erfgoed')
 
-    cy.checkMapLayer('Monumenten', MAP_LAYERS.checkboxCEMonumenten, 1)
-    cy.checkMapLayer('Unesco werelderfgoedzones', MAP_LAYERS.checkboxCEUnesco, 2)
+    cy.checkMapLayer('Monumenten', MAP_LAYERS.checkboxCEMonumenten, 2)
+    cy.checkMapLayer('Unesco werelderfgoedzones', MAP_LAYERS.checkboxCEUnesco, 3)
 
     cy.get(MAP_LAYERS.checkboxCultureelErfgoed).uncheck({ force: true }).should('not.be.checked')
     cy.get(MAP.imageLayer).should('not.exist')
@@ -315,22 +315,22 @@ describe('Check if all map layers are visible when selected', () => {
     cy.checkMapLayer('Explosieven - Gevrijwaarde gebieden', MAP_LAYERS.checkboxOExplosievenGG, 7)
     cy.checkMapLayer('Explosieven - Verdachte gebieden', MAP_LAYERS.checkboxOExplosievenVG, 8)
     cy.checkMapLayer('Gemeentelijke beperkingen (WKPB)', MAP_LAYERS.checkboxOWKPB, 17)
-    cy.checkMapLayer('LPG-stations - Risicozones', MAP_LAYERS.checkboxOLPGStations, 18)
-    cy.checkMapLayer('LPG-tanks - Risicozones', MAP_LAYERS.checkboxOLPGTanks, 19)
-    cy.checkMapLayer('LPG-vulpunten - Risicozones', MAP_LAYERS.checkboxOLPGVulpunten, 20)
-    cy.checkMapLayer('LPG-afleverzuilen - Risicozones', MAP_LAYERS.checkboxOLPGAfleverzuilen, 21)
-    cy.checkMapLayer('Explosieven - Inslagen', MAP_LAYERS.checkboxOExplosieven, 22)
-    cy.checkMapLayer('Grondmonsters', MAP_LAYERS.checkboxOGrondmonsters, 23)
-    cy.checkMapLayer('Grondmonsters asbest', MAP_LAYERS.checkboxOGrondmonstersA, 24)
-    cy.checkMapLayer('Grondwatermonsters', MAP_LAYERS.checkboxOGrondwatermonsters, 25)
-    cy.checkMapLayer('Meetbouten - Zaksnelheid', MAP_LAYERS.checkboxOMeetboutenZaksnelheid, 26)
-    cy.checkMapLayer('Meetbouten - Status', MAP_LAYERS.checkboxOMeetboutenStatus, 27)
+    cy.checkMapLayer('LPG-stations - Risicozones', MAP_LAYERS.checkboxOLPGStations, 19)
+    cy.checkMapLayer('LPG-tanks - Risicozones', MAP_LAYERS.checkboxOLPGTanks, 22)
+    cy.checkMapLayer('LPG-vulpunten - Risicozones', MAP_LAYERS.checkboxOLPGVulpunten, 25)
+    cy.checkMapLayer('LPG-afleverzuilen - Risicozones', MAP_LAYERS.checkboxOLPGAfleverzuilen, 27)
+    cy.checkMapLayer('Explosieven - Inslagen', MAP_LAYERS.checkboxOExplosieven, 28)
+    cy.checkMapLayer('Grondmonsters', MAP_LAYERS.checkboxOGrondmonsters, 29)
+    cy.checkMapLayer('Grondmonsters asbest', MAP_LAYERS.checkboxOGrondmonstersA, 30)
+    cy.checkMapLayer('Grondwatermonsters', MAP_LAYERS.checkboxOGrondwatermonsters, 31)
+    cy.checkMapLayer('Meetbouten - Zaksnelheid', MAP_LAYERS.checkboxOMeetboutenZaksnelheid, 32)
+    cy.checkMapLayer('Meetbouten - Status', MAP_LAYERS.checkboxOMeetboutenStatus, 33)
     cy.checkMapLayer(
       'Meetbouten - Referentiepunten',
       MAP_LAYERS.checkboxOMeetboutenReferentiepunten,
-      28,
+      34,
     )
-    cy.checkMapLayer('Verzinkbare palen', MAP_LAYERS.checkboxOVerzinkbarePalen, 29)
+    cy.checkMapLayer('Verzinkbare palen', MAP_LAYERS.checkboxOVerzinkbarePalen, 35)
 
     cy.get(MAP_LAYERS.checkboxOndergrond).uncheck({ force: true }).should('not.be.checked')
     cy.get(MAP.imageLayer).should('not.exist')
@@ -364,10 +364,10 @@ describe('Check if all map layers are visible when selected', () => {
   it('Should check Geluidszones layers', () => {
     cy.checkMapLayerCategory('Geluidszones')
 
-    cy.checkMapLayer('Industrie', MAP_LAYERS.checkBoxGZIndustrie, 1)
-    cy.checkMapLayer('Spoorwegen', MAP_LAYERS.checkBoxGZSpoorwegen, 2)
-    cy.checkMapLayer('Metro', MAP_LAYERS.checkBoxGZMetro, 3)
-    cy.checkMapLayer('Schiphol - Ruimtelijke beperkingen', MAP_LAYERS.checkBoxGZSchiphol, 4)
+    cy.checkMapLayer('Industrie', MAP_LAYERS.checkBoxGZIndustrie, 2)
+    cy.checkMapLayer('Spoorwegen', MAP_LAYERS.checkBoxGZSpoorwegen, 3)
+    cy.checkMapLayer('Metro', MAP_LAYERS.checkBoxGZMetro, 4)
+    cy.checkMapLayer('Schiphol - Ruimtelijke beperkingen', MAP_LAYERS.checkBoxGZSchiphol, 5)
 
     cy.get(MAP_LAYERS.checkboxGeluidszones).uncheck({ force: true }).should('not.be.checked')
     cy.get(MAP.imageLayer).should('not.exist')
@@ -386,29 +386,29 @@ describe('Check if all map layers are visible when selected', () => {
   it('Should check Risicozones layers', () => {
     cy.checkMapLayerCategory('Risicozones')
 
-    cy.checkMapLayer('LPG-vulpunten', MAP_LAYERS.checkboxRZLPGVulpunten, 1)
-    cy.checkMapLayer('LPG-afleverzuilen', MAP_LAYERS.checkboxRZLPGAfleverzuilen, 2)
-    cy.checkMapLayer('LPG-tanks', MAP_LAYERS.checkboxRZLPGTanks, 3)
-    cy.checkMapLayer('LPG-stations', MAP_LAYERS.checkboxRZLPGStations, 4)
-    cy.checkMapLayer('Spoorwegen', MAP_LAYERS.checkboxRZSpoorwegen, 5)
-    cy.checkMapLayer('Vaarwegen', MAP_LAYERS.checkboxRZVaarwegen, 6)
-    cy.checkMapLayer('Wegen', MAP_LAYERS.checkboxRZWegen, 7)
-    cy.checkMapLayer('Veiligheidsafstanden', MAP_LAYERS.checkboxRZVeiligheidsafstanden, 13)
+    cy.checkMapLayer('LPG-vulpunten', MAP_LAYERS.checkboxRZLPGVulpunten, 3)
+    cy.checkMapLayer('LPG-afleverzuilen', MAP_LAYERS.checkboxRZLPGAfleverzuilen, 5)
+    cy.checkMapLayer('LPG-tanks', MAP_LAYERS.checkboxRZLPGTanks, 8)
+    cy.checkMapLayer('LPG-stations', MAP_LAYERS.checkboxRZLPGStations, 10)
+    cy.checkMapLayer('Spoorwegen', MAP_LAYERS.checkboxRZSpoorwegen, 11)
+    cy.checkMapLayer('Vaarwegen', MAP_LAYERS.checkboxRZVaarwegen, 12)
+    cy.checkMapLayer('Wegen', MAP_LAYERS.checkboxRZWegen, 13)
+    cy.checkMapLayer('Veiligheidsafstanden', MAP_LAYERS.checkboxRZVeiligheidsafstanden, 19)
     cy.checkMapLayer(
       'Bedrijven - Bronnen en risicozones',
       MAP_LAYERS.checkboxRZBedrijvenBronnen,
-      14,
+      21,
     )
     cy.checkMapLayer(
       'Bedrijven - Invloedsgebieden',
       MAP_LAYERS.checkboxRZBedrijvenInvloedsgebieden,
-      14,
+      21,
     )
-    cy.checkMapLayer('Bedrijven - Terreingrenzen', MAP_LAYERS.checkboxRZBedrijvenTerreingrenzen, 15)
-    cy.checkMapLayer('Aardgasbuisleidingen', MAP_LAYERS.checkboxRZAardgasbuisleidingen, 20)
-    cy.checkMapLayer('Routes gevaarlijke stoffen', MAP_LAYERS.checkboxRZRoutesGS, 21)
-    cy.checkMapLayer('Tunnels gevaarlijke stoffen', MAP_LAYERS.checkboxRZTunnelsGS, 22)
-    cy.checkMapLayer('U-routes', MAP_LAYERS.checkboxRZURoutes, 23)
+    cy.checkMapLayer('Bedrijven - Terreingrenzen', MAP_LAYERS.checkboxRZBedrijvenTerreingrenzen, 23)
+    cy.checkMapLayer('Aardgasbuisleidingen', MAP_LAYERS.checkboxRZAardgasbuisleidingen, 28)
+    cy.checkMapLayer('Routes gevaarlijke stoffen', MAP_LAYERS.checkboxRZRoutesGS, 29)
+    cy.checkMapLayer('Tunnels gevaarlijke stoffen', MAP_LAYERS.checkboxRZTunnelsGS, 30)
+    cy.checkMapLayer('U-routes', MAP_LAYERS.checkboxRZURoutes, 31)
 
     cy.get(MAP_LAYERS.checkboxRisicoZones)
       .scrollIntoView()
@@ -465,5 +465,10 @@ describe('Check if all map layers are visible when selected', () => {
 
     cy.get(MAP_LAYERS.checkboxBelastingen).uncheck({ force: true }).should('not.be.checked')
     cy.get(MAP.imageLayer).should('not.exist')
+  })
+})
+describe('Check if all map layers are fetched by an url', () => {
+  it('should check if all layers are working', () => {
+    cy.checkAllLayers()
   })
 })
