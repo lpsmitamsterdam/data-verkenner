@@ -29,6 +29,7 @@ const modernModules = [
   '@datapunt/asc-ui',
   '@datapunt/matomo-tracker-js',
   '@datapunt/matomo-tracker-react',
+  '@datapunt/react-maps',
   'body-scroll-lock',
   'escape-string-regexp',
   'redux-first-router',
