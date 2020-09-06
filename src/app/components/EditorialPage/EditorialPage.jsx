@@ -9,6 +9,7 @@ import linkAttributesFromAction from '../../../shared/services/link-attributes-f
 import getImageFromCms from '../../utils/getImageFromCms'
 import useDocumentTitle from '../../utils/useDocumentTitle'
 import LoadingSpinner from '../LoadingSpinner/LoadingSpinner'
+import { routing } from '../../routes'
 
 const BodyStyle = styled.div`
   background-color: ${themeColor('level', 'level1')}
@@ -25,6 +26,7 @@ const EditorialPage = ({
   image,
   title,
   lang,
+  error,
 }) => {
   const { setDocumentTitle } = useDocumentTitle()
   const { trackPageView } = useMatomo()
@@ -35,6 +37,12 @@ const EditorialPage = ({
       trackPageView({ documentTitle })
     }
   }, [documentTitle])
+
+  React.useEffect(() => {
+    if (error) {
+      window.location.replace(routing.niet_gevonden.path)
+    }
+  }, [error])
 
   const href = linkAction && linkAttributesFromAction(linkAction).href
 

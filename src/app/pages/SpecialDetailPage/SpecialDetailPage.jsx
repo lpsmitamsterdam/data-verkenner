@@ -7,7 +7,6 @@ import EditorialPage from '../../components/EditorialPage/EditorialPage'
 import { cmsConfig } from '../../../shared/config/config'
 import { toSpecialDetail } from '../../../store/redux-first-router/actions'
 import ContentContainer from '../../components/ContentContainer/ContentContainer'
-import { routing } from '../../routes'
 import IFrame from '../../components/IFrame/IFrame'
 import Animation from './specials/Animation'
 import { SpecialType } from '../../../shared/config/cms.config'
@@ -19,12 +18,6 @@ const SpecialDetailPage = ({ id }) => {
     fetchData()
   }, [id])
 
-  React.useEffect(() => {
-    if (error) {
-      window.location.replace(routing.niet_gevonden.path)
-    }
-  }, [error])
-
   const { field_content_link: contentLink, slug, specialType, title, field_language: lang } =
     results || {}
   const documentTitle = title && `Special: ${title}`
@@ -32,7 +25,7 @@ const SpecialDetailPage = ({ id }) => {
   const linkAction = toSpecialDetail(id, specialType, slug)
 
   return (
-    <EditorialPage {...{ documentTitle, linkAction, lang }} loading={loading}>
+    <EditorialPage {...{ documentTitle, linkAction, lang, error, loading }}>
       <Row>
         <ContentContainer>
           {specialType === SpecialType.Animation && (
