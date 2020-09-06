@@ -1,26 +1,26 @@
 import styled, { css } from 'styled-components'
 import {
+  Accordion,
+  AccordionWrapper,
   Article,
+  breakpoint,
+  Column,
+  CustomHTMLBlock,
   EditorialBody,
   EditorialContent,
   EditorialMetaList,
   EditorialSidebar,
-  Column,
-  CustomHTMLBlock,
   Heading,
+  Link,
   List,
   ListItem,
-  Link,
-  Typography,
+  Paragraph,
   Row,
   themeColor,
-  Paragraph,
   themeSpacing,
-  breakpoint,
-  Accordion,
-  AccordionWrapper,
+  Typography,
 } from '@datapunt/asc-ui'
-import React from 'react'
+import React, { useMemo } from 'react'
 import { connect } from 'react-redux'
 import { useMatomo } from '@datapunt/matomo-tracker-react'
 import { getLocationPayload } from '../../../store/redux-first-router/selectors'
@@ -30,7 +30,6 @@ import { toArticleDetail } from '../../../store/redux-first-router/actions'
 import ContentContainer from '../../components/ContentContainer/ContentContainer'
 import { cmsConfig } from '../../../shared/config/config'
 import normalizeDownloadsObject from '../../../normalizations/cms/normalizeDownloadFiles'
-import { routing } from '../../routes'
 import ShareBar from '../../components/ShareBar/ShareBar'
 import getImageFromCms from '../../utils/getImageFromCms'
 import EditorialResults from '../../components/EditorialResults'
@@ -39,6 +38,7 @@ import useNormalizedCMSResults, {
   EDITORIAL_FIELD_TYPE_VALUES,
 } from '../../../normalizations/cms/useNormalizedCMSResults'
 import environment from '../../../environment'
+import LoadingSpinner from '../../components/LoadingSpinner/LoadingSpinner'
 
 const ListItemContent = styled.div`
   display: flex;
@@ -63,6 +63,10 @@ const DownloadLink = styled(Link).attrs({
   small {
     text-transform: uppercase;
     color: ${themeColor('tint', 'level6')};
+  }
+
+  &:disabled {
+    cursor: default;
   }
 `
 
@@ -120,9 +124,18 @@ const StyledLink = styled(Link)`
   }
 `
 
+const FileInfo = styled(Typography)`
+  display: inline-flex;
+`
+
+const StyledLoadingSpinner = styled(LoadingSpinner)`
+  width: 15px;
+  margin-left: ${themeSpacing(2)};
+`
+
 const ArticleDetailPage = ({ id }) => {
   const { fetchData, results, loading, error } = useFromCMS(cmsConfig.ARTICLE, id)
-  const [, downloadFile] = useDownload()
+  const [downloadLoading, downloadFile] = useDownload()
 
   React.useEffect(() => {
     fetchData()
@@ -145,26 +158,20 @@ const ArticleDetailPage = ({ id }) => {
     related,
   } = results || {}
 
-  const image = getImageFromCms(coverImage, 1200, 600)
+  const image = useMemo(() => getImageFromCms(coverImage, 1200, 600), [coverImage])
 
   const { trackEvent } = useMatomo()
 
-  React.useEffect(() => {
-    if (error) {
-      window.location.replace(routing.niet_gevonden.path)
-    }
-  }, [error])
-
   const documentTitle = title && `Artikel: ${title}`
-  const linkAction = slug && toArticleDetail(id, slug)
+  const linkAction = useMemo(() => slug && toArticleDetail(id, slug), [slug, id])
 
-  const normalizedDownloads = normalizeDownloadsObject(downloads)
+  const normalizedDownloads = useMemo(() => normalizeDownloadsObject(downloads), [downloads])
 
   const isContentType = articleType === EDITORIAL_FIELD_TYPE_VALUES.CONTENT
 
   return (
     <EditorialPage
-      {...{ documentTitle, loading, linkAction, title, lang }}
+      {...{ documentTitle, loading, linkAction, title, lang, error }}
       image={coverImage}
       description={intro}
     >
@@ -204,7 +211,7 @@ const ArticleDetailPage = ({ id }) => {
                                 field_accordion_intro: accordionIntro,
                                 field_accordion_label: accordionLabel,
                               }) => (
-                                <React.Fragment key={accordionTitle}>
+                                <React.Fragment key={`${accordionTitle}_${accordionLabel}`}>
                                   {accordionTitle && (
                                     <StyledAccordionHeading forwardedAs="h3">
                                       {accordionTitle}
@@ -248,6 +255,7 @@ const ArticleDetailPage = ({ id }) => {
                               {normalizedDownloads.map(({ fileName, key, type, size, url }) => (
                                 <ListItem key={key}>
                                   <DownloadLink
+                                    disabled={downloadLoading}
                                     forwardedAs="button"
                                     onClick={() => {
                                       trackEvent({
@@ -261,7 +269,10 @@ const ArticleDetailPage = ({ id }) => {
                                   >
                                     <ListItemContent>
                                       <span>{fileName}</span>
-                                      <Typography as="small">({`${type} ${size}`})</Typography>
+                                      <FileInfo as="small">
+                                        ({`${type} ${size}`})
+                                        {downloadLoading && <StyledLoadingSpinner size={15} />}
+                                      </FileInfo>
                                     </ListItemContent>
                                   </DownloadLink>
                                 </ListItem>

@@ -2,12 +2,12 @@ import React from 'react'
 import { connect } from 'react-redux'
 import {
   Column,
-  Row,
   CustomHTMLBlock,
-  EditorialMetaList,
   EditorialContent,
-  Paragraph,
+  EditorialMetaList,
   Heading,
+  Paragraph,
+  Row,
 } from '@datapunt/asc-ui'
 import { useMatomo } from '@datapunt/matomo-tracker-react'
 import { getLocationPayload } from '../../../store/redux-first-router/selectors'
@@ -16,7 +16,6 @@ import EditorialPage from '../../components/EditorialPage/EditorialPage'
 import { cmsConfig } from '../../../shared/config/config'
 import { toPublicationDetail } from '../../../store/redux-first-router/actions'
 import ContentContainer from '../../components/ContentContainer/ContentContainer'
-import { routing } from '../../routes'
 import ShareBar from '../../components/ShareBar/ShareBar'
 import getImageFromCms from '../../utils/getImageFromCms'
 import DocumentCover from '../../components/DocumentCover/DocumentCover'
@@ -31,12 +30,6 @@ const PublicationDetailPage = ({ id }) => {
   React.useEffect(() => {
     fetchData()
   }, [id])
-
-  React.useEffect(() => {
-    if (error) {
-      window.location.replace(routing.niet_gevonden.path)
-    }
-  }, [error])
 
   const {
     title,
@@ -56,7 +49,7 @@ const PublicationDetailPage = ({ id }) => {
   const linkAction = toPublicationDetail(id, slug)
 
   return (
-    <EditorialPage {...{ documentTitle, loading, linkAction, lang }} description={intro}>
+    <EditorialPage {...{ documentTitle, loading, linkAction, lang, error }} description={intro}>
       {!loading && (
         <Column wrap="true" span={{ small: 1, medium: 4, big: 6, large: 12, xLarge: 12 }}>
           <ContentContainer>
