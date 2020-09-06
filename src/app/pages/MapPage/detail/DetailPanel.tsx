@@ -1,6 +1,6 @@
 import { MapPanelContent } from '@datapunt/arm-core'
 import { Alert, Link, Paragraph, themeSpacing } from '@datapunt/asc-ui'
-import React, { Fragment, useContext, useEffect, useMemo } from 'react'
+import React, { Fragment, useContext, useMemo } from 'react'
 import styled from 'styled-components'
 import {
   fetchDetails,
@@ -15,8 +15,10 @@ import {
 } from '../../../../map/types/details'
 import DefinitionList, { DefinitionListItem } from '../../../components/DefinitionList'
 import LoadingSpinner from '../../../components/LoadingSpinner/LoadingSpinner'
+import { detailUrlParam } from '../query-params'
+import useParam from '../../../utils/useParam'
 import usePromise, { PromiseResult, PromiseStatus } from '../../../utils/usePromise'
-import PanoramaPreview from '../Components/PanoramaPreview'
+import PanoramaPreview from '../map-search/PanoramaPreview'
 import MapContext from '../MapContext'
 
 export interface DetailPanelProps {
@@ -37,9 +39,10 @@ const Spacer = styled.div`
 `
 
 const DetailPanel: React.FC<DetailPanelProps> = ({ detailUrl }) => {
-  const { setDetailUrl, setGeometry } = useContext(MapContext)
+  const [, setDetailUrl] = useParam(detailUrlParam)
+  const { setDetailFeature } = useContext(MapContext)
   const result = usePromise(
-    useMemo(() => {
+    useMemo(async () => {
       const detailParams = parseDetailPath(detailUrl)
       const serviceDefinition = getServiceDefinition(detailParams.type)
 
@@ -47,15 +50,18 @@ const DetailPanel: React.FC<DetailPanelProps> = ({ detailUrl }) => {
         return Promise.resolve(null)
       }
 
-      return fetchDetails(serviceDefinition, detailParams.id)
+      const details = await fetchDetails(serviceDefinition, detailParams.id)
+
+      setDetailFeature({
+        id: detailParams.id,
+        type: 'Feature',
+        geometry: details.geometry,
+        properties: null,
+      })
+
+      return details
     }, [detailUrl]),
   )
-
-  useEffect(() => {
-    if (result.status === PromiseStatus.Fulfilled && result.value) {
-      setGeometry(result.value.geometry)
-    }
-  }, [result])
 
   const subTitle = (result.status === PromiseStatus.Fulfilled && result.value?.result.title) || ''
 
