@@ -507,7 +507,6 @@ const servicesByEndpointType: { [type: string]: ServiceDefinition } = {
         {
           type: DetailResultItemType.DefinitionList,
           entries: [
-            { term: 'Kenmerk', description: result.kenmerk },
             { term: 'Soort handeling', description: result.type },
             { term: 'Bron', description: result.bron },
             { term: 'Datum rapport', description: result.date && formatDate(result.date) },
