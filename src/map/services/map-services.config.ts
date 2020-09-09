@@ -531,7 +531,6 @@ const servicesByEndpointType: { [type: string]: ServiceDefinition } = {
         {
           type: DetailResultItemType.DefinitionList,
           entries: [
-            { term: 'Kenmerk', description: result.kenmerk },
             { term: 'Datum brondocument', description: result.datum && formatDate(result.datum) },
             {
               term: 'Datum van inslag',
@@ -563,7 +562,6 @@ const servicesByEndpointType: { [type: string]: ServiceDefinition } = {
         {
           type: DetailResultItemType.DefinitionList,
           entries: [
-            { term: 'Kenmerk', description: result.kenmerk },
             { term: 'Soort rapportage', description: result.type },
             { term: 'Onderzoeksgebied', description: result.onderzoeksgebied },
             { term: 'Opdrachtnemer', description: result.opdrachtnemer },
