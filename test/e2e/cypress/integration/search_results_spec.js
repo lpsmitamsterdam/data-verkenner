@@ -176,7 +176,8 @@ describe('Search results', () => {
       )
       cy.checkFirstInSearchResults('Dossiers', 'Toerisme', DATA_SEARCH.searchResultsEditorialCard)
     })
-    it("Should search: 'Factsheet' and check if first autosuggestitem and searchresult are: 'Factsheet: Amsterdam fietsstad'", () => {
+    // Skipped becasue we need to improve autosuggest and search options first.
+    it.skip("Should search: 'Factsheet' and check if first autosuggestitem and searchresult are: 'Factsheet: Amsterdam fietsstad'", () => {
       cy.checkAutoSuggestFirstOfAll('Factsheet', 'Factsheet: Amsterdam fietsstad')
       cy.checkFirstInSearchResults(
         'Publicaties',

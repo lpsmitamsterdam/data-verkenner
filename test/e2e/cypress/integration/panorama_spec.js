@@ -95,9 +95,7 @@ describe('panorama module', () => {
   describe('user should be able to interact with the panorama', () => {
     it('should remember the state when closing the pano, and update to search results when clicked in map', () => {
       const panoUrl =
-        '/data/panorama/TMX7316010203-000355_pano_0000_000850/?center=52.3663697%2C4.8833909&detail-ref=0363300000004153%2Cbag%2Copenbareruimte' +
-        '&heading=117.99999999999999&lagen=pano-pano2016bi%3A1%7Cpano-pano2017bi%3A1%7Cpano-pano2018bi%3A1%7Cpano-pano2019bi%3A1%7Cpano-pano2020bi%3A1' +
-        '&locatie=52.3663696651629%2C4.88339092332249&reference=03630000004153%2Cbag%2Copenbareruimte'
+        '/data/panorama/TMX7316010203-001675_pano_0000_005373/?center=52.366303%2C4.8835141&detail-ref=0363300000004153%2Cbag%2Copenbareruimte&heading=-33.99999999999992&lagen=pano-pano2016bi%3A1%7Cpano-pano2017bi%3A1%7Cpano-pano2018bi%3A1%7Cpano-pano2019bi%3A1%7Cpano-pano2020bi%3A1&locatie=52.3663030317001%2C4.88351414921202&reference=03630000004153%2Cbag%2Copenbareruimte'
       let newUrl
 
       cy.defineGeoSearchRoutes()
@@ -177,7 +175,7 @@ describe('panorama module', () => {
       // should show the openbareruimte again
       cy.waitForGeoSearch()
       cy.get(ADDRESS_PAGE.panoramaThumbnail).should('exist').and('be.visible')
-      cy.contains('Elandsgracht')
+      cy.contains(/Elandsgracht|Leidsegracht/g)
     })
   })
 })
