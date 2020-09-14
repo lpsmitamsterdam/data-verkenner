@@ -169,10 +169,8 @@ const MapLegend = ({
 
   useEffect(() => {
     if (isOpen && ref.current) {
-      ref.current.scrollIntoView({
-        behavior: 'smooth',
-        block: 'start',
-      })
+      // Since our application can be embedded on other sites as a iFrame, we cannot use `scrollIntoView`, as this will cause the parent's document to scroll too
+      document.querySelector('.scroll-wrapper').scrollTop = ref.current.offsetTop
     }
   }, [ref.current, isOpen])
 
