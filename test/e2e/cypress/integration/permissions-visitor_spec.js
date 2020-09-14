@@ -1,5 +1,11 @@
 import { urls, values } from '../support/permissions-constants'
-import { DATA_SEARCH, DATA_SELECTION_TABLE, MAP, ADDRESS_PAGE } from '../support/selectors'
+import {
+  ADDRESS_PAGE,
+  DATA_SEARCH,
+  DATA_SELECTION_TABLE,
+  MAP,
+  MAP_LAYERS,
+} from '../support/selectors'
 
 describe('visitor permissions', () => {
   beforeEach(() => {
@@ -143,7 +149,7 @@ describe('visitor permissions', () => {
     cy.get(MAP.toggleMapPanel).click()
     cy.get(MAP.mapPanel).should('have.class', 'map-panel--expanded')
 
-    cy.get(MAP.checkboxVestigingen).check({ force: true })
+    cy.get(MAP_LAYERS.checkboxVestigingen).check({ force: true })
     cy.get(MAP.legendNotification)
       .contains(values.legendPermissionNotification)
       .should('exist')

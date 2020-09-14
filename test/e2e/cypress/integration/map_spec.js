@@ -1,6 +1,6 @@
 import PARAMETERS from '../../../../src/store/parameters'
 import { routing } from '../../../../src/app/routes'
-import { ADDRESS_PAGE, DATA_SEARCH, HOMEPAGE, MAP } from '../support/selectors'
+import { ADDRESS_PAGE, DATA_SEARCH, HOMEPAGE, MAP, MAP_LAYERS } from '../support/selectors'
 
 const { VIEW, VIEW_CENTER } = PARAMETERS
 
@@ -126,7 +126,7 @@ describe('map module', () => {
       cy.get(MAP.mapPanel).should('have.class', 'map-panel--expanded')
       // the scroll wrapper should be visible when map panel is expanded
       cy.get(DATA_SEARCH.scrollWrapper).should('exist').and('be.visible')
-      cy.get('#Gebiedsindeling').check({ force: true })
+      cy.get(MAP_LAYERS.checkboxGebiedsindeling).check({ force: true })
       cy.get(MAP.mapOverlayPane).children().should('exist')
       cy.get(MAP.mapOverlayPane).find('canvas').should('exist')
     })
@@ -173,31 +173,31 @@ describe('map module', () => {
       cy.contains('Panden naar bouwjaar').should('be.visible')
 
       // Checkboxes related to Kadastrale perceelsgrenzen are not visible
-      cy.get(MAP.checkboxBurgerlijkeGemeente).should('not.be.visible')
-      cy.get(MAP.checkboxKadastraleGemeente).should('not.be.visible')
-      cy.get(MAP.checkboxKadastraleSectie).should('not.be.visible')
-      cy.get(MAP.checkboxKadastraalObject).should('not.be.visible')
+      cy.get(MAP_LAYERS.checkboxOZKKPBurgerlijkeGemeente).should('not.be.visible')
+      cy.get(MAP_LAYERS.checkboxOZKKPKadastraleGemeente).should('not.be.visible')
+      cy.get(MAP_LAYERS.checkboxOZKKPKadastraleSectie).should('not.be.visible')
+      cy.get(MAP_LAYERS.checkboxOZKKPKadastraalObject).should('not.be.visible')
 
       cy.get(MAP.mapZoomIn).click()
       cy.get(MAP.mapOverlayPane).children().should('not.exist')
       cy.get(MAP.imageLayer).should('not.exist')
-      cy.get(MAP.checkboxKadastralePercelen).click({ force: true })
+      cy.get(MAP_LAYERS.checkboxOZKadastralePerceelsgrenzen).click({ force: true })
 
       // Checkboxes related to Kadastrale perceelsgrenzen are visible
-      cy.get(MAP.checkboxBurgerlijkeGemeente).should('be.visible').and('be.checked')
-      cy.get(MAP.checkboxKadastraleGemeente).should('be.visible').and('be.checked')
-      cy.get(MAP.checkboxKadastraleSectie).should('be.visible').and('be.checked')
-      cy.get(MAP.checkboxKadastraalObject).should('be.visible').and('be.checked')
+      cy.get(MAP_LAYERS.checkboxOZKKPBurgerlijkeGemeente).should('be.visible').and('be.checked')
+      cy.get(MAP_LAYERS.checkboxOZKKPKadastraleGemeente).should('be.visible').and('be.checked')
+      cy.get(MAP_LAYERS.checkboxOZKKPKadastraleSectie).should('be.visible').and('be.checked')
+      cy.get(MAP_LAYERS.checkboxOZKKPKadastraalObject).should('be.visible').and('be.checked')
 
       // Check if layers exists
       cy.get(MAP.imageLayer).should('have.length', 4)
 
-      cy.get(MAP.checkboxKadastralePercelen).click({ force: true })
+      cy.get(MAP_LAYERS.checkboxOZKadastralePerceelsgrenzen).click({ force: true })
       cy.get(MAP.mapOverlayPane).children().should('not.exist')
-      cy.get(MAP.checkboxKadastralePercelen).click({ force: true })
+      cy.get(MAP_LAYERS.checkboxOZKadastralePerceelsgrenzen).click({ force: true })
 
-      cy.get(MAP.checkboxKadastraleGemeente).uncheck({ force: true })
-      cy.get(MAP.checkboxKadastraleSectie).uncheck({ force: true })
+      cy.get(MAP_LAYERS.checkboxOZKKPKadastraleGemeente).uncheck({ force: true })
+      cy.get(MAP_LAYERS.checkboxOZKKPKadastraleSectie).uncheck({ force: true })
 
       // Check if 2 layers are visible and 2 are not visible, based on opacity
       cy.get(MAP.imageLayer)
@@ -221,8 +221,8 @@ describe('map module', () => {
       cy.get(MAP.mapDetailResultPanel).should('exist').and('be.visible')
       cy.get(MAP.iconMapMarker).should('be.visible')
 
-      cy.get(`#${CSS.escape('Onroerende zaken')}`).click({ force: true })
-      cy.get(`#${CSS.escape('Onroerende zaken')}`).click({ force: true })
+      cy.get(MAP_LAYERS.checkboxOnroerendeZaken).click({ force: true })
+      cy.get(MAP_LAYERS.checkboxOnroerendeZaken).click({ force: true })
       cy.get(MAP.imageLayer).should('not.exist')
     })
   })
@@ -262,18 +262,22 @@ describe('map module', () => {
         .parents(MAP.mapLegendItemButton)
         .click('right')
 
-      cy.get(MAP.checkboxVestigingBouw).check({ force: true }).should('be.checked')
-      cy.get(MAP.checkboxVestigingCultuur).check({ force: true }).should('be.checked')
-      cy.get(MAP.checkboxVestigingFinance).check({ force: true }).should('be.checked')
-      cy.get(MAP.checkboxVestigingHandel).check({ force: true }).should('be.checked')
-      cy.get(MAP.checkboxVestigingHoreca).check({ force: true }).should('be.checked')
-      cy.get(MAP.checkboxVestigingIt).check({ force: true }).should('be.checked')
-      cy.get(MAP.checkboxVestigingLandbouw).check({ force: true }).should('be.checked')
-      cy.get(MAP.checkboxVestigingOverheid).check({ force: true }).should('be.checked')
-      cy.get(MAP.checkboxVestigingPersDiensverlening).check({ force: true }).should('be.checked')
-      cy.get(MAP.checkboxVestigingProductie).check({ force: true }).should('be.checked')
-      cy.get(MAP.checkboxVestigingZakDienstverlening).check({ force: true }).should('be.checked')
-      cy.get(MAP.checkboxVestigingOverige).check({ force: true }).should('be.checked')
+      cy.get(MAP_LAYERS.checkboxVestigingBouw).check({ force: true }).should('be.checked')
+      cy.get(MAP_LAYERS.checkboxVestigingCultuur).check({ force: true }).should('be.checked')
+      cy.get(MAP_LAYERS.checkboxVestigingFinance).check({ force: true }).should('be.checked')
+      cy.get(MAP_LAYERS.checkboxVestigingHandel).check({ force: true }).should('be.checked')
+      cy.get(MAP_LAYERS.checkboxVestigingHoreca).check({ force: true }).should('be.checked')
+      cy.get(MAP_LAYERS.checkboxVestigingIt).check({ force: true }).should('be.checked')
+      cy.get(MAP_LAYERS.checkboxVestigingLandbouw).check({ force: true }).should('be.checked')
+      cy.get(MAP_LAYERS.checkboxVestigingOverheid).check({ force: true }).should('be.checked')
+      cy.get(MAP_LAYERS.checkboxVestigingPersDiensverlening)
+        .check({ force: true })
+        .should('be.checked')
+      cy.get(MAP_LAYERS.checkboxVestigingProductie).check({ force: true }).should('be.checked')
+      cy.get(MAP_LAYERS.checkboxVestigingZakDienstverlening)
+        .check({ force: true })
+        .should('be.checked')
+      cy.get(MAP_LAYERS.checkboxVestigingOverige).check({ force: true }).should('be.checked')
 
       // All 12 layers are visible after login
       cy.get(MAP.legendNotification)
@@ -310,18 +314,22 @@ describe('map module', () => {
         .click('right')
       cy.get(MAP.imageLayer).should('not.exist')
 
-      cy.get(MAP.checkboxVestigingBouw).check({ force: true }).should('be.checked')
-      cy.get(MAP.checkboxVestigingCultuur).check({ force: true }).should('be.checked')
-      cy.get(MAP.checkboxVestigingFinance).check({ force: true }).should('be.checked')
-      cy.get(MAP.checkboxVestigingHandel).check({ force: true }).should('be.checked')
-      cy.get(MAP.checkboxVestigingHoreca).check({ force: true }).should('be.checked')
-      cy.get(MAP.checkboxVestigingIt).check({ force: true }).should('be.checked')
-      cy.get(MAP.checkboxVestigingLandbouw).check({ force: true }).should('be.checked')
-      cy.get(MAP.checkboxVestigingOverheid).check({ force: true }).should('be.checked')
-      cy.get(MAP.checkboxVestigingPersDiensverlening).check({ force: true }).should('be.checked')
-      cy.get(MAP.checkboxVestigingProductie).check({ force: true }).should('be.checked')
-      cy.get(MAP.checkboxVestigingZakDienstverlening).check({ force: true }).should('be.checked')
-      cy.get(MAP.checkboxVestigingOverige).check({ force: true }).should('be.checked')
+      cy.get(MAP_LAYERS.checkboxVestigingBouw).check({ force: true }).should('be.checked')
+      cy.get(MAP_LAYERS.checkboxVestigingCultuur).check({ force: true }).should('be.checked')
+      cy.get(MAP_LAYERS.checkboxVestigingFinance).check({ force: true }).should('be.checked')
+      cy.get(MAP_LAYERS.checkboxVestigingHandel).check({ force: true }).should('be.checked')
+      cy.get(MAP_LAYERS.checkboxVestigingHoreca).check({ force: true }).should('be.checked')
+      cy.get(MAP_LAYERS.checkboxVestigingIt).check({ force: true }).should('be.checked')
+      cy.get(MAP_LAYERS.checkboxVestigingLandbouw).check({ force: true }).should('be.checked')
+      cy.get(MAP_LAYERS.checkboxVestigingOverheid).check({ force: true }).should('be.checked')
+      cy.get(MAP_LAYERS.checkboxVestigingPersDiensverlening)
+        .check({ force: true })
+        .should('be.checked')
+      cy.get(MAP_LAYERS.checkboxVestigingProductie).check({ force: true }).should('be.checked')
+      cy.get(MAP_LAYERS.checkboxVestigingZakDienstverlening)
+        .check({ force: true })
+        .should('be.checked')
+      cy.get(MAP_LAYERS.checkboxVestigingOverige).check({ force: true }).should('be.checked')
 
       // Selection of layers results in 12
       cy.get(MAP.imageLayer).should('exist').and('have.length', 12)

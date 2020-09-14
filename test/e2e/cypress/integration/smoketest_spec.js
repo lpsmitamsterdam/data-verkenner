@@ -84,7 +84,7 @@ describe('Smoketest', () => {
       cy.wait(700)
       cy.get(MAP.mapContainer).click(1139, 424)
       cy.waitForGeoSearch()
-      cy.get(MAP.mapSearchResultsPanel, { timeout: 80000 }).should('be.visible')
+      cy.get(MAP.mapSearchResultsPanel, { timeout: 40000 }).should('be.visible')
 
       // Check data in detail panel
       cy.get(MAP.mapSearchResultsCategoryHeader).should('contain', 'Pand').and('be.visible')
@@ -117,14 +117,14 @@ describe('Smoketest', () => {
       cy.get(MAP.buttonEnlarge).click()
       cy.waitForGeoSearch()
       cy.wait('@getPand')
-      cy.get(DATA_SEARCH.searchResultsGrid, { timeout: 80000 }).should('be.visible')
+      cy.get(DATA_SEARCH.searchResultsGrid, { timeout: 40000 }).should('be.visible')
 
       // Maximize map again
       cy.get(MAP.mapMaximize).should('be.visible').click()
       cy.wait('@getNummeraanduiding')
       cy.wait('@getMonument')
       cy.waitForGeoSearch()
-      cy.get(MAP.mapSearchResultsPanel, { timeout: 80000 }).should('be.visible')
+      cy.get(MAP.mapSearchResultsPanel, { timeout: 40000 }).should('be.visible')
       cy.contains('0363100012168052').should('be.visible')
 
       // Open panorama view
@@ -133,10 +133,10 @@ describe('Smoketest', () => {
       cy.waitForGeoSearch()
 
       // Open details of Burgwallen-Oude Zijde'
-      cy.contains('Burgwallen-Oude Zijde', { timeout: 80000 }).click()
-      cy.get(ADDRESS_PAGE.linkVestigingen, { timeout: 80000 })
+      cy.contains('Burgwallen-Oude Zijde', { timeout: 40000 }).click()
+      cy.get(ADDRESS_PAGE.linkVestigingen, { timeout: 40000 })
         .contains('In tabel weergeven')
-        .click()
+        .click({ force: true })
     })
     it('Should see no vestigingen or kadastrale objecten ', () => {
       // Check if vestigingen and kadstrale objecten are not visible, because user is not logged in
@@ -152,8 +152,9 @@ describe('Smoketest', () => {
       ).should('be.visible')
       cy.get(DATA_SEARCH.linklogin).should('be.visible')
       cy.get(TABLES.tableValue).should('not.be.visible')
-      cy.wait(1000)
-      cy.get(ADDRESS_PAGE.tab).contains('Kadastrale objecten').click()
+      cy.get(ADDRESS_PAGE.tab, { timeout: 40000 })
+        .contains('Kadastrale objecten')
+        .click({ force: true })
       cy.url('contains', '/data/brk/kadastrale-objecten/')
       cy.get(TABLES.tableValue).should('not.be.visible')
       cy.contains('Tabel weergeven').click()
@@ -204,7 +205,7 @@ describe('Smoketest', () => {
       cy.contains(
         'Medewerkers/ketenpartners van Gemeente Amsterdam kunnen inloggen om maatschappelijke activiteiten en vestigingen te bekijken.',
       ).should('not.be.visible')
-      cy.get(TABLES.tableValue).should('be.visible')
+      cy.get(TABLES.tableValue, { timeout: 40000 }).should('be.visible')
       cy.contains('Kaart weergeven').click()
       cy.url('contains', '/data/hr/vestigingen/')
       cy.wait('@getHrDataGeo')
@@ -213,18 +214,20 @@ describe('Smoketest', () => {
       cy.get(ADDRESS_PAGE.iconCluster).should('be.visible')
       cy.get(ADDRESS_PAGE.dataSelection).should('be.visible')
       cy.get(TABLES.activeFilterItem).should('contain', 'Burgwallen-Oude Zijde')
-      cy.get(TABLES.tableValue).should('be.visible')
-      cy.wait(1000)
+      cy.get(TABLES.tableValue, { timeout: 40000 }).should('be.visible')
 
       // Open kadastrale objecten table, should see kadastrale objecten
-      cy.get(ADDRESS_PAGE.tab).contains('Kadastrale objecten').click()
+      cy.get(ADDRESS_PAGE.tab).eq(2).click({ force: true })
       cy.wait('@getBRK')
       cy.url('contains', '/data/brk/kadastrale-objecten/')
       cy.get(TABLES.tableValue).should('be.visible')
       cy.contains('Tabel weergeven').click()
-      cy.get(HEADINGS.dataSelectionHeading).should('contain', 'Kadastrale objecten')
-      cy.get(TABLES.tableValue).should('be.visible')
       cy.wait('@getBRK2')
+      cy.get(HEADINGS.dataSelectionHeading, { timeout: 40000 }).should(
+        'contain',
+        'Kadastrale objecten',
+      )
+      cy.get(TABLES.tableValue).should('be.visible')
     })
   })
   describe('Open dataset and publication', () => {

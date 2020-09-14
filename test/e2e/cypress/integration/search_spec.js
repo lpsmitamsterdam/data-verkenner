@@ -43,7 +43,7 @@ describe('search module', () => {
     })
 
     it('should go to the detail page when selecting a result', () => {
-      cy.get(DATA_SEARCH.autoSuggestDropdownCategories).eq(2).click()
+      cy.contains('Bodemkwaliteit').click()
       cy.wait('@graphql')
       cy.wait('@graphql')
       cy.url().should('include', '/data/?modus=kaart&lagen')
