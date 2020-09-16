@@ -156,7 +156,9 @@ describe('datasets module', () => {
       cy.wait('@getDataset')
 
       // Check if dataset is shown
-      cy.get(DATA_SEARCH.headerSubTitle).should('contain', 'Dataset').and('be.visible')
+      cy.get(DATA_SEARCH.headerSubTitle, { timeout: 10000 })
+        .should('contain', 'Dataset')
+        .and('be.visible')
       cy.get(DATA_SEARCH.headerSubTitle).should('contain', 'Resources').and('be.visible')
       cy.get(DATA_SEARCH.headerSubTitle).should('contain', 'Details').and('be.visible')
       cy.get(DATA_SEARCH.headerSubTitle).should('contain', "Thema's").and('be.visible')

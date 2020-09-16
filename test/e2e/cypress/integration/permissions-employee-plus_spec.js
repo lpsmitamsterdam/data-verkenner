@@ -1,5 +1,5 @@
 import { urls, values } from '../support/permissions-constants'
-import { DATA_SEARCH, DATA_SELECTION_TABLE, MAP, TABLES } from '../support/selectors'
+import { DATA_SEARCH, DATA_SELECTION_TABLE, MAP, MAP_LAYERS, TABLES } from '../support/selectors'
 
 describe('employee PLUS permissions', () => {
   beforeEach(() => {
@@ -135,9 +135,9 @@ describe('employee PLUS permissions', () => {
   it('6. Should allow a plus employee to view all map layers', () => {
     cy.visit(urls.map)
     cy.get(MAP.toggleMapPanel).click()
-    cy.get(MAP.checkboxGebiedsindeling).check({ force: true })
-    cy.get(MAP.checkboxHoogte).check({ force: true })
-    cy.get(MAP.checkboxVestigingen).check({ force: true })
+    cy.get(MAP_LAYERS.checkboxGebiedsindeling).check({ force: true })
+    cy.get(MAP_LAYERS.checkboxHoogte).check({ force: true })
+    cy.get(MAP_LAYERS.checkboxVestigingen).check({ force: true })
     cy.get(MAP.legendNotification).should('not.contain', values.legendPermissionNotification)
   })
 

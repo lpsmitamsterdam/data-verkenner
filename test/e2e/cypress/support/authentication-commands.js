@@ -63,6 +63,7 @@ Cypress.Commands.add('login', (type = 'EMPLOYEE_PLUS') => {
             type: type.toLowerCase(),
           },
           followRedirect: false,
+          failOnStatusCode: false,
         }),
       )
 

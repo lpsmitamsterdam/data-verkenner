@@ -9,19 +9,16 @@ import {
   themeSpacing,
 } from '@datapunt/asc-ui'
 import { useMatomo } from '@datapunt/matomo-tracker-react'
+import classNames from 'classnames'
 import queryString from 'querystring'
 import React, { useEffect, useMemo, useState } from 'react'
 import { useSelector } from 'react-redux'
 import styled, { css } from 'styled-components'
 import LoginLink from '../../../app/components/Links/LoginLink/LoginLink'
+import { ReactComponent as SearchPlus } from '../../../shared/assets/icons/search-plus.svg'
 import { isPrintOrEmbedMode } from '../../../shared/ducks/ui/ui'
 import MAP_CONFIG from '../../services/map.config'
-
-const isAuthorised = (layer, user) =>
-  !layer.authScope || (user.authenticated && user.scopes.includes(layer.authScope))
-
-const isInsideZoomLevel = (layer, zoomLevel) =>
-  zoomLevel >= layer.minZoom && zoomLevel <= layer.maxZoom
+import { isAuthorised } from '../../utils/map-layer'
 
 const TitleWrapper = styled.div`
   display: flex;
@@ -95,6 +92,8 @@ const MapLegend = ({
   onLayerToggle,
   title,
   overlays,
+  onRemoveLayers,
+  onAddLayers,
 }) => {
   const ref = React.createRef()
   const { trackEvent } = useMatomo()
@@ -170,10 +169,8 @@ const MapLegend = ({
 
   useEffect(() => {
     if (isOpen && ref.current) {
-      ref.current.scrollIntoView({
-        behavior: 'smooth',
-        block: 'start',
-      })
+      // Since our application can be embedded on other sites as a iFrame, we cannot use `scrollIntoView`, as this will cause the parent's document to scroll too
+      document.querySelector('.scroll-wrapper').scrollTop = ref.current.offsetTop
     }
   }, [ref.current, isOpen])
 
@@ -194,9 +191,31 @@ const MapLegend = ({
     if (hasOpenMapLayers) setOpen(true)
   }, [hasOpenMapLayers])
 
+  const addOrRemoveLayer = (checked, layers, onlyInvisible = false) => {
+    const layersToFilter = onlyInvisible ? layers.filter(({ isVisible }) => !isVisible) : layers
+    const filteredMapLayers = layersToFilter
+      .map((mapLayer) => {
+        if (mapLayer?.legendItems?.length && mapLayer?.legendItems?.every(({ id }) => id)) {
+          return mapLayer?.legendItems?.map((legendItem) => legendItem.id)
+        }
+        return mapLayer.id
+      })
+      .flat()
+      .filter((id) => id)
+
+    if (checked) {
+      if (onAddLayers) {
+        onAddLayers(filteredMapLayers)
+      }
+    } else if (onRemoveLayers) {
+      onRemoveLayers(filteredMapLayers)
+    }
+  }
+
   const handleOnChangeCollection = (e) => {
     // We want to check all the layers when user clicks on an indeterminate checkbox
     if (collectionIndeterminate) {
+      addOrRemoveLayer(e.currentTarget.checked, mapLayers, true)
       mapLayers
         .filter(({ isVisible }) => !isVisible)
         .forEach((mapLayer) => {
@@ -217,6 +236,7 @@ const MapLegend = ({
         handleLayerToggle(e.currentTarget.checked, mapLayer)
       })
       setOpen(e.currentTarget.checked)
+      addOrRemoveLayer(e.currentTarget.checked, activeMapLayers)
     }
   }
 
@@ -226,18 +246,17 @@ const MapLegend = ({
         (isPrintOrEmbedView && mapLayers.some(({ isEmbedded }) => isEmbedded))) && ( // Also display the collection title when maplayer is embedded
         <LayerButton ref={ref} onClick={() => setOpen(!isOpen)} isOpen={isOpen}>
           <TitleWrapper>
-            <CollectionLabel key={title} htmlFor={title} label={title}>
-              {!isPrintOrEmbedView ? (
-                <StyledCheckbox
-                  id={title}
-                  className="checkbox"
-                  name={title}
-                  indeterminate={collectionIndeterminate}
-                  checked={allVisible}
-                  onChange={handleOnChangeCollection}
-                />
-              ) : null}
-            </CollectionLabel>
+            {!isPrintOrEmbedView ? (
+              <StyledCheckbox
+                className="checkbox"
+                name={title}
+                indeterminate={collectionIndeterminate}
+                checked={allVisible}
+                onChange={handleOnChangeCollection}
+                aria-label={title}
+              />
+            ) : null}
+            <CollectionLabel key={title} label={title} />
           </TitleWrapper>
           <Icon size={15}>
             <ChevronDown />
@@ -273,131 +292,130 @@ const MapLegend = ({
                     }selectable-legend
                   `}
                     >
-                      <StyledLabel key={mapLayer.id} htmlFor={mapLayer.id} label={mapLayer.title}>
-                        <>
-                          {!hasLegendItems ? (
-                            <div
-                              className={`
-                            map-legend__image
-                            map-legend__image--selectable
-                          `}
-                            >
-                              <img
-                                alt={mapLayer.title}
-                                src={constructLegendIconUrl(mapLayer, mapLayer)}
-                              />
-                            </div>
-                          ) : null}
-                          <StyledCheckbox
-                            id={mapLayer.id}
-                            className="checkbox"
-                            variant="tertiary"
-                            checked={layerIsChecked}
-                            indeterminate={layerIsIndeterminate}
-                            name={mapLayer.title}
-                            onChange={
-                              /* istanbul ignore next */
-                              (e) => {
-                                // Sometimes we dont want the active maplayers to be deleted from the query parameters in the url
-                                if (isPrintOrEmbedView || layerIsIndeterminate) {
-                                  return mapLayer.legendItems.length > 0 &&
-                                    mapLayer.legendItems.some(({ id }) => id !== null)
-                                    ? mapLayer.legendItems
-                                        .filter(({ isVisible }) =>
-                                          layerIsIndeterminate ? !isVisible : true,
+                      <StyledLabel
+                        className="map-legend__label"
+                        key={mapLayer.id}
+                        htmlFor={mapLayer.id}
+                        label={mapLayer.title}
+                      >
+                        <StyledCheckbox
+                          id={mapLayer.id}
+                          className="checkbox"
+                          variant="tertiary"
+                          checked={layerIsChecked && !layerIsIndeterminate}
+                          indeterminate={layerIsIndeterminate}
+                          name={mapLayer.title}
+                          onChange={
+                            /* istanbul ignore next */
+                            (e) => {
+                              addOrRemoveLayer(e.currentTarget.checked, [mapLayer])
+                              // Sometimes we dont want the active maplayers to be deleted from the query parameters in the url
+                              if (isPrintOrEmbedView || layerIsIndeterminate) {
+                                return mapLayer.legendItems.length > 0 &&
+                                  mapLayer.legendItems.some(({ id }) => id !== null)
+                                  ? mapLayer.legendItems
+                                      .filter(({ isVisible }) =>
+                                        layerIsIndeterminate ? !isVisible : true,
+                                      )
+                                      .forEach(({ id }) => {
+                                        onLayerVisibilityToggle(
+                                          id,
+                                          layerIsIndeterminate ? false : !e.currentTarget.checked,
                                         )
-                                        .forEach(({ id }) => {
-                                          onLayerVisibilityToggle(
-                                            id,
-                                            layerIsIndeterminate ? false : !e.currentTarget.checked,
-                                          )
-                                        })
-                                    : onLayerVisibilityToggle(mapLayer.id, !e.currentTarget.checked)
-                                }
-                                return handleLayerToggle(e.currentTarget.checked, mapLayer)
+                                      })
+                                  : onLayerVisibilityToggle(mapLayer.id, !e.currentTarget.checked)
                               }
+                              return handleLayerToggle(e.currentTarget.checked, mapLayer)
                             }
-                          />
-                        </>
+                          }
+                        />
                       </StyledLabel>
+                      {isAuthorised(mapLayer, user) &&
+                        layerIsChecked &&
+                        zoomLevel < mapLayer.minZoom && (
+                          <div
+                            className={classNames('map-legend__visibility', {
+                              'map-legend__visibility--no-legend-image': hasLegendItems,
+                            })}
+                            title="Kaartlaag zichtbaar bij verder inzoomen"
+                          >
+                            <Icon size={16} color={themeColor('primary', 'main')}>
+                              <SearchPlus />
+                            </Icon>
+                          </div>
+                        )}
+                      {!hasLegendItems ? (
+                        <div className="map-legend__image">
+                          <img
+                            alt={mapLayer.title}
+                            src={constructLegendIconUrl(mapLayer, mapLayer)}
+                          />
+                        </div>
+                      ) : null}
                     </div>
                     {!isAuthorised(mapLayer, user) && (
                       <div className="map-legend__notification">
                         <span>
-                          <LoginLink variant="blank">Zichtbaar na inloggen</LoginLink>
+                          <LoginLink inList={false}>Zichtbaar na inloggen</LoginLink>
                         </span>
                       </div>
                     )}
-                    {isAuthorised(mapLayer, user) && !isInsideZoomLevel(mapLayer, zoomLevel) && (
-                      <div className="map-legend__notification">
-                        <span>
-                          {`Zichtbaar bij verder ${
-                            zoomLevel < mapLayer.minZoom ? 'inzoomen' : 'uitzoomen'
-                          }`}
-                        </span>
-                      </div>
-                    )}
-                    {isAuthorised(mapLayer, user) &&
-                      layerIsChecked &&
-                      isInsideZoomLevel(mapLayer, zoomLevel) &&
-                      !mapLayer.disabled && (
-                        <ul className="map-legend__items">
-                          {hasLegendItems
-                            ? mapLayer.legendItems.map((legendItem, legendItemIndex) => {
-                                const legendItemIsVisible = legendItem.isVisible
-                                const LegendLabel = !legendItem.notSelectable
-                                  ? StyledLabel
-                                  : NonSelectableLegendParagraph
-                                return !legendItemIsVisible && printMode ? null : (
-                                  <li
-                                    className="map-legend__item"
-                                    // eslint-disable-next-line react/no-array-index-key
-                                    key={legendItemIndex}
+                    {isAuthorised(mapLayer, user) && layerIsChecked && !mapLayer.disabled && (
+                      <ul className="map-legend__items">
+                        {hasLegendItems
+                          ? mapLayer.legendItems.map((legendItem) => {
+                              const legendItemIsVisible = legendItem.isVisible
+                              const LegendLabel = !legendItem.notSelectable
+                                ? StyledLabel
+                                : NonSelectableLegendParagraph
+                              return !legendItemIsVisible && printMode ? null : (
+                                <li className="map-legend__item" key={legendItem.id}>
+                                  <LegendLabel
+                                    className="map-legend__label"
+                                    htmlFor={legendItem.id}
+                                    label={legendItem.title}
                                   >
-                                    <LegendLabel
-                                      key={legendItem.id}
-                                      htmlFor={legendItem.id}
-                                      label={legendItem.title}
-                                    >
-                                      <div
-                                        className={`
-                            map-legend__image
-                            map-legend__image--${
-                              legendItem.notSelectable ? 'not-selectable' : 'selectable'
-                            }
-                          `}
-                                      >
-                                        <img
-                                          alt={legendItem.title}
-                                          src={constructLegendIconUrl(mapLayer, legendItem)}
-                                        />
-                                      </div>
-                                      {!legendItem.notSelectable ? (
-                                        <StyledCheckbox
-                                          id={legendItem.id}
-                                          className="checkbox"
-                                          variant="tertiary"
-                                          checked={legendItemIsVisible}
-                                          name={legendItem.title}
-                                          onChange={
-                                            /* istanbul ignore next */
-                                            () =>
-                                              onLayerVisibilityToggle(
-                                                legendItem.id,
-                                                legendItemIsVisible,
-                                              )
+                                    {!legendItem.notSelectable ? (
+                                      <StyledCheckbox
+                                        id={legendItem.id}
+                                        className="checkbox"
+                                        variant="tertiary"
+                                        checked={legendItemIsVisible}
+                                        name={legendItem.title}
+                                        onChange={
+                                          /* istanbul ignore next */
+                                          () => {
+                                            onLayerVisibilityToggle(
+                                              legendItem.id,
+                                              legendItemIsVisible,
+                                            )
+
+                                            if (!legendItemIsVisible) {
+                                              if (onAddLayers) {
+                                                onAddLayers([legendItem.id])
+                                              }
+                                            } else if (onRemoveLayers) {
+                                              onRemoveLayers([legendItem.id])
+                                            }
                                           }
-                                        />
-                                      ) : (
-                                        legendItem.title
-                                      )}
-                                    </LegendLabel>
-                                  </li>
-                                )
-                              })
-                            : null}
-                        </ul>
-                      )}
+                                        }
+                                      />
+                                    ) : (
+                                      legendItem.title
+                                    )}
+                                  </LegendLabel>
+                                  <div className="map-legend__image">
+                                    <img
+                                      alt={legendItem.title}
+                                      src={constructLegendIconUrl(mapLayer, legendItem)}
+                                    />
+                                  </div>
+                                </li>
+                              )
+                            })
+                          : null}
+                      </ul>
+                    )}
                   </li>
                 )
               })}

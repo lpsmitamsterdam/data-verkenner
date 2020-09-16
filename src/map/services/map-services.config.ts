@@ -1,14 +1,27 @@
+import { LatLngLiteral } from 'leaflet'
 import NotificationLevel from '../../app/models/notification'
+import getFileName from '../../app/utils/getFileName'
+import environment from '../../environment'
+import { DEFAULT_LOCALE } from '../../shared/config/locale.config'
+import { fetchWithToken } from '../../shared/services/api/api'
 import formatDate from '../../shared/services/date-formatter/date-formatter'
-import { DetailResult, DetailResultItemType, DetailResultNotification } from '../types/details'
+import {
+  DetailResult,
+  DetailResultItem,
+  DetailResultItemType,
+  DetailResultNotification,
+} from '../types/details'
 import adressenNummeraanduiding from './adressen-nummeraanduiding/adressen-nummeraanduiding'
 import categoryLabels from './map-search/category-labels'
+import { fetchDetailData } from './map/fetchDetails'
+import { getServiceDefinition } from './map/getServiceDefinition'
 import {
   adressenPand,
   adressenVerblijfsobject,
   bekendmakingen,
   evenementen,
   explosieven,
+  formatSquareMetre,
   grexProject,
   kadastraalObject,
   meetbout,
@@ -60,12 +73,12 @@ export const endpointTypes = {
   parkeervak: 'parkeervakken/parkeervakken/',
   parkeerzones: 'vsd/parkeerzones/',
   parkeerzonesUitz: 'vsd/parkeerzones_uitz/',
-  precarioShips: 'v1/precariobelasting/woonschepen/',
-  precarioComVessels: 'v1/precariobelasting/bedrijfsvaartuigen/',
-  precarioPassVessels: 'v1/precariobelasting/passagiersvaartuigen/',
-  precarioTerraces: 'v1/precariobelasting/terrassen/',
+  precarioShips: 'precariobelasting/woonschepen',
+  precarioComVessels: 'precariobelasting/bedrijfsvaartuigen',
+  precarioPassVessels: 'precariobelasting/passagiersvaartuigen',
+  precarioTerraces: 'precariobelasting/terrassen',
   reclamebelasting: 'vsd/reclamebelasting/',
-  tunnels: 'v1/hoofdroutes/tunnels_gevaarlijke_stoffen/',
+  tunnels: 'hoofdroutes/tunnels_gevaarlijke_stoffen',
   vastgoed: 'vsd/vastgoed',
   vestiging: 'handelsregister/vestiging/',
   winkelgebied: 'vsd/winkgeb',
@@ -80,8 +93,8 @@ export interface ServiceDefinition {
   // TODO: 'endpoint' should be required once all service definitions have one.
   endpoint?: string
   authScope?: string
-  normalization?: (result: any) => any
-  mapDetail: (result: any) => DetailResult
+  normalization?: (result: any) => any | Promise<any>
+  mapDetail: (result: any, location: LatLngLiteral) => DetailResult | Promise<DetailResult>
 }
 
 const servicesByEndpointType: { [type: string]: ServiceDefinition } = {
@@ -383,10 +396,13 @@ const servicesByEndpointType: { [type: string]: ServiceDefinition } = {
         {
           type: DetailResultItemType.DefinitionList,
           entries: [
+            { term: 'Naam', description: result._display },
             { term: 'Type', description: result.biz_type },
             { term: 'Heffingsgrondslag', description: result.heffingsgrondslag },
             { term: 'Jaarlijkse heffing', description: result.heffing_display },
             { term: 'Aantal heffingsplichtigen', description: result.bijdrageplichtigen },
+            { term: 'Website', description: result.website, link: result.website },
+            { term: 'Verordening', description: result.verordening, link: result.verordening },
           ].filter(hasDescription),
         },
       ],
@@ -503,9 +519,10 @@ const servicesByEndpointType: { [type: string]: ServiceDefinition } = {
         {
           type: DetailResultItemType.DefinitionList,
           entries: [
-            { term: 'Datum rapport', description: result.date && formatDate(result.date) },
             { term: 'Soort handeling', description: result.type },
             { term: 'Bron', description: result.bron },
+            { term: 'Datum rapport', description: result.date && formatDate(result.date) },
+            { term: 'Intekening', description: result.intekening },
             {
               term: 'Opmerkingen',
               description: result.opmerkingen,
@@ -526,14 +543,21 @@ const servicesByEndpointType: { [type: string]: ServiceDefinition } = {
         {
           type: DetailResultItemType.DefinitionList,
           entries: [
-            { term: 'Datum', description: result.datum },
+            { term: 'Datum brondocument', description: result.datum && formatDate(result.datum) },
             {
               term: 'Datum van inslag',
               description: result.datum_inslag && formatDate(result.datum_inslag),
             },
             { term: 'Soort handeling', description: result.type },
             { term: 'Bron', description: result.bron },
+            { term: 'Intekening', description: result.intekening },
+            { term: 'Nouwkeurigheid', description: result.nouwkeurig },
             { term: 'Opmerkingen', description: result.opmerkingen },
+            {
+              term: 'Oorlogsincidentrapport',
+              description: getFileName(result.pdf),
+              link: result.pdf,
+            },
           ].filter(hasDescription),
         },
       ],
@@ -550,10 +574,12 @@ const servicesByEndpointType: { [type: string]: ServiceDefinition } = {
         {
           type: DetailResultItemType.DefinitionList,
           entries: [
-            { term: 'Datum rapport', description: result.date && formatDate(result.date) },
             { term: 'Soort rapportage', description: result.type },
             { term: 'Onderzoeksgebied', description: result.onderzoeksgebied },
+            { term: 'Opdrachtnemer', description: result.opdrachtnemer },
+            { term: 'Opdrachtgever', description: result.opdrachtgever },
             { term: 'Verdacht gebied', description: result.verdacht_gebied },
+            { term: 'Datum rapport', description: result.datum && formatDate(result.datum) },
           ].filter(hasDescription),
         },
       ],
@@ -571,7 +597,18 @@ const servicesByEndpointType: { [type: string]: ServiceDefinition } = {
           entries: [
             { term: 'Hoofdgroep', description: result.type },
             { term: 'Subsoort', description: result.subtype },
+            { term: 'Kaliber', description: result.kaliber },
+            { term: 'Aantallen', description: result.aantal },
+            { term: 'Verschijning', description: result.verschijning },
+            { term: 'Afbakening', description: result.afbakening },
+            { term: 'Horizontaal', description: result.horizontaal },
+            { term: 'Cartografie', description: result.cartografie },
             { term: 'Opmerkingen', description: result.opmerkingen },
+            {
+              term: 'Oorlogshandelingsrapport',
+              description: getFileName(result.pdf),
+              link: result.pdf,
+            },
           ].filter(hasDescription),
         },
       ],
@@ -624,7 +661,9 @@ const servicesByEndpointType: { [type: string]: ServiceDefinition } = {
           type: DetailResultItemType.DefinitionList,
           entries: [
             { term: 'Startdatum', description: result.startDate },
+            { term: 'Starttijd', description: result.startTime },
             { term: 'Einddatum', description: result.endDate },
+            { term: 'Eindtijd', description: result.endTime },
             { term: 'Omschrijving', description: result.omschrijving },
             { term: 'Meer informatie', description: result.url, link: result.url },
           ].filter(hasDescription),
@@ -778,22 +817,32 @@ const servicesByEndpointType: { [type: string]: ServiceDefinition } = {
     }),
   },
   [endpointTypes.napPeilmerk]: {
+    type: 'nap/peilmerk',
+    endpoint: 'nap/peilmerk',
     normalization: napPeilmerk,
     mapDetail: (result) => ({
       title: categoryLabels.napPeilmerk.singular,
       subTitle: result.peilmerkidentificatie,
       items: [
-        { type: DetailResultItemType.Default, label: 'Hoogte NAP', value: result.height },
         {
-          type: DetailResultItemType.Default,
-          label: 'Omschrijving',
-          value: result.omschrijving,
-        },
-        { type: DetailResultItemType.Default, label: 'Windrichting', value: result.windrichting },
-        {
-          type: DetailResultItemType.Default,
-          label: 'Muurvlakcoördinaten (cm)',
-          value: result.wallCoordinates,
+          type: DetailResultItemType.DefinitionList,
+          entries: [
+            {
+              term: 'Hoogte NAP',
+              description: result.hoogte_nap
+                ? `${parseFloat(result.hoogte_nap).toLocaleString(DEFAULT_LOCALE)} m`
+                : undefined,
+            },
+            { term: 'Jaar', description: result.jaar },
+            { term: 'Omschrijving', description: result.omschrijving },
+            { term: 'Windrichting', description: result.windrichting },
+            {
+              term: 'Muurvlakcoördinaten (cm)',
+              description: `${result.x_muurvlak}, ${result.y_muurvlak}`,
+            },
+            { term: 'Merk', description: result.merk },
+            { term: 'RWS nummer', description: result.rws_nummer },
+          ].filter(hasDescription),
         },
       ],
     }),
@@ -879,20 +928,76 @@ const servicesByEndpointType: { [type: string]: ServiceDefinition } = {
     }),
   },
   [endpointTypes.vastgoed]: {
+    type: 'vsd/vastgoed',
+    endpoint: 'vsd/vastgoed',
     normalization: vastgoed,
-    mapDetail: (result) => ({
-      title: 'Gemeentelijk eigendom',
-      subTitle: result._display,
-      items: [
-        { type: DetailResultItemType.Default, label: 'Bouwjaar', value: result.construction_year },
-        {
-          type: DetailResultItemType.Default,
-          label: 'Monumentstatus',
-          value: result.monumental_status,
-        },
-        { type: DetailResultItemType.Default, label: 'Status', value: result.status },
-      ],
-    }),
+    mapDetail: async (result, location) => {
+      // TODO: What is happening here is a bit rediculous, but it was migrated from existing code.
+      // Basically we do a GeoSearch which returns all the nearby buildings that are on this location.
+      // This will in some cases return a bunch of buildings on the exact same location, since they share the same space (see the Geometery)
+      // It's a bit dumb since our initial GeoSearch to see if the user clicked something already returns all of these.
+      // Either way this is needed because we need to put some identifier in the URL so it might as well be the first one we find.
+      // Technically we should really have some kind of model in the API to hold these collections so we can identify them with a single identifier.
+      // Really more of a task for the API team to figure this one out...
+      const { features } = await fetchWithToken(
+        `${environment.API_ROOT}geosearch/vastgoed/?${new URLSearchParams({
+          lat: location.lat.toString(),
+          lon: location.lng.toString(),
+          item: 'vastgoed',
+          radius: '0',
+        }).toString()}`,
+      )
+
+      const serviceDefinition = getServiceDefinition('vsd/vastgoed')
+
+      if (!serviceDefinition) {
+        throw new Error('Unable to retrieve service defintition for vastgoed details.')
+      }
+
+      const units = await Promise.all(
+        features.map(
+          async ({ properties }: { properties: { id: string } }) =>
+            (await fetchDetailData(serviceDefinition, properties.id)).data,
+        ),
+      )
+
+      const additionalItems: DetailResultItem[] = units.map((unit: any) => ({
+        type: DetailResultItemType.DefinitionList,
+        title: unit._display,
+        entries: [
+          { term: 'Verhuurde eenheid', description: unit.vhe_adres },
+          { term: 'Gebruiksdoel', description: unit.bag_verblijfsobject_gebruiksdoelen },
+          {
+            term: 'Oppervlakte (indicatie)',
+            description: unit.oppervlakte > 0 ? formatSquareMetre(unit.oppervlakte) : 'Onbekend',
+          },
+          { term: 'Monumentstatus', description: unit.monumental_status },
+          { term: 'Status', description: unit.status },
+          { term: 'Contractueel gebruik', description: unit.huurtype },
+        ].filter(hasDescription),
+      }))
+
+      return {
+        title: 'Gemeentelijk eigendom',
+        subTitle: result._display,
+        items: [
+          {
+            type: DetailResultItemType.DefinitionList,
+            entries: [
+              { term: 'Bouwjaar', description: result.construction_year },
+              { term: 'Aantal verhuurde eenheden', description: additionalItems.length },
+              { term: 'Monumentstatus', description: result.monumental_status },
+              { term: 'Status', description: result.status },
+            ].filter(hasDescription),
+          },
+          {
+            type: DetailResultItemType.Heading,
+            value: `Verhuurde eenheden (${additionalItems.length})`,
+          },
+          ...additionalItems,
+        ],
+      }
+    },
   },
   [endpointTypes.vestiging]: {
     authScope: 'HR/R',
@@ -1071,146 +1176,154 @@ const servicesByEndpointType: { [type: string]: ServiceDefinition } = {
     }),
   },
   [endpointTypes.precarioShips]: {
+    type: 'precariobelasting/woonschepen',
+    endpoint: 'v1/precariobelasting/woonschepen',
     mapDetail: (result) => ({
       title: categoryLabels.precarioShips.singular,
       subTitle: result.gebied,
       items: [
         {
-          type: DetailResultItemType.Default,
-          label: 'Categorie',
-          value: result.categorie,
-        },
-        {
-          type: DetailResultItemType.Default,
-          label: 'Jaar',
-          value: result.jaar,
-        },
-        {
-          type: DetailResultItemType.Default,
-          label: 'Stadsdeel',
-          value: result.stadsdeel,
-        },
-        {
-          type: DetailResultItemType.Default,
-          label: 'Tarief per jaar per m2',
-          value: result.tariefPerJaarPerM2,
+          type: DetailResultItemType.DefinitionList,
+          entries: [
+            {
+              term: 'Categorie',
+              description: result.categorie,
+            },
+            {
+              term: 'Jaar',
+              description: result.jaar,
+            },
+            {
+              term: 'Stadsdeel',
+              description: result.stadsdeel,
+            },
+            {
+              term: 'Tarief per jaar per m2',
+              description: result.tariefPerJaarPerM2,
+            },
+          ].filter(hasDescription),
         },
       ],
     }),
   },
   [endpointTypes.precarioComVessels]: {
+    type: 'precariobelasting/bedrijfsvaartuigen',
+    endpoint: 'v1/precariobelasting/bedrijfsvaartuigen',
     mapDetail: (result) => ({
       title: categoryLabels.precarioComVessels.singular,
       subTitle: result.gebied,
       items: [
         {
-          type: DetailResultItemType.Default,
-          label: 'Categorie',
-          value: result.categorie,
-        },
-        {
-          type: DetailResultItemType.Default,
-          label: 'Jaar',
-          value: result.jaar,
-        },
-        {
-          type: DetailResultItemType.Default,
-          label: 'Stadsdeel',
-          value: result.stadsdeel,
-        },
-        {
-          type: DetailResultItemType.Default,
-          label: 'Tarief per jaar per m2',
-          value: result.tariefPerJaarPerM2,
+          type: DetailResultItemType.DefinitionList,
+          entries: [
+            {
+              term: 'Categorie',
+              description: result.categorie,
+            },
+            {
+              term: 'Jaar',
+              description: result.jaar,
+            },
+            {
+              term: 'Stadsdeel',
+              description: result.stadsdeel,
+            },
+            {
+              term: 'Tarief per jaar per m2',
+              description: result.tariefPerJaarPerM2,
+            },
+          ].filter(hasDescription),
         },
       ],
     }),
   },
   [endpointTypes.precarioPassVessels]: {
+    type: 'precariobelasting/passagiersvaartuigen',
+    endpoint: 'v1/precariobelasting/passagiersvaartuigen',
     mapDetail: (result) => ({
       title: categoryLabels.precarioPassVessels.singular,
       subTitle: result.gebied,
       items: [
         {
-          type: DetailResultItemType.Default,
-          label: 'Categorie',
-          value: result.categorie,
-        },
-        {
-          type: DetailResultItemType.Default,
-          label: 'Jaar',
-          value: result.jaar,
-        },
-        {
-          type: DetailResultItemType.Default,
-          label: 'Gebied',
-          value: result.gebied,
-        },
-        {
-          type: DetailResultItemType.Default,
-          label: 'Tarief per jaar per m2',
-          value: result.tariefPerJaarPerM2,
+          type: DetailResultItemType.DefinitionList,
+          entries: [
+            {
+              term: 'Categorie',
+              description: result.categorie,
+            },
+            {
+              term: 'Jaar',
+              description: result.jaar,
+            },
+            {
+              term: 'Gebied',
+              description: result.gebied,
+            },
+            {
+              term: 'Tarief per jaar per m2',
+              description: result.tariefPerJaarPerM2,
+            },
+          ].filter(hasDescription),
         },
       ],
     }),
   },
   [endpointTypes.precarioTerraces]: {
+    type: 'precariobelasting/terrassen',
+    endpoint: 'v1/precariobelasting/terrassen',
     mapDetail: (result) => ({
       title: categoryLabels.precarioTerraces.singular,
       subTitle: result.gebied,
       items: [
         {
-          type: DetailResultItemType.Default,
-          label: 'Categorie',
-          value: result.categorie,
-        },
-        {
-          type: DetailResultItemType.Default,
-          label: 'Jaar',
-          value: result.jaar,
-        },
-        {
-          type: DetailResultItemType.Default,
-          label: 'Stadsdeel',
-          value: result.stadsdeel,
-        },
-        {
-          type: DetailResultItemType.Default,
-          label: 'Gebied',
-          value: result.gebied,
-        },
-        {
-          type: DetailResultItemType.Default,
-          label: 'Overdekt terras per jaar per m2',
-          value: result.tariefOverdektTerrasPerJaarPerM2,
-        },
-        {
-          type: DetailResultItemType.Default,
-          label: 'Onverdekt terras per zomerseizoen per m2',
-          value: result.tariefOnoverdektTerrasPerZomerseizoenPerM2,
-        },
-        {
-          type: DetailResultItemType.Default,
-          label: 'Onoverdekt terras per winterseizoen per m2',
-          value: result.tariefOnoverdektTerrasPerWinterseizoenPerM2,
+          type: DetailResultItemType.DefinitionList,
+          entries: [
+            {
+              term: 'Categorie',
+              description: result.categorie,
+            },
+            {
+              term: 'Jaar',
+              description: result.jaar,
+            },
+            {
+              term: 'Stadsdeel',
+              description: result.stadsdeel,
+            },
+            {
+              term: 'Gebied',
+              description: result.gebied,
+            },
+            {
+              term: 'Overdekt terras per jaar per m2',
+              description: result.tariefOverdektTerrasPerJaarPerM2,
+            },
+            {
+              term: 'Onverdekt terras per zomerseizoen per m2',
+              description: result.tariefOnoverdektTerrasPerZomerseizoenPerM2,
+            },
+            {
+              term: 'Onoverdekt terras per winterseizoen per m2',
+              description: result.tariefOnoverdektTerrasPerWinterseizoenPerM2,
+            },
+          ].filter(hasDescription),
         },
       ],
     }),
   },
   [endpointTypes.tunnels]: {
+    type: 'hoofdroutes/tunnels_gevaarlijke_stoffen',
+    endpoint: 'v1/hoofdroutes/tunnels_gevaarlijke_stoffen',
     mapDetail: (result) => ({
       title: categoryLabels.tunnels.singular,
       subTitle: result.title,
       items: [
         {
-          type: DetailResultItemType.Default,
-          label: 'Titel',
-          value: result.title,
-        },
-        {
-          type: DetailResultItemType.Default,
-          label: 'Categorie',
-          value: result.categorie,
+          type: DetailResultItemType.DefinitionList,
+          entries: [
+            { term: 'Titel', description: result.title },
+            { term: 'Categorie', description: result.categorie },
+          ].filter(hasDescription),
         },
       ],
     }),

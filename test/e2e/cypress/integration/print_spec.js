@@ -1,4 +1,4 @@
-import { ADDRESS_PAGE, DATA_SEARCH, HOMEPAGE, MAP, PRINT } from '../support/selectors'
+import { ADDRESS_PAGE, DATA_SEARCH, HOMEPAGE, MAP, MAP_LAYERS, PRINT } from '../support/selectors'
 
 describe('print module', () => {
   beforeEach(() => {
@@ -42,7 +42,7 @@ describe('print module', () => {
       .contains('Ondergrond')
       .parents(MAP.mapLegendItemButton)
       .click('right')
-    cy.get(MAP.checkboxOndergrond).check({ force: true })
+    cy.get(MAP_LAYERS.checkboxOndergrond).check({ force: true })
     cy.visit('/data/bag/verblijfsobject/id0363010000751893/?lagen=ondrgd-mbz%3A1&zoom=16')
     cy.waitForAdressDetail()
     cy.get(MAP.mapContainer).click(166, 304)
