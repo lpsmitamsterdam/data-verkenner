@@ -49,6 +49,7 @@ export const DATA_SEARCH = {
   searchResultsEditorialCard: '[class*=EditorialCard__StyledHeading]',
   searchResultsLink: '[class*=LinkStyle__LinkContent]',
   searchResultsParagraphLink: '[class*="StyledParagraphLink"]',
+  sortDropdown: '[data-testid="sort-select"]',
   warningPanel: '.c-panel',
   warningPanelAngular: '.c-panel--warning',
 }
@@ -176,6 +177,7 @@ export const MAP = {
   mapZoomIn: '.leaflet-control-zoom-in',
   toggleMapPanel: '.map-panel__toggle',
   toggleFullScreen: '.qa-toggle-fullscreen',
+  zoomInAlert: '[class*=ZoomInAlertContent]',
 }
 
 export const MAP_LAYERS = {
@@ -197,6 +199,10 @@ export const MAP_LAYERS = {
   checkboxBKGrondwatermonsters: '#bdmkw-mbgwm',
   checkboxBKGrondmonstersAsbest: '#bdmkw-mbaig',
   checkboxBKGeotechnischeSonderingen: '#bdmkw-bros',
+  checkboxCovid: '[aria-label="COVID-19 maatregelen"]',
+  checkboxCovidAlcohol: '#cov19-cov19alcvrkp',
+  checkboxCovidStraatartiest: '#cov19-cov19strtart',
+  checkboxCovidGebied: '#cov19-cov19gebver',
   checkboxCultureelErfgoed: '[aria-label="Cultureel erfgoed"]',
   checkboxCEMonumenten: '#culterf-mnmtn',
   checkboxCEUnesco: '#culterf-unesco',
@@ -403,10 +409,6 @@ export const PRINT = {
   buttonClosePrint: '.c-print-header__close',
   headerTitle: 'h1.c-print-header__title',
   printLink: '.qa-share-bar > div > button:nth(4) ',
-}
-
-export const PUBLICATIONS = {
-  sortDropdown: '[data-testid="sort-select"]',
 }
 
 export const SEARCH = {
