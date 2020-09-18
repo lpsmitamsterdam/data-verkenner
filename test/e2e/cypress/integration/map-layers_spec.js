@@ -98,6 +98,16 @@ describe('Check if all map layers are visible when selected', () => {
     cy.get(MAP_LAYERS.checkboxParkeren).uncheck({ force: true }).should('not.be.checked')
     cy.get(MAP.imageLayer).should('not.exist')
   })
+  it('Should check COVID-19 maatregelen layers', () => {
+    cy.checkMapLayerCategory('COVID-19 maatregelen')
+
+    cy.checkMapLayer('Alcoholverkoopverbod', MAP_LAYERS.checkboxCovidAlcohol, 1)
+    cy.checkMapLayer('Straatartiestverbod', MAP_LAYERS.checkboxCovidStraatartiest, 2)
+    cy.checkMapLayer('Gebiedsverbod', MAP_LAYERS.checkboxCovidGebied, 3)
+
+    cy.get(MAP_LAYERS.checkboxCovid).uncheck({ force: true }).should('not.be.checked')
+    cy.get(MAP.imageLayer).should('not.exist')
+  })
   it('Should check Energie layers', () => {
     cy.checkMapLayerCategory('Energie')
 

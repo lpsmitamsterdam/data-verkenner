@@ -1,4 +1,4 @@
-import { DATA_SEARCH, HOMEPAGE } from './selectors'
+import { DATA_SEARCH, HOMEPAGE, SEARCH } from './selectors'
 
 Cypress.Commands.add('checkAutoSuggestFirstOfAll', (searchTerm, result) => {
   cy.server()
@@ -47,4 +47,13 @@ Cypress.Commands.add('searchAndCheck', (searchTerm, result, result2) => {
 Cypress.Commands.add('searchInCategoryAndCheckFirst', (searchTerm, category, result, result2) => {
   cy.checkAutoSuggestFirstofCategory(searchTerm, category, result)
   cy.checkFirstParagraphLinkInSearchResults(result2 || result)
+})
+
+Cypress.Commands.add('searchWithFilter', (category, searchTerm) => {
+  cy.get(DATA_SEARCH.searchBarFilter).select(category)
+  cy.get(SEARCH.input).type(searchTerm)
+  cy.get(SEARCH.form).submit()
+  cy.wait(['@graphql', '@graphql'])
+  cy.wait('@jsonapi')
+  cy.contains(`${category} met '${searchTerm}' (`)
 })

@@ -112,3 +112,65 @@ describe('user should be able to submit', () => {
     cy.contains('Maak de zoekcriteria eventueel minder specifiek.').should('be.visible')
   })
 })
+describe('Filter on search results', () => {
+  beforeEach(() => {
+    cy.server()
+    cy.route('POST', '/cms_search/graphql/').as('graphql')
+    cy.route('/jsonapi/node/list/*').as('jsonapi')
+    cy.hidePopup()
+
+    cy.visit('/')
+    cy.get(SEARCH.input).trigger('focus')
+  })
+
+  it('should show all results', () => {
+    cy.get(DATA_SEARCH.searchBarFilter).select('Alle zoekresultaten')
+    cy.get(SEARCH.input).type('Amsterdam')
+    cy.get(SEARCH.form).submit()
+
+    cy.wait(['@graphql', '@graphql'])
+    cy.wait('@jsonapi')
+
+    cy.contains("Alle zoekresultaten met 'Amsterdam' (")
+    cy.get(DATA_SEARCH.searchResultsCategory).eq(0).should('contain', 'Dossiers (')
+    cy.get(DATA_SEARCH.searchResultsCategory).eq(1).should('contain', 'Specials (')
+    cy.get(DATA_SEARCH.searchResultsCategory).eq(2).should('contain', 'Kaartlagen (')
+    cy.get(DATA_SEARCH.searchResultsCategory).eq(3).should('contain', 'Kaartcollecties (')
+    cy.get(DATA_SEARCH.searchResultsCategory).eq(4).should('contain', 'Data (')
+    cy.get(DATA_SEARCH.searchResultsCategory).eq(5).should('contain', 'Datasets (')
+    cy.get(DATA_SEARCH.searchResultsCategory).eq(6).should('contain', 'Publicaties (')
+    cy.get(DATA_SEARCH.searchResultsCategory).eq(7).should('contain', 'Artikelen (')
+  })
+
+  it('should only show dossiers', () => {
+    cy.searchWithFilter('Dossiers', 'Amsterdam')
+    cy.get(DATA_SEARCH.sortDropdown).should('be.visible')
+  })
+  it('should only show specials', () => {
+    cy.searchWithFilter('Specials', 'Amsterdam')
+    cy.get(DATA_SEARCH.sortDropdown).should('be.visible')
+  })
+  it('should only show kaarten', () => {
+    cy.searchWithFilter('Kaarten', 'Amsterdam')
+  })
+  it('should only show data', () => {
+    cy.searchWithFilter('Data', 'Amsterdam')
+  })
+  it('should only show datasets', () => {
+    cy.searchWithFilter('Datasets', 'Amsterdam')
+  })
+  it('should only show publicaties', () => {
+    cy.searchWithFilter('Publicaties', 'Amsterdam')
+    cy.get(DATA_SEARCH.sortDropdown).should('be.visible')
+  })
+  it('should only show artikelen', () => {
+    cy.searchWithFilter('Artikelen', 'Amsterdam')
+    cy.get(DATA_SEARCH.sortDropdown).should('be.visible')
+  })
+  it('should remember the search filter', () => {
+    cy.searchWithFilter('Artikelen', 'Amsterdam')
+    cy.visit('/')
+    cy.get(DATA_SEARCH.autoSuggestInput).focus().type('Amsterdam')
+    cy.get(DATA_SEARCH.autoSuggestHeader).should('have.length', 1).and('have.text', 'Artikelen')
+  })
+})

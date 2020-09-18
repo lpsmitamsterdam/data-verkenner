@@ -7,7 +7,6 @@ import {
   HOMEPAGE,
   MAP,
   PANORAMA,
-  PUBLICATIONS,
   SEARCH,
   TABLES,
 } from '../support/selectors'
@@ -44,7 +43,7 @@ describe('Smoketest', () => {
       cy.contains('Monumenten (4)').should('be.visible')
 
       // Open Adress details
-      cy.get('[href*="/data/bag/verblijfsobject/id0363010003761571/"]').click()
+      cy.get('[href*="/data/bag/verblijfsobject/id0363010003761571/"]').click({ force: true })
       cy.waitForAdressDetail()
       cy.get(ADDRESS_PAGE.resultsPanel).should('exist').and('be.visible')
       cy.get(ADDRESS_PAGE.resultsPanel)
@@ -292,7 +291,7 @@ describe('Smoketest', () => {
       cy.contains('resultaten tonen').click()
       cy.url('contains', '/publicaties/zoek/?term=Oost')
       cy.contains("Publicaties met 'Oost' (")
-      cy.get(PUBLICATIONS.sortDropdown).select('Publicatiedatum oplopend')
+      cy.get(DATA_SEARCH.sortDropdown).select('Publicatiedatum oplopend')
       cy.get('[href*="/publicaties/publicatie/"]').first().click()
       cy.wait('@getPublication')
 

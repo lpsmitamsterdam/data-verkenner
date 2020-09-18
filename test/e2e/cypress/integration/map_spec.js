@@ -14,13 +14,13 @@ describe('map module', () => {
       cy.visit('/')
 
       cy.wait('@jsonapi')
-      cy.get(HOMEPAGE.navigationBlockKaart).should('exist').and('be.visible')
+      cy.get(HOMEPAGE.navigationBlockKaart).should('be.visible')
       cy.get(MAP.mapContainer).should('not.exist')
       cy.get(HOMEPAGE.navigationBlockKaart).click()
       cy.wait('@graphql')
       cy.wait('@graphql')
       cy.url().should('include', '/data/?modus=kaart&legenda=true')
-      cy.get(MAP.mapContainer).should('exist').and('be.visible')
+      cy.get(MAP.mapContainer).should('be.visible')
       cy.get(MAP.mapPanelBackgroundLabel).should('be.visible').and('have.text', 'Achtergrond')
 
       cy.checkTopography()
@@ -58,8 +58,7 @@ describe('map module', () => {
       cy.wait('@getVerblijfsobject')
       // check that the circle icon is drawed on the map
       cy.get(MAP.iconMapMarker)
-        .should('exist')
-        .and('be.visible')
+        .should('be.visible')
         .and('have.attr', 'src', `${svgMapPath}detail.svg`)
       cy.checkPreviewPanel(['Dam 1', 'winkelfunctie'])
 
@@ -68,26 +67,21 @@ describe('map module', () => {
 
       cy.waitForGeoSearch()
       cy.get(MAP.iconMapMarker)
-        .should('exist')
-        .and('be.visible')
+        .should('be.visible')
         .and('have.attr', 'src', `${svgMapPath}search.svg`)
 
       cy.get(MAP.mapPreviewPanelVisible).contains('Beursplein 15').click()
 
       cy.get(MAP.iconMapMarker)
-        .should('exist')
-        .and('be.visible')
+        .should('be.visible')
         .and('have.attr', 'src', `${svgMapPath}detail.svg`)
-      cy.get(MAP.mapPreviewPanelVisible)
-        .get(MAP.mapDetailPanoramaHeaderImage)
-        .should('exist')
-        .and('be.visible')
+      cy.get(MAP.mapPreviewPanelVisible).get(MAP.mapDetailPanoramaHeaderImage).should('be.visible')
       cy.checkPreviewPanel(['Type adres', 'Hoofdadres'])
 
       // click on the button inside the panel balloon thingy, and expect the large right column to
       // become visible
       cy.get(MAP.buttonEnlarge).click()
-      cy.get(ADDRESS_PAGE.resultsPanel).should('exist').and('be.visible')
+      cy.get(ADDRESS_PAGE.resultsPanel).should('be.visible')
       cy.wait('@getNummeraanduiding')
       cy.wait('@getPanden')
       cy.wait('@getObjectExpand')
@@ -110,9 +104,9 @@ describe('map module', () => {
       cy.server()
       cy.hidePopup()
       cy.visit(`/${routing.data.path}?${VIEW}=kaart`)
-      cy.get(ADDRESS_PAGE.mapContainer).should('exist').and('be.visible')
-      cy.get(MAP.mapContainer).should('exist').and('be.visible')
-      cy.get('.leaflet-tile-container').should('exist').and('be.visible')
+      cy.get(ADDRESS_PAGE.mapContainer).should('be.visible')
+      cy.get(MAP.mapContainer).should('be.visible')
+      cy.get('.leaflet-tile-container').should('be.visible')
     })
 
     it('should add a map-layer to the leaflet map', () => {
@@ -151,7 +145,7 @@ describe('map module', () => {
       cy.contains('Kadastrale erfpachtuitgevers').should('not.be.visible')
       cy.contains('Gemeentelijk eigendom').should('not.be.visible')
       cy.contains('Gemeentelijke beperkingen (WKPB)').should('not.be.visible')
-      cy.get(MAP.legendNotification).should('not.be.visible')
+      cy.get(MAP.zoomInAlert).should('not.be.visible')
       cy.contains('Panden ouder dan 1960').should('not.be.visible')
       cy.contains('Panden naar bouwjaar').should('not.be.visible')
 
@@ -168,7 +162,17 @@ describe('map module', () => {
       cy.contains('Kadastrale erfpachtuitgevers').should('be.visible')
       cy.contains('Gemeentelijk eigendom').should('be.visible')
       cy.contains('Gemeentelijke beperkingen (WKPB)').should('be.visible')
-      cy.get(MAP.legendNotification).should('be.visible')
+      cy.get(MAP_LAYERS.checkboxOZGemeentelijkeBeperkingen).check()
+
+      cy.get(MAP.zoomInAlert)
+        .scrollIntoView()
+        .should(
+          'contain',
+          'Een of meerdere geselecteerde kaartlagen zijn nog niet zichtbaar. Zoom in op de kaart om deze te zien.',
+        )
+        .and('be.visible')
+
+      cy.get(MAP_LAYERS.checkboxOZGemeentelijkeBeperkingen).uncheck()
       cy.contains('Panden ouder dan 1960').should('be.visible')
       cy.contains('Panden naar bouwjaar').should('be.visible')
 
@@ -218,7 +222,7 @@ describe('map module', () => {
       cy.wait('@getVerblijfsobject')
       cy.wait('@getPanorama')
       cy.get(MAP.mapZoomIn).click({ force: true })
-      cy.get(MAP.mapDetailResultPanel).should('exist').and('be.visible')
+      cy.get(MAP.mapDetailResultPanel).should('be.visible')
       cy.get(MAP.iconMapMarker).should('be.visible')
 
       cy.get(MAP_LAYERS.checkboxOnroerendeZaken).click({ force: true })
@@ -228,7 +232,7 @@ describe('map module', () => {
   })
 
   describe('user should be able to open the map panel when collapsed', () => {
-    it('should add open the map panel component', () => {
+    it('should open the map panel component', () => {
       cy.server()
       cy.hidePopup()
       cy.visit(`/${routing.data.path}?${VIEW}=kaart`)
@@ -237,7 +241,7 @@ describe('map module', () => {
       cy.get(DATA_SEARCH.scrollWrapper).should('not.be.visible')
       cy.get(MAP.toggleMapPanel).click()
       cy.get(MAP.mapPanel).should('have.class', 'map-panel--expanded')
-      cy.get(DATA_SEARCH.scrollWrapper).should('exist').and('be.visible')
+      cy.get(DATA_SEARCH.scrollWrapper).should('be.visible')
     })
   })
 
