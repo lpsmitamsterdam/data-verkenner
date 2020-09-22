@@ -28,27 +28,24 @@ const useParam = <T>(urlParam: UrlParam<T>): [T, SetValueFn<T>] => {
     stateRef.current = state
   }, [stateRef, state])
 
-  const setValue = useCallback<SetValueFn<T>>(
-    (valueOrFn, method = 'push') => {
-      const value = valueOrFn instanceof Function ? valueOrFn(stateRef.current) : valueOrFn
-      const newParams = new URLSearchParams(window.location.search)
+  const setValue = useCallback<SetValueFn<T>>((valueOrFn, method = 'push') => {
+    const value = valueOrFn instanceof Function ? valueOrFn(stateRef.current) : valueOrFn
+    const newParams = new URLSearchParams(window.location.search)
 
-      // Hide the default value in the URL
-      const newValue = encodeParam(urlParam, value)
+    // Hide the default value in the URL
+    const newValue = encodeParam(urlParam, value)
 
-      if (newValue) {
-        newParams.set(urlParam.name, newValue)
-      } else {
-        newParams.delete(urlParam.name)
-      }
+    if (newValue) {
+      newParams.set(urlParam.name, newValue)
+    } else {
+      newParams.delete(urlParam.name)
+    }
 
-      // We don't want the order to change, so always sort them before updating the URL
-      newParams.sort()
+    // We don't want the order to change, so always sort them before updating the URL
+    newParams.sort()
 
-      history[method]({ ...location, search: newParams.toString() })
-    },
-    [stateRef, location],
-  )
+    history[method]({ ...location, search: newParams.toString() })
+  }, [])
 
   return [state, setValue]
 }
