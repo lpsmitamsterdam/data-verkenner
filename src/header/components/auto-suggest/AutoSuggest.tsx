@@ -66,7 +66,6 @@ const AutoSuggest = forwardRef<HTMLDivElement, AutoSuggestProps>(
               key={category.label}
               highlightValue={highlightValue}
               category={category}
-              searchCategory={searchBarFilterValue}
               inputValue={inputValue}
             />
           ))}

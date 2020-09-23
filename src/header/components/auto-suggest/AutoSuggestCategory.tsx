@@ -8,21 +8,19 @@ import AutoSuggestItem from './AutoSuggestItem'
 
 export interface AutoSuggestCategoryProps {
   category: AutoSuggestSearchResult
-  searchCategory: string
   highlightValue: string
   inputValue: string
 }
 
 const AutoSuggestCategory: React.FC<AutoSuggestCategoryProps> = ({
   category,
-  searchCategory,
   highlightValue,
   inputValue,
 }) => {
   const { type, label, content, totalResults } = category
   const subType = (type === 'data' && label.toLowerCase()) || undefined
   const moreResultsLink =
-    totalResults > content.length ? getMoreResultsLink(searchCategory, inputValue, subType) : null
+    totalResults > content.length ? getMoreResultsLink(type, inputValue, subType) : null
 
   return (
     <div className="auto-suggest__dropdown-category">
