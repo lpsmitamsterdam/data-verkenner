@@ -1,5 +1,3 @@
-import { DOWNLOAD_DATASET_RESOURCE } from '../../../../src/shared/ducks/detail/constants'
-
 describe('the dp-detail component', () => {
   let $compile
   let $rootScope
@@ -215,39 +213,6 @@ describe('the dp-detail component', () => {
       scope.vm.endpoint = 'http://www.fake-endpoint.com/brk/object/789/'
       $rootScope.$apply()
       expect(scope.vm.endpoint).toEqual('http://www.fake-endpoint.com/brk/object/789/')
-    })
-  })
-
-  describe('the stripMarkdown function', () => {
-    it('returns a value', () => {
-      const component = getComponent('http://www.fake-endpoint.com/dcatd/datasets/789/', false)
-
-      const scope = component.isolateScope()
-      const { vm } = scope
-      const description = vm.stripMarkdown('test description')
-
-      expect(description).toEqual('test description')
-    })
-  })
-
-  describe('the downloadResource function', () => {
-    it('dispatches  a value', () => {
-      const component = getComponent('http://www.fake-endpoint.com/dcatd/datasets/789/', false)
-
-      const scope = component.isolateScope()
-      store.dispatch.calls.reset()
-      const { vm } = scope
-      vm.downloadResource('dataset name', 'dataset url')
-
-      expect(store.dispatch).toHaveBeenCalledWith({
-        type: DOWNLOAD_DATASET_RESOURCE,
-        meta: {
-          tracking: {
-            dataset: 'dataset name',
-            resourceUrl: 'dataset url',
-          },
-        },
-      })
     })
   })
 })
