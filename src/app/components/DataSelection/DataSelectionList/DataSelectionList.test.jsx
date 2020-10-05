@@ -3,7 +3,8 @@ import configureMockStore from 'redux-mock-store'
 import { shallow } from 'enzyme'
 import DataSelectionList from './DataSelectionList'
 
-// Todo: DP-6235
+jest.mock('react-redux')
+
 describe('DataSelectionList', () => {
   it('should render without failing', () => {
     const store = configureMockStore()({})
@@ -21,7 +22,7 @@ describe('DataSelectionList', () => {
         }}
         navigateToDetail={() => {}}
       />,
-    ).dive()
+    )
 
     expect(component).toMatchSnapshot()
   })

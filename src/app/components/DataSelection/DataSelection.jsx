@@ -1,13 +1,14 @@
 /* eslint-disable global-require */
-import { Alert, Heading, Paragraph, Button, themeSpacing, Tabs, Tab } from '@amsterdam/asc-ui'
-import { Table, Map } from '@amsterdam/asc-assets'
+import { Alert, Button, Heading, Paragraph, Tab, Tabs, themeSpacing } from '@amsterdam/asc-ui'
+import { Map, Table } from '@amsterdam/asc-assets'
 import classNames from 'classnames'
 import PropTypes from 'prop-types'
 import React from 'react'
 import { AngularWrapper } from 'react-angular'
 import styled from 'styled-components'
+import { useHistory } from 'react-router-dom'
 import Link from 'redux-first-router-link'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { DATASETS, VIEWS_TO_PARAMS } from '../../../shared/ducks/data-selection/constants'
 import { setViewMode, VIEW_MODE } from '../../../shared/ducks/ui/ui'
 import { SCOPES } from '../../../shared/services/auth/auth'
@@ -21,7 +22,16 @@ import ShareBar from '../ShareBar/ShareBar'
 import DataSelectionList from './DataSelectionList/DataSelectionList'
 import DataSelectionTable from './DataSelectionTable/DataSelectionTable'
 import DataSelectionDownloadButton from './DataSelectionDownloadButton'
-import { setDataset } from '../../../shared/ducks/data-selection/actions'
+import useParam from '../../utils/useParam'
+import { viewParam } from '../../pages/MapPage/query-params'
+import useGetUrl from '../../utils/useGetUrl'
+import {
+  getDataSelection,
+  getDataSelectionResult,
+} from '../../../shared/ducks/data-selection/selectors'
+import { getFilters } from '../../../shared/ducks/filters/filters'
+import { getUser, getUserScopes } from '../../../shared/ducks/user/user'
+import { setPage as setDatasetPage } from '../../../shared/ducks/data-selection/actions'
 
 let angularInstance = null
 
@@ -38,19 +48,20 @@ const StyledTabs = styled(Tabs)`
   margin-bottom: ${themeSpacing(2)};
 `
 
-const DataSelection = ({
-  view,
-  isLoading,
-  dataset,
-  activeFilters,
-  user,
-  userScopes,
-  setPage,
-  authError,
-  results: { numberOfRecords, filters: availableFilters, numberOfPages, data },
-  page: currentPage,
-}) => {
+const DataSelection = () => {
+  const history = useHistory()
+  const [view] = useParam(viewParam)
+  const { getFromPath } = useGetUrl()
+
+  const { isLoading, dataset, authError, page: currentPage } = useSelector(getDataSelection)
   const dispatch = useDispatch()
+
+  const activeFilters = useSelector(getFilters)
+  const results = useSelector(getDataSelectionResult)
+  const { numberOfRecords, filters: availableFilters, numberOfPages, data } = results
+  const user = useSelector(getUser)
+  const userScopes = useSelector(getUserScopes)
+
   // Local state
   const showHeader = view === VIEW_MODE.SPLIT || !isLoading
   const showFilters = view !== VIEW_MODE.SPLIT && numberOfRecords > 0
@@ -78,7 +89,7 @@ const DataSelection = ({
   const tabs = [DATASETS.BAG, DATASETS.HR, DATASETS.BRK].map((ds) => ({
     dataset: ds,
     title: DATA_SELECTION_CONFIG.datasets[ds].TITLE_TAB,
-    tabAction: setDataset(ds),
+    path: DATA_SELECTION_CONFIG.datasets[ds].PATH,
     isActive: dataset === ds,
   }))
 
@@ -157,7 +168,9 @@ const DataSelection = ({
                     ? `(${numberOfRecords.toLocaleString('NL-nl')})`
                     : ''
                 }`}
-                onClick={() => dispatch(tab.tabAction)}
+                onClick={() => {
+                  history.push(getFromPath(tab.path))
+                }}
               />
             ))}
           </StyledTabs>
@@ -252,7 +265,7 @@ const DataSelection = ({
                         bindings={{
                           currentPage,
                           numberOfPages,
-                          setPage,
+                          setPage: (page) => dispatch(setDatasetPage(page)),
                         }}
                       />
                     )}

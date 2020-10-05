@@ -67,7 +67,6 @@ describe('Data Selection Reducer', () => {
       ['isLoading', 'authError', 'errorMessage', 'result', 'markers'],
       [{ error: 'error message' }],
     ),
-    ...getExpectations(actionCreators.downloadDataSelection.name, [], []),
   }
 
   Object.keys(actionCreators).forEach((actionCreator) => {

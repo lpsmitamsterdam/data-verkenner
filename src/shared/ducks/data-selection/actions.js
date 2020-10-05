@@ -4,7 +4,6 @@ import {
   FETCH_DATA_SELECTION_FAILURE,
   FETCH_DATA_SELECTION_REQUEST,
   FETCH_DATA_SELECTION_SUCCESS,
-  DOWNLOAD_DATA_SELECTION,
   RESET_DATA_SELECTION,
   REMOVE_GEOMETRY_FILTER,
   SET_DATASET,
@@ -41,12 +40,6 @@ export const receiveDataSelectionSuccess = (payload) => ({
 export const receiveDataSelectionFailure = (payload) => ({
   type: FETCH_DATA_SELECTION_FAILURE,
   payload,
-})
-export const downloadDataSelection = (payload) => ({
-  type: DOWNLOAD_DATA_SELECTION,
-  meta: {
-    tracking: payload,
-  },
 })
 export const setGeometryFilter = (payload) => ({
   type: SET_GEOMETRY_FILTER,
