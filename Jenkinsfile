@@ -76,6 +76,7 @@ pipeline {
       }
       steps {
         build job: 'Subtask_Openstack_Playbook', parameters: [
+          [$class: 'StringParameterValue', name: 'INVENTORY', value: 'acceptance'],
           [$class: 'StringParameterValue', name: 'PLAYBOOK', value: "${PLAYBOOK}"],
           [$class: 'StringParameterValue', name: 'PLAYBOOKPARAMS', value: "-e cmdb_id=app_dataportaal"]
         ]
