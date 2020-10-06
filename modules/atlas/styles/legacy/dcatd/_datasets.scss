@@ -1,7 +1,7 @@
 // resources, resources-item and the styles/** are copyied form dcatd_admin and should be integrated in atlas
-@import './resources';
-@import './resources-item';
-@import './datasets-themes';
+@import 'modules/atlas/styles/legacy/dcatd/resources';
+@import 'modules/atlas/styles/legacy/dcatd/resources-item';
+@import 'modules/atlas/styles/legacy/dcatd/datasets-themes';
 
 .resources {
   margin-right: -2 * $base-whitespace;
@@ -118,8 +118,6 @@
   }
 
   .o-header__subtitle {
-    padding: 0 10px;
-
     .o-header__button.catalog__button--wijzigen {
       // sass-lint:disable-line force-element-nesting
       @include icon-button-text-right('edit', '', 'white');
@@ -168,13 +166,12 @@
 
   .dataset-tag {
     display: inline-block;
-    margin-left: -8px;
 
     &__arrow {
       display: inline-block;
       position: relative;
       top: 3.3px;
-      left: 13.16px;
+      left: 10px;
       padding: 8.58528137423857px;
       transform: rotate(45deg);
       border-width: 0 0 1px 1px;

@@ -31,18 +31,7 @@ exports[`DataSelectionTable should render without failing 1`] = `
       className="c-ds-table__row c-ds-table__row--link qa-table-link"
       key="0"
     >
-      <Styled(Connect(Link))
-        to={
-          Object {
-            "payload": Object {
-              "id": "idundefined",
-              "subtype": undefined,
-              "type": undefined,
-            },
-            "type": "atlasRouter/DATA_DETAIL",
-          }
-        }
-      />
+      <Styled(mockConstructor) />
     </tr>
   </tbody>
 </table>

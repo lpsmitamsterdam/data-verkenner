@@ -1,11 +1,13 @@
 import brkApi from './data-selection-api-brk'
 import dataSelectionApi from './data-selection-api-data-selection'
 import dcatApi from './data-selection-api-dcatd'
+import { routing } from '../../../app/routes'
 
 const DATA_SELECTION_CONFIG = {
   datasets: {
     bag: {
       CUSTOM_API: dataSelectionApi,
+      PATH: routing.addresses.path,
       MAX_AVAILABLE_PAGES: 100,
       MAX_NUMBER_OF_CLUSTERED_MARKERS: 10000,
       ENDPOINT_PREVIEW: 'dataselectie/bag/',
@@ -149,6 +151,7 @@ const DATA_SELECTION_CONFIG = {
     brk: {
       AUTH_SCOPE: 'BRK/RSN',
       CUSTOM_API: brkApi,
+      PATH: routing.cadastralObjects.path,
       MAX_AVAILABLE_PAGES: 100,
       MAX_NUMBER_OF_CLUSTERED_MARKERS: Infinity,
       ENDPOINT_PREVIEW: {
@@ -256,6 +259,7 @@ const DATA_SELECTION_CONFIG = {
     hr: {
       CUSTOM_API: dataSelectionApi,
       AUTH_SCOPE: 'HR/R',
+      PATH: routing.establishments.path,
       MAX_AVAILABLE_PAGES: 100,
       MAX_NUMBER_OF_CLUSTERED_MARKERS: 10000,
       ENDPOINT_PREVIEW: 'dataselectie/hr/',

@@ -158,3 +158,12 @@ export const panoFullScreenParam: UrlParam<boolean> = {
   decode: (value) => Boolean(value),
   encode: (value) => value.toString(),
 }
+
+type View = 'volledig' | 'kaart' | 'gesplitst'
+
+export const viewParam: UrlParam<View> = {
+  name: 'modus',
+  defaultValue: 'gesplitst',
+  decode: (value) => value as View,
+  encode: (value) => value,
+}

@@ -202,6 +202,7 @@ const routes = Object.keys(routing).reduce((acc, key) => {
 export const mapSearchPagePaths = [
   routing.search.path,
   routing.dataSearch.path,
+  routing.datasetSearch.path,
   routing.articleSearch.path,
   routing.publicationSearch.path,
   routing.specialSearch.path,

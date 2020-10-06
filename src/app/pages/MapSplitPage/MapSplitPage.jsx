@@ -6,7 +6,7 @@ import { connect } from 'react-redux'
 import { getDetailEndpoint } from '../../../shared/ducks/detail/selectors'
 import { toDetailFromEndpoint as endpointActionCreator } from '../../../store/redux-first-router/actions'
 import SplitScreen from '../../components/SplitScreen/SplitScreen'
-import DataSelection from '../../components/DataSelection/DataSelectionContainer'
+import DataSelection from '../../components/DataSelection/DataSelection'
 import { getSelectionType } from '../../../shared/ducks/selection/selection'
 import {
   getViewMode,

@@ -21,8 +21,6 @@ import {
   SET_PANORAMA_TAGS,
 } from '../../../panorama/ducks/constants'
 import { getLabelObjectByTags } from '../../../panorama/ducks/selectors'
-import { DOWNLOAD_DATA_SELECTION } from '../../../shared/ducks/data-selection/constants'
-import { DOWNLOAD_DATASET_RESOURCE } from '../../../shared/ducks/detail/constants'
 import { ADD_FILTER, REMOVE_FILTER } from '../../../shared/ducks/filters/filters'
 import {
   getViewMode,
@@ -143,22 +141,6 @@ const trackEvents = {
         ]
     }
   },
-  // DATASETS
-  // DATASETS -> CLICK RESOURCE ON DATASET_DETAIL
-  [DOWNLOAD_DATASET_RESOURCE]: ({ tracking }) => [
-    MATOMO_CONSTANTS.TRACK_EVENT,
-    'Download',
-    tracking.dataset,
-    tracking.resourceUrl,
-  ],
-  // DATA SELECTION
-  // DATA SELECTION -> BUTTON "downloaden"
-  [DOWNLOAD_DATA_SELECTION]: ({ tracking }) => [
-    MATOMO_CONSTANTS.TRACK_EVENT,
-    'Download-tabel',
-    `dataselectie-download-${tracking.toLowerCase()}`,
-    null,
-  ],
   // DRAW TOOL
   [MAP_SET_DRAWING_MODE]: function trackDrawing({ tracking, state, title }) {
     const markers = getShapeMarkers(state)
