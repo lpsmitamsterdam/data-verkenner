@@ -37,7 +37,9 @@ export default [
     optimization: {
       minimizer: [
         new TerserPlugin({
-          sourceMap: true,
+          terserOptions: {
+            sourceMap: true,
+          }
         }),
       ],
       splitChunks: {
