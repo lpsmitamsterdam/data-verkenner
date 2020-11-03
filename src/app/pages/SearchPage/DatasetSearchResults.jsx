@@ -1,21 +1,21 @@
-import { Enlarge } from '@datapunt/asc-assets'
-import styled from 'styled-components'
-import { themeSpacing } from '@datapunt/asc-ui'
+import { Enlarge } from '@amsterdam/asc-assets'
+import { themeSpacing } from '@amsterdam/asc-ui'
 import React from 'react'
+import styled from 'styled-components'
 import { dcatdScopes } from '../../../shared/services/auth/auth'
 import getState from '../../../shared/services/redux/get-state'
 import { toDatasetDetail, toDatasetSearch } from '../../../store/redux-first-router/actions'
 import ActionButton from '../../components/ActionButton/ActionButton'
+import AuthAlert from '../../components/Alerts/AuthAlert'
 import DatasetCard from '../../components/DatasetCard'
-import { modificationDateFilter } from '../../components/Filters/Filters'
 import ErrorMessage from '../../components/ErrorMessage/ErrorMessage'
+import { modificationDateFilter } from '../../components/Filters/Filters'
 import NoSearchResults from '../../components/NoSearchResults'
-import MoreResultsWhenLoggedIn from '../../components/Alerts/MoreResultsWhenLoggedIn'
 import getErrorsForPath from '../../utils/getErrorsForPath'
 import getLoadingErrors from '../../utils/getLoadingErrors'
 import getUnauthorizedLabels from '../../utils/getUnauthorizedLabels'
 import redirectToDcatd from '../../utils/redirectToDcatd'
-import useSlug from '../../utils/useSlug'
+import toSlug from '../../utils/toSlug'
 
 const DatasetCardContainer = styled.div`
   margin-bottom: ${themeSpacing(8)};
@@ -61,7 +61,7 @@ const DatasetSearchResults = ({ query, label, results, errors, isOverviewPage })
               key: id,
               to: toDatasetDetail({
                 id,
-                slug: useSlug(header) || '',
+                slug: toSlug(header) || '',
               }),
               shortTitle: header,
               teaser,
@@ -73,7 +73,7 @@ const DatasetSearchResults = ({ query, label, results, errors, isOverviewPage })
         ))}
 
         {unauthorizedLabels.length > 0 && (
-          <MoreResultsWhenLoggedIn excludedResults={unauthorizedLabels.join(', ')} />
+          <AuthAlert excludedResults={unauthorizedLabels.join(', ')} />
         )}
       </DatasetCardContainer>
     )

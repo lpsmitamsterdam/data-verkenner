@@ -12,7 +12,7 @@ module.exports = {
   settings: {
     'import/resolver': {
       node: {
-        extensions: ['.ts', '.tsx', '.mjs', '.js', '.jsx'],
+        extensions: ['.ts', '.tsx', '.js', '.jsx'],
       },
     },
   },
@@ -43,6 +43,16 @@ module.exports = {
           '_defaultValue',
           '_provider',
         ],
+      },
+    ],
+    'import/extensions': [
+      'error',
+      'ignorePackages',
+      {
+        js: 'never',
+        jsx: 'never',
+        ts: 'never',
+        tsx: 'never',
       },
     ],
   },

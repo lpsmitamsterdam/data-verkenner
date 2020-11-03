@@ -1,5 +1,3 @@
-import React from 'react'
-import { connect } from 'react-redux'
 import {
   Column,
   CustomHTMLBlock,
@@ -8,26 +6,34 @@ import {
   Heading,
   Paragraph,
   Row,
-} from '@datapunt/asc-ui'
+  List,
+  ListItem,
+  Link,
+} from '@amsterdam/asc-ui'
 import { useMatomo } from '@datapunt/matomo-tracker-react'
-import { getLocationPayload } from '../../../store/redux-first-router/selectors'
-import useFromCMS from '../../utils/useFromCMS'
-import EditorialPage from '../../components/EditorialPage/EditorialPage'
+import React, { useEffect } from 'react'
+import { useParams, Link as RouterLink } from 'react-router-dom'
+import { generatePath } from 'react-router'
+import { routing } from '../../routes'
+import environment from '../../../environment'
 import { cmsConfig } from '../../../shared/config/config'
+import { routingKey } from '../../../shared/config/cms.config'
 import { toPublicationDetail } from '../../../store/redux-first-router/actions'
 import ContentContainer from '../../components/ContentContainer/ContentContainer'
+import DocumentCover from '../../components/DocumentCover/DocumentCover'
+import EditorialPage from '../../components/EditorialPage/EditorialPage'
 import ShareBar from '../../components/ShareBar/ShareBar'
 import getImageFromCms from '../../utils/getImageFromCms'
-import DocumentCover from '../../components/DocumentCover/DocumentCover'
 import useDownload from '../../utils/useDownload'
-import environment from '../../../environment'
+import useFromCMS from '../../utils/useFromCMS'
 
-const PublicationDetailPage = ({ id }) => {
+const PublicationDetailPage = () => {
+  const { id } = useParams()
   const { fetchData, results, loading, error } = useFromCMS(cmsConfig.PUBLICATION, id)
   const [downloadLoading, downloadFile] = useDownload()
   const { trackEvent } = useMatomo()
 
-  React.useEffect(() => {
+  useEffect(() => {
     fetchData()
   }, [id])
 
@@ -43,6 +49,7 @@ const PublicationDetailPage = ({ id }) => {
     field_intro: intro,
     field_language: lang,
     slug,
+    related,
   } = results || {}
 
   const documentTitle = title && `Publicatie: ${title}`
@@ -97,6 +104,24 @@ const PublicationDetailPage = ({ id }) => {
                   <EditorialContent>
                     {intro && <Paragraph strong dangerouslySetInnerHTML={{ __html: intro }} />}
                     {body && <CustomHTMLBlock body={body} />}
+                    {related?.length ? (
+                      <List>
+                        {related.map(({ id: linkId, title: linkTitle, type, to }) => (
+                          <ListItem key={linkId}>
+                            <Link
+                              as={RouterLink}
+                              to={generatePath(routing[routingKey[type]].path, {
+                                slug: to.payload.slug,
+                                id: to.payload.id,
+                              })}
+                              inList
+                            >
+                              {linkTitle}
+                            </Link>
+                          </ListItem>
+                        ))}
+                      </List>
+                    ) : null}
                   </EditorialContent>
                 </Column>
               </Column>
@@ -111,11 +136,4 @@ const PublicationDetailPage = ({ id }) => {
   )
 }
 
-const mapStateToProps = (state) => {
-  const { id } = getLocationPayload(state)
-  return {
-    id,
-  }
-}
-
-export default connect(mapStateToProps, null)(PublicationDetailPage)
+export default PublicationDetailPage

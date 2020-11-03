@@ -1,6 +1,14 @@
 import PARAMETERS from '../../../../src/store/parameters'
 import { routing } from '../../../../src/app/routes'
-import { ADDRESS_PAGE, DATA_SEARCH, HOMEPAGE, MAP, MAP_LAYERS } from '../support/selectors'
+import {
+  ADDRESS_PAGE,
+  COMPONENTS,
+  DATA_DETAIL,
+  DATA_SEARCH,
+  HOMEPAGE,
+  MAP,
+  MAP_LAYERS,
+} from '../support/selectors'
 
 const { VIEW, VIEW_CENTER } = PARAMETERS
 
@@ -14,13 +22,13 @@ describe('map module', () => {
       cy.visit('/')
 
       cy.wait('@jsonapi')
-      cy.get(HOMEPAGE.navigationBlockKaart).should('exist').and('be.visible')
+      cy.get(HOMEPAGE.navigationBlockKaart).should('be.visible')
       cy.get(MAP.mapContainer).should('not.exist')
       cy.get(HOMEPAGE.navigationBlockKaart).click()
       cy.wait('@graphql')
       cy.wait('@graphql')
       cy.url().should('include', '/data/?modus=kaart&legenda=true')
-      cy.get(MAP.mapContainer).should('exist').and('be.visible')
+      cy.get(MAP.mapContainer).should('be.visible')
       cy.get(MAP.mapPanelBackgroundLabel).should('be.visible').and('have.text', 'Achtergrond')
 
       cy.checkTopography()
@@ -42,7 +50,7 @@ describe('map module', () => {
       cy.defineAddressDetailRoutes()
 
       // Use regular expression to match spaces
-      cy.route(/\/typeahead\?q=dam 1/).as('getTypeaheadResults')
+      cy.route('/typeahead?q=dam+1').as('getTypeaheadResults')
 
       // ensure the viewport is always the same in this test, so the clicks can be aligned properly
       cy.viewport(1000, 660)
@@ -53,13 +61,13 @@ describe('map module', () => {
       cy.get(DATA_SEARCH.autoSuggestInput).focus().type('dam 1')
 
       cy.wait('@getTypeaheadResults')
+      cy.wait(500)
       cy.get(DATA_SEARCH.autoSuggest).contains('Dam 1').click()
 
       cy.wait('@getVerblijfsobject')
       // check that the circle icon is drawed on the map
       cy.get(MAP.iconMapMarker)
-        .should('exist')
-        .and('be.visible')
+        .should('be.visible')
         .and('have.attr', 'src', `${svgMapPath}detail.svg`)
       cy.checkPreviewPanel(['Dam 1', 'winkelfunctie'])
 
@@ -68,40 +76,28 @@ describe('map module', () => {
 
       cy.waitForGeoSearch()
       cy.get(MAP.iconMapMarker)
-        .should('exist')
-        .and('be.visible')
+        .should('be.visible')
         .and('have.attr', 'src', `${svgMapPath}search.svg`)
 
       cy.get(MAP.mapPreviewPanelVisible).contains('Beursplein 15').click()
 
       cy.get(MAP.iconMapMarker)
-        .should('exist')
-        .and('be.visible')
+        .should('be.visible')
         .and('have.attr', 'src', `${svgMapPath}detail.svg`)
-      cy.get(MAP.mapPreviewPanelVisible)
-        .get(MAP.mapDetailPanoramaHeaderImage)
-        .should('exist')
-        .and('be.visible')
+      cy.get(MAP.mapPreviewPanelVisible).get(MAP.mapDetailPanoramaHeaderImage).should('be.visible')
       cy.checkPreviewPanel(['Type adres', 'Hoofdadres'])
 
       // click on the button inside the panel balloon thingy, and expect the large right column to
       // become visible
       cy.get(MAP.buttonEnlarge).click()
-      cy.get(ADDRESS_PAGE.resultsPanel).should('exist').and('be.visible')
-      cy.wait('@getNummeraanduiding')
-      cy.wait('@getPanden')
-      cy.wait('@getObjectExpand')
-      cy.wait('@getSitueringen')
-      cy.wait('@getMonument')
-      cy.get(ADDRESS_PAGE.resultsPanel)
-        .get(ADDRESS_PAGE.resultsPanelTitle)
-        .contains('Beursplein 15')
-      cy.get(ADDRESS_PAGE.resultsPanel).get('dl').contains('1012JW')
+      cy.get(ADDRESS_PAGE.resultsPanel).should('be.visible')
+
+      cy.waitForAdressDetail()
+
+      cy.get(DATA_DETAIL.heading).contains('Beursplein 15')
+      cy.get(DATA_DETAIL.main).get('dl').contains('1012JW')
       cy.wait('@getPanorama')
-      cy.get(ADDRESS_PAGE.resultsPanel)
-        .get(ADDRESS_PAGE.panoramaThumbnail)
-        .should('exist')
-        .and('be.visible')
+      cy.get(COMPONENTS.panoramaPreview).should('exist').and('be.visible')
     })
   })
 
@@ -110,9 +106,9 @@ describe('map module', () => {
       cy.server()
       cy.hidePopup()
       cy.visit(`/${routing.data.path}?${VIEW}=kaart`)
-      cy.get(ADDRESS_PAGE.mapContainer).should('exist').and('be.visible')
-      cy.get(MAP.mapContainer).should('exist').and('be.visible')
-      cy.get('.leaflet-tile-container').should('exist').and('be.visible')
+      cy.get(ADDRESS_PAGE.mapContainer).should('be.visible')
+      cy.get(MAP.mapContainer).should('be.visible')
+      cy.get('.leaflet-tile-container').should('be.visible')
     })
 
     it('should add a map-layer to the leaflet map', () => {
@@ -133,8 +129,8 @@ describe('map module', () => {
     it('should add a layer to the map', () => {
       cy.server()
       cy.route('POST', '/cms_search/graphql/').as('graphql')
-      cy.route(/\/typeahead\?q=spuistraat 59a/).as('getTypeaheadResults')
-      cy.route('/panorama/thumbnail/*').as('getPanorama')
+      cy.route('/typeahead?q=spuistraat+59a').as('getTypeaheadResults')
+      cy.route('/panorama/thumbnail?*').as('getPanorama')
       cy.route('/bag/v1.1/verblijfsobject/*').as('getVerblijfsobject')
       cy.hidePopup()
       cy.visit(`/`)
@@ -150,8 +146,7 @@ describe('map module', () => {
       cy.contains('Kadastrale eigenaren').should('not.be.visible')
       cy.contains('Kadastrale erfpachtuitgevers').should('not.be.visible')
       cy.contains('Gemeentelijk eigendom').should('not.be.visible')
-      cy.contains('Gemeentelijke beperkingen (WKPB)').should('not.be.visible')
-      cy.get(MAP.legendNotification).should('not.be.visible')
+      cy.get(MAP.zoomInAlert).should('not.be.visible')
       cy.contains('Panden ouder dan 1960').should('not.be.visible')
       cy.contains('Panden naar bouwjaar').should('not.be.visible')
 
@@ -167,8 +162,17 @@ describe('map module', () => {
       cy.contains('Kadastrale eigenaren').should('be.visible')
       cy.contains('Kadastrale erfpachtuitgevers').should('be.visible')
       cy.contains('Gemeentelijk eigendom').should('be.visible')
-      cy.contains('Gemeentelijke beperkingen (WKPB)').should('be.visible')
-      cy.get(MAP.legendNotification).should('be.visible')
+      cy.get(MAP_LAYERS.checkboxOZGemeentelijkeBeperkingen).check()
+
+      cy.get(MAP.zoomInAlert)
+        .scrollIntoView()
+        .should(
+          'contain',
+          'Een of meerdere geselecteerde kaartlagen zijn nog niet zichtbaar. Zoom in op de kaart om deze te zien.',
+        )
+        .and('be.visible')
+
+      cy.get(MAP_LAYERS.checkboxOZGemeentelijkeBeperkingen).uncheck()
       cy.contains('Panden ouder dan 1960').should('be.visible')
       cy.contains('Panden naar bouwjaar').should('be.visible')
 
@@ -218,7 +222,7 @@ describe('map module', () => {
       cy.wait('@getVerblijfsobject')
       cy.wait('@getPanorama')
       cy.get(MAP.mapZoomIn).click({ force: true })
-      cy.get(MAP.mapDetailResultPanel).should('exist').and('be.visible')
+      cy.get(MAP.mapDetailResultPanel).should('be.visible')
       cy.get(MAP.iconMapMarker).should('be.visible')
 
       cy.get(MAP_LAYERS.checkboxOnroerendeZaken).click({ force: true })
@@ -228,7 +232,7 @@ describe('map module', () => {
   })
 
   describe('user should be able to open the map panel when collapsed', () => {
-    it('should add open the map panel component', () => {
+    it('should open the map panel component', () => {
       cy.server()
       cy.hidePopup()
       cy.visit(`/${routing.data.path}?${VIEW}=kaart`)
@@ -237,7 +241,7 @@ describe('map module', () => {
       cy.get(DATA_SEARCH.scrollWrapper).should('not.be.visible')
       cy.get(MAP.toggleMapPanel).click()
       cy.get(MAP.mapPanel).should('have.class', 'map-panel--expanded')
-      cy.get(DATA_SEARCH.scrollWrapper).should('exist').and('be.visible')
+      cy.get(DATA_SEARCH.scrollWrapper).should('be.visible')
     })
   })
 
@@ -245,9 +249,6 @@ describe('map module', () => {
     it('should see no layers vestigingen on the map if not logged in', () => {
       cy.server()
       cy.route('POST', '/cms_search/graphql/').as('graphql')
-      cy.route(/\/typeahead\?q=spuistraat 59a/).as('getTypeaheadResults')
-      cy.route('/panorama/thumbnail/*').as('getPanorama')
-      cy.route('/bag/v1.1/verblijfsobject/*').as('getVerblijfsobject')
       cy.hidePopup()
       cy.visit(`/`)
       cy.get(HOMEPAGE.navigationBlockKaart).click()
@@ -296,9 +297,6 @@ describe('map module', () => {
     it('Should see vestigingen on the map', () => {
       cy.server()
       cy.route('POST', '/cms_search/graphql/').as('graphql')
-      cy.route(/\/typeahead\?q=spuistraat 59a/).as('getTypeaheadResults')
-      cy.route('/panorama/thumbnail/*').as('getPanorama')
-      cy.route('/bag/v1.1/verblijfsobject/*').as('getVerblijfsobject')
       cy.hidePopup()
       cy.visit(`/`)
       cy.get(HOMEPAGE.navigationBlockKaart).click()

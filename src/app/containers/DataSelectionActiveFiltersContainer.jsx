@@ -1,6 +1,5 @@
 import React from 'react'
-import PropTypes from 'prop-types'
-import { connect } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { removeGeometryFilter } from '../../shared/ducks/data-selection/actions'
 import {
   removeFilter as removeActiveFilter,
@@ -8,22 +7,17 @@ import {
 } from '../../shared/ducks/filters/filters'
 import ActiveFilters from '../components/ActiveFilters/ActiveFilters'
 
-const DataSelectionActiveFilters = ({ filters, removeFilter }) => (
-  <ActiveFilters filters={filters} removeFilter={removeFilter} />
-)
-
-DataSelectionActiveFilters.propTypes = {
-  filters: PropTypes.arrayOf(PropTypes.object).isRequired,
-  removeFilter: PropTypes.func.isRequired,
+const DataSelectionActiveFilters = () => {
+  const dispatch = useDispatch()
+  const filters = useSelector(selectDataSelectionFilters)
+  return (
+    <ActiveFilters
+      filters={filters}
+      removeFilter={(key) => {
+        dispatch(key === 'shape' ? removeGeometryFilter() : removeActiveFilter(key))
+      }}
+    />
+  )
 }
 
-const mapStateToProps = (state) => ({
-  filters: selectDataSelectionFilters(state),
-})
-
-const mapDispatchToProps = (dispatch) => ({
-  removeFilter: (key) =>
-    key === 'shape' ? dispatch(removeGeometryFilter()) : dispatch(removeActiveFilter(key)),
-})
-
-export default connect(mapStateToProps, mapDispatchToProps)(DataSelectionActiveFilters)
+export default DataSelectionActiveFilters

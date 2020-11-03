@@ -26,22 +26,10 @@ Then, open the application in your browser at [localhost:3000](http://localhost:
 
 ## Testing
 
-Karma & Jest unit and (Jest) integration test
+Jest unit test
 
 ```
 npm test
-```
-
-Only Karma unit tests
-
-```
-npm run test:karma
-```
-
-Only Jest unit tests
-
-```
-npm run test:jest
 ```
 
 ### E2E testing
@@ -70,6 +58,14 @@ This will start the E2E test, if you want to watch for changes you can also run 
 npm run analyze:modern
 # Analyze the legacy browser bundle (ES5)
 npm run analyze:legacy
+```
+
+### Deploying to a demo server
+
+There are three demo servers that can be deployed to, to deploy to one of these servers run the following command on your branch.
+
+```bash
+npm run deploy:demo
 ```
 
 ## Other useful commands

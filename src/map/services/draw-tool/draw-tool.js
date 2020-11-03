@@ -1,13 +1,8 @@
-import get from 'lodash.get'
-// TODO: R: clean file, overlay complex and contains state
-
 /* eslint-disable no-use-before-define,no-underscore-dangle */
 /* global L */
-
+import debounce from 'lodash.debounce'
 import defer from 'lodash.defer'
 import isEqual from 'lodash.isequal'
-import debounce from 'lodash.debounce'
-
 import { isBusy, start } from '../suppress/suppress'
 import drawToolConfig from './draw-tool.config'
 
@@ -479,7 +474,8 @@ function deleteAllMarkers() {
     return
   }
 
-  const firstMarker = get(drawTool, 'drawShapeHandler._markers[0]')
+  const firstMarker = drawTool?.drawShapeHandler?._markers?.[0]
+
   if (firstMarker) {
     currentShape.deleteMarker = firstMarker
     deleteMarker()

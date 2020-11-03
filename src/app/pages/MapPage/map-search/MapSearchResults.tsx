@@ -1,8 +1,9 @@
-import { MapPanelContent } from '@datapunt/arm-core'
-import { Heading, Link, Paragraph, themeColor, themeSpacing } from '@datapunt/asc-ui'
+import { MapPanelContent } from '@amsterdam/arm-core'
+import { Heading, Link, Paragraph, themeColor, themeSpacing } from '@amsterdam/asc-ui'
 import { LatLngLiteral } from 'leaflet'
 import React, { useMemo } from 'react'
 import { useSelector } from 'react-redux'
+import { Link as RouterLink } from 'react-router-dom'
 import styled from 'styled-components'
 import mapSearch, {
   MapSearchCategory,
@@ -11,14 +12,16 @@ import mapSearch, {
 } from '../../../../map/services/map-search/map-search'
 import { getUser } from '../../../../shared/ducks/user/user'
 import formatNumber from '../../../../shared/services/number-formatter/number-formatter'
-import MoreResultsWhenLoggedIn from '../../../components/Alerts/MoreResultsWhenLoggedIn'
+import AuthAlert from '../../../components/Alerts/AuthAlert'
 import LoadingSpinner from '../../../components/LoadingSpinner/LoadingSpinner'
 import ShowMore from '../../../components/ShowMore'
-import usePromise, { PromiseResult, PromiseStatus } from '../../../utils/usePromise'
-import PanoramaPreview from './PanoramaPreview'
-import { Overlay } from '../types'
 import useParam from '../../../utils/useParam'
+import usePromise, { PromiseResult, PromiseStatus } from '../../../utils/usePromise'
 import { locationParam } from '../query-params'
+import { Overlay } from '../types'
+import PanoramaPreview from './PanoramaPreview'
+import buildDetailUrl from '../detail/buildDetailUrl'
+import { getDetailPageData } from '../../../../store/redux-first-router/actions'
 
 const RESULT_LIMIT = 10
 
@@ -63,7 +66,7 @@ const StatusLabel = styled.span`
   font-weight: normal;
 `
 
-const StyledMoreResultsWhenLoggedIn = styled(MoreResultsWhenLoggedIn)`
+const StyledAuthAlert = styled(AuthAlert)`
   margin-top: ${themeSpacing(4)};
 `
 
@@ -110,7 +113,7 @@ const MapSearchResults: React.FC<MapSearchPanelProps> = ({ currentOverlay, locat
       <StyledPanoramaPreview location={location} radius={180} aspect={2.5} />
       {renderResult(result)}
       {(!user.scopes.includes('HR/R') || !user.scopes.includes('BRK/RS')) && (
-        <StyledMoreResultsWhenLoggedIn excludedResults={EXCLUDED_RESULTS} />
+        <StyledAuthAlert excludedResults={EXCLUDED_RESULTS} />
       )}
     </MapPanelContent>
   )
@@ -150,8 +153,13 @@ function renderResultItems(results: MapSearchResult[]) {
   return (
     <ShowMore limit={RESULT_LIMIT}>
       {results.map((result) => (
-        // TODO: Actually link to the details page for the result.
-        <ResultLink key={result.type + result.label} href="/" inList>
+        // @ts-ignore
+        <ResultLink
+          key={result.type + result.label}
+          forwardedAs={RouterLink}
+          to={buildDetailUrl(getDetailPageData(result.uri))}
+          inList
+        >
           {result.label}
           {result.statusLabel && (
             <>

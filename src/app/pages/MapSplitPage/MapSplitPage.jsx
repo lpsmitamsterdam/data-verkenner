@@ -6,7 +6,7 @@ import { connect } from 'react-redux'
 import { getDetailEndpoint } from '../../../shared/ducks/detail/selectors'
 import { toDetailFromEndpoint as endpointActionCreator } from '../../../store/redux-first-router/actions'
 import SplitScreen from '../../components/SplitScreen/SplitScreen'
-import DataSelection from '../../components/DataSelection/DataSelectionContainer'
+import DataSelection from '../../components/DataSelection/DataSelection'
 import { getSelectionType } from '../../../shared/ducks/selection/selection'
 import {
   getViewMode,
@@ -20,9 +20,9 @@ import PAGES from '../../pages'
 const DataDetailPage = React.lazy(() =>
   import(/* webpackChunkName: "DataDetailPage" */ '../DataDetailPage/DataDetailPage'),
 )
-const LocationSearchContainer = React.lazy(() =>
+const LocationSearch = React.lazy(() =>
   import(
-    /* webpackChunkName: "LocationSearchContainer" */ '../../components/LocationSearch/LocationSearchContainer'
+    /* webpackChunkName: "LocationSearchContainer" */ '../../components/LocationSearch/LocationSearch'
   ),
 )
 const PanoramaContainer = React.lazy(() =>
@@ -30,6 +30,13 @@ const PanoramaContainer = React.lazy(() =>
     /* webpackChunkName: "PanoramaContainer" */ '../../../panorama/containers/PanoramaContainer'
   ),
 ) // TODO: refactor, test
+
+let MapComponent = () => null
+
+if (typeof window !== 'undefined') {
+  // eslint-disable-next-line global-require
+  MapComponent = require('../../../map/containers/map/MapContainer').default
+}
 
 /* istanbul ignore next */ const MapSplitPage = ({
   hasSelection,
@@ -40,13 +47,6 @@ const PanoramaContainer = React.lazy(() =>
 }) => {
   let mapProps = {}
   let Component = null
-
-  let MapComponent = () => null
-
-  if (typeof window !== 'undefined') {
-    // eslint-disable-next-line global-require
-    MapComponent = require('../../../map/containers/map/MapContainer').default
-  }
 
   switch (currentPage) {
     case PAGES.DATA_DETAIL:
@@ -74,7 +74,7 @@ const PanoramaContainer = React.lazy(() =>
       break
 
     case PAGES.DATA_SEARCH_GEO:
-      Component = <LocationSearchContainer />
+      Component = <LocationSearch />
       mapProps = {
         showPreviewPanel: true,
       }

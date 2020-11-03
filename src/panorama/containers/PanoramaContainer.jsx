@@ -1,27 +1,23 @@
-import React from 'react'
+import classNames from 'classnames'
+import debounce from 'lodash.debounce'
 import PropTypes from 'prop-types'
+import React from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import throttle from 'lodash.throttle'
-import classNames from 'classnames'
-
+import { Map as ContextMenu } from '../../app/components/ContextMenu'
+import IconButton from '../../app/components/IconButton/IconButton'
+import ToggleFullscreen from '../../app/components/ToggleFullscreen/ToggleFullscreen'
+import { getMapDetail } from '../../map/ducks/detail/actions'
+import { getMapOverlays } from '../../map/ducks/map/selectors'
+import { pageTypeToEndpoint } from '../../map/services/map-detail/map-detail'
+import { isPrintMode, isPrintOrEmbedMode, setViewMode, VIEW_MODE } from '../../shared/ducks/ui/ui'
+import PanoramaToggle from '../components/PanoramaToggle/PanoramaToggle'
+import StatusBar from '../components/StatusBar/StatusBar'
 import {
   closePanorama,
   fetchPanoramaHotspotRequest,
   setPanoramaOrientation,
 } from '../ducks/actions'
-
-import {
-  getHeadingDegrees,
-  getOrientation,
-  initialize,
-  loadScene,
-} from '../services/marzipano/marzipano'
-
-import StatusBar from '../components/StatusBar/StatusBar'
-import PanoramaToggle from '../components/PanoramaToggle/PanoramaToggle'
-import ToggleFullscreen from '../../app/components/ToggleFullscreen/ToggleFullscreen'
-import { Map as ContextMenu } from '../../app/components/ContextMenu'
 import {
   getDetailReference,
   getLabelObjectByTags,
@@ -29,11 +25,12 @@ import {
   getPanoramaLocation,
   getPanoramaTags,
 } from '../ducks/selectors'
-import IconButton from '../../app/components/IconButton/IconButton'
-import { getMapDetail } from '../../map/ducks/detail/actions'
-import { getMapOverlays } from '../../map/ducks/map/selectors'
-import { pageTypeToEndpoint } from '../../map/services/map-detail/map-detail'
-import { isPrintMode, isPrintOrEmbedMode, setViewMode, VIEW_MODE } from '../../shared/ducks/ui/ui'
+import {
+  getHeadingDegrees,
+  getOrientation,
+  initialize,
+  loadScene,
+} from '../services/marzipano/marzipano'
 
 class PanoramaContainer extends React.Component {
   constructor(props) {
@@ -43,7 +40,7 @@ class PanoramaContainer extends React.Component {
     this.hotspotClickHandler = this.hotspotClickHandler.bind(this)
     this.loadPanoramaScene = this.loadPanoramaScene.bind(this)
 
-    this.updateOrientationThrottled = throttle(this.updateOrientation, 300, {
+    this.updateOrientationDebounced = debounce(this.updateOrientation, 300, {
       leading: true,
       trailing: true,
     })
@@ -55,7 +52,7 @@ class PanoramaContainer extends React.Component {
     this.loadPanoramaScene()
 
     if (this.panoramaViewer) {
-      this.panoramaViewer.addEventListener('viewChange', this.updateOrientationThrottled)
+      this.panoramaViewer.addEventListener('viewChange', this.updateOrientationDebounced)
     }
 
     if (detailReference.length > 0) {
@@ -78,7 +75,7 @@ class PanoramaContainer extends React.Component {
   }
 
   componentWillUnmount() {
-    this.panoramaViewer.removeEventListener('viewChange', this.updateOrientationThrottled)
+    this.panoramaViewer.removeEventListener('viewChange', this.updateOrientationDebounced)
   }
 
   loadPanoramaScene() {

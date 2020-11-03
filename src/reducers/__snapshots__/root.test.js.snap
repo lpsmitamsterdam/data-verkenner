@@ -2,10 +2,8 @@
 
 exports[`the root reducer combines many reducers 1`] = `
 Object {
-  "autoSuggest": "autoSuggest",
   "dataSearch": "dataSearch",
   "dataSelection": "dataSelection",
-  "datasets": "datasets",
   "detail": "detail",
   "error": "error",
   "files": Object {
@@ -23,7 +21,6 @@ Object {
     "panelLayers": "panelLayers",
   },
   "panorama": "panorama",
-  "panoramaPreview": "panoramaPreview",
   "search": Object {
     "activeFilters": Array [],
     "page": 1,

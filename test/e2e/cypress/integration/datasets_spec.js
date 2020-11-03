@@ -48,12 +48,12 @@ describe('datasets module', () => {
       cy.wait('@getDataset')
 
       // check detail titles
-      cy.get('h3').should('be.visible').and('contain', 'Dataset')
-      cy.get('h3').should('be.visible').and('contain', 'Resources')
-      cy.get('h3').should('be.visible').and('contain', 'Details')
-      cy.get('h3').should('be.visible').and('contain', "Thema's")
-      cy.get('h3').should('be.visible').and('contain', 'Tags')
-      cy.get('h3').should('be.visible').and('contain', 'Licentie')
+      cy.get('h2').should('be.visible').and('contain', 'Dataset')
+      cy.get('h2').should('be.visible').and('contain', 'Resources')
+      cy.get('h2').should('be.visible').and('contain', 'Details')
+      cy.get('h2').should('be.visible').and('contain', "Thema's")
+      cy.get('h2').should('be.visible').and('contain', 'Tags')
+      cy.get('h2').should('be.visible').and('contain', 'Licentie')
 
       // as downloading is not testable, we check for the presence of href
       cy.get('.resources-item').should('exist').and('be.visible').and('have.attr', 'href')
@@ -147,11 +147,13 @@ describe('datasets module', () => {
       cy.get(SEARCH.input).trigger('focus')
       cy.get(SEARCH.input).type('Vergunningen')
       cy.wait('@typeaheadResults')
+      cy.wait(500)
+      cy.get(DATA_SEARCH.autoSuggest).click()
       cy.get(DATA_SEARCH.autoSuggestHeader)
         .contains('Datasets')
         .siblings('ul')
         .children('li')
-        .first()
+        .eq(2)
         .click()
       cy.wait('@getDataset')
 
@@ -167,7 +169,7 @@ describe('datasets module', () => {
       cy.get(DATA_SETS.datasetItem).should('be.visible')
 
       cy.get(DATA_SEARCH.searchBarFilter).select('Datasets')
-      cy.get(SEARCH.input).type('Vergunningen{enter}')
+      cy.get(SEARCH.input).clear().type('Vergunningen{enter}')
 
       cy.contains("Datasets met 'Vergunningen' (").should('be.visible')
       cy.should('not.contain', "Alle zoekresultaten met 'Vergunningen'")

@@ -1,4 +1,11 @@
-import { DATA_SELECTION_TABLE, HOMEPAGE, LINKS, MAP, TABLES } from '../support/selectors'
+import {
+  DATA_DETAIL,
+  DATA_SELECTION_TABLE,
+  HOMEPAGE,
+  LINKS,
+  MAP,
+  TABLES,
+} from '../support/selectors'
 
 describe('parcel-ownership (eigendommen) module', () => {
   describe('user should be able to navigate to the parcel-ownership from the homepage', () => {
@@ -54,7 +61,7 @@ describe('parcel-ownership (eigendommen) module', () => {
       })
 
       it('should not show a notification', () => {
-        cy.get(TABLES.warningPanel).should('not.exist').and('not.be.visible')
+        cy.get(TABLES.warningPanel).should('not.exist')
       })
 
       it('should show the table with results', () => {
@@ -72,7 +79,7 @@ describe('parcel-ownership (eigendommen) module', () => {
 
         cy.wait('@getBrkObject')
         cy.wait('@getBrkObjectExpand')
-        cy.get(TABLES.detailPane).should('exist').and('be.visible')
+        cy.get(DATA_DETAIL.main).should('exist').and('be.visible')
       })
     })
 

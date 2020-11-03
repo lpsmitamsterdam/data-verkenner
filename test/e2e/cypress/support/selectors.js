@@ -6,7 +6,7 @@ export const ADDRESS_PAGE = {
   detailPage: '.c-detail',
   iconCluster: '.o-highlight-cluster',
   iconMapMarker: '.leaflet-marker-icon',
-  linkVestigingen: '.qa-hr',
+  linkTable: '[class*="DetailLinkList__LinkList"]',
   mapContainer: '.qa-map-container',
   notification: '.notification__content',
   panoramaThumbnail: 'img.c-panorama-thumbnail--img',
@@ -15,6 +15,21 @@ export const ADDRESS_PAGE = {
   resultsPanel: '.qa-dashboard__column--right',
   resultsPanelTitle: '.qa-title',
   tab: '.o-tabs__tab',
+  tabKadastraleObjecten: '#tab-brk',
+}
+
+export const COMPONENTS = {
+  panoramaPreview: '[data-testid="panorama-preview"]',
+  authAlert: '[data-testid="auth-alert"]',
+  shareBar: '[data-testid="sharebar"]',
+}
+
+export const DATA_DETAIL = {
+  main: '[data-testid="data-detail"]',
+  heading: '[data-testid="data-detail-heading"]',
+  subHeading: '[data-testid="data-detail-subheading"]',
+  definitionList: '[data-testid="detail-definition-list"]',
+  linkList: '[data-testid="detail-linklist"]',
 }
 
 export const DATA_SEARCH = {
@@ -29,6 +44,7 @@ export const DATA_SEARCH = {
   autoSuggestInput: '#auto-suggest__input',
   autoSuggestHeader: 'h4.qa-auto-suggest-header',
   autoSuggestTip: '.auto-suggest__tip',
+  buttonFilteren: '[class*=SearchPageResults__FilterButton]',
   headerTitle: '.o-header__title',
   headerSubTitle: '.o-header__subtitle',
   infoNotification: '.notification--info',
@@ -43,12 +59,13 @@ export const DATA_SEARCH = {
   scrollWrapper: '.scroll-wrapper',
   searchBarFilter: '[data-testid="SearchBarFilter"]',
   searchHeader: '.qa-search-header',
-  searchResultsGrid: '.c-search-results',
+  searchResultsGrid: '[data-testid="geosearch-page"]',
   searchResultsCategory: '[class*=SearchHeading__StyledHeading]',
   searchResultsDatasetCard: '[class*=DatasetCard__StyledHeading]',
   searchResultsEditorialCard: '[class*=EditorialCard__StyledHeading]',
   searchResultsLink: '[class*=LinkStyle__LinkContent]',
   searchResultsParagraphLink: '[class*="StyledParagraphLink"]',
+  sortDropdown: '[data-testid="sort-select"]',
   warningPanel: '.c-panel',
   warningPanelAngular: '.c-panel--warning',
 }
@@ -67,11 +84,35 @@ export const DATA_SETS = {
   dataSetLink: '[data-test=DatasetCard]',
 }
 
+export const DETAIL_PANEL = {
+  buttonClose: '[aria-label="Sluiten"]',
+  buttonInfo: '[data-testid="detail-infobox"]',
+  definitionList: '[data-testid="detail-definition-list"]',
+  definitionListDescription: '[class*="DefinitionListDescription"]',
+  definitionListTerm: '[class*="DefinitionListTerm"]',
+  panelTypeTitle: '[class*=DataDetailPage__DetailType]',
+  panelSubject: '[class*="DetailPanel__Heading"] h1',
+  panoramaPreview: '[class*="PanoramaPreview__PreviewContainer"]',
+}
+
 export const DRAWING = {
   buttonDrawingOn: '.toggle-drawing__icon',
   labelDrawing: '.toggle-drawing__label',
   clusterIcon: '.o-highlight-cluster',
   mapPolygon: '.c-map__leaflet-drawn-polygon',
+  buttonDrawTool: '[class*="DrawToolBare__DrawToolButton"]',
+  buttonRemove: '[class*="DrawToolBare__RemoveButton"]',
+  clusterSymbol: '[class*="clustergroup"]',
+  dropdownResults: '[data-testid="sort-select"]',
+  dropdownResultsSelectedValue: '[data-testid="selectedValue"]',
+  linkDrawresult: '[class*="DrawResults__ResultLink"]',
+  panelDrawTool: '[class*="DrawToolBare__DrawToolPanel"]',
+  polygon: '[class="leaflet-interactive"]',
+  tooltip: '[class*=leaflet-tooltip-bottom]',
+}
+
+export const GEO_SEARCH = {
+  listItem: '[data-testid="geosearch-listitem"]',
 }
 
 export const HEADER = {
@@ -152,7 +193,7 @@ export const MAP = {
   legendNotification: '.map-legend__notification',
   legendToggleItem: '.map-layers__toggle-title',
   mapContainer: '.leaflet-container',
-  mapDetailPanoramaHeader: '.map-search-results__header-pano',
+  mapDetailPanoramaHeader: '.map-detail-result__header-pano',
   mapDetailPanoramaHeaderImage: 'img.map-detail-result__header-pano',
   mapDetailResultPanel: '.map-detail-result',
   mapLegend: '.map-legend',
@@ -176,6 +217,7 @@ export const MAP = {
   mapZoomIn: '.leaflet-control-zoom-in',
   toggleMapPanel: '.map-panel__toggle',
   toggleFullScreen: '.qa-toggle-fullscreen',
+  zoomInAlert: '[class*=ZoomInAlertContent]',
 }
 
 export const MAP_LAYERS = {
@@ -197,6 +239,10 @@ export const MAP_LAYERS = {
   checkboxBKGrondwatermonsters: '#bdmkw-mbgwm',
   checkboxBKGrondmonstersAsbest: '#bdmkw-mbaig',
   checkboxBKGeotechnischeSonderingen: '#bdmkw-bros',
+  checkboxCovid: '[aria-label="COVID-19 maatregelen"]',
+  checkboxCovidAlcohol: '#cov19-cov19alcvrkp',
+  checkboxCovidStraatartiest: '#cov19-cov19strtart',
+  checkboxCovidGebied: '#cov19-cov19gebver',
   checkboxCultureelErfgoed: '[aria-label="Cultureel erfgoed"]',
   checkboxCEMonumenten: '#culterf-mnmtn',
   checkboxCEUnesco: '#culterf-unesco',
@@ -405,10 +451,6 @@ export const PRINT = {
   printLink: '.qa-share-bar > div > button:nth(4) ',
 }
 
-export const PUBLICATIONS = {
-  sortDropdown: '[data-testid="sort-select"]',
-}
-
 export const SEARCH = {
   form: '[data-test=search-form]',
   input: '[data-test=search-input]',
@@ -417,7 +459,6 @@ export const SEARCH = {
 export const TABLES = {
   activeFilterItem: '.c-data-selection-active-filters__listitem',
   activeFilterRemove: '.c-data-selection-active-filters--remove-filter',
-  detailPane: '.qa-detail',
   detailTitle: 'h2.o-header__title',
   filterCategories: '.c-data-selection-available-filters__category',
   filterItem: '.c-data-selection-available-filters__item',

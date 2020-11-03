@@ -1,8 +1,7 @@
-import identity from 'lodash.identity'
+import environment from '../../../environment'
 import { fetchWithToken } from '../api/api'
 import generateId from '../state-token-generator/state-token-generator'
 import { query as DSQuery } from './data-selection-api-data-selection'
-import environment from '../../../environment'
 
 export function query(config, view, activeFilters, page, search, geometryFilter) {
   return DSQuery(config, view, activeFilters, page, search, geometryFilter)
@@ -49,7 +48,7 @@ export function getMarkers(config, activeFilters, zoomLevel, boundingBox) {
             id: generateId(),
             type: 'dataSelectionBounds',
           },
-        ].filter(identity),
+        ].filter((item) => item),
         markers: data.appartementen.map((appartement) => ({
           iconData: {
             zoomLevel,

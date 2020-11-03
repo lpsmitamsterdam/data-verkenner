@@ -1,4 +1,4 @@
-import { breakpoint, themeColor, themeSpacing } from '@datapunt/asc-ui'
+import { breakpoint, themeColor, themeSpacing } from '@amsterdam/asc-ui'
 import React from 'react'
 import styled from 'styled-components'
 
@@ -9,7 +9,9 @@ type Props = {
 const DefinitionListItemWrapper = styled.div`
   display: flex;
   padding: ${themeSpacing(2)} 0;
-  border-bottom: 1px solid ${themeColor('tint', 'level4')};
+  &:not(:last-of-type) {
+    border-bottom: 1px solid ${themeColor('tint', 'level4')};
+  }
 
   @media screen and ${breakpoint('max-width', 'mobileL')} {
     flex-direction: column;
@@ -21,6 +23,7 @@ const DefinitionListTerm = styled.dt`
   color: ${themeColor('tint', 'level5')};
   font-weight: 500;
   white-space: normal;
+  word-break: break-word;
   width: 30%;
 `
 

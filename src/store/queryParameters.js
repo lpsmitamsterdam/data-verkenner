@@ -1,8 +1,8 @@
 import {
   getActiveFilters,
   getPage,
-  getQuery,
   getSort,
+  getQuery,
   REDUCER_KEY as SEARCH_REDUCER,
 } from '../app/pages/SearchPage/SearchPageDucks'
 import { routing } from '../app/routes'
@@ -308,7 +308,7 @@ export default paramsRegistry
       {
         defaultValue: panoramaInitialState.detailReference,
         decode: (val) =>
-          val && val.length ? val.split(',') : panoramaInitialState.detailReference,
+          val?.length > 0 && val?.split ? val.split(',') : panoramaInitialState.detailReference,
         selector: getDetailReference,
         encode: (selectorResult) =>
           selectorResult.length ? selectorResult.join() : panoramaInitialState.detailReference,

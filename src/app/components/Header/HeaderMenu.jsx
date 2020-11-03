@@ -1,4 +1,4 @@
-import { ChevronRight } from '@datapunt/asc-assets'
+import { ChevronRight } from '@amsterdam/asc-assets'
 import {
   MenuButton,
   MenuFlyOut,
@@ -6,7 +6,7 @@ import {
   MenuItem,
   MenuToggle,
   themeColor,
-} from '@datapunt/asc-ui'
+} from '@amsterdam/asc-ui'
 import { useMatomo } from '@datapunt/matomo-tracker-react'
 import PropTypes from 'prop-types'
 import React, { useState } from 'react'
@@ -24,9 +24,14 @@ const StyledMenuInline = styled(MenuInline)`
     tall ? themeColor('tint', 'level2')({ theme }) : themeColor('tint', 'level1')({ theme })};
 `
 
+// TODO: Fix z-index issue with overlay in ASC eventually
+const StyledMenuToggle = styled(MenuToggle)`
+  z-index: 24;
+`
+
 const components = {
   default: StyledMenuInline,
-  mobile: MenuToggle,
+  mobile: StyledMenuToggle,
 }
 
 function dropFocus() {

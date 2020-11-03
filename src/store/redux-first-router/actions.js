@@ -155,7 +155,6 @@ export const getDetailPageData = (endpoint) => {
     .replace('iiif-metadata/', 'bouwdossiers/') // Clean URL if this is using the new IIIF Metadata API
   // eslint-disable-next-line no-useless-escape
   matches = matches.match(/(\w+)\/([\w-]+)\/([\w\.-]+)\/?$/)
-
   return {
     type: matches[1],
     subtype: matches[2],

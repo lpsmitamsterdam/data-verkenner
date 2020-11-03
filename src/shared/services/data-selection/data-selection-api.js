@@ -1,7 +1,6 @@
-import identity from 'lodash.identity'
-import DATA_SELECTION_CONFIG from './data-selection-config'
 import isDefined from '../is-defined'
 import isObject from '../is-object'
+import DATA_SELECTION_CONFIG from './data-selection-config'
 
 function formatFilters(dataset, rawData) {
   const formattedFilters = DATA_SELECTION_CONFIG.datasets[dataset].FILTERS
@@ -52,7 +51,7 @@ function recurGetContent(path, rawData) {
     const key = path[0]
     const rawValue = rawData[key]
 
-    return Array.isArray(rawValue) ? rawValue.filter(identity).join(' | ') : rawValue
+    return Array.isArray(rawValue) ? rawValue.filter((part) => part).join(' | ') : rawValue
   }
   const key = path[0]
   const rawValue = rawData[key]

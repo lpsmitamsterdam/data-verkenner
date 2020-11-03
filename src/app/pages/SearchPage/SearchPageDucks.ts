@@ -93,12 +93,10 @@ export default function reducer(state = initialState, action: SearchPageAction):
 
 type StoreValue = { [REDUCER_KEY]: SearchPageState }
 
-// The query should always be a string
-export const getQuery = ({ [REDUCER_KEY]: { query } }: StoreValue) => query && query.toString()
-
 export const getSort = ({ [REDUCER_KEY]: { sort } }: StoreValue) => sort
 export const getPage = ({ [REDUCER_KEY]: { page } }: StoreValue) => page
 
+export const getQuery = ({ [REDUCER_KEY]: { query } }: StoreValue) => query
 export const getActiveFilters = ({ [REDUCER_KEY]: { activeFilters } }: StoreValue) => activeFilters
 
 export const getFilterValues = (type: string) => ({

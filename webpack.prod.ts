@@ -7,6 +7,7 @@ const CHUNKS = {
   MAP:
     'leaflet|leaflet-draw|leaflet-rotatedmarker|leaflet.markercluster|leaflet.nontiledlayer|proj4|proj4leaflet',
   DATAPUNT: '@datapunt',
+  AMSTERDAM: '@amsterdam',
   STYLED: 'styled-components|polished|style-loader|css-loader|sass-loader|postcss-loader',
   PANORAMA: 'marzipano',
   POLYFILL: 'objectFitPolyfill|core-js|core-js-pure',
@@ -22,6 +23,7 @@ export default [
   createConfig({ legacy: true, mode: 'production' }),
 ].map((config) =>
   merge(config, {
+    bail: true,
     resolve: {
       alias: {
         [path.resolve(srcPath, 'environment.ts')]: path.resolve(srcPath, 'environment.prod.ts'),
@@ -36,7 +38,9 @@ export default [
     optimization: {
       minimizer: [
         new TerserPlugin({
-          sourceMap: true,
+          terserOptions: {
+            sourceMap: true,
+          }
         }),
       ],
       splitChunks: {
@@ -51,6 +55,7 @@ export default [
             test: new RegExp(
               `/node_modules/(?!${[
                 CHUNKS.DATAPUNT,
+                CHUNKS.AMSTERDAM,
                 CHUNKS.POLYFILL,
                 CHUNKS.MAP,
                 CHUNKS.STYLED,
@@ -65,6 +70,12 @@ export default [
           datapunt: {
             test: getTestRegex(CHUNKS.DATAPUNT),
             name: 'datapunt',
+            chunks: 'all',
+            enforce: true,
+          },
+          amsterdam: {
+            test: getTestRegex(CHUNKS.AMSTERDAM),
+            name: 'amsterdam',
             chunks: 'all',
             enforce: true,
           },

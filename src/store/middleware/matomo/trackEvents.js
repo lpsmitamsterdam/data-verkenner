@@ -1,27 +1,11 @@
-import get from 'lodash.get'
+import { MATOMO_CONSTANTS } from '../../../app/matomo'
+import PAGES from '../../../app/pages'
 import { routing } from '../../../app/routes'
 import {
-  getPage,
-  isDataSelectionPage,
-  isDatasetPage,
-  isPanoPage,
-} from '../../redux-first-router/selectors'
-import { DOWNLOAD_DATA_SELECTION } from '../../../shared/ducks/data-selection/constants'
-import {
-  AUTHENTICATE_USER_REQUEST,
-  AUTHENTICATE_USER_SUCCESS,
-} from '../../../shared/ducks/user/user'
-import { ADD_FILTER, REMOVE_FILTER } from '../../../shared/ducks/filters/filters'
-import {
-  getViewMode,
-  HIDE_EMBED_PREVIEW,
-  HIDE_PRINT,
-  SET_VIEW_MODE,
-  SHOW_EMBED_PREVIEW,
-  SHOW_PRINT,
-  VIEW_MODE,
-  SHARE_PAGE,
-} from '../../../shared/ducks/ui/ui'
+  CLOSE_MODAL,
+  REPORT_FEEDBACK_REQUEST,
+  REPORT_PROBLEM_REQUEST,
+} from '../../../header/ducks/actions'
 import {
   MAP_SET_DRAWING_MODE,
   SET_MAP_BASE_LAYER,
@@ -29,64 +13,90 @@ import {
   TOGGLE_MAP_EMBED,
 } from '../../../map/ducks/map/constants'
 import { getShapeMarkers } from '../../../map/ducks/map/selectors'
-import { getLabelObjectByTags } from '../../../panorama/ducks/selectors'
 import {
-  SHOW_MODAL,
-  CLOSE_MODAL,
-  NAVIGATE_HOME_REQUEST,
-  REPORT_FEEDBACK_REQUEST,
-  REPORT_PROBLEM_REQUEST,
-} from '../../../header/ducks/actions'
-import {
-  FETCH_PANORAMA_HOTSPOT_REQUEST,
-  SET_PANORAMA_TAGS,
   CLOSE_PANORAMA,
+  FETCH_PANORAMA_HOTSPOT_REQUEST,
   FETCH_PANORAMA_REQUEST_EXTERNAL,
+  SET_PANORAMA_TAGS,
 } from '../../../panorama/ducks/constants'
-import PAGES from '../../../app/pages'
+import { getLabelObjectByTags } from '../../../panorama/ducks/selectors'
+import { ADD_FILTER, REMOVE_FILTER } from '../../../shared/ducks/filters/filters'
+import {
+  getViewMode,
+  HIDE_EMBED_PREVIEW,
+  HIDE_PRINT,
+  SET_VIEW_MODE,
+  SHARE_PAGE,
+  SHOW_EMBED_PREVIEW,
+  SHOW_PRINT,
+  VIEW_MODE,
+} from '../../../shared/ducks/ui/ui'
+import {
+  AUTHENTICATE_USER_REQUEST,
+  AUTHENTICATE_USER_SUCCESS,
+} from '../../../shared/ducks/user/user'
 import PARAMETERS from '../../parameters'
-import { DOWNLOAD_DATASET_RESOURCE } from '../../../shared/ducks/detail/constants'
-import { MATOMO_CONSTANTS } from '../../../app/matomo'
+import {
+  getPage,
+  isDataSelectionPage,
+  isDatasetPage,
+  isPanoPage,
+} from '../../redux-first-router/selectors'
+
+export const TRACK_ACTION_NAVIGATION = 'navigation'
+export const TRACK_CATEGORY_AUTO_SUGGEST = 'auto-suggest'
+export const TRACK_NAME_ENLARGE_DETAIL_MAP = 'detail-kaart-vergroten'
+export const TRACK_NAME_FULL_DETAIL = 'detail-volledig-weergeven'
+export const TRACK_NAME_LEAVE_PANO = 'panorama-verlaten'
 
 /* istanbul ignore next */
 const trackEvents = {
   // NAVIGATION
   // NAVIGATION -> NAVIGATE TO DATA DETAIL
-  [routing.dataDetail.type]: function trackDataDetail({ firstAction, query, tracking, state }) {
-    // eslint-disable-next-line no-nested-ternary
-    return tracking && tracking.event === 'auto-suggest'
-      ? [
-          MATOMO_CONSTANTS.TRACK_EVENT,
-          'auto-suggest', // NAVIGATION -> SELECT AUTOSUGGEST OPTION
-          tracking.category,
-          tracking.query,
-        ]
-      : // eslint-disable-next-line no-nested-ternary
-      getViewMode(state) === VIEW_MODE.MAP && get(query, `${PARAMETERS.VIEW}`) === undefined
-      ? [
-          MATOMO_CONSTANTS.TRACK_EVENT,
-          'navigation', // NAVIGATION -> CLICK TOGGLE FULLSCREEN FROM MAP
-          'detail-volledig-weergeven',
-          null,
-        ]
-      : // eslint-disable-next-line no-nested-ternary
-      !firstAction &&
-        getViewMode(state) === VIEW_MODE.SPLIT &&
-        get(query, `${PARAMETERS.VIEW}`) === VIEW_MODE.MAP
-      ? [
-          MATOMO_CONSTANTS.TRACK_EVENT,
-          'navigation', // NAVIGATION -> CLICK TOGGLE FULLSCREEN FROM SPLITSCREEN
-          'detail-kaart-vergroten',
-          null,
-        ]
-      : isPanoPage(state)
-      ? [
-          MATOMO_CONSTANTS.TRACK_EVENT,
-          'navigation', // NAVIGATION -> CLICK CLOSE FROM PANORAMA
-          'panorama-verlaten',
-          null,
-        ]
-      : []
+  [routing.dataDetail.type]: function trackDataDetail({ isFirstAction, query, tracking, state }) {
+    if (tracking?.event === 'auto-suggest') {
+      return [
+        MATOMO_CONSTANTS.TRACK_EVENT,
+        'auto-suggest', // NAVIGATION -> SELECT AUTOSUGGEST OPTION
+        tracking.category,
+        tracking.query,
+      ]
+    }
+
+    const viewMode = getViewMode(state)
+
+    if (viewMode === VIEW_MODE.MAP && query?.[PARAMETERS.VIEW] === undefined) {
+      return [
+        MATOMO_CONSTANTS.TRACK_EVENT,
+        'navigation', // NAVIGATION -> CLICK TOGGLE FULLSCREEN FROM MAP
+        'detail-volledig-weergeven',
+        null,
+      ]
+    }
+
+    if (
+      !isFirstAction &&
+      viewMode === VIEW_MODE.SPLIT &&
+      query?.[PARAMETERS.VIEW] === VIEW_MODE.MAP
+    ) {
+      return [
+        MATOMO_CONSTANTS.TRACK_EVENT,
+        'navigation', // NAVIGATION -> CLICK TOGGLE FULLSCREEN FROM SPLITSCREEN
+        'detail-kaart-vergroten',
+        null,
+      ]
+    }
+
+    if (isPanoPage(state)) {
+      return [
+        MATOMO_CONSTANTS.TRACK_EVENT,
+        'navigation', // NAVIGATION -> CLICK CLOSE FROM PANORAMA
+        'panorama-verlaten',
+        null,
+      ]
+    }
+
+    return []
   },
   // NAVIGATION -> CLICK CLOSE FROM PANORAMA
   [CLOSE_PANORAMA]: () => [MATOMO_CONSTANTS.TRACK_EVENT, 'navigation', 'panorama-verlaten', null],
@@ -95,21 +105,14 @@ const trackEvents = {
   // NAVIGATION -> CLOSE EMBED VIEW
   [HIDE_EMBED_PREVIEW]: () => [
     MATOMO_CONSTANTS.TRACK_EVENT,
-    'navigation',
+    TRACK_ACTION_NAVIGATION,
     'embedversie-verlaten',
     null,
-  ],
-  // NAVIGATION -> CLICK LOGO
-  [NAVIGATE_HOME_REQUEST]: ({ title }) => [
-    MATOMO_CONSTANTS.TRACK_EVENT,
-    'navigation',
-    'home',
-    title,
   ],
   // NAVIGATION -> TOGGLE FROM EMBEDDED MAP
   [TOGGLE_MAP_EMBED]: () => [
     MATOMO_CONSTANTS.TRACK_EVENT,
-    'navigation',
+    TRACK_ACTION_NAVIGATION,
     'embedkaart-naar-portaal',
     null,
   ],
@@ -120,7 +123,7 @@ const trackEvents = {
       case PAGES.DATA_SEARCH_GEO:
         return [
           MATOMO_CONSTANTS.TRACK_EVENT,
-          'navigation', // NAVIGATION -> CLICK TOGGLE FULLSCREEN FROM MAP Or SPLITSCREEN
+          TRACK_ACTION_NAVIGATION, // NAVIGATION -> CLICK TOGGLE FULLSCREEN FROM MAP Or SPLITSCREEN
           `georesultaten-${viewMode === VIEW_MODE.MAP ? 'volledig-weergeven' : 'kaart-vergroten'}`,
           null,
         ]
@@ -130,7 +133,7 @@ const trackEvents = {
         if (typeof tracking === 'boolean') {
           view = viewMode === VIEW_MODE.MAP ? 'kaart-verkleinen' : 'kaart-vergroten'
         }
-        return [MATOMO_CONSTANTS.TRACK_EVENT, 'navigation', `panorama-${view}`, null]
+        return [MATOMO_CONSTANTS.TRACK_EVENT, TRACK_ACTION_NAVIGATION, `panorama-${view}`, null]
       }
 
       case PAGES.ADDRESSES:
@@ -140,34 +143,18 @@ const trackEvents = {
         if (typeof tracking === 'boolean') {
           view = viewMode === VIEW_MODE.MAP ? 'kaart-verkleinen' : 'kaart-vergroten'
         }
-        return [MATOMO_CONSTANTS.TRACK_EVENT, 'navigation', `dataselectie-${view}`, null]
+        return [MATOMO_CONSTANTS.TRACK_EVENT, TRACK_ACTION_NAVIGATION, `dataselectie-${view}`, null]
       }
 
       default:
         return [
           MATOMO_CONSTANTS.TRACK_EVENT,
-          'navigation',
+          TRACK_ACTION_NAVIGATION,
           `detail-${viewMode === VIEW_MODE.MAP ? 'volledig-weergeven' : 'kaart-vergroten'}`,
           null,
         ]
     }
   },
-  // DATASETS
-  // DATASETS -> CLICK RESOURCE ON DATASET_DETAIL
-  [DOWNLOAD_DATASET_RESOURCE]: ({ tracking }) => [
-    MATOMO_CONSTANTS.TRACK_EVENT,
-    'Download',
-    tracking.dataset,
-    tracking.resourceUrl,
-  ],
-  // DATA SELECTION
-  // DATA SELECTION -> BUTTON "downloaden"
-  [DOWNLOAD_DATA_SELECTION]: ({ tracking }) => [
-    MATOMO_CONSTANTS.TRACK_EVENT,
-    'Download-tabel',
-    `dataselectie-download-${tracking.toLowerCase()}`,
-    null,
-  ],
   // DRAW TOOL
   [MAP_SET_DRAWING_MODE]: function trackDrawing({ tracking, state, title }) {
     const markers = getShapeMarkers(state)
@@ -279,8 +266,6 @@ const trackEvents = {
     null,
   ],
   // MENU
-  // MENU -> TOGGLE MODAL ON
-  [SHOW_MODAL]: ({ title }) => [MATOMO_CONSTANTS.TRACK_EVENT, 'feedback', 'feedback-menu', title],
   // MENU -> TOGGLE MODAL OFF
   [CLOSE_MODAL]: () => [MATOMO_CONSTANTS.TRACK_EVENT, 'feedback', 'feedback-verlaten', null],
   // MENU -> "terugmelden"

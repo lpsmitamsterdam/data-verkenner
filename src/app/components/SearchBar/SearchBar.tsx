@@ -7,15 +7,27 @@ import {
   SearchBarToggle,
   showAboveBackDrop,
   styles,
-} from '@datapunt/asc-ui'
-import React, { Dispatch, SetStateAction } from 'react'
+} from '@amsterdam/asc-ui'
+import React from 'react'
 import styled from 'styled-components'
-import { SearchCategory } from '../../../header/components/auto-suggest/AutoSuggest'
+import { IDS } from '../../../shared/config/config'
 import CONSTANTS from '../../../shared/config/constants'
 import SearchBarFilter from '../SearchBarFilter'
-import { IDS } from '../../../shared/config/config'
 
 const Z_INDEX_OFFSET = 2 // Set a custom offset
+
+// TODO: Fix z-index issue with overlay in ASC eventually
+const StyledSearchBarToggle = styled(SearchBarToggle)`
+  z-index: 23;
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+
+  & > button {
+    margin-right: 50px;
+  }
+`
 
 const SearchBarWrapper = styled.div`
   position: relative;
@@ -41,13 +53,11 @@ const StyledSearchBar = styled(SearchBarComponent)`
 
 type SearchBarProps = React.InputHTMLAttributes<HTMLInputElement> & {
   expanded: boolean
-  onOpenSearchBarToggle: (open: boolean) => void
-  openSearchBarToggle: boolean
   value: string
   onClear: () => void
   onBlur: () => void
-  searchCategory: SearchCategory
-  setSearchCategory: Dispatch<SetStateAction<SearchCategory>>
+  setSearchBarFilterValue: (value: string) => void
+  searchBarFilterValue: string
 }
 
 const SearchBar: React.FC<SearchBarProps> = ({
@@ -58,11 +68,9 @@ const SearchBar: React.FC<SearchBarProps> = ({
   onClear,
   onKeyDown,
   value,
-  openSearchBarToggle,
-  onOpenSearchBarToggle,
   children,
-  searchCategory,
-  setSearchCategory,
+  setSearchBarFilterValue,
+  searchBarFilterValue,
 }) => {
   const searchBarProps = {
     onBlur,
@@ -87,7 +95,7 @@ const SearchBar: React.FC<SearchBarProps> = ({
     <>
       <SearchBarWrapper expanded={expanded}>
         <Hidden maxBreakpoint="tabletM">
-          <SearchBarFilter searchCategory={searchCategory} setSearchCategory={setSearchCategory} />
+          <SearchBarFilter setValue={setSearchBarFilterValue} value={searchBarFilterValue} />
         </Hidden>
         <StyledSearchBar
           showAt="tabletM"
@@ -110,11 +118,9 @@ const SearchBar: React.FC<SearchBarProps> = ({
         />
       )}
 
-      <SearchBarToggle
+      <StyledSearchBarToggle
         title={inputProps.placeholder}
         hideAt="tabletM"
-        onOpen={onOpenSearchBarToggle}
-        open={openSearchBarToggle}
         inputProps={inputProps}
         searchBarProps={searchBarProps}
         aria-haspopup="true"
@@ -123,7 +129,7 @@ const SearchBar: React.FC<SearchBarProps> = ({
         label={placeHolder}
       >
         {children}
-      </SearchBarToggle>
+      </StyledSearchBarToggle>
     </>
   )
 }

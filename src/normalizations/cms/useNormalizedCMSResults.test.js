@@ -1,17 +1,17 @@
-import useNormalizedCMSResults from './useNormalizedCMSResults'
-import useSlug from '../../app/utils/useSlug'
-import formatDate from '../../shared/services/date-formatter/date-formatter'
+import formatDate from '../../app/utils/formatDate'
+import toSlug from '../../app/utils/toSlug'
 import { CmsType } from '../../shared/config/cms.config'
+import useNormalizedCMSResults from './useNormalizedCMSResults'
 
-jest.mock('../../app/utils/useSlug')
-jest.mock('../../shared/services/date-formatter/date-formatter')
+jest.mock('../../app/utils/toSlug')
+jest.mock('../../app/utils/formatDate')
 
 describe('useNormalizedCMSResults', () => {
   const slug = 'this-is-a-slug'
   const formattedDate = 'pretty date'
 
   beforeEach(() => {
-    useSlug.mockImplementation(() => slug)
+    toSlug.mockImplementation(() => slug)
     formatDate.mockImplementation(() => formattedDate)
   })
   const input = {

@@ -1,18 +1,17 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import classNames from 'classnames'
-import styled, { css } from 'styled-components'
 import {
   AmsterdamLogo,
-  Header as HeaderComponent,
-  styles,
   breakpoint,
+  Header as HeaderComponent,
   showAboveBackDrop,
-} from '@datapunt/asc-ui'
-import HeaderSearchContainer from '../../../header/containers/header-search/HeaderSearchContainer'
-import HeaderMenuContainer from './HeaderMenuContainer'
-
+  styles,
+} from '@amsterdam/asc-ui'
+import classNames from 'classnames'
+import PropTypes from 'prop-types'
+import React from 'react'
+import styled, { css } from 'styled-components'
+import HeaderSearch from '../../../header/components/HeaderSearch'
 import EmbedHeader from './EmbedHeader'
+import HeaderMenuContainer from './HeaderMenuContainer'
 import PrintHeader from './PrintHeader'
 
 const stickyStyle = css`
@@ -41,7 +40,7 @@ const HeaderWrapper = styled.section`
 
 const StyledHeader = styled(HeaderComponent)`
   ${styles.HeaderNavigationStyle} {
-    // This must be added to the @datapunt/asc-ui project https://github.com/Amsterdam/amsterdam-styled-components/issues/165
+    // This must be added to the @amsterdam/asc-ui project https://github.com/Amsterdam/amsterdam-styled-components/issues/165
     @media screen and ${breakpoint('min-width', 'desktop')} {
       margin-left: 29px;
       margin-right: 29px;
@@ -74,7 +73,7 @@ const Header = ({
           logo={AmsterdamLogo}
           navigation={
             <>
-              <HeaderSearchContainer />
+              <HeaderSearch />
               <HeaderMenuContainer
                 type="default"
                 data-test="header-menu-default"

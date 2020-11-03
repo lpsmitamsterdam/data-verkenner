@@ -1,5 +1,6 @@
 import {
   ADDRESS_PAGE,
+  DATA_DETAIL,
   DATA_SEARCH,
   DATA_SETS,
   HEADER_MENU,
@@ -7,20 +8,20 @@ import {
   HOMEPAGE,
   MAP,
   PANORAMA,
-  PUBLICATIONS,
   SEARCH,
   TABLES,
 } from '../support/selectors'
 
 describe('Smoketest', () => {
-  describe('Search for addres not logged in', () => {
+  describe('Search for address not logged in', () => {
     beforeEach(() => {
       cy.viewport(1920, 1080)
       cy.hidePopup()
     })
+
     it('Should show the details of an address', () => {
       cy.server()
-      cy.route('/typeahead?q=dam 1').as('getResults')
+      cy.route('/typeahead?q=dam+1').as('getResults')
       cy.route('POST', '/cms_search/graphql/').as('graphql')
       cy.route('/jsonapi/node/list/*').as('jsonapi')
       cy.route('/bag/v1.1/pand/*').as('getPand')
@@ -44,11 +45,11 @@ describe('Smoketest', () => {
       cy.contains('Monumenten (4)').should('be.visible')
 
       // Open Adress details
-      cy.get('[href*="/data/bag/verblijfsobject/id0363010003761571/"]').click()
+      cy.get('[href*="/data/bag/verblijfsobject/id0363010003761571/"]').click({ force: true })
       cy.waitForAdressDetail()
       cy.get(ADDRESS_PAGE.resultsPanel).should('exist').and('be.visible')
       cy.get(ADDRESS_PAGE.resultsPanel)
-        .get(TABLES.detailTitle)
+        .get(DATA_DETAIL.heading)
         .contains('Dam 1')
         .and('have.css', 'font-style')
         .and('match', /normal/)
@@ -59,7 +60,7 @@ describe('Smoketest', () => {
       // Maximize Map
       cy.get(MAP.mapMaximize).click()
       cy.get(ADDRESS_PAGE.resultsPanel).should('not.be.visible')
-      cy.get(MAP.mapDetailResultPanel).should('be.visible')
+      cy.get(MAP.mapDetailResultPanel, { timeout: 30000 }).should('be.visible')
 
       // Check address data
       cy.contains('Gebruiksdoel').should('be.visible')
@@ -72,11 +73,11 @@ describe('Smoketest', () => {
       cy.contains('Hoofdadres').should('be.visible')
       cy.contains('Indicatie geconstateerd').should('be.visible')
       cy.contains('Aanduiding in onderzoek').should('be.visible')
-      cy.contains('Oppervlakte').should('be.visible')
-      cy.contains('23.820 m²').should('be.visible')
+      cy.contains('Oppervlakte')
+      cy.contains('23.820 m²')
 
       // Zoom in and click on building
-      cy.get(MAP.mapZoomIn).click()
+      cy.get(MAP.mapZoomIn).click({ force: true })
       cy.wait(700)
       cy.get(MAP.mapZoomIn).click({ force: true })
       cy.wait(700)
@@ -87,7 +88,9 @@ describe('Smoketest', () => {
       cy.get(MAP.mapSearchResultsPanel, { timeout: 40000 }).should('be.visible')
 
       // Check data in detail panel
-      cy.get(MAP.mapSearchResultsCategoryHeader).should('contain', 'Pand').and('be.visible')
+      cy.get(MAP.mapSearchResultsCategoryHeader, { timeout: 40000 })
+        .should('contain', 'Pand')
+        .and('be.visible')
       cy.get(MAP.mapSearchResultsItem).should('contain', '0363100012168052').and('be.visible')
       cy.get(MAP.mapSearchResultsCategoryHeader).should('contain', 'Adressen').and('be.visible')
       cy.get(MAP.mapSearchResultsItem).should('contain', 'Dam 1').and('be.visible')
@@ -123,7 +126,7 @@ describe('Smoketest', () => {
       cy.get(MAP.mapMaximize).should('be.visible').click()
       cy.wait('@getNummeraanduiding')
       cy.wait('@getMonument')
-      cy.waitForGeoSearch()
+      // cy.waitForGeoSearch()
       cy.get(MAP.mapSearchResultsPanel, { timeout: 40000 }).should('be.visible')
       cy.contains('0363100012168052').should('be.visible')
 
@@ -134,7 +137,8 @@ describe('Smoketest', () => {
 
       // Open details of Burgwallen-Oude Zijde'
       cy.contains('Burgwallen-Oude Zijde', { timeout: 40000 }).click()
-      cy.get(ADDRESS_PAGE.linkVestigingen, { timeout: 40000 })
+      cy.get(ADDRESS_PAGE.linkTable, { timeout: 40000 })
+        .eq(1)
         .contains('In tabel weergeven')
         .click({ force: true })
     })
@@ -152,7 +156,7 @@ describe('Smoketest', () => {
       ).should('be.visible')
       cy.get(DATA_SEARCH.linklogin).should('be.visible')
       cy.get(TABLES.tableValue).should('not.be.visible')
-      cy.get(ADDRESS_PAGE.tab, { timeout: 40000 })
+      cy.get(ADDRESS_PAGE.tabKadastraleObjecten, { timeout: 30000 })
         .contains('Kadastrale objecten')
         .click({ force: true })
       cy.url('contains', '/data/brk/kadastrale-objecten/')
@@ -179,7 +183,7 @@ describe('Smoketest', () => {
         '/dataselectie/hr/geolocation/?shape=[]&buurtcombinatie_naam=Burgwallen-Oude+Zijde',
       ).as('getHrDataGeo')
       cy.route(
-        '//dataselectie/hr/?page=1&dataset=ves&shape=[]&buurtcombinatie_naam=Burgwallen-Oude+Zijde',
+        '/dataselectie/hr/?page=1&dataset=ves&shape=[]&buurtcombinatie_naam=Burgwallen-Oude+Zijde',
       ).as('getHrData')
       cy.route(
         '/dataselectie/brk/kot/?page=1&dataset=ves&shape=[]&buurtcombinatie_naam=Burgwallen-Oude+Zijde',
@@ -187,19 +191,25 @@ describe('Smoketest', () => {
       cy.route(
         '/dataselectie/brk/?page=1&dataset=ves&shape=[]&buurtcombinatie_naam=Burgwallen-Oude+Zijde',
       ).as('getBRK2')
-      cy.route('/typeahead?q=dam 1').as('getResults')
-      cy.route('/gebieden/buurt/?buurtcombinatie=3630012052036').as('getBuurtCombinatie')
+      cy.route('/typeahead?q=dam+1').as('getResults')
+      cy.route('/gebieden/buurt/?buurtcombinatie=3630012052036*').as('getBuurtCombinatie')
 
       // Search for an address
       cy.get(DATA_SEARCH.searchBarFilter).select('Alle zoekresultaten')
       cy.get(SEARCH.input).focus().type('Dam 1')
-      cy.get(DATA_SEARCH.autoSuggestDropdownHighlighted).contains('Dam 1').click()
+      cy.wait('@getResults')
+      cy.get(
+        '[href*="/data/bag/verblijfsobject/id0363010003761571/?modus=gesplitst&term=Dam+1"]',
+      ).click()
       cy.waitForAdressDetail()
       cy.contains('Burgwallen-Oude Zijde').click()
       cy.url('contains', '/data/gebieden/buurtcombinatie/id3630012052036/')
 
       // Open vestigingen table, should see vestigingen
-      cy.get(ADDRESS_PAGE.linkVestigingen).contains('In tabel weergeven').click()
+      cy.get(ADDRESS_PAGE.linkTable, { timeout: 40000 })
+        .eq(1)
+        .contains('In tabel weergeven')
+        .click()
       cy.wait('@getBuurtCombinatie')
       cy.wait('@getHrData')
       cy.contains(
@@ -217,7 +227,7 @@ describe('Smoketest', () => {
       cy.get(TABLES.tableValue, { timeout: 40000 }).should('be.visible')
 
       // Open kadastrale objecten table, should see kadastrale objecten
-      cy.get(ADDRESS_PAGE.tab).eq(2).click({ force: true })
+      cy.get(ADDRESS_PAGE.tabKadastraleObjecten).click({ force: true })
       cy.wait('@getBRK')
       cy.url('contains', '/data/brk/kadastrale-objecten/')
       cy.get(TABLES.tableValue).should('be.visible')
@@ -279,20 +289,20 @@ describe('Smoketest', () => {
       cy.server()
       cy.route('/typeahead?q=oost').as('getResults')
       cy.route('/jsonapi/node/publication/*').as('getPublication')
+      cy.route('POST', '/cms_search/graphql/').as('graphql')
 
       // Search keyword Oost, results contain only datasets
       cy.get(SEARCH.input).focus().clear().type('Oost{enter}')
       cy.wait('@getResults')
-      cy.contains("Datasets met 'Oost' (")
 
       // Filter publications
       cy.contains('Filteren').click()
       cy.get('[role="dialog"]').find('[href*="/publicaties/zoek/"]').click()
-      cy.wait('@getResults')
+      cy.wait('@graphql')
       cy.contains('resultaten tonen').click()
       cy.url('contains', '/publicaties/zoek/?term=Oost')
       cy.contains("Publicaties met 'Oost' (")
-      cy.get(PUBLICATIONS.sortDropdown).select('Publicatiedatum oplopend')
+      cy.get(DATA_SEARCH.sortDropdown).select('Publicatiedatum oplopend')
       cy.get('[href*="/publicaties/publicatie/"]').first().click()
       cy.wait('@getPublication')
 
@@ -317,7 +327,7 @@ describe('Smoketest', () => {
       cy.go('back')
       cy.contains("Publicaties met 'Oost' (")
       cy.go('back')
-      cy.contains("Datasets met 'Oost' (")
+      cy.contains("Alle zoekresultaten met 'Oost' (")
       cy.go('back')
       cy.wait('@getDataset')
       cy.get(DATA_SEARCH.headerSubTitle).should('contain', 'Dataset').and('be.visible')
@@ -327,11 +337,9 @@ describe('Smoketest', () => {
       cy.get(DATA_SEARCH.headerSubTitle).should('contain', 'Tags').and('be.visible')
       cy.get(DATA_SEARCH.headerSubTitle).should('contain', 'Licentie').and('be.visible')
       cy.go('back')
-      cy.wait('@getResults')
       cy.contains("Datasets met 'Oost' (")
       cy.go('back')
       cy.contains("Alle zoekresultaten met 'Oost' (").should('be.visible')
-      cy.go('back')
       cy.go('back')
 
       // Back to the homepage

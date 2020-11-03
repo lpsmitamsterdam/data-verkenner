@@ -1,5 +1,6 @@
-import { constants } from '@datapunt/arm-core'
+import { constants } from '@amsterdam/arm-core'
 import { LatLngLiteral, LatLngTuple } from 'leaflet'
+import { PANO_LABELS } from '../../../panorama/ducks/constants'
 import { normalizeCoordinate } from '../../../shared/services/coordinate-reference-system'
 import { UrlParam } from '../../utils/useParam'
 
@@ -37,6 +38,12 @@ export interface PolyDrawing {
 export interface MapLayer {
   id: string
   isVisible: boolean
+}
+
+export interface Pano {
+  heading: number
+  pitch: number
+  fov: number
 }
 
 const COORDINATE_PRECISION = 7
@@ -128,5 +135,35 @@ export const detailUrlParam: UrlParam<string | null> = {
   name: 'detailUrl',
   defaultValue: null,
   decode: (value) => value,
+  encode: (value) => value,
+}
+
+export const panoParam: UrlParam<Pano | null> = {
+  name: 'pano',
+  defaultValue: null,
+  decode: (value) => value && JSON.parse(value),
+  encode: (value) => value && JSON.stringify(value),
+}
+
+export const panoTagParam: UrlParam<string> = {
+  name: 'panoTag',
+  defaultValue: PANO_LABELS[0].id,
+  decode: (value) => value,
+  encode: (value) => value,
+}
+
+export const panoFullScreenParam: UrlParam<boolean> = {
+  name: 'panoFullScreen',
+  defaultValue: false,
+  decode: (value) => Boolean(value),
+  encode: (value) => value.toString(),
+}
+
+type View = 'volledig' | 'kaart' | 'gesplitst'
+
+export const viewParam: UrlParam<View> = {
+  name: 'modus',
+  defaultValue: 'gesplitst',
+  decode: (value) => value as View,
   encode: (value) => value,
 }

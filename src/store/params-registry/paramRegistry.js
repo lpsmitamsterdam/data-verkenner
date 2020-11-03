@@ -1,10 +1,8 @@
-import get from 'lodash.get'
-import isUndefined from 'lodash.isundefined'
 import queryString from 'querystring'
-import PARAMETERS from '../parameters'
-import getState from '../../shared/services/redux/get-state'
 import PAGES from '../../app/pages'
 import { ROUTER_NAMESPACE } from '../../app/routes'
+import getState from '../../shared/services/redux/get-state'
+import PARAMETERS from '../parameters'
 
 /**
  * ParamsRegistry manages the relations between url parameters, reducers and routes.
@@ -57,7 +55,7 @@ class ParamsRegistry {
     })
 
     return {
-      selector: (state) => get(state, `[${reducerKey}]${stateKey}`),
+      selector: (state) => state?.[reducerKey]?.[stateKey],
       decode: (val) => {
         if (typeof val !== 'string') {
           return val
@@ -173,7 +171,7 @@ class ParamsRegistry {
    * @param addHistory
    */
   bindRouteToReducerSettings(param, route, reducerKey, stateKey, reducerObject, addHistory) {
-    let paramRouteReducerSettings = get(this.result, `[${param}].routes`, {})
+    let paramRouteReducerSettings = this.result?.[param]?.routes ?? {}
     if (paramRouteReducerSettings[route]) {
       throw new Error(`Route is already registered for parameter "${param}" with route "${route}"`)
     }
@@ -201,8 +199,9 @@ class ParamsRegistry {
     ) {
       return undefined
     }
+
     const query = Object.entries(this.result).reduce((acc, [parameter, paramObject]) => {
-      const reducerObject = get(paramObject, `[routes][${currentLocationType}]`, null)
+      const reducerObject = paramObject?.routes?.[currentLocationType] ?? null
       if (reducerObject) {
         const encodedValue = reducerObject.encode(reducerObject.selector(state))
         let newQuery = {}
@@ -224,6 +223,7 @@ class ParamsRegistry {
 
       return acc
     }, {})
+
     const orderedQuery = ParamsRegistry.orderQuery(query)
     const searchQuery = queryString.stringify(orderedQuery)
 
@@ -252,16 +252,15 @@ class ParamsRegistry {
   getStateFromQueries(reducerKey, action) {
     return this.isRouterType(action)
       ? Object.entries(this.result).reduce((acc, [parameter, object]) => {
-          const reducerObject = get(object, `routes[${action.type}]`)
+          const reducerObject = object?.routes?.[action.type]
 
           if (reducerObject && reducerObject.reducerKey === reducerKey) {
-            const urlParam = get(action, `meta.query[${parameter}]`)
+            const urlParam = action?.meta?.query?.[parameter]
             const decodedValue = reducerObject.decode(urlParam)
             return {
               ...acc,
-              [reducerObject.stateKey]: isUndefined(urlParam)
-                ? reducerObject.defaultValue
-                : decodedValue,
+              [reducerObject.stateKey]:
+                urlParam === undefined ? reducerObject.defaultValue : decodedValue,
             }
           }
           const reducerObj = Object.values(object.routes).find(
@@ -276,7 +275,7 @@ class ParamsRegistry {
   }
 
   getReduxObject(parameter, route) {
-    return get(this.result, `${parameter}.routes[${route}]`, {})
+    return this.result?.[parameter]?.routes?.[route] ?? {}
   }
 
   removeParamsWithDefaultValue(parameters, route) {
@@ -317,7 +316,7 @@ class ParamsRegistry {
 
   /**
    * Set the param to the location in the history object
-   * @param name
+   * @param param
    * @param value
    * @param replace
    * @returns void

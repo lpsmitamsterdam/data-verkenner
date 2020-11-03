@@ -1,10 +1,11 @@
 import {
   ADDRESS_PAGE,
+  COMPONENTS,
+  DATA_DETAIL,
   DATA_SEARCH,
   HOMEPAGE,
   MAP,
   MAP_LAYERS,
-  TABLES,
   PANORAMA,
 } from '../support/selectors'
 
@@ -100,29 +101,23 @@ describe('panorama module', () => {
 
       cy.defineGeoSearchRoutes()
       cy.route('/bag/v1.1/openbareruimte/*').as('getOpenbareRuimte')
-      cy.route('/panorama/thumbnail/*').as('getPanoThumbnail')
+      cy.route('/panorama/thumbnail?*').as('getPanoThumbnail')
       cy.route('/typeahead?q=leidsegracht').as('getSuggestions')
 
       cy.viewport(1000, 660)
       cy.get(PANORAMA.markerPane).find('img').should('exist').and('be.visible')
       cy.get(DATA_SEARCH.autoSuggestInput).type('Leidsegracht')
       cy.wait('@getSuggestions')
+      cy.wait(500)
       cy.get(DATA_SEARCH.autoSuggest).contains('Leidsegracht').click()
 
       cy.wait('@getOpenbareRuimte')
       cy.wait('@getPanoThumbnail')
-      cy.get(ADDRESS_PAGE.panoramaThumbnail).should('exist').and('be.visible')
-      cy.get(TABLES.detailTitle).should('exist').and('be.visible').contains('Leidsegracht')
-      cy.get(ADDRESS_PAGE.panoramaThumbnail).click()
+      cy.get(COMPONENTS.panoramaPreview).should('exist').and('be.visible')
+      cy.get(DATA_DETAIL.heading).should('exist').and('be.visible').contains('Leidsegracht')
+      cy.get(`${COMPONENTS.panoramaPreview} a`).click()
 
       cy.wait('@getResults')
-      cy.wait('@getPanoThumbnail')
-      cy.wait('@getOpenbareRuimte')
-
-      cy.location().then((loc) => {
-        newUrl = `${loc.pathname + loc.search}&reference=03630000004153%2Cbag%2Copenbareruimte`
-        expect(newUrl).to.equal(panoUrl)
-      })
 
       let largestButtonSize = 0
       let largestButton
@@ -154,12 +149,10 @@ describe('panorama module', () => {
       cy.wait(1000)
       cy.get(ADDRESS_PAGE.buttonMaximizeMap).last().click()
 
-      cy.wait('@getOpenbareRuimte')
       cy.wait('@getPanoThumbnail')
 
-      cy.get(ADDRESS_PAGE.panoramaThumbnail, { timeout: 10000 }).should('exist').and('be.visible')
-      cy.get(TABLES.detailTitle).should('exist').and('be.visible').contains('Leidsegracht')
-      cy.get(ADDRESS_PAGE.panoramaThumbnail).click()
+      cy.get(COMPONENTS.panoramaPreview, { timeout: 10000 }).should('exist').and('be.visible')
+      cy.get(`${COMPONENTS.panoramaPreview} a`).click()
 
       cy.get(MAP.mapContainer).click(20, 100)
 
@@ -174,7 +167,7 @@ describe('panorama module', () => {
 
       // should show the openbareruimte again
       cy.waitForGeoSearch()
-      cy.get(ADDRESS_PAGE.panoramaThumbnail).should('exist').and('be.visible')
+      cy.get(COMPONENTS.panoramaPreview).should('exist').and('be.visible')
       cy.contains(/Elandsgracht|Leidsegracht/g)
     })
   })

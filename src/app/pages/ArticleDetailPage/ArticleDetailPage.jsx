@@ -1,4 +1,3 @@
-import styled, { css } from 'styled-components'
 import {
   Accordion,
   AccordionWrapper,
@@ -19,26 +18,26 @@ import {
   themeColor,
   themeSpacing,
   Typography,
-} from '@datapunt/asc-ui'
-import React, { useMemo } from 'react'
-import { connect } from 'react-redux'
+} from '@amsterdam/asc-ui'
 import { useMatomo } from '@datapunt/matomo-tracker-react'
-import { getLocationPayload } from '../../../store/redux-first-router/selectors'
-import useFromCMS from '../../utils/useFromCMS'
-import EditorialPage from '../../components/EditorialPage/EditorialPage'
-import { toArticleDetail } from '../../../store/redux-first-router/actions'
-import ContentContainer from '../../components/ContentContainer/ContentContainer'
-import { cmsConfig } from '../../../shared/config/config'
+import React, { useEffect, useMemo } from 'react'
+import { useParams } from 'react-router-dom'
+import styled, { css } from 'styled-components'
+import environment from '../../../environment'
 import normalizeDownloadsObject from '../../../normalizations/cms/normalizeDownloadFiles'
-import ShareBar from '../../components/ShareBar/ShareBar'
-import getImageFromCms from '../../utils/getImageFromCms'
-import EditorialResults from '../../components/EditorialResults'
-import useDownload from '../../utils/useDownload'
 import useNormalizedCMSResults, {
   EDITORIAL_FIELD_TYPE_VALUES,
 } from '../../../normalizations/cms/useNormalizedCMSResults'
-import environment from '../../../environment'
+import { cmsConfig } from '../../../shared/config/config'
+import { toArticleDetail } from '../../../store/redux-first-router/actions'
+import ContentContainer from '../../components/ContentContainer/ContentContainer'
+import EditorialPage from '../../components/EditorialPage/EditorialPage'
+import EditorialResults from '../../components/EditorialResults'
 import LoadingSpinner from '../../components/LoadingSpinner/LoadingSpinner'
+import ShareBar from '../../components/ShareBar/ShareBar'
+import getImageFromCms from '../../utils/getImageFromCms'
+import useDownload from '../../utils/useDownload'
+import useFromCMS from '../../utils/useFromCMS'
 
 const ListItemContent = styled.div`
   display: flex;
@@ -133,11 +132,12 @@ const StyledLoadingSpinner = styled(LoadingSpinner)`
   margin-left: ${themeSpacing(2)};
 `
 
-const ArticleDetailPage = ({ id }) => {
+const ArticleDetailPage = () => {
+  const { id } = useParams()
   const { fetchData, results, loading, error } = useFromCMS(cmsConfig.ARTICLE, id)
   const [downloadLoading, downloadFile] = useDownload()
 
-  React.useEffect(() => {
+  useEffect(() => {
     fetchData()
   }, [id])
 
@@ -313,11 +313,4 @@ const ArticleDetailPage = ({ id }) => {
   )
 }
 
-const mapStateToProps = (state) => {
-  const { id } = getLocationPayload(state)
-  return {
-    id,
-  }
-}
-
-export default connect(mapStateToProps, null)(ArticleDetailPage)
+export default ArticleDetailPage

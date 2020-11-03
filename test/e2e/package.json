@@ -8,15 +8,15 @@
   "engines": {
     "node": "^12"
   },
-  "author": "Datapunt Amsterdam",
+  "author": "Gemeente Amsterdam",
   "license": "MPL-2.0",
   "scripts": {
     "start": "node ./cypress-run.js",
     "watch": "node ./cypress-watch.js"
   },
   "dependencies": {
-    "cypress": "^5.1.0",
+    "cypress": "^5.5.0",
     "prettier": "^2.1.2",
-    "typescript": "^4.0.2"
+    "typescript": "^4.0.5"
   }
 }

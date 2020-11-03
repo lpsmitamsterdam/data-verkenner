@@ -1,19 +1,19 @@
-import { MapPanelContext } from '@datapunt/arm-core'
+import { MapPanelContext } from '@amsterdam/arm-core'
 import {
   DrawTool as DrawToolComponent,
   ExtendedLayer,
   PolygonType,
   PolylineType,
-} from '@datapunt/arm-draw'
-import { ascDefaultTheme, themeColor } from '@datapunt/asc-ui'
-import { useMapInstance } from '@datapunt/react-maps'
+} from '@amsterdam/arm-draw'
+import { ascDefaultTheme, themeColor } from '@amsterdam/asc-ui'
+import { useMapInstance } from '@amsterdam/react-maps'
 import L, { LatLng, LatLngLiteral, Polygon } from 'leaflet'
 import React, { useCallback, useContext, useEffect, useMemo, useState } from 'react'
-import DataSelectionContext from './DataSelectionContext'
-import { Overlay, SnapPoint } from '../types'
 import useParam from '../../../utils/useParam'
-import { PolyDrawing, polygonsParam, polylinesParam } from '../query-params'
 import MapContext from '../MapContext'
+import { PolyDrawing, polygonsParam, polylinesParam } from '../query-params'
+import { Overlay, SnapPoint } from '../types'
+import DataSelectionContext from './DataSelectionContext'
 
 function getTotalDistance(latLngs: LatLng[]) {
   return latLngs.reduce(
@@ -186,25 +186,20 @@ const DrawTool: React.FC<DrawToolProps> = ({ setCurrentOverlay }) => {
   const fitToBounds = useCallback(() => {
     const bounds = drawnItemsGroup.getBounds()
 
-    if (mapInstance && bounds.isValid()) {
+    if (bounds.isValid()) {
       mapInstance.fitBounds(bounds)
     }
-  }, [drawnItemsGroup, mapInstance])
+  }, [drawnItemsGroup])
 
   useEffect(() => {
-    if (mapInstance) {
-      fitToBounds()
-      // @ts-ignore
-      mapInstance.on(L.Draw.Event.EDITVERTEX, editVertex)
-    }
+    fitToBounds()
+
+    mapInstance.on(L.Draw.Event.EDITVERTEX as any, editVertex as any)
 
     return () => {
-      if (mapInstance) {
-        // @ts-ignore
-        mapInstance.off(L.Draw.Event.EDITVERTEX, editVertex)
-      }
+      mapInstance.off(L.Draw.Event.EDITVERTEX as any, editVertex as any)
     }
-  }, [mapInstance])
+  }, [])
 
   useEffect(() => {
     if (dataSelection) {
@@ -255,6 +250,14 @@ const DrawTool: React.FC<DrawToolProps> = ({ setCurrentOverlay }) => {
       drawnItemsGroup.clearLayers()
     }
   }, [showDrawTool])
+
+  useEffect(() => {
+    if (!polylines.length && !polygons.length) {
+      setShowDrawTool(false)
+    } else {
+      setShowDrawTool(true)
+    }
+  }, [polylines, polygons])
 
   useEffect(() => {
     initialDrawnItems.forEach((layer) => {

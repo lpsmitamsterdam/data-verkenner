@@ -1,29 +1,16 @@
-import React, { Dispatch, SetStateAction, useEffect, useState } from 'react'
-import { Select, Label } from '@datapunt/asc-ui'
+import { Label, Select, srOnlyStyle } from '@amsterdam/asc-ui'
+import React, { useEffect } from 'react'
 import styled from 'styled-components'
-import SEARCH_PAGE_CONFIG from '../../pages/SearchPage/config'
 import { SearchCategory } from '../../../header/components/auto-suggest/AutoSuggest'
+import SEARCH_PAGE_CONFIG from '../../pages/SearchPage/config'
 
-// TODO: Add the screen reader only "styling" to asc-ui
 const StyledLabel = styled(Label)`
-  border-width: 0;
-  clip: rect(0, 0, 0, 0);
-  height: 1px;
-  margin: -1px;
-  overflow: hidden;
-  padding: 0;
-  position: absolute;
-  width: 1px;
+  ${srOnlyStyle}
 `
 
 const StyledSelect = styled(Select)`
   border-right: none;
 `
-
-type SearchBarFilterProps = {
-  searchCategory: SearchCategory
-  setSearchCategory: Dispatch<SetStateAction<SearchCategory>>
-}
 
 type SearchBarFilterOptions = {
   type: SearchCategory
@@ -37,22 +24,24 @@ const AVAILABLE_FILTERS: Array<SearchBarFilterOptions> = Object.values(SEARCH_PA
   }),
 )
 
-const SearchBarFilter: React.FC<SearchBarFilterProps> = ({ searchCategory, setSearchCategory }) => {
-  const [selectedValue, setSelectedValue] = useState(searchCategory)
+type Props = {
+  value: string
+  setValue: (value: string) => void
+}
 
+export const LOCAL_STORAGE_KEY = 'search_filters'
+
+const SearchBarFilter: React.FC<Props> = ({ value, setValue }) => {
   function onSetSearchCategory(e: React.ChangeEvent<HTMLSelectElement>) {
     e.preventDefault()
     e.stopPropagation()
 
-    const value = e.currentTarget.value as SearchCategory
-    setSearchCategory(value)
+    setValue(e.currentTarget.value as SearchCategory)
   }
 
   useEffect(() => {
-    if (searchCategory) {
-      setSelectedValue(searchCategory)
-    }
-  }, [searchCategory])
+    window.localStorage.setItem(LOCAL_STORAGE_KEY, value)
+  }, [value])
 
   return (
     <>
@@ -60,7 +49,7 @@ const SearchBarFilter: React.FC<SearchBarFilterProps> = ({ searchCategory, setSe
       <StyledSelect
         data-testid="SearchBarFilter"
         id="category"
-        value={selectedValue || ''}
+        value={value}
         onChange={onSetSearchCategory}
       >
         {AVAILABLE_FILTERS.map(({ type, label }) => {

@@ -2,8 +2,6 @@
 
 exports[`Data Selection Reducer should set  state when dispatching cancelDrawing 1`] = `Object {}`;
 
-exports[`Data Selection Reducer should set  state when dispatching downloadDataSelection 1`] = `Object {}`;
-
 exports[`Data Selection Reducer should set  state when dispatching endDataSelection 1`] = `Object {}`;
 
 exports[`Data Selection Reducer should set  state when dispatching startDrawing 1`] = `Object {}`;

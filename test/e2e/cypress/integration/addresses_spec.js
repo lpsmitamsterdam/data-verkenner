@@ -1,11 +1,15 @@
 import { getCountFromHeader } from '../support/helper-functions'
 import {
   ADDRESS_PAGE,
+  COMPONENTS,
+  DATA_DETAIL,
+  DATA_SEARCH,
   DATA_SELECTION_TABLE,
+  GEO_SEARCH,
   HEADINGS,
   MAP,
+  SEARCH,
   TABLES,
-  DATA_SEARCH,
 } from '../support/selectors'
 
 describe('addresses module', () => {
@@ -87,7 +91,7 @@ describe('addresses module', () => {
 
               cy.waitForAdressDetail()
 
-              cy.get(TABLES.detailPane).should('exist').and('be.visible')
+              cy.get(DATA_DETAIL.main).should('exist').and('be.visible')
               cy.get('dt').contains(selectedGroup).should('exist').and('be.visible')
               cy.get('dt')
                 .contains(selectedGroup)
@@ -110,7 +114,7 @@ describe('addresses module', () => {
               // click on the firstItem to open address preview panel
               cy.get(`${DATA_SELECTION_TABLE.body} ${DATA_SELECTION_TABLE.row}`).first().click()
               // the detail view should exist
-              cy.get(TABLES.detailPane).should('exist').and('be.visible')
+              cy.get(DATA_DETAIL.main).should('exist').and('be.visible')
               // the map view maximize button should exist
               cy.get(ADDRESS_PAGE.buttonMaximizeMap).should('exist')
               // click on the maximize button to open the map view
@@ -170,7 +174,7 @@ describe('addresses module', () => {
       })
 
       // click on "kaart weergeven"
-      cy.get(ADDRESS_PAGE.buttonOpenMap).click()
+      cy.contains('Kaart weergeven').click()
       cy.wait('@getGeoResults')
 
       // map should be visible now
@@ -186,5 +190,63 @@ describe('addresses module', () => {
       // active filter should show
       cy.get(TABLES.activeFilterItem).contains('AMC').should('exist').and('be.visible')
     })
+  })
+})
+
+describe('user should be able to open more addresses', () => {
+  it('should show the addresses', () => {
+    cy.server()
+    cy.route('/typeahead?q=dam+20').as('getResults')
+    cy.route('POST', '/cms_search/graphql/').as('graphql')
+    cy.route('/jsonapi/node/list/*').as('jsonapi')
+    cy.route('/bag/v1.1/pand/*').as('getPand')
+    cy.defineGeoSearchRoutes()
+    cy.defineAddressDetailRoutes()
+    cy.visit('/')
+
+    cy.get(DATA_SEARCH.searchBarFilter).select('Alle zoekresultaten')
+    cy.get(SEARCH.input).focus().type('Dam 20{enter}')
+    cy.wait(['@graphql', '@graphql'])
+    cy.wait('@jsonapi')
+    cy.contains('Adressen (').click()
+    cy.contains("Data met 'Dam 20' (7 resultaten)")
+    cy.contains('Adressen (7)')
+    cy.go('back')
+    cy.contains("Resultaten tonen binnen de categorie 'Data'").click()
+  })
+})
+describe('open address', () => {
+  it('should open the address detail panel', () => {
+    cy.server()
+    cy.defineGeoSearchRoutes()
+    cy.defineAddressDetailRoutes()
+    cy.route('typeahead?q=ad+windighof+2').as('getResults')
+
+    // ensure the viewport is always the same in this test, so the clicks can be aligned properly
+    cy.viewport(1000, 660)
+    cy.hidePopup()
+    cy.visit('/')
+    cy.get(DATA_SEARCH.autoSuggestInput).focus().type('Ad Windighof 2')
+
+    cy.wait('@getResults')
+    cy.get(DATA_SEARCH.autoSuggestDropdown).contains('Ad Windighof 2').click({ force: true })
+    cy.wait('@getVerblijfsobject')
+
+    // Rendering after this request takes some time on server
+    cy.wait(500)
+    cy.get(ADDRESS_PAGE.resultsPanel).should('exist').and('be.visible')
+    cy.get(ADDRESS_PAGE.resultsPanel).get(DATA_DETAIL.heading).contains('Ad Windighof 2')
+    cy.get(ADDRESS_PAGE.resultsPanel).get('dl').contains('1087HE')
+
+    cy.wait('@getPanorama')
+    cy.get(COMPONENTS.panoramaPreview).should('exist').and('be.visible')
+
+    cy.get(MAP.mapZoomIn).click()
+    cy.get(MAP.mapZoomIn).click()
+    cy.get(MAP.mapContainer).click(166, 304)
+
+    // check that the address is open in right column
+    cy.waitForGeoSearch()
+    cy.get(GEO_SEARCH.listItem).contains('Ad Windighof 2').should('exist').and('be.visible')
   })
 })

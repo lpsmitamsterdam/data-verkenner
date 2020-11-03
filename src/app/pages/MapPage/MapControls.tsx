@@ -1,6 +1,6 @@
-import { MapPanelContext, MapPanelLegendButton, Zoom } from '@datapunt/arm-core'
-import { Overlay } from '@datapunt/arm-core/lib/components/MapPanel/constants'
-import { Spinner, ViewerContainer as ViewerContainerComponent } from '@datapunt/asc-ui'
+import { MapPanelContext, MapPanelLegendButton, Zoom } from '@amsterdam/arm-core'
+import { Overlay } from '@amsterdam/arm-core/lib/components/MapPanel/constants'
+import { Spinner, ViewerContainer as ViewerContainerComponent } from '@amsterdam/asc-ui'
 import React, { useContext } from 'react'
 import styled, { css } from 'styled-components'
 import BaseLayerToggle from './controls/BaseLayerToggle'
@@ -33,6 +33,7 @@ type Props = {
   setCurrentOverlay: (overlay: Overlay) => void
   showDesktopVariant: boolean
   isLoading: boolean
+  panoActive: boolean
 }
 
 const BottomLeftHolder = styled.div`
@@ -44,6 +45,7 @@ const MapControls: React.FC<Props> = ({
   setCurrentOverlay,
   showDesktopVariant,
   isLoading,
+  panoActive,
   ...otherProps
 }) => {
   const { drawerPosition, draggable } = useContext(MapPanelContext)
@@ -66,7 +68,7 @@ const MapControls: React.FC<Props> = ({
           bottomLeft={
             <MapPanelLegendButton {...{ showDesktopVariant, currentOverlay, setCurrentOverlay }} />
           }
-          topRight={<DrawTool setCurrentOverlay={setCurrentOverlay} />}
+          topRight={!panoActive && <DrawTool setCurrentOverlay={setCurrentOverlay} />}
         />
       ) : (
         <StyledViewerContainer
@@ -85,7 +87,7 @@ const MapControls: React.FC<Props> = ({
               <BaseLayerToggle />
             </BottomLeftHolder>
           }
-          topRight={<DrawTool setCurrentOverlay={setCurrentOverlay} />}
+          topRight={!panoActive && <DrawTool setCurrentOverlay={setCurrentOverlay} />}
         />
       )}
     </>

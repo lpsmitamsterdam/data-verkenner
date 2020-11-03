@@ -1,12 +1,14 @@
-import { MapPanelContext, Marker as ARMMarker, usePanToLatLng } from '@datapunt/arm-core'
-import { useMapInstance } from '@datapunt/react-maps'
+import { MapPanelContext, Marker as ARMMarker } from '@amsterdam/arm-core'
+import { useMapEvents } from '@amsterdam/react-maps'
 import { LeafletMouseEvent } from 'leaflet'
-import React, { useContext, useEffect } from 'react'
+import React, { useContext } from 'react'
 import fetchNearestDetail from '../../../../map/services/nearest-detail/nearest-detail'
-import { detailUrlParam, locationParam } from '../query-params'
 import joinUrl from '../../../utils/joinUrl'
+import useMapCenterToMarker from '../../../utils/useMapCenterToMarker'
 import useParam from '../../../utils/useParam'
 import MapContext, { Overlay } from '../MapContext'
+import { MarkerProps } from '../MapMarkers'
+import { detailUrlParam } from '../query-params'
 import { SnapPoint } from '../types'
 
 interface NearestDetail {
@@ -14,18 +16,13 @@ interface NearestDetail {
   type: string
 }
 
-const MapSearchMarker: React.FC = () => {
+const MapSearchMarker: React.FC<MarkerProps> = ({ location, setLocation }) => {
   const [, setDetailUrl] = useParam(detailUrlParam)
   const { legendLeafletLayers } = useContext(MapContext)
-  const [location, setLocation] = useParam(locationParam)
-  const mapInstance = useMapInstance()
-  const { pan } = usePanToLatLng()
-  const {
-    drawerPosition,
-    setPositionFromSnapPoint,
-    matchPositionWithSnapPoint,
-    variant,
-  } = useContext(MapPanelContext)
+
+  useMapCenterToMarker(location)
+
+  const { setPositionFromSnapPoint } = useContext(MapPanelContext)
 
   async function handleMapClick(e: LeafletMouseEvent, activeOverlays: Overlay[]) {
     const layers = activeOverlays
@@ -44,36 +41,19 @@ const MapSearchMarker: React.FC = () => {
     )
 
     if (nearestDetail) {
-      const detailUrl = joinUrl(nearestDetail.type, nearestDetail.id)
+      const detailUrl = joinUrl([nearestDetail.type, nearestDetail.id], true)
       setDetailUrl(detailUrl)
     } else {
       setLocation(e.latlng)
     }
   }
 
-  useEffect(() => {
-    if (!mapInstance) {
-      return undefined
-    }
-
-    const clickHandler = (e: LeafletMouseEvent) => {
+  useMapEvents({
+    click: (event) => {
       setPositionFromSnapPoint(SnapPoint.Halfway)
-      handleMapClick(e, legendLeafletLayers)
-    }
-
-    mapInstance.on('click', clickHandler)
-
-    return () => {
-      mapInstance.off('click', clickHandler)
-    }
-  }, [mapInstance, legendLeafletLayers])
-
-  // Use this logic to automatically pan the map to the center of the marker when the drawer is positioned in the middle
-  useEffect(() => {
-    if (matchPositionWithSnapPoint(SnapPoint.Halfway) && location) {
-      pan(location, variant === 'drawer' ? 'vertical' : 'horizontal', 20)
-    }
-  }, [drawerPosition, location])
+      handleMapClick(event, legendLeafletLayers)
+    },
+  })
 
   return location ? <ARMMarker latLng={location} /> : null
 }
