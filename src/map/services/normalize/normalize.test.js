@@ -171,7 +171,7 @@ describe('normalize', () => {
   describe('normalizes "adressenPand', () => {
     let input
     let output
-    it('returns the statusLevel and year', async () => {
+    it('returns the statusLevel and year', () => {
       input = {
         status: {
           code: 26,
@@ -180,7 +180,7 @@ describe('normalize', () => {
         oorspronkelijk_bouwjaar: 2012,
       }
 
-      output = await adressenPand(input)
+      output = adressenPand(input)
 
       expect(output).toMatchObject({
         statusLevel: NotificationLevel.Attention,
@@ -191,7 +191,7 @@ describe('normalize', () => {
         oorspronkelijk_bouwjaar: `${YEAR_UNKNOWN}`,
       }
 
-      output = await adressenPand(input)
+      output = adressenPand(input)
 
       expect(output).toMatchObject({
         statusLevel: false,
