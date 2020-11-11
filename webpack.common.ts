@@ -305,19 +305,17 @@ export function createConfig(additionalOptions: CreateConfigOptions): Configurat
           : false,
       }),
       ...(!options.singleBuild ? [new HtmlWebpackMultiBuildPlugin()] : []),
-      ...(options.checkTypes
-        ? [
-            new ForkTsCheckerWebpackPlugin({
-              typescript: {
-                memoryLimit: 4096,
-                diagnosticOptions: {
-                  semantic: true,
-                  syntactic: true,
-                },
-              },
-            }),
-          ]
-        : []),
+      ...(options.checkTypes ? [
+        new ForkTsCheckerWebpackPlugin({
+          typescript: {
+            memoryLimit: 4096,
+            diagnosticOptions: {
+              semantic: true,
+              syntactic: true,
+            },
+          },
+        }),
+      ] : []),
     ],
   }
 }
