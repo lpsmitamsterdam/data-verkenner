@@ -10,7 +10,7 @@ import {
 import { MatomoProvider } from '@datapunt/matomo-tracker-react'
 import classNames from 'classnames'
 import PropTypes from 'prop-types'
-import React, { useState } from 'react'
+import React from 'react'
 import { connect } from 'react-redux'
 import styled from 'styled-components'
 import {
@@ -39,7 +39,6 @@ import Header from './components/Header'
 import matomoInstance from './matomo'
 import { isContentPage, isEditorialDetailPage, isSearchPage } from './pages'
 import { routing } from './routes'
-import ErrorModal from './components/Modal/ErrorModal'
 
 const StyledContainer = styled(Container)`
   min-height: 100%;
@@ -122,8 +121,6 @@ const App = ({
     window.location.replace(routing.niet_gevonden.path)
   }
 
-  const [openErrorModal, setOpenErrorModal] = useState(true)
-
   const bodyClasses = classNames({
     'c-dashboard__body--error': visibilityError,
     'c-dashboard__body--overflow': overflowScroll,
@@ -194,7 +191,6 @@ const App = ({
                 {...{ homePage, hasMaxWidth, printMode, embedPreviewMode, printOrEmbedMode }}
               />
             )}
-            <ErrorModal {...{ openErrorModal, setOpenErrorModal }} />
             <AppBody
               {...{
                 hasGrid: hasMaxWidth,
