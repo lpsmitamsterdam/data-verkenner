@@ -40,7 +40,8 @@ const ErrorModal: FunctionComponent<Props> = ({ openErrorModal, setOpenErrorModa
       </TopBar>
       <ModalBlock>
         <Paragraph>
-          Er is een storing op de site waardoor niet alle inhoud beschikbaar is.
+          Er is een storing op de site waardoor niet alle inhoud beschikbaar is. Je kunt wel gebruik
+          maken van:
         </Paragraph>
         <List variant="bullet">
           <ListItem>
