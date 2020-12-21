@@ -1,13 +1,13 @@
 import { Alert, Heading, Link, themeSpacing } from '@amsterdam/asc-ui'
-import styled from 'styled-components'
 import PropTypes from 'prop-types'
 import React from 'react'
 import { useSelector } from 'react-redux'
+import styled from 'styled-components'
+import PanoAlert from '../../../app/components/PanoAlert/PanoAlert'
+import useGetLegacyPanoramaPreview from '../../../app/utils/useGetLegacyPanoramaPreview'
+import { getUser } from '../../../shared/ducks/user/user'
 import { wgs84ToRd } from '../../../shared/services/coordinate-reference-system'
 import MapSearchResultsCategory from './map-search-results-category/MapSearchResultsCategory'
-import useGetLegacyPanoramaPreview from '../../../app/utils/useGetLegacyPanoramaPreview'
-import AuthAlert from '../../../app/components/Alerts/AuthAlert'
-import { getUser } from '../../../shared/ducks/user/user'
 
 const StyledLink = styled(Link)`
   padding: 0;
@@ -71,7 +71,7 @@ const MapSearchResults = ({
           </StyledLink>
         </header>
       ) : (
-        <AuthAlert excludedResults="Panoramabeelden" />
+        <PanoAlert />
       )}
 
       <div className="map-search-results__scroll-wrapper">

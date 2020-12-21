@@ -4,9 +4,7 @@ exports[`MapDetailResultWrapper should not render empty panoUrl 1`] = `
 <section
   className="map-detail-result"
 >
-  <AuthAlert
-    excludedResults="Panoramabeelden"
-  />
+  <PanoAlert />
   <div
     className="map-detail-result__scroll-wrapper"
   >
@@ -58,9 +56,7 @@ exports[`MapDetailResultWrapper should not render empty sub title 1`] = `
 <section
   className="map-detail-result"
 >
-  <AuthAlert
-    excludedResults="Panoramabeelden"
-  />
+  <PanoAlert />
   <div
     className="map-detail-result__scroll-wrapper"
   >
@@ -106,9 +102,7 @@ exports[`MapDetailResultWrapper should not render missing children 1`] = `
 <section
   className="map-detail-result"
 >
-  <AuthAlert
-    excludedResults="Panoramabeelden"
-  />
+  <PanoAlert />
   <div
     className="map-detail-result__scroll-wrapper"
   >
@@ -146,9 +140,7 @@ exports[`MapDetailResultWrapper should not render missing sub title 1`] = `
 <section
   className="map-detail-result"
 >
-  <AuthAlert
-    excludedResults="Panoramabeelden"
-  />
+  <PanoAlert />
   <div
     className="map-detail-result__scroll-wrapper"
   >
@@ -194,9 +186,7 @@ exports[`MapDetailResultWrapper should render everything 1`] = `
 <section
   className="map-detail-result"
 >
-  <AuthAlert
-    excludedResults="Panoramabeelden"
-  />
+  <PanoAlert />
   <div
     className="map-detail-result__scroll-wrapper"
   >

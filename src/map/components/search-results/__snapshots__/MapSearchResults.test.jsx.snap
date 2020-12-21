@@ -4,9 +4,7 @@ exports[`MapSearchResults rendering should filter external monumenten on pand re
 <section
   className="map-search-results"
 >
-  <AuthAlert
-    excludedResults="Panoramabeelden"
-  />
+  <PanoAlert />
   <div
     className="map-search-results__scroll-wrapper"
   >
@@ -105,9 +103,7 @@ exports[`MapSearchResults rendering should render empty results 1`] = `
 <section
   className="map-search-results"
 >
-  <AuthAlert
-    excludedResults="Panoramabeelden"
-  />
+  <PanoAlert />
   <div
     className="map-search-results__scroll-wrapper"
   >
@@ -154,9 +150,7 @@ exports[`MapSearchResults rendering should render results 1`] = `
 <section
   className="map-search-results"
 >
-  <AuthAlert
-    excludedResults="Panoramabeelden"
-  />
+  <PanoAlert />
   <div
     className="map-search-results__scroll-wrapper"
   >
@@ -247,9 +241,7 @@ exports[`MapSearchResults rendering should update results 1`] = `
 <section
   className="map-search-results"
 >
-  <AuthAlert
-    excludedResults="Panoramabeelden"
-  />
+  <PanoAlert />
   <div
     className="map-search-results__scroll-wrapper"
   >
@@ -331,9 +323,7 @@ exports[`MapSearchResults rendering should update results 2`] = `
 <section
   className="map-search-results"
 >
-  <AuthAlert
-    excludedResults="Panoramabeelden"
-  />
+  <PanoAlert />
   <div
     className="map-search-results__scroll-wrapper"
   >

@@ -2,9 +2,9 @@ import { MapPanelContent } from '@amsterdam/arm-core'
 import { Enlarge, Minimise } from '@amsterdam/asc-assets'
 import { Alert, Button, List, ListItem, Paragraph, themeSpacing } from '@amsterdam/asc-ui'
 import React, { Fragment, FunctionComponent, useContext, useEffect, useState } from 'react'
+import { useSelector } from 'react-redux'
 import { useHistory, useParams } from 'react-router-dom'
 import styled, { css } from 'styled-components'
-import { useSelector } from 'react-redux'
 import {
   fetchDetailData,
   getServiceDefinition,
@@ -19,23 +19,24 @@ import {
   DetailResultItemType,
   PaginatedData as PaginatedDataType,
 } from '../../../../map/types/details'
+import { getUser } from '../../../../shared/ducks/user/user'
 import { AuthError } from '../../../../shared/services/api/customError'
 import AuthAlert from '../../../components/Alerts/AuthAlert'
 import AuthenticationWrapper from '../../../components/AuthenticationWrapper/AuthenticationWrapper'
+import PanoAlert from '../../../components/PanoAlert/PanoAlert'
 import PromiseResult from '../../../components/PromiseResult/PromiseResult'
+import Spacer from '../../../components/Spacer/Spacer'
+import { routing } from '../../../routes'
+import useAuthScope from '../../../utils/useAuthScope'
+import useBuildQueryString from '../../../utils/useBuildQueryString'
 import PanoramaPreview, { PreviewContainer } from '../map-search/PanoramaPreview'
 import MapContext from '../MapContext'
+import { panoParam } from '../query-params'
 import DetailDefinitionList from './DetailDefinitionList'
 import DetailHeading from './DetailHeading'
 import DetailInfoBox, { InfoBoxProps } from './DetailInfoBox'
 import DetailLinkList from './DetailLinkList'
 import DetailTable from './DetailTable'
-import useAuthScope from '../../../utils/useAuthScope'
-import Spacer from '../../../components/Spacer/Spacer'
-import { routing } from '../../../routes'
-import useBuildQueryString from '../../../utils/useBuildQueryString'
-import { panoParam } from '../query-params'
-import { getUser } from '../../../../shared/ducks/user/user'
 
 const Message = styled(Paragraph)`
   margin: ${themeSpacing(4)} 0;
@@ -359,7 +360,7 @@ export const RenderDetails: FunctionComponent<RenderDetailsProps> = ({ details, 
         user.authenticated ? (
           <PanoramaPreview location={details.location} radius={180} aspect={2.5} />
         ) : (
-          <AuthAlert excludedResults="Panoramabeelden" />
+          <PanoAlert />
         )
       ) : null}
       <Spacer />
