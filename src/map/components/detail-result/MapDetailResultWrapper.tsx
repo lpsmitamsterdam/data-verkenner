@@ -1,11 +1,11 @@
+import { Heading, Link, themeSpacing } from '@amsterdam/asc-ui'
+import { LatLngLiteral } from 'leaflet'
 import React from 'react'
 import { useSelector } from 'react-redux'
-import { LatLngLiteral } from 'leaflet'
-import { Heading, Link, themeSpacing } from '@amsterdam/asc-ui'
 import styled from 'styled-components'
-import { isEmbedded } from '../../../shared/ducks/ui/ui'
+import PanoAlert from '../../../app/components/PanoAlert/PanoAlert'
 import useGetLegacyPanoramaPreview from '../../../app/utils/useGetLegacyPanoramaPreview'
-import AuthAlert from '../../../app/components/Alerts/AuthAlert'
+import { isEmbedded } from '../../../shared/ducks/ui/ui'
 import { getUser } from '../../../shared/ducks/user/user'
 
 export interface MapDetailResultWrapperProps {
@@ -65,7 +65,7 @@ const MapDetailResultWrapper: React.FC<MapDetailResultWrapperProps> = ({
           </StyledLink>
         </header>
       ) : (
-        <AuthAlert excludedResults="Panoramabeelden" />
+        <PanoAlert />
       )}
       <div className="map-detail-result__scroll-wrapper">
         {!user.authenticated && (

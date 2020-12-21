@@ -1,11 +1,7 @@
 import { Alert, Container, Heading, themeSpacing } from '@amsterdam/asc-ui'
 import React, { FunctionComponent } from 'react'
-import styled from 'styled-components'
 import { useSelector } from 'react-redux'
-import { wgs84ToRd } from '../../../shared/services/coordinate-reference-system'
-import AuthAlert from '../Alerts/AuthAlert'
-import LoadingSpinner from '../LoadingSpinner/LoadingSpinner'
-import ShareBar from '../ShareBar/ShareBar'
+import styled from 'styled-components'
 import {
   getDataSearchError,
   getDataSearchLocation,
@@ -14,9 +10,14 @@ import {
   isSearchLoading,
 } from '../../../shared/ducks/data-search/selectors'
 import { getUser } from '../../../shared/ducks/user/user'
-import LocationSearchResults from './LocationSearchResults'
 import AuthScope from '../../../shared/services/api/authScope'
+import { wgs84ToRd } from '../../../shared/services/coordinate-reference-system'
 import PanoramaPreview, { PreviewContainer } from '../../pages/MapPage/map-search/PanoramaPreview'
+import AuthAlert from '../Alerts/AuthAlert'
+import LoadingSpinner from '../LoadingSpinner/LoadingSpinner'
+import PanoAlert from '../PanoAlert/PanoAlert'
+import ShareBar from '../ShareBar/ShareBar'
+import LocationSearchResults from './LocationSearchResults'
 
 const EXCLUDED_RESULTS = 'vestigingen'
 
@@ -91,7 +92,7 @@ const LocationSearch: FunctionComponent = () => {
                 radius={180}
               />
             ) : (
-              <AuthAlert excludedResults="Panoramabeelden" />
+              <PanoAlert />
             )
           ) : null}
 

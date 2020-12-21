@@ -1,12 +1,8 @@
-import React from 'react'
 import PropTypes from 'prop-types'
-import { bindActionCreators } from 'redux'
+import React from 'react'
 import { connect, useSelector } from 'react-redux'
-
+import { bindActionCreators } from 'redux'
 import { getDetailEndpoint } from '../../../shared/ducks/detail/selectors'
-import { toDetailFromEndpoint as endpointActionCreator } from '../../../store/redux-first-router/actions'
-import SplitScreen from '../../components/SplitScreen/SplitScreen'
-import DataSelection from '../../components/DataSelection/DataSelection'
 import { getSelectionType } from '../../../shared/ducks/selection/selection'
 import {
   getViewMode,
@@ -14,10 +10,13 @@ import {
   setViewMode as setViewModeAction,
   VIEW_MODE,
 } from '../../../shared/ducks/ui/ui'
-import { getPage } from '../../../store/redux-first-router/selectors'
-import PAGES from '../../pages'
 import { getUser } from '../../../shared/ducks/user/user'
-import AuthAlert from '../../components/Alerts/AuthAlert'
+import { toDetailFromEndpoint as endpointActionCreator } from '../../../store/redux-first-router/actions'
+import { getPage } from '../../../store/redux-first-router/selectors'
+import DataSelection from '../../components/DataSelection/DataSelection'
+import PanoAlert from '../../components/PanoAlert/PanoAlert'
+import SplitScreen from '../../components/SplitScreen/SplitScreen'
+import PAGES from '../../pages'
 
 const DataDetailPage = React.lazy(() =>
   import(/* webpackChunkName: "DataDetailPage" */ '../DataDetailPage/DataDetailPage'),
@@ -71,7 +70,7 @@ if (typeof window !== 'undefined') {
       Component = user.authenticated ? (
         <PanoramaContainer isFullscreen={viewMode === VIEW_MODE.FULL} />
       ) : (
-        <AuthAlert excludedResults="Panoramabeelden" />
+        <PanoAlert />
       )
       mapProps = {
         isFullscreen: true,
