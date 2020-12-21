@@ -36,11 +36,6 @@ The `Makefile` consists of other useful commands to stop, restart and rebuild th
 make help
 ```
 
-By default, debugging information is disabled in the production build. To locally run build application and have Webpack keep both `debugger` and `console` statements, run
-```
-DEBUG=true make rebuild
-```
-
 ## Testing
 
 Jest unit test
@@ -57,8 +52,6 @@ In order to E2E test the application make sure you have a development server run
 npm run start
 ```
 
-> Note: Due to a missing polyfill for the Fetch API you will have to run your build with `legacy` set to `true` in the build config.
-
 After doing this open up a new terminal and run the following commands:
 
 ```
@@ -71,10 +64,7 @@ This will start the E2E test, if you want to watch for changes you can also run 
 ### Analyzing a production bundle
 
 ```bash
-# Analyze the modern browser bundle (ES2015+)
-npm run analyze:modern
-# Analyze the legacy browser bundle (ES5)
-npm run analyze:legacy
+npm run analyze
 ```
 
 ### Deploying to a demo server
