@@ -247,8 +247,8 @@ export function createConfig(additionalOptions: CreateConfigOptions): Configurat
         },
       }),
       new MiniCssExtractPlugin({
-        filename: isProd ? '[name].[contenthash].css' : '[name].css',
-        chunkFilename: isProd ? '[name].[contenthash].css' : '[name].css',
+        filename: '[name].css',
+        chunkFilename: '[name].css',
       }),
       new HtmlWebpackPlugin({
         template: 'index.ejs',
