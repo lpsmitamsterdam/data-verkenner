@@ -40,7 +40,7 @@
     "@turf/turf": "^6.2.0",
     "body-scroll-lock": "^3.1.5",
     "classnames": "2.2.6",
-    "core-js": "^3.8.2",
+    "core-js": "^3.8.3",
     "escape-string-regexp": "^4.0.0",
     "file-saver": "^2.0.5",
     "graphql": "^15.4.0",
