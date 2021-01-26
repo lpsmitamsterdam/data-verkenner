@@ -12,7 +12,7 @@ const PanoAlert: FunctionComponent = () => (
       Panoramabeelden alleen toegankelijk vanaf een vertrouwd netwerk
     </Heading>
     <Paragraph>
-      Momentel werken we eraan om de panoramabeelden toegankelijk te maken voor het publiek. Wil je
+      Momenteel werken we eraan om de panoramabeelden toegankelijk te maken voor het publiek. Wil je
       panoramabeelden zien, dan moet je inloggen op ADW of vanaf een vertrouwd netwerk aanmelden.
     </Paragraph>
   </StyledAlert>
