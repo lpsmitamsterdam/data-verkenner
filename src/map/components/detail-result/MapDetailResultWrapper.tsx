@@ -1,10 +1,11 @@
-import { Heading, Link, themeSpacing } from '@amsterdam/asc-ui'
+import { Heading, Button, Link, themeSpacing, themeColor } from '@amsterdam/asc-ui'
 import { LatLngLiteral } from 'leaflet'
 import { FunctionComponent } from 'react'
 import { useSelector } from 'react-redux'
 import styled from 'styled-components'
 import PanoAlert from '../../../app/components/PanoAlert/PanoAlert'
 import useGetLegacyPanoramaPreview from '../../../app/utils/useGetLegacyPanoramaPreview'
+import Maximize from '../../../shared/assets/icons/icon-maximize.svg'
 import { isEmbedded } from '../../../shared/ducks/ui/ui'
 import { getUser } from '../../../shared/ducks/user/user'
 
@@ -24,6 +25,13 @@ const StyledLink = styled(Link)`
 
 const Header = styled.header`
   margin: 0 ${themeSpacing(3)};
+`
+
+const StyledButton = styled(Button)`
+  background-color: ${themeColor('tint', 'level1')};
+  svg path {
+    fill: ${themeColor('primary')};
+  }
 `
 
 const MapDetailResultWrapper: FunctionComponent<MapDetailResultWrapperProps> = ({
@@ -80,20 +88,9 @@ const MapDetailResultWrapper: FunctionComponent<MapDetailResultWrapperProps> = (
         )}
         {children}
         <footer className="map-search-results__footer">
-          <button
-            type="button"
-            className="map-search-results__button"
-            onClick={onMaximize}
-            title="Volledig weergeven"
-          >
-            <span
-              className={`
-                    map-search-results__button-icon
-                    map-search-results__button-icon--maximize
-                  `}
-            />
+          <StyledButton type="button" onClick={onMaximize} iconLeft={<Maximize />} iconSize={21}>
             Volledig weergeven
-          </button>
+          </StyledButton>
         </footer>
       </div>
     </section>

@@ -1,12 +1,13 @@
-import { Alert, Heading, Link, themeSpacing } from '@amsterdam/asc-ui'
+import { Alert, Button, Heading, Link, themeColor, themeSpacing } from '@amsterdam/asc-ui'
 import PropTypes from 'prop-types'
 import { useSelector } from 'react-redux'
 import styled from 'styled-components'
 import PanoAlert from '../../../app/components/PanoAlert/PanoAlert'
-import useGetLegacyPanoramaPreview from '../../../app/utils/useGetLegacyPanoramaPreview'
 import { getUser } from '../../../shared/ducks/user/user'
 import { wgs84ToRd } from '../../../shared/services/coordinate-reference-system'
 import MapSearchResultsCategory from './map-search-results-category/MapSearchResultsCategory'
+import useGetLegacyPanoramaPreview from '../../../app/utils/useGetLegacyPanoramaPreview'
+import Maximize from '../../../shared/assets/icons/icon-maximize.svg'
 
 const StyledLink = styled(Link)`
   padding: 0;
@@ -16,6 +17,14 @@ const StyledLink = styled(Link)`
 
 const Header = styled.header`
   margin: 0 ${themeSpacing(3)};
+`
+
+const StyledButton = styled(Button)`
+  background-color: ${themeColor('tint', 'level1')};
+
+  svg path {
+    fill: ${themeColor('primary')};
+  }
 `
 
 const MapSearchResults = ({
@@ -103,20 +112,9 @@ const MapSearchResults = ({
         </ul>
         {!isEmbed && (
           <footer className="map-search-results__footer">
-            <button
-              type="button"
-              className="map-search-results__button"
-              onClick={onMaximize}
-              title="Volledig weergeven"
-            >
-              <span
-                className={`
-                    map-search-results__button-icon
-                    map-search-results__button-icon--maximize
-                  `}
-              />
+            <StyledButton type="button" onClick={onMaximize} iconLeft={<Maximize />} iconSize={21}>
               Volledig weergeven
-            </button>
+            </StyledButton>
           </footer>
         )}
       </div>
