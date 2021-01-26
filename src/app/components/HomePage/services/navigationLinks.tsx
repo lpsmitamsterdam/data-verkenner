@@ -1,12 +1,13 @@
 import { Api, Data, DocumentText, Map, Pano, Table } from '@amsterdam/asc-assets'
 import { Icon } from '@amsterdam/asc-ui'
+import { LocationDescriptorObject } from 'history'
+import { To } from 'redux-first-router-link'
 import environment from '../../../../environment'
 import {
   NAVIGATION_LINK_DATA_IN_TABLES,
   NAVIGATION_LINK_DATA_SERVICES,
 } from '../../../../shared/config/content-links'
 import {
-  toArticleDetail,
   toArticleSearch,
   toCollectionSearch,
   toDatasetSearch,
@@ -16,12 +17,20 @@ import {
   toPublicationSearch,
   toSpecialSearch,
 } from '../../../../store/redux-first-router/actions'
+import { toArticleDetail } from '../../../links'
 import { routing as routes } from '../../../routes'
-import decodeHTML from '../../../utils/decodeHTML'
+
+export interface NavigationLink {
+  id: number
+  to: To | LocationDescriptorObject
+  CardIcon?: () => JSX.Element
+  title: string
+  description?: string
+}
 
 // The id's also represent the order in which they are displayed in the NavigationBlock on the homepage
 // The order of how the items are placed in the array, is the order for the Menu
-const navigationLinks = [
+const navigationLinks: NavigationLink[] = [
   {
     id: 0,
     to: toMapWithLegendOpen(),
@@ -41,7 +50,7 @@ const navigationLinks = [
         <Pano />
       </Icon>
     ),
-    title: decodeHTML('Panorama&shy;beelden'),
+    title: 'Panoramabeelden',
     description: 'Kijk 360 graden in het rond',
   },
   {
@@ -107,7 +116,7 @@ const navigationLinks = [
       </Icon>
     ),
     title: routes.publicationSearch.title,
-    description: decodeHTML('Download factsheets en onderzoeks&shy;rapporten'),
+    description: 'Download factsheets en onderzoeksrapporten',
   },
   {
     id: 8,

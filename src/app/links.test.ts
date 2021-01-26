@@ -1,5 +1,14 @@
 import { generatePath } from 'react-router-dom'
-import { toAddresses, toCadastralObjects, toConstructionFile, toEstablishments } from './links'
+import environment from '../environment'
+import { HEADER_LINK_HELP } from '../shared/config/content-links'
+import {
+  toAddresses,
+  toArticleDetail,
+  toCadastralObjects,
+  toConstructionFile,
+  toEstablishments,
+  toHelpPage,
+} from './links'
 import { routing } from './routes'
 
 describe('toAddresses', () => {
@@ -7,6 +16,17 @@ describe('toAddresses', () => {
     expect(toAddresses()).toEqual({
       pathname: routing.addresses.path,
       search: 'modus=volledig',
+    })
+  })
+})
+
+describe('toArticleDetail', () => {
+  const id = '123456'
+  const slug = 'hello-world'
+
+  it('creates a location descriptor', () => {
+    expect(toArticleDetail(id, slug)).toEqual({
+      pathname: generatePath(routing.articleDetail.path, { id, slug }),
     })
   })
 })
@@ -36,6 +56,17 @@ describe('toEstablishments', () => {
     expect(toEstablishments()).toEqual({
       pathname: routing.establishments.path,
       search: 'modus=volledig',
+    })
+  })
+})
+
+describe('toHelpPage', () => {
+  it('creates a location descriptor', () => {
+    const id = HEADER_LINK_HELP.id[environment.DEPLOY_ENV]
+    const { slug } = HEADER_LINK_HELP
+
+    expect(toHelpPage()).toEqual({
+      pathname: generatePath(routing.articleDetail.path, { id, slug }),
     })
   })
 })
