@@ -11,9 +11,11 @@ import { getDetailLocation } from '../../../../store/redux-first-router/selector
 import { PANO_LAYERS } from '../../../components/PanoramaViewer/PanoramaViewer'
 import pickLinkComponent from '../../../utils/pickLinkComponent'
 import useBuildQueryString from '../../../utils/useBuildQueryString'
-import useParam from '../../../utils/useParam'
 import usePromise, { PromiseStatus } from '../../../utils/usePromise'
 import { locationParam, mapLayersParam, panoParam, zoomParam } from '../query-params'
+import useParam from '../../../utils/useParam'
+import { ForbiddenError } from '../../../../shared/services/api/customError'
+import PanoAlert from '../../../components/PanoAlert/PanoAlert'
 
 export interface PanoramaPreviewProps extends FetchPanoramaOptions {
   location: LatLngLiteral
@@ -97,7 +99,10 @@ const PanoramaPreview: FunctionComponent<PanoramaPreviewProps> = ({
   }
 
   if (result.status === PromiseStatus.Rejected) {
-    return <PreviewMessage>Kon panoramabeeld niet laden.</PreviewMessage>
+    if (result.error instanceof ForbiddenError) {
+      return <PanoAlert />
+    }
+    return <PreviewMessage>Kan panoramabeeld niet laden.</PreviewMessage>
   }
 
   if (!result.value) {

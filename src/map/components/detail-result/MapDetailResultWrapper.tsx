@@ -8,13 +8,15 @@ import useGetLegacyPanoramaPreview from '../../../app/utils/useGetLegacyPanorama
 import Maximize from '../../../shared/assets/icons/icon-maximize.svg'
 import { isEmbedded } from '../../../shared/ducks/ui/ui'
 import { getUser } from '../../../shared/ducks/user/user'
+import { fetchProxy } from '../../../shared/services/api/api'
+import usePromise from '../../../app/utils/usePromise'
+import { ForbiddenError } from '../../../shared/services/api/customError'
 
 export interface MapDetailResultWrapperProps {
   title: string
   location?: LatLngLiteral
   subTitle?: string | null
   onMaximize: () => void
-  children: React.ReactNode
 }
 
 const StyledLink = styled(Link)`
@@ -45,9 +47,14 @@ const MapDetailResultWrapper: FunctionComponent<MapDetailResultWrapperProps> = (
   const isEmbed = useSelector(isEmbedded)
   const user = useSelector(getUser)
 
+  const result = usePromise(
+    // A small response that will only be available on gov. network
+    () => fetchProxy('https://acc.api.data.amsterdam.nl/brk/?format=json'),
+    [],
+  )
   return (
     <section className="map-detail-result">
-      {panoramaUrl && user.authenticated ? (
+      {panoramaUrl && result.status === 'fulfilled' ? (
         <header
           className={`
       map-detail-result__header
@@ -73,7 +80,7 @@ const MapDetailResultWrapper: FunctionComponent<MapDetailResultWrapperProps> = (
           </StyledLink>
         </header>
       ) : (
-        <PanoAlert />
+        result.status === 'rejected' && result.error instanceof ForbiddenError && <PanoAlert />
       )}
       <div className="map-detail-result__scroll-wrapper">
         {!user.authenticated && (
