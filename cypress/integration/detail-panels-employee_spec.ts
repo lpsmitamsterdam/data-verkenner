@@ -20,7 +20,7 @@ describe('employee permissions', () => {
       cy.contains(
         'Medewerkers met speciale bevoegdheden kunnen alle gegevens zien (ook Zakelijke rechten).',
       )
-      cy.checkListItems('../fixtures/kadastraalSubjectNatural.json')
+      cy.checkListItems('../fixtures/kadastraalSubjectNaturalPerson.json')
       cy.get(DETAIL_PANEL.definitionList).should('not.contain', 'Statutaire zetel')
       cy.checkInfoBoxes(['Kadastra', 'Zakelijke rechten'])
     })
@@ -30,7 +30,7 @@ describe('employee permissions', () => {
       cy.visit('data/brk/subject/idNL.KAD.Persoon.423186718')
 
       cy.wait('@getSubject')
-      cy.checkListItems('../fixtures/kadastraalSubjectNonNatural.json')
+      cy.checkListItems('../fixtures/kadastraalSubjectNonNaturalPerson.json')
       cy.get(DETAIL_PANEL.linkList).contains('Eigendom (recht van)')
       cy.checkInfoBoxes(['Kadastra', 'Zakelijke rechten'])
     })

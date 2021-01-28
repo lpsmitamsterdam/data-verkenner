@@ -1,15 +1,15 @@
 {
   "panelType": "Kadastraal subject",
-  "panelHeading": "Bakker & Toledo Holding B.V.",
+  "panelHeading": "Foobar B.V.",
   "definitionLists": [
     {
       "subheading": "",
       "items": {
-        "Statutaire zetel": "OOSTZAAN",
+        "Statutaire zetel": "FOOBAR",
         "Rechtsvorm": "Besloten vennootschap",
-        "RSIN": "822730790",
-        "KvK nummer": "50417703",
-        "Woonadres": "Rietschoot 106 1511WN OOSTZAAN",
+        "RSIN": "123654862",
+        "KvK nummer": "123456789",
+        "Woonadres": "Beethovenstraat 64, 1076HH AMSTERDAM",
         "Woonadres buitenland": "",
         "Postadres": "",
         "Postadres buitenland": "",
@@ -20,7 +20,7 @@
   "linkLists": [
     {
       "subheading": "Zakelijke rechten",
-      "items": ["OZN00C03755A0008 - Eigendom (recht van) (1/1)"]
+      "items": ["OGN00C03725A0003 - Eigendom (recht van) (1/1)"]
     }
   ]
 }

@@ -1,19 +1,19 @@
 {
   "panelType": "Kadastraal subject",
-  "panelHeading": "Barbara Bakker",
+  "panelHeading": "John Doe",
   "definitionLists": [
     {
       "subheading": "",
       "items": {
-        "Voornamen": "Barbara",
+        "Voornamen": "John",
         "Voorvoegsels": "",
-        "Geslachtsnaam": "Bakker",
-        "Geslacht": "Vrouw",
-        "Geboortedatum": "23-07-1971",
+        "Geslachtsnaam": "Doe",
+        "Geslacht": "Man",
+        "Geboortedatum": "11-11-1966",
         "Geboorteplaats": "AMSTERDAM",
         "Geboorteland": "",
         "Datum van overlijden": "",
-        "Woonadres": "Overtoom 34 H 1054HK AMSTERDAM",
+        "Woonadres": "Beethovenstraat 66 1076HH AMSTERDAM",
         "Woonadres buitenland": "",
         "Postadres": "",
         "Postadres buitenland": "",
