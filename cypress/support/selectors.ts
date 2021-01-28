@@ -203,7 +203,7 @@ export const MAP = {
   mapMaximize: '.rc-icon-button',
   mapOverlayPane: '.leaflet-overlay-pane',
   mapPanel: '.map-panel',
-  mapPanelHandle: '.map-panel-handle',
+  mapPanelHandle: '[data-testid="mapPanel"]',
   mapPanelBackground: '.map-type',
   mapPanelBackgroundLabel: '.map-type [class*=HeadingStyle]',
   mapPreviewPanel: '.map-preview-panel',
