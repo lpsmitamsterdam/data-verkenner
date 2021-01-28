@@ -1,16 +1,16 @@
-import React from 'react'
 import { render } from '@testing-library/react'
 import { Provider } from 'react-redux'
 import { BrowserRouter as Router } from 'react-router-dom'
 import configureMockStore from 'redux-mock-store'
 import App from './App'
-import { VIEW_MODE } from '../shared/ducks/ui/ui'
+import { ViewMode } from '../shared/ducks/ui/ui'
 import { ROUTER_NAMESPACE } from './routes'
 import PAGES from './pages'
 import useParam from './utils/useParam'
 
-// Mock the Header component because of it's complex dependencies (like using .query files that jest cannot handle)
+// Mock some components because of it's complex dependencies (like using .query files that jest cannot handle)
 jest.mock('./components/Header', () => () => <div data-testid="header" />)
+jest.mock('./components/SearchBar/SearchBar', () => () => <div data-testid="search-bar" />)
 
 // For some reason we get styled-components console warnings when MapLegend is rendered ("The component styled.div with the id of "sc-xxxxx" has been created dynamically.")
 jest.mock('../map/components/legend/MapLegend')
@@ -22,7 +22,7 @@ const initialState = {
     isEmbed: false,
     isEmbedPreview: false,
     isPrintMode: false,
-    viewMode: VIEW_MODE.FULL,
+    viewMode: ViewMode.Full,
   },
   search: {
     query: '',
@@ -39,6 +39,11 @@ const initialState = {
   },
   location: {
     type: `${ROUTER_NAMESPACE}/${PAGES.DATA}`,
+  },
+  files: {
+    fileName: '',
+    fileUrl: '',
+    type: 'default',
   },
 }
 const store = mockStore(initialState)

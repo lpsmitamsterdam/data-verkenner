@@ -27,8 +27,9 @@ import {
   SET_PANORAMA_TAGS,
 } from '../ducks/constants'
 import { getPanoramaLocation, getPanoramaTags, getLabelObjectByTags } from '../ducks/selectors'
-import { getViewMode, VIEW_MODE } from '../../shared/ducks/ui/ui'
+import { getViewMode, ViewMode } from '../../shared/ducks/ui/ui'
 import { routing } from '../../app/routes'
+import { ForbiddenError } from '../../shared/services/api/customError'
 
 jest.mock('../ducks/selectors')
 
@@ -39,7 +40,7 @@ describe('watchPanoramaRoute', () => {
     testSaga(fetchFetchPanoramaEffect, { payload })
       .next()
       .select(getViewMode)
-      .next(VIEW_MODE.FULL)
+      .next(ViewMode.Full)
       .put(closeMapPanel())
       .next()
       .put(fetchPanoramaRequest(payload))
@@ -222,6 +223,16 @@ describe('fetchPanorma and fetchPanoramaByLocation', () => {
           type: FETCH_PANORAMA_ERROR,
           payload: 'error',
         })
+        .next()
+        .isDone()
+    })
+
+    it('should skip dispatching FETCH_PANORAMA_ERROR when error is 403', () => {
+      const mockFn = jest.fn()
+      testSaga(handlePanoramaRequest, mockFn, 'id123', ['string'])
+        .next()
+        .call(mockFn, 'id123', ['string'])
+        .throw(new ForbiddenError(403, ''))
         .next()
         .isDone()
     })

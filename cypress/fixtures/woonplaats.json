@@ -1,0 +1,11 @@
+{
+  "panelType": "Woonplaats",
+  "panelHeading": "Amsterdam",
+  "definitionLists": [],
+  "linkLists": [
+    {
+      "subheading": "Openbare ruimtes",
+      "items": ["'s-Gravelandse Veer"]
+    }
+  ]
+}

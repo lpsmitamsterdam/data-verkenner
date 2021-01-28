@@ -1,5 +1,5 @@
 import { Alert, CustomHTMLBlock, Link, ShowMoreShowLess } from '@amsterdam/asc-ui'
-import React, { FunctionComponent } from 'react'
+import { FunctionComponent } from 'react'
 import { Link as RouterLink } from 'react-router-dom'
 import styled from 'styled-components'
 import { LocationDescriptor } from 'history'
@@ -31,8 +31,8 @@ const DetailDefinitionList: FunctionComponent<Pick<DetailResultItemDefinitionLis
 
 function renderDescription(
   description?: string | null,
-  href?: LocationDescriptor | null,
-  to?: string | { pathname: string; search?: string },
+  href?: string | null,
+  to?: LocationDescriptor,
 ) {
   if (href) {
     return (
@@ -44,7 +44,7 @@ function renderDescription(
 
   if (to) {
     return (
-      <Link as={RouterLink} to={to} href={href} inList>
+      <Link as={RouterLink} to={to} inList>
         {description}
       </Link>
     )

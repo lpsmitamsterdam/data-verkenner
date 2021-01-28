@@ -1,10 +1,10 @@
+/* eslint-disable global-require */
 import { CleanWebpackPlugin } from 'clean-webpack-plugin'
 import CopyWebpackPlugin from 'copy-webpack-plugin'
 import ForkTsCheckerWebpackPlugin from 'fork-ts-checker-webpack-plugin'
 import HtmlWebpackPlugin from 'html-webpack-plugin'
 import MiniCssExtractPlugin from 'mini-css-extract-plugin'
 import path from 'path'
-import SVGSpritemapPlugin from 'svg-spritemap-webpack-plugin'
 import { Configuration, DefinePlugin } from 'webpack'
 
 /**
@@ -114,7 +114,12 @@ export function createConfig(additionalOptions: CreateConfigOptions): Configurat
                     corejs: 3,
                   },
                 ],
-                '@babel/preset-react',
+                [
+                  '@babel/preset-react',
+                  {
+                    runtime: 'automatic',
+                  },
+                ],
                 '@babel/preset-typescript',
               ],
               plugins: [
@@ -201,15 +206,8 @@ export function createConfig(additionalOptions: CreateConfigOptions): Configurat
           ],
         },
         {
-          test: /\.(jpg|png|svg|cur)$/,
-          use: [
-            {
-              loader: 'file-loader',
-              options: {
-                outputPath: 'assets/',
-              },
-            },
-          ],
+          type: 'asset/resource',
+          test: /\.(jpg|png|cur)$/,
         },
         {
           test: /\.(graphql|gql)$/,
@@ -219,10 +217,7 @@ export function createConfig(additionalOptions: CreateConfigOptions): Configurat
       ],
     },
     plugins: [
-      new CleanWebpackPlugin({
-        // Prevent multiple cleanups, since we're using multiple configs (see: https://github.com/johnagan/clean-webpack-plugin/issues/122).
-        cleanOnceBeforeBuildPatterns: [],
-      }),
+      new CleanWebpackPlugin(),
       new CopyWebpackPlugin({
         patterns: [
           { from: './public/', to: './assets/' },
@@ -237,25 +232,10 @@ export function createConfig(additionalOptions: CreateConfigOptions): Configurat
       }),
       new DefinePlugin({
         'process.env.VERSION': JSON.stringify(require('./package.json').version),
-        'process.env.GIT_COMMIT': process.env.GIT_COMMIT,
-      }),
-      new SVGSpritemapPlugin(['src/shared/assets/icons/**/*.svg'], {
-        output: {
-          filename: 'sprite.svg',
-          chunk: {
-            name: 'sprite',
-          },
-          svgo: {
-            plugins: Object.entries(svgoConfig).map(([key, value]) => ({ [key]: value })),
-          },
-        },
-        styles: {
-          filename: path.join(__dirname, 'src/shared/styles/config/mixins/_sprites.scss'),
-        },
       }),
       new MiniCssExtractPlugin({
-        filename: isProd ? '[name].[contenthash].css' : '[name].css',
-        chunkFilename: isProd ? '[name].[contenthash].css' : '[name].css',
+        filename: '[name].css',
+        chunkFilename: '[name].css',
       }),
       new HtmlWebpackPlugin({
         template: 'index.ejs',

@@ -1,4 +1,4 @@
-import { DocumentEdit } from '@amsterdam/asc-assets'
+import { ChevronRight, DocumentEdit } from '@amsterdam/asc-assets'
 import {
   Alert,
   breakpoint,
@@ -6,13 +6,14 @@ import {
   Column,
   Container,
   CustomHTMLBlock,
+  Icon,
   Link,
   Row,
 } from '@amsterdam/asc-ui'
 import { useMatomo } from '@datapunt/matomo-tracker-react'
 import classNames from 'classnames'
 import marked from 'marked'
-import React, { FunctionComponent, useMemo } from 'react'
+import { FunctionComponent, useMemo } from 'react'
 import { Helmet } from 'react-helmet'
 import { useSelector } from 'react-redux'
 import { useParams } from 'react-router-dom'
@@ -293,7 +294,11 @@ const DatasetDetailPage: FunctionComponent = () => {
                                             {getFileSize(row['dcat:byteSize'])}
                                           </div>
                                         )}
-                                      <div className="resources-item__navigation-arrow" />
+                                      <div className="resources-item__navigation-arrow">
+                                        <Icon size={16}>
+                                          <ChevronRight />
+                                        </Icon>
+                                      </div>
                                     </div>
                                   </div>
                                 </a>
@@ -436,7 +441,11 @@ const DatasetDetailPage: FunctionComponent = () => {
                       <div className="catalog-themes">
                         {dataset['dcat:theme'].map((group: string) => (
                           <div className="catalog-theme" key={group}>
-                            <span className="catalog-theme__detail-icon--{{group.substring(6)}} catalog-theme__label">
+                            <span
+                              className={`catalog-theme__detail-icon--${group.substring(
+                                6,
+                              )} catalog-theme__label`}
+                            >
                               {getOptionLabel(group.split(':')[1], filters.groupTypes)}
                             </span>
                           </div>

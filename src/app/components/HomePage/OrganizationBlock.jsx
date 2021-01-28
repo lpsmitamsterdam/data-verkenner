@@ -8,9 +8,9 @@ import {
   themeColor,
   themeSpacing,
 } from '@amsterdam/asc-ui'
-import React from 'react'
+import { useEffect } from 'react'
 import styled from 'styled-components'
-import { cmsConfig } from '../../../shared/config/config'
+import cmsConfig from '../../../shared/config/cms.config'
 import useFromCMS from '../../utils/useFromCMS'
 import ErrorMessage from '../ErrorMessage/ErrorMessage'
 import OrganizationCard from './OrganizationCard'
@@ -47,7 +47,7 @@ const StyledHeading = styled(Heading)`
 const OrganizationBlock = () => {
   const { results, fetchData, loading, error } = useFromCMS(cmsConfig.HOME_ORGANIZATION)
 
-  React.useEffect(() => {
+  useEffect(() => {
     ;(async () => {
       await fetchData()
     })()

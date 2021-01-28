@@ -1,9 +1,8 @@
 import { ThemeProvider } from '@amsterdam/asc-ui'
 import { useMatomo } from '@datapunt/matomo-tracker-react'
 import { mount, shallow } from 'enzyme'
-import React from 'react'
 import { mocked } from 'ts-jest/utils'
-import { cmsConfig } from '../../../shared/config/config'
+import cmsConfig from '../../../shared/config/cms.config'
 import EditorialPage from '../../components/EditorialPage/EditorialPage'
 import useDocumentTitle from '../../utils/useDocumentTitle'
 import useFromCMS from '../../utils/useFromCMS'
@@ -14,6 +13,7 @@ jest.mock('../../utils/useDocumentTitle')
 jest.mock('@datapunt/matomo-tracker-react')
 jest.mock('react-router-dom', () => ({
   useParams: () => ({ id: 'foo' }),
+  useHistory: () => ({ createHref: () => '' }),
 }))
 
 const mockedUseFromCMS = mocked(useFromCMS, true)

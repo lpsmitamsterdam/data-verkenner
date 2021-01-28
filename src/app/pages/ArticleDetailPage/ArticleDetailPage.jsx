@@ -20,7 +20,7 @@ import {
   Typography,
 } from '@amsterdam/asc-ui'
 import { useMatomo } from '@datapunt/matomo-tracker-react'
-import React, { useEffect, useMemo } from 'react'
+import { Fragment, useEffect, useMemo } from 'react'
 import { useParams } from 'react-router-dom'
 import styled, { css } from 'styled-components'
 import environment from '../../../environment'
@@ -28,13 +28,13 @@ import normalizeDownloadsObject from '../../../normalizations/cms/normalizeDownl
 import useNormalizedCMSResults, {
   EDITORIAL_FIELD_TYPE_VALUES,
 } from '../../../normalizations/cms/useNormalizedCMSResults'
-import { cmsConfig } from '../../../shared/config/config'
-import { toArticleDetail } from '../../../store/redux-first-router/actions'
+import cmsConfig from '../../../shared/config/cms.config'
 import ContentContainer from '../../components/ContentContainer/ContentContainer'
 import EditorialPage from '../../components/EditorialPage/EditorialPage'
 import EditorialResults from '../../components/EditorialResults'
 import LoadingSpinner from '../../components/LoadingSpinner/LoadingSpinner'
 import ShareBar from '../../components/ShareBar/ShareBar'
+import { toArticleDetail } from '../../links'
 import getImageFromCms from '../../utils/getImageFromCms'
 import useDownload from '../../utils/useDownload'
 import useFromCMS from '../../utils/useFromCMS'
@@ -165,7 +165,7 @@ const ArticleDetailPage = () => {
   const { trackEvent } = useMatomo()
 
   const documentTitle = title && `Artikel: ${title}`
-  const linkAction = useMemo(() => slug && toArticleDetail(id, slug), [slug, id])
+  const link = useMemo(() => (slug ? toArticleDetail(id, slug) : null), [slug, id])
 
   const normalizedDownloads = useMemo(() => normalizeDownloadsObject(downloads), [downloads])
 
@@ -173,7 +173,12 @@ const ArticleDetailPage = () => {
 
   return (
     <EditorialPage
-      {...{ documentTitle, loading, linkAction, title, lang, error }}
+      documentTitle={documentTitle}
+      loading={loading}
+      link={link}
+      title={title}
+      lang={lang}
+      error={error}
       image={coverImage}
       description={intro}
     >
@@ -213,7 +218,7 @@ const ArticleDetailPage = () => {
                                 field_accordion_intro: accordionIntro,
                                 field_accordion_label: accordionLabel,
                               }) => (
-                                <React.Fragment key={`${accordionTitle}_${accordionLabel}`}>
+                                <Fragment key={`${accordionTitle}_${accordionLabel}`}>
                                   {accordionTitle && (
                                     <StyledAccordionHeading forwardedAs="h3">
                                       {accordionTitle}
@@ -227,7 +232,7 @@ const ArticleDetailPage = () => {
                                       <CustomHTMLBlock body={accordionContent.processed} />
                                     </StyledAccordion>
                                   )}
-                                </React.Fragment>
+                                </Fragment>
                               ),
                             )}
                           </AccordionWrapper>

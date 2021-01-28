@@ -1,7 +1,7 @@
 import { breakpoint, Column, Heading, Row, themeColor, themeSpacing } from '@amsterdam/asc-ui'
-import React from 'react'
+import { useEffect } from 'react'
 import styled, { css } from 'styled-components'
-import { cmsConfig } from '../../../shared/config/config'
+import cmsConfig from '../../../shared/config/cms.config'
 import useFromCMS from '../../utils/useFromCMS'
 import ErrorMessage, { ErrorBackgroundCSS } from '../ErrorMessage/ErrorMessage'
 import AboutCard from './AboutCard'
@@ -83,7 +83,7 @@ const AboutBlock = () => {
     error: errorAboutData,
   } = useFromCMS(cmsConfig.HOME_ABOUT_DATA)
 
-  React.useEffect(() => {
+  useEffect(() => {
     ;(async () => {
       await fetchDataAbout()
       await fetchDataAboutData()

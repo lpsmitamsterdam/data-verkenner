@@ -9,8 +9,8 @@ import {
 } from '@amsterdam/asc-ui'
 import { MatomoProvider } from '@datapunt/matomo-tracker-react'
 import classNames from 'classnames'
-import React, { FunctionComponent } from 'react'
-import { connect } from 'react-redux'
+import { FunctionComponent } from 'react'
+import { useSelector } from 'react-redux'
 import styled from 'styled-components'
 import {
   cacheExchange,
@@ -20,8 +20,6 @@ import {
   Provider as GraphQLProvider,
 } from 'urql'
 import environment from '../environment'
-import { RootState } from '../reducers/root'
-import { IDS } from '../shared/config/config'
 import { hasGlobalError } from '../shared/ducks/error/error-message'
 import {
   hasOverflowScroll,
@@ -33,9 +31,10 @@ import {
 } from '../shared/ducks/ui/ui'
 import getState from '../shared/services/redux/get-state'
 import { getPage, isHomepage } from '../store/redux-first-router/selectors'
-import AppBody from './AppBody'
-import Footer from './components/Footer/Footer'
+import AppBody, { APP_CONTAINER_ID } from './AppBody'
+import Footer, { FOOTER_ID } from './components/Footer/Footer'
 import Header from './components/Header'
+import { SEARCH_BAR_INPUT_ID } from './components/SearchBar/SearchBar'
 import matomoInstance from './matomo'
 import { isContentPage, isEditorialDetailPage, isSearchPage } from './pages'
 import { routing } from './routes'
@@ -78,19 +77,12 @@ const graphQLClient = createClient({
 
 interface AppWrapperProps {
   hasMaxWidth: boolean
-  isFullHeight: boolean
   currentPage: string
 }
 
-const AppWrapper: FunctionComponent<AppWrapperProps> = ({
-  children,
-  hasMaxWidth,
-  isFullHeight,
-  currentPage,
-}) => {
+const AppWrapper: FunctionComponent<AppWrapperProps> = ({ children, hasMaxWidth, currentPage }) => {
   const rootClasses = classNames({
     'c-dashboard--max-width': hasMaxWidth,
-    'c-dashboard--full-height': isFullHeight,
   })
 
   // Todo: don't use page types, this will be used
@@ -108,31 +100,17 @@ const AppWrapper: FunctionComponent<AppWrapperProps> = ({
   )
 }
 
-interface AppProps {
-  isFullHeight: boolean
-  currentPage: string
-  visibilityError: boolean
-  embedMode: boolean
-  homePage: boolean
-  printMode: boolean
-  printOrEmbedMode: boolean
-  printModeLandscape: boolean
-  embedPreviewMode: boolean
-  overflowScroll: boolean
-}
+const App: FunctionComponent = () => {
+  const currentPage = useSelector(getPage)
+  const embedMode = useSelector(isEmbedded)
+  const homePage = useSelector(isHomepage)
+  const printMode = useSelector(isPrintMode)
+  const printModeLandscape = useSelector(isPrintModeLandscape)
+  const embedPreviewMode = useSelector(isEmbedPreview)
+  const overflowScroll = useSelector(hasOverflowScroll)
+  const printOrEmbedMode = useSelector(isPrintOrEmbedMode)
+  const visibilityError = useSelector(hasGlobalError)
 
-const App: FunctionComponent<AppProps> = ({
-  isFullHeight,
-  visibilityError,
-  homePage,
-  currentPage,
-  embedMode,
-  printMode,
-  embedPreviewMode,
-  overflowScroll,
-  printModeLandscape,
-  printOrEmbedMode,
-}) => {
   // Todo: match with react-router paths
   const hasMaxWidth =
     homePage ||
@@ -184,17 +162,13 @@ const App: FunctionComponent<AppProps> = ({
       <GlobalStyle />
       <MatomoProvider value={matomoInstance}>
         <GraphQLProvider value={graphQLClient}>
-          <AppWrapper
-            currentPage={currentPage}
-            isFullHeight={isFullHeight}
-            hasMaxWidth={hasMaxWidth}
-          >
+          <AppWrapper currentPage={currentPage} hasMaxWidth={hasMaxWidth}>
             {/* @ts-ignore */}
             <SkipNavigationLink
               variant="primary"
               title="Direct naar: inhoud"
               forwardedAs="a"
-              href={`#${IDS.main}`}
+              href={`#${APP_CONTAINER_ID}`}
             >
               Direct naar: inhoud
             </SkipNavigationLink>
@@ -202,7 +176,7 @@ const App: FunctionComponent<AppProps> = ({
               variant="primary"
               title="Direct naar: zoeken"
               onClick={() => {
-                document.getElementById(IDS.searchbar)?.focus()
+                document.getElementById(SEARCH_BAR_INPUT_ID)?.focus()
               }}
             >
               Direct naar: zoeken
@@ -212,13 +186,17 @@ const App: FunctionComponent<AppProps> = ({
               variant="primary"
               title="Direct naar: footer"
               forwardedAs="a"
-              href={`#${IDS.footer}`}
+              href={`#${FOOTER_ID}`}
             >
               Direct naar: footer
             </SkipNavigationLink>
             {!embedMode && (
               <Header
-                {...{ homePage, hasMaxWidth, printMode, embedPreviewMode, printOrEmbedMode }}
+                homePage={homePage}
+                hasMaxWidth={hasMaxWidth}
+                printMode={printMode}
+                embedPreviewMode={embedPreviewMode}
+                printOrEmbedMode={printOrEmbedMode}
               />
             )}
             <AppBody
@@ -236,23 +214,4 @@ const App: FunctionComponent<AppProps> = ({
   )
 }
 
-App.defaultProps = {
-  isFullHeight: false,
-  visibilityError: false,
-}
-
-const mapStateToProps = (state: RootState) => ({
-  currentPage: getPage(state),
-  embedMode: isEmbedded(state),
-  homePage: isHomepage(state),
-  printMode: isPrintMode(state),
-  printModeLandscape: isPrintModeLandscape(state),
-  embedPreviewMode: isEmbedPreview(state),
-  overflowScroll: hasOverflowScroll(state),
-  printOrEmbedMode: isPrintOrEmbedMode(state),
-  visibilityError: hasGlobalError(state),
-})
-
-const AppContainer = connect(mapStateToProps, null)(App)
-
-export default AppContainer
+export default App

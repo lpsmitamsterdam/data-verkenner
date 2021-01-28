@@ -1,11 +1,11 @@
 /* eslint-disable camelcase */
 import { Heading, Link, List, ListItem, themeColor, themeSpacing } from '@amsterdam/asc-ui'
-import React, { FunctionComponent, useMemo } from 'react'
+import { FunctionComponent, useMemo } from 'react'
 import RouterLink from 'redux-first-router-link'
 import styled from 'styled-components'
 import getAddresses from '../../../normalizations/construction-files/getAddresses'
 import { toDataDetail } from '../../../store/redux-first-router/actions'
-import { Bouwdossier } from '../../../api/iiif-metadata/bouwdossier'
+import { Single as Bouwdossier } from '../../../api/iiif-metadata/bouwdossier'
 import DefinitionList, { DefinitionListItem } from '../DefinitionList'
 import Gallery from '../Gallery/Gallery'
 

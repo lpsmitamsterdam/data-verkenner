@@ -1,14 +1,16 @@
 import { useMatomo } from '@datapunt/matomo-tracker-react'
 import escapeStringRegexp from 'escape-string-regexp'
 import { LocationDescriptorObject } from 'history'
-import React, { useMemo } from 'react'
+import { FunctionComponent, useMemo } from 'react'
 import { useSelector } from 'react-redux'
-import { generatePath, Link } from 'react-router-dom'
+import { generatePath, Link as RouterLink } from 'react-router-dom'
+import { Link, themeSpacing } from '@amsterdam/asc-ui'
+import styled from 'styled-components'
 import SearchType from '../../../app/pages/SearchPage/constants'
 import { routing } from '../../../app/routes'
 import toSlug from '../../../app/utils/toSlug'
 import { CmsType } from '../../../shared/config/cms.config'
-import { getViewMode, VIEW_MODE } from '../../../shared/ducks/ui/ui'
+import { getViewMode, ViewMode } from '../../../shared/ducks/ui/ui'
 import PARAMETERS from '../../../store/parameters'
 import { decodeLayers } from '../../../store/queryParameters'
 import { extractIdEndpoint, getDetailPageData } from '../../../store/redux-first-router/actions'
@@ -22,7 +24,12 @@ export interface AutoSuggestItemProps {
   label: string
 }
 
-const AutoSuggestItem: React.FC<AutoSuggestItemProps> = ({
+const StyledLink = styled(Link)`
+  font-weight: inherit;
+  margin-left: ${themeSpacing(1)};
+`
+
+const AutoSuggestItem: FunctionComponent<AutoSuggestItemProps> = ({
   content,
   suggestion,
   highlightValue,
@@ -98,7 +105,7 @@ const AutoSuggestItem: React.FC<AutoSuggestItemProps> = ({
       return {
         pathname: routing.data.path,
         search: new URLSearchParams({
-          [PARAMETERS.VIEW]: VIEW_MODE.MAP,
+          [PARAMETERS.VIEW]: ViewMode.Map,
           [PARAMETERS.QUERY]: `${inputValue}`,
           [PARAMETERS.LEGEND]: 'true',
           [PARAMETERS.LAYERS]: searchParams.get(PARAMETERS.LAYERS) || '',
@@ -127,7 +134,9 @@ const AutoSuggestItem: React.FC<AutoSuggestItemProps> = ({
 
   return (
     <li>
-      <Link
+      <StyledLink
+        forwardedAs={RouterLink}
+        inList
         className="auto-suggest__dropdown-item"
         onClick={() => {
           trackEvent({
@@ -138,16 +147,13 @@ const AutoSuggestItem: React.FC<AutoSuggestItemProps> = ({
         }}
         to={to}
       >
-        <div>
-          <span className="icon" />
-          <div
-            // eslint-disable-next-line react/no-danger
-            dangerouslySetInnerHTML={{
-              __html: htmlContent,
-            }}
-          />
-        </div>
-      </Link>
+        <div
+          // eslint-disable-next-line react/no-danger
+          dangerouslySetInnerHTML={{
+            __html: htmlContent,
+          }}
+        />
+      </StyledLink>
     </li>
   )
 }

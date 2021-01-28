@@ -1,9 +1,8 @@
 import { ThemeProvider } from '@amsterdam/asc-ui'
 import { useMatomo } from '@datapunt/matomo-tracker-react'
 import { mount, shallow } from 'enzyme'
-import React from 'react'
 import { mocked } from 'ts-jest/utils'
-import { cmsConfig } from '../../../shared/config/config'
+import cmsConfig from '../../../shared/config/cms.config'
 import linkAttributesFromAction from '../../../shared/services/link-attributes-from-action/linkAttributesFromAction'
 import DocumentCover from '../../components/DocumentCover/DocumentCover'
 import EditorialPage from '../../components/EditorialPage/EditorialPage'
@@ -20,6 +19,7 @@ jest.mock('@datapunt/matomo-tracker-react')
 
 jest.mock('react-router-dom', () => ({
   useParams: () => ({ id: 'foo' }),
+  useHistory: () => ({ createHref: () => '' }),
 }))
 
 const mockedLinkAttributesFromAction = mocked(linkAttributesFromAction, true)
@@ -103,13 +103,6 @@ describe('PublicationDetailPage', () => {
 
     expect(mockedUseFromCMS).toHaveBeenCalledWith(cmsConfig.PUBLICATION as CMSConfig, 'foo')
     expect(fetchDataMock).toHaveBeenCalled()
-  })
-
-  it('should render the publication when there are results', () => {
-    mockedUseFromCMS.mockImplementation(() => mockData as any)
-    const component = shallow(<PublicationDetailPage />)
-
-    expect(component).toMatchSnapshot()
   })
 
   it('should call the useDownload hook when user tries to download publication', () => {

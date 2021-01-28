@@ -8,9 +8,8 @@ import {
   themeColor,
   themeSpacing,
 } from '@amsterdam/asc-ui'
-import React from 'react'
-import RouterLink from 'redux-first-router-link'
 import styled from 'styled-components'
+import pickLinkComponent from '../../utils/pickLinkComponent'
 
 const StyledHeading = styled(Heading)`
   border-bottom: 2px solid transparent;
@@ -79,7 +78,7 @@ const DatasetCard = ({
 }) => (
   <StyledLink
     {...{
-      forwardedAs: RouterLink,
+      forwardedAs: pickLinkComponent(to),
       key: id,
       to,
       title: shortTitle,

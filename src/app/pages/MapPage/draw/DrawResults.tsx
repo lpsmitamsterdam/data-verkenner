@@ -16,10 +16,18 @@ import {
 } from '@amsterdam/asc-ui'
 import { useMatomo } from '@datapunt/matomo-tracker-react'
 import L, { LatLng, LatLngExpression, LatLngTuple } from 'leaflet'
-import { useHistory } from 'react-router-dom'
-import React, { useCallback, useContext, useEffect, useMemo, useState } from 'react'
+import { useHistory, Link as RouterLink } from 'react-router-dom'
+import {
+  Fragment,
+  FunctionComponent,
+  useCallback,
+  useContext,
+  useEffect,
+  useMemo,
+  useState,
+} from 'react'
 import { useSelector } from 'react-redux'
-import RouterLink from 'redux-first-router-link'
+import ReduxRouterLink from 'redux-first-router-link'
 import styled, { createGlobalStyle } from 'styled-components'
 import { getUserScopes } from '../../../../shared/ducks/user/user'
 import ErrorMessage from '../../../components/ErrorMessage/ErrorMessage'
@@ -34,7 +42,7 @@ import { routing } from '../../../routes'
 import useBuildQueryString from '../../../utils/useBuildQueryString'
 import { polygonsParam, polylinesParam } from '../query-params'
 
-const ResultLink = styled(RouterLink)`
+const ResultLink = styled(ReduxRouterLink)`
   width: 100%;
   margin-bottom: ${themeSpacing(2)};
 `
@@ -109,7 +117,7 @@ type Props = {
   currentOverlay: Overlay
 }
 
-const DrawResults: React.FC<Props> = ({ currentOverlay }) => {
+const DrawResults: FunctionComponent<Props> = ({ currentOverlay }) => {
   const [delayedLoadingIds, setDelayedLoadingIds] = useState<string[]>([])
   const [highlightMarker, setHighlightMarker] = useState<LatLngTuple | null>(null)
   const {
@@ -134,16 +142,16 @@ const DrawResults: React.FC<Props> = ({ currentOverlay }) => {
 
   // Effect to delay the loading states, this is to prevent the results block to collapse and re-open in a short time
   useEffect(() => {
-    let timeOutId: number
+    let timeoutId: number
     if (loadingIds.length) {
-      timeOutId = setTimeout(() => {
+      timeoutId = window.setTimeout(() => {
         setDelayedLoadingIds(loadingIds)
       }, 400)
     } else {
       setDelayedLoadingIds([])
     }
     return () => {
-      clearTimeout(timeOutId)
+      window.clearTimeout(timeoutId)
     }
   }, [loadingIds, setDelayedLoadingIds])
 
@@ -241,14 +249,14 @@ const DrawResults: React.FC<Props> = ({ currentOverlay }) => {
 
         {showDesktopVariant ? (
           <>
-            {/* @ts-ignore */}
             <Button
               as={TableRouterLink}
               variant="primaryInverted"
               title="Resultaten in tabel weergeven"
               type="button"
               iconLeft={<Table />}
-              {...({ to: config[type].toTableAction } as any)}
+              /* @ts-ignore */
+              to={config[type].toTable}
             >
               Tabel weergeven
             </Button>
@@ -263,7 +271,8 @@ const DrawResults: React.FC<Props> = ({ currentOverlay }) => {
               size={40}
               icon={<Table />}
               iconSize={25}
-              {...({ to: config[type].toTableAction } as any)}
+              /* @ts-ignore */
+              to={config[type].toTable}
             />
           </>
         )}
@@ -281,7 +290,7 @@ const DrawResults: React.FC<Props> = ({ currentOverlay }) => {
       ) : (
         <AccordionWrapper>
           {dataSelectionWithMarkers.map(({ id, result, size, page, totalCount, mapData }, i) => (
-            <React.Fragment key={id}>
+            <Fragment key={id}>
               <StyledAccordion
                 {...(dataSelectionWithMarkers.length === 1
                   ? {
@@ -356,7 +365,7 @@ const DrawResults: React.FC<Props> = ({ currentOverlay }) => {
                   <StyledAlert level="info">Er zijn geen resultaten</StyledAlert>
                 )}
               </StyledAccordion>
-            </React.Fragment>
+            </Fragment>
           ))}
         </AccordionWrapper>
       )}

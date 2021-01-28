@@ -1,12 +1,12 @@
 import { LatLngLiteral } from 'leaflet'
 import { useSelector } from 'react-redux'
-import { Link as RouterLink, useLocation } from 'react-router-dom'
-import LegacyLink from 'redux-first-router-link'
+import { useLocation } from 'react-router-dom'
 import { getPanoramaThumbnail } from '../../api/panorama/thumbnail'
 import { PANORAMA_CONFIG } from '../../panorama/services/panorama-api/panorama-api'
 import { toPanoramaAndPreserveQuery } from '../../store/redux-first-router/actions'
 import { getDetailLocation } from '../../store/redux-first-router/selectors'
 import { locationParam, panoParam } from '../pages/MapPage/query-params'
+import pickLinkComponent from './pickLinkComponent'
 import useBuildQueryString from './useBuildQueryString'
 import usePromise, { PromiseStatus } from './usePromise'
 
@@ -58,18 +58,14 @@ const useGetLegacyPanoramaPreview = (
     browserLocation.pathname === '/kaart' || browserLocation.pathname === '/kaart/'
       ? `${browserLocation.pathname}?${panoramaLink}`
       : toPanoramaAndPreserveQuery(
-          panoramaResult?.value?.id,
+          // eslint-disable-next-line camelcase
+          panoramaResult?.value?.pano_id,
           panoramaResult?.value?.heading,
           legacyReference,
         )
 
-  const linkComponent =
-    browserLocation.pathname === '/kaart' || browserLocation.pathname === '/kaart/'
-      ? RouterLink
-      : LegacyLink
-
   return {
-    linkComponent,
+    linkComponent: pickLinkComponent(link),
     link,
     panoramaUrl,
   }

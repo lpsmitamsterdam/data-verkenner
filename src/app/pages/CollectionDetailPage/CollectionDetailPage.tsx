@@ -1,9 +1,9 @@
 /* eslint-disable camelcase */
 import { Link, Row, themeSpacing } from '@amsterdam/asc-ui'
-import React, { useEffect } from 'react'
+import { FunctionComponent, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 import styled from 'styled-components'
-import { cmsConfig } from '../../../shared/config/config'
+import cmsConfig from '../../../shared/config/cms.config'
 import CardListBlock, { CMSCollectionList } from '../../components/CardList/CardListBlock'
 import ContentContainer from '../../components/ContentContainer/ContentContainer'
 import ErrorMessage from '../../components/ErrorMessage/ErrorMessage'
@@ -35,7 +35,7 @@ interface CollectionDetailPageParams {
   id: string
 }
 
-const CollectionDetailPage: React.FC = () => {
+const CollectionDetailPage: FunctionComponent = () => {
   const { id } = useParams<CollectionDetailPageParams>()
   const { setDocumentTitle } = useDocumentTitle()
   const { results, fetchData, loading, error } = useFromCMS<CollectionResult>(

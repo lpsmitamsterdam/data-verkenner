@@ -1,7 +1,7 @@
 import { breakpoint, CardContainer, Column, Row, styles, themeColor } from '@amsterdam/asc-ui'
-import React from 'react'
-import RouterLink from 'redux-first-router-link'
+import { useEffect } from 'react'
 import styled from 'styled-components'
+import pickLinkComponent from '../../utils/pickLinkComponent'
 import useFromCMS from '../../utils/useFromCMS'
 import ErrorMessage, { ErrorBackgroundCSS } from '../ErrorMessage/ErrorMessage'
 import BlockHeading from './BlockHeading'
@@ -34,7 +34,7 @@ const CardRow = styled.div`
 const EditorialBlock = ({ title, list, showMoreProps = {}, showContentType = false }) => {
   const { results, fetchData, loading, error } = useFromCMS(list)
 
-  React.useEffect(() => {
+  useEffect(() => {
     ;(async () => {
       await fetchData()
     })()
@@ -91,7 +91,10 @@ const EditorialBlock = ({ title, list, showMoreProps = {}, showContentType = fal
         <Row hasMargin={false}>
           <Column wrap span={{ small: 1, medium: 2, big: 3, large: 4, xLarge: 4 }}>
             <OverviewLink
-              linkProps={{ to: showMoreProps.to(), forwardedAs: RouterLink }}
+              linkProps={{
+                to: showMoreProps.to(),
+                forwardedAs: pickLinkComponent(showMoreProps.to()),
+              }}
               label={showMoreProps.label}
               title={showMoreProps.label}
             />

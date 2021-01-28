@@ -1,0 +1,70 @@
+{
+  "panelType": "Adres",
+  "panelHeading": "Herengracht 502",
+  "definitionLists": [
+    {
+      "subheading": "",
+      "items": {
+        "Naam openbare ruimte": "Eerste Anjeliersdwarsstraat",
+        "Huisnummer": "1",
+        "Huisletter": "",
+        "Huisnummertoevoeging": "H",
+        "Postcode": "1015NR",
+        "Woonplaats": "Amsterdam",
+        "Type adres": "Hoofdadres"
+      }
+    },
+    {
+      "subheading": "Ligt in",
+      "items": {
+        "Stadsdeel": "Centrum (A)",
+        "Wijk": "Jordaan (06)",
+        "Buurt": "Anjeliersbuurt Zuid (A06l)",
+        "Gebiedsgerichtwerken-gebied": "Centrum-West (DX01)",
+        "Bouwblok": "YJ29"
+      }
+    },
+    {
+      "subheading": "Verblijfsobject",
+      "items": {
+        "Gebruiksdoel": "woonfunctie, kantoorfunctie",
+        "Gebruiksdoel woonfunctie": "",
+        "Gebruiksdoel gezondheidszorgfunctie": "",
+        "Aantal eenheden complex": "",
+        "Status": "Verblijfsobject in gebruik",
+        "Indicatie geconstateerd": "Nee",
+        "Aanduiding in onderzoek": "Nee",
+        "Oppervlakte": "1.526 m²",
+        "Aantal kamers": "6",
+        "Verdieping toegang": "0",
+        "Toegang": "Begane grond",
+        "Aantal bouwlagen": "6",
+        "Hoogste bouwlaag": "4",
+        "Laagste bouwlaag": "-1",
+        "Reden opvoer": "Correctie opvoer",
+        "Eigendomsverhouding": "",
+        "Coördinaten": "121369.00, 486445.00 (52.3648610, 4.8934443)"
+      }
+    }
+  ],
+  "linkLists": [
+    {
+      "subheading": "Adressen",
+      "items": ["Eerste Anjeliersdwarsstraat 1-H"]
+    },
+    {
+      "subheading": "Panden",
+      "items": ["0363100012061164"]
+    },
+    {
+      "subheading": "Vestigingen",
+      "items": []
+    },
+    {
+      "subheading": "Kadastrale objecten",
+      "items": ["ACD00 A 00003 G 0000"]
+    },
+    { "subheading": "Monumenten", "items": ["Ambtswoning van de burgemeester"] },
+    { "subheading": "Bouw- en omgevingsdossiers", "items": ["SA3 2003 verbouwing"] }
+  ]
+}

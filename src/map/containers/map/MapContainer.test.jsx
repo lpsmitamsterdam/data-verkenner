@@ -1,4 +1,3 @@
-import React from 'react'
 import configureMockStore from 'redux-mock-store'
 import { shallow } from 'enzyme'
 import MapContainer, { overrideLeafletGetBounds } from './MapContainer'
@@ -61,29 +60,6 @@ describe('MapContainer', () => {
     isEmbedded.mockReturnValue(false)
     isEmbedPreview.mockReturnValue(false)
     previewDataAvailable.mockReturnValue(false)
-  })
-
-  it('should render', () => {
-    const store = configureMockStore()({ ...initialState })
-    const wrapper = shallow(
-      <MapContainer isFullscreen={false} toggleFullscreen={() => {}} store={store} />,
-    )
-      .dive()
-      .dive()
-
-    expect(wrapper).toMatchSnapshot()
-  })
-
-  it('should render with drawingmode: draw', () => {
-    getDrawingMode.mockImplementation(() => 'draw')
-    const store = configureMockStore()({ ...initialState })
-    const wrapper = shallow(
-      <MapContainer isFullscreen={false} toggleFullscreen={() => {}} store={store} />,
-    )
-      .dive()
-      .dive()
-
-    expect(wrapper).toMatchSnapshot()
   })
 
   it('should set the leaflet instance state', () => {

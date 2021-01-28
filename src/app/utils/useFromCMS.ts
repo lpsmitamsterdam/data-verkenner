@@ -1,5 +1,6 @@
 /* eslint-disable camelcase */
-import React from 'react'
+import { LocationDescriptorObject } from 'history'
+import { useState } from 'react'
 import { To } from 'redux-first-router-link'
 import useNormalizedCMSResults from '../../normalizations/cms/useNormalizedCMSResults'
 import { CmsType, SpecialType } from '../../shared/config/cms.config'
@@ -20,7 +21,7 @@ export type CMSResultItem = {
   shortTitle?: string
   teaser: string
   linkProps?: {
-    to?: To
+    to?: To | LocationDescriptorObject
     forwardedAs?: never
     title: string
     href?: string
@@ -42,9 +43,9 @@ function useFromCMS<T = CMSResultItem[]>(
   id?: string,
   normalizeFromJSONApi = true,
 ): CMSResults<T> {
-  const [results, setResults] = React.useState<T>()
-  const [loading, setLoading] = React.useState(true)
-  const [error, setError] = React.useState(false)
+  const [results, setResults] = useState<T>()
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState(false)
 
   const fetchData = async (endpoint?: string) => {
     setLoading(true)

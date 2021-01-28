@@ -1,10 +1,12 @@
 import PropTypes from 'prop-types'
-import React from 'react'
+import { Close } from '@amsterdam/asc-assets'
+import { Button } from '@amsterdam/asc-ui'
 import LoadingSpinner from '../../../app/components/LoadingSpinner/LoadingSpinner'
-import { VIEW_MODE } from '../../../shared/ducks/ui/ui'
+import { ViewMode } from '../../../shared/ducks/ui/ui'
 import MapDetailResult from '../../components/detail-result/MapDetailResult'
 import MapSearchResults from '../../components/search-results/MapSearchResults'
 import PAGES from '../../../app/pages'
+import MaximizeIcon from '../../../shared/assets/icons/maximize.svg'
 
 const previewPanelSearchResultLimit = 3
 
@@ -27,36 +29,30 @@ const MapPreviewPanel = ({
   const isDetailPage = currentPage === PAGES.DATA_DETAIL
 
   const openDetailEndpoint = () => openDetail(detail)
-  const onMaximize = () => onSearchMaximize(VIEW_MODE.SPLIT)
+  const onMaximize = () => onSearchMaximize(ViewMode.Split)
 
   return (
     <div className="map-preview-panel-wrapper">
       <section className="map-preview-panel map-preview-panel--visible">
         <div className="map-preview-panel__heading">
-          <button
+          <Button
             type="button"
-            className="map-preview-panel__button map-preview-panel__button--expand"
+            variant="blank"
+            aria-label="Volledige weergave tonen"
+            size={28}
+            icon={<MaximizeIcon />}
+            iconSize={24}
             onClick={isDetailPage ? openDetailEndpoint : onMaximize}
-            title="Volledige weergave tonen"
-          >
-            <span
-              className="
-                map-preview-panel__button-icon
-                map-preview-panel__button-icon--maximize"
-            />
-          </button>
-          <button
+          />
+          <Button
             type="button"
-            className="map-preview-panel__button"
+            variant="blank"
+            aria-label="Sluiten"
+            size={28}
+            icon={<Close />}
+            iconSize={15}
             onClick={closePanel}
-            title="Sluiten"
-          >
-            <span
-              className="
-                map-preview-panel__button-icon
-                map-preview-panel__button-icon--close"
-            />
-          </button>
+          />
         </div>
         <div
           className={`
