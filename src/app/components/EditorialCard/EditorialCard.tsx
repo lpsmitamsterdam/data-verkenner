@@ -13,9 +13,10 @@ import {
 } from '@amsterdam/asc-ui'
 import { FunctionComponent } from 'react'
 import styled, { css } from 'styled-components'
-import { CmsType, SpecialType } from '../../../shared/config/cms.config'
+import { SpecialType } from '../../../shared/config/cms.config'
 import getContentTypeLabel from '../../utils/getContentTypeLabel'
 import getImageFromCms, { Resize } from '../../utils/getImageFromCms'
+import { CMSResultItem } from '../../utils/useFromCMS'
 
 const notFoundImage = '/assets/images/not_found_thumbnail.jpg'
 
@@ -40,7 +41,7 @@ const getImageSize = (image: string, resize: Resize, imageSize: number) => {
 interface CardMediaProps {
   highlighted: boolean
   vertical?: boolean
-  image?: string
+  image?: string | null
   imageDimensions: [number, number]
 }
 
@@ -201,22 +202,23 @@ const MetaText = styled(Paragraph)`
   }
 `
 
-interface EditorialCardProps {
-  title: string
-  description?: string
-  type: CmsType
-  specialType?: SpecialType
+interface EditorialCardProps
+  extends Pick<Partial<CMSResultItem>, 'title' | 'specialType' | 'type' | 'teaser'> {
   date?: string
-  image?: string
+  image?: string | null
   imageDimensions?: [number, number]
   compact?: boolean
   showContentType?: boolean
   highlighted?: boolean
 }
 
+export const EDITORIAL_CARD_TEST_ID = 'editorialCard'
+export const EDITORIAL_CARD_CONTENT_TYPE_TEST_ID = 'contentType'
+export const EDITORIAL_CARD_META_TEXT_TEST_ID = 'metaText'
+
 const EditorialCard: FunctionComponent<EditorialCardProps> = ({
   title,
-  description,
+  teaser,
   type,
   specialType,
   date,
@@ -227,17 +229,22 @@ const EditorialCard: FunctionComponent<EditorialCardProps> = ({
   highlighted = false,
   ...otherProps
 }) => {
+  if (!type) {
+    return null
+  }
   const contentTypeLabel = getContentTypeLabel(type, specialType)
 
   return (
     // Don't use the title attribute here, as we already use a heading that can be read by screen readers
-    <StyledLink {...{ variant: 'blank', ...otherProps }}>
+    <StyledLink {...{ variant: 'blank', ...otherProps }} data-testid={EDITORIAL_CARD_TEST_ID}>
       <StyledCard horizontal highlighted={highlighted}>
         <CustomCardMedia {...{ highlighted, image, imageDimensions }} />
         <StyledCardContent highlighted={highlighted}>
           {showContentType && contentTypeLabel && (
             <div>
-              <ContentType data-testid="contentType">{contentTypeLabel}</ContentType>
+              <ContentType data-testid={EDITORIAL_CARD_CONTENT_TYPE_TEST_ID}>
+                {contentTypeLabel}
+              </ContentType>
             </div>
           )}
 
@@ -249,14 +256,14 @@ const EditorialCard: FunctionComponent<EditorialCardProps> = ({
             </StyledHeading>
           </div>
 
-          {description && (
+          {teaser && (
             <div>
-              <IntroText dangerouslySetInnerHTML={{ __html: description }} />
+              <IntroText dangerouslySetInnerHTML={{ __html: teaser }} />
             </div>
           )}
 
           {date && (
-            <MetaText as="time" data-testid="metaText" dateTime={date}>
+            <MetaText as="time" data-testid={EDITORIAL_CARD_META_TEXT_TEST_ID} dateTime={date}>
               {specialType === SpecialType.Dashboard || specialType === SpecialType.Story
                 ? `Laatst gewijzigd: ${date}`
                 : date}
