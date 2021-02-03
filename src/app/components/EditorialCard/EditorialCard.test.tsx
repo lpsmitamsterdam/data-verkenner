@@ -27,6 +27,12 @@ describe('EditorialCard', () => {
     expect(image?.getAttribute('src')).toBe('image.jpg')
   })
 
+  it('should not render when type is null', () => {
+    const { container } = render(<EditorialCard {...mockDataItem} type={null} />)
+
+    expect(container.firstChild).toBeNull()
+  })
+
   it('should display the correct title', () => {
     const { container } = render(<EditorialCard {...mockDataItem} />)
 
@@ -37,7 +43,7 @@ describe('EditorialCard', () => {
   it("should display a placeholder when there's no cover image", () => {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { image: unusedImage, ...mockDataItems } = mockDataItem
-    const { container } = render(<EditorialCard {...mockDataItems} />)
+    const { container } = render(<EditorialCard image={null} {...mockDataItems} />)
 
     const image = container.querySelector('img')
 

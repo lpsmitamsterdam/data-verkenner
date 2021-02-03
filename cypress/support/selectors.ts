@@ -16,7 +16,7 @@ export const ALERTS = {
 }
 
 export const ADDRESS_PAGE = {
-  buttonMaximizeMap: 'button.icon-button__right',
+  buttonMaximizeMap: '[aria-label="Kaart vergroten"]',
   buttonShowMore: '.map-search-results__button',
   dataSelection: '.c-data-selection',
   iconCluster: '.o-highlight-cluster',
@@ -444,18 +444,18 @@ export const PANORAMA = {
   homepage: '.c-homepage',
   markerPane: '.leaflet-marker-pane',
   statusBarCoordinates: '.c-panorama-status-bar__coordinates',
-  panorama: '.c-panorama',
+  panorama: '[data-testid="panoramaContainer"]',
   panoramaMenu: '.panorama-menu',
   panoramaToggle: '[data-testid="toggle"]',
 }
 
 export const PRINT = {
-  buttonClosePrint: '.c-print-header__close',
-  headerTitle: 'h1.c-print-header__title',
+  buttonClosePrint: '[data-testid="printHeaderClose"]',
+  headerTitle: '[data-testid="printHeaderTitle"]',
 }
 
 export const TABLES = {
-  activeFilterItem: '.c-data-selection-active-filters__listitem',
+  activeFilters: '[data-testid="activeFilters"]',
   filterCategories: '.c-data-selection-available-filters__category',
   filterItem: '.c-data-selection-available-filters__item',
   filterLabel: '.qa-option-label',
