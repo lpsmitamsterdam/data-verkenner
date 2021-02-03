@@ -139,9 +139,30 @@ export const panoParam: UrlParam<Pano | null> = {
 }
 
 export const panoTagParam: UrlParam<string> = {
-  name: 'panoTag',
+  name: 'tags',
   defaultValue: PANO_LABELS[0].id,
-  decode: (value) => value,
+  decode: (value) => {
+    // Attempt to find the entry with a matching id.
+    const matched = PANO_LABELS.find(({ id }) => id === value)
+
+    if (matched) {
+      return matched.id
+    }
+
+    // If no matching id was found, handle legacy values which are based on a collection of tags
+    // and find the matching label definition.
+    const legacyTags = value.split(',')
+    const legacyMatched = PANO_LABELS.find(({ tags }) =>
+      legacyTags.every((tag) => tags.includes(tag)),
+    )
+
+    if (legacyMatched) {
+      return legacyMatched.id
+    }
+
+    // If value is not found or not correct, fall back to default value.
+    return panoTagParam.defaultValue
+  },
   encode: (value) => value,
 }
 
