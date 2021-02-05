@@ -2568,6 +2568,10 @@ const servicesByEndpointType: { [type: string]: ServiceDefinition } = {
               description: result.totaalAantalWoningen,
             },
             {
+              term: 'Totaal aantal woningen huidig',
+              description: result.aantalWoningenHuidig,
+            },
+            {
               term: 'Verschil Tussen huidig en na realisatie plan',
               description: result.verschilTotaalPlanHuidig,
             },
