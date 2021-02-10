@@ -89,13 +89,16 @@ function useFromCMS<T = CMSResultItem[]>(
         } else {
           result = normalizeCMSResults(result)
         }
+
         setResults(result)
       })
       .catch(() => {
         setError(true)
       })
+      .finally(() => {
+        setLoading(false)
+      })
 
-    setLoading(false)
     return results
   }
 
