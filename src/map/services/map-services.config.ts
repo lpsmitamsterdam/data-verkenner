@@ -2510,7 +2510,7 @@ const servicesByEndpointType: { [type: string]: ServiceDefinition } = {
               description: result.aantalWoningenHuidig,
             },
             {
-              term: 'Verschil Tussen huidig en na realisatie plan',
+              term: 'Verschil tussen huidig en na realisatie plan',
               description: result.verschilTotaalPlanHuidig,
             },
           ],
@@ -2572,7 +2572,7 @@ const servicesByEndpointType: { [type: string]: ServiceDefinition } = {
               description: result.aantalWoningenHuidig,
             },
             {
-              term: 'Verschil Tussen huidig en na realisatie plan',
+              term: 'Verschil tussen huidig en na realisatie plan',
               description: result.verschilTotaalPlanHuidig,
             },
           ],
