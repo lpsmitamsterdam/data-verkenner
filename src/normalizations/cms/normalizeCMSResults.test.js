@@ -40,6 +40,7 @@ describe('normalizeCMSResults', () => {
     })
 
     it('returns an object with dates from field_publication_date', () => {
+      // eslint-disable-next-line @typescript-eslint/naming-convention
       const field_publication_date = '2020-12-02T16:00:00+01:00'
       const { localeDate, localeDateFormatted } = getLocaleFormattedDate({
         field_publication_date,
@@ -50,6 +51,7 @@ describe('normalizeCMSResults', () => {
     })
 
     it('returns an object with dates from field_publication_year', () => {
+      // eslint-disable-next-line @typescript-eslint/naming-convention
       const field_publication_year = '2020'
       const { localeDate, localeDateFormatted } = getLocaleFormattedDate({
         field_publication_year,
@@ -60,7 +62,9 @@ describe('normalizeCMSResults', () => {
     })
 
     it('returns an object with dates from field_publication_year and field_publication_month', () => {
+      // eslint-disable-next-line @typescript-eslint/naming-convention
       const field_publication_year = '2020'
+      // eslint-disable-next-line @typescript-eslint/naming-convention
       const field_publication_month = 12
       const { localeDate, localeDateFormatted } = getLocaleFormattedDate({
         field_publication_year,
@@ -74,8 +78,11 @@ describe('normalizeCMSResults', () => {
     })
 
     it('returns an object with dates from field_publication_year, field_publication_month and field_publication_day', () => {
+      // eslint-disable-next-line @typescript-eslint/naming-convention
       const field_publication_year = 2020
+      // eslint-disable-next-line @typescript-eslint/naming-convention
       const field_publication_month = 10
+      // eslint-disable-next-line @typescript-eslint/naming-convention
       const field_publication_day = 31
       const { localeDate, localeDateFormatted } = getLocaleFormattedDate({
         field_publication_year,
@@ -94,8 +101,11 @@ describe('normalizeCMSResults', () => {
     })
 
     it('returns an object with dates from field_publication_year, field_publication_month and field_publication_day 1', () => {
+      // eslint-disable-next-line @typescript-eslint/naming-convention
       const field_publication_year = 2020
+      // eslint-disable-next-line @typescript-eslint/naming-convention
       const field_publication_month = 1
+      // eslint-disable-next-line @typescript-eslint/naming-convention
       const field_publication_day = 1
       const { localeDate, localeDateFormatted } = getLocaleFormattedDate({
         field_publication_year,
@@ -169,7 +179,7 @@ describe('normalizeCMSResults', () => {
     })
 
     it('sets the "to" prop for type special', () => {
-      // eslint-disable-next-line camelcase
+      // eslint-disable-next-line camelcase,@typescript-eslint/naming-convention
       const field_special_type = 'foo'
       expect(
         getLinkProps(
@@ -251,7 +261,7 @@ describe('normalizeCMSResults', () => {
     })
 
     it('sets the links prop', () => {
-      // eslint-disable-next-line camelcase
+      // eslint-disable-next-line camelcase,@typescript-eslint/naming-convention
       const field_links = [
         { uri: 'http://example.com?foo=bar&amp;baz=qux', title: 'Test', options: [] },
         { uri: 'internal:/test/', title: 'Test 2', options: [] },

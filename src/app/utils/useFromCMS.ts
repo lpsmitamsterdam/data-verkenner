@@ -41,7 +41,7 @@ export type CMSResultItem = {
 
 export type CMSResults<T> = {
   loading: boolean
-  fetchData: (endpoint?: string) => Promise<T | undefined>
+  fetchData: (endpoint?: string) => T | undefined
   error: boolean
   results?: T
 }
@@ -55,43 +55,45 @@ function useFromCMS<T = CMSResultItem[]>(
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(false)
 
-  const fetchData = async (endpoint?: string) => {
+  const fetchData = (endpoint?: string) => {
     setLoading(true)
     setError(false)
     setResults(undefined)
-    try {
-      if (!endpoint) {
-        // eslint-disable-next-line no-param-reassign
-        endpoint = id ? config.endpoint(id) : config.endpoint()
-      }
 
-      const { fields } = config
-      const data = await fetchWithToken(endpoint)
-
-      let result = data
-      if (normalizeFromJSONApi) {
-        result = cmsJsonApiNormalizer(data, fields)
-      }
-
-      // Todo: Need to refactor this when we really know what types and fields to expect from the CMS
-      // This if-statement is an "exeption" for the CollectionDetail pages.
-      if (result.field_blocks && result.field_items) {
-        result = {
-          ...result,
-          // @ts-ignore
-          field_blocks: result.field_blocks.map(({ field_content, ...otherFields }) => ({
-            ...otherFields,
-            field_content: normalizeCMSResults(field_content),
-          })),
-          field_items: normalizeCMSResults(result.field_items),
-        }
-      } else {
-        result = normalizeCMSResults(result)
-      }
-      setResults(result)
-    } catch (e) {
-      setError(true)
+    if (!endpoint) {
+      // eslint-disable-next-line no-param-reassign
+      endpoint = id ? config.endpoint(id) : config.endpoint()
     }
+
+    const { fields } = config
+
+    fetchWithToken(endpoint)
+      .then((data) => {
+        let result = data
+        if (normalizeFromJSONApi) {
+          result = cmsJsonApiNormalizer(data, fields)
+        }
+
+        // Todo: Need to refactor this when we really know what types and fields to expect from the CMS
+        // This if-statement is an "exeption" for the CollectionDetail pages.
+        if (result.field_blocks && result.field_items) {
+          result = {
+            ...result,
+            // @ts-ignore
+            field_blocks: result.field_blocks.map(({ field_content, ...otherFields }) => ({
+              ...otherFields,
+              field_content: normalizeCMSResults(field_content),
+            })),
+            field_items: normalizeCMSResults(result.field_items),
+          }
+        } else {
+          result = normalizeCMSResults(result)
+        }
+        setResults(result)
+      })
+      .catch(() => {
+        setError(true)
+      })
 
     setLoading(false)
     return results
