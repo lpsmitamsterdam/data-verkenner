@@ -104,11 +104,37 @@ export const baseLayerParam: UrlParam<BaseLayer> = {
   encode: (value) => value,
 }
 
-export const panoParam: UrlParam<Pano | null> = {
-  name: 'pano',
+export const panoPitchParam: UrlParam<number | null> = {
+  name: 'pitch',
   defaultValue: null,
-  decode: (value) => value && JSON.parse(value),
-  encode: (value) => value && JSON.stringify(value),
+  initialValue: 10,
+  decode: (value) => {
+    const float = parseFloat(value)
+    return !Number.isNaN(float) ? float : null
+  },
+  encode: (value) => (typeof value === 'number' ? value.toString() : null),
+}
+
+export const panoFovParam: UrlParam<number | null> = {
+  name: 'fov',
+  defaultValue: null,
+  initialValue: 30,
+  decode: (value) => {
+    const integer = parseInt(value, 10)
+    return !Number.isNaN(integer) ? integer : null
+  },
+  encode: (value) => (typeof value === 'number' ? value.toFixed(0).toString() : null),
+}
+
+export const panoHeadingParam: UrlParam<number | null> = {
+  name: 'heading',
+  defaultValue: null,
+  initialValue: 0,
+  decode: (value) => {
+    const float = parseFloat(value)
+    return !Number.isNaN(float) ? float : null
+  },
+  encode: (value) => (typeof value === 'number' ? value.toString() : null),
 }
 
 export const panoTagParam: UrlParam<string> = {
