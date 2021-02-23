@@ -2246,8 +2246,8 @@ const servicesByEndpointType: { [type: string]: ServiceDefinition } = {
                 {
                   pageSize: 25,
                   normalize: (data) => {
-                    const typedData = (data as unknown) as OpenbareRuimtesList['_embedded']
-                    return typedData.openbareruimtes.map(({ _links, naam, id }) => ({
+                    const typedData = (data as unknown) as OpenbareRuimtesList
+                    return typedData._embedded.openbareruimtes.map(({ _links, naam, id }) => ({
                       _display: naam,
                       _links,
                       id,
