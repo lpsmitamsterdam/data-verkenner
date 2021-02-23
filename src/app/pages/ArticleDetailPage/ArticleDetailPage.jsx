@@ -24,14 +24,11 @@ import { Fragment, useEffect, useMemo } from 'react'
 import { useParams } from 'react-router-dom'
 import styled, { css } from 'styled-components'
 import environment from '../../../environment'
-import normalizeCMSResults, {
-  EDITORIAL_FIELD_TYPE_VALUES,
-} from '../../../normalizations/cms/normalizeCMSResults'
 import normalizeDownloadsObject from '../../../normalizations/cms/normalizeDownloadFiles'
+import { EDITORIAL_FIELD_TYPE_VALUES } from '../../../normalizations/cms/normalizeCMSResults'
 import cmsConfig from '../../../shared/config/cms.config'
 import ContentContainer from '../../components/ContentContainer/ContentContainer'
 import EditorialPage from '../../components/EditorialPage/EditorialPage'
-import EditorialResults from '../../components/EditorialResults'
 import LoadingSpinner from '../../components/LoadingSpinner/LoadingSpinner'
 import ShareBar from '../../components/ShareBar/ShareBar'
 import { toArticleDetail } from '../../links'
@@ -102,17 +99,6 @@ const EditorialBodyStyled = styled(EditorialBody)`
   width: 100%;
 `
 
-const Divider = styled.div`
-  width: 200px;
-  height: 3px;
-  background-color: ${themeColor('secondary')};
-  margin: ${themeSpacing(8, 0, 6)};
-`
-
-const StyledEditorialResults = styled(EditorialResults)`
-  margin-bottom: ${themeSpacing(25)};
-`
-
 const StyledAccordion = styled(Accordion)`
   margin-top: ${themeSpacing(2)};
 `
@@ -155,7 +141,6 @@ const ArticleDetailPage = () => {
     intro,
     field_type: articleType,
     field_language: lang,
-    related,
   } = results || {}
 
   const image = useMemo(() => (coverImage ? getImageFromCms(coverImage, 1200, 600) : null), [
@@ -237,17 +222,6 @@ const ArticleDetailPage = () => {
                             )}
                           </AccordionWrapper>
                         )}
-                        {related && related.length ? (
-                          <>
-                            <Divider />
-                            <StyledEditorialResults
-                              headingLevel="h2"
-                              results={normalizeCMSResults(related)}
-                              errors={[]}
-                              title="Verder lezen"
-                            />
-                          </>
-                        ) : null}
                       </EditorialBodyStyled>
                     </Column>
                     <Column
