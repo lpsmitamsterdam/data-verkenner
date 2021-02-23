@@ -16,6 +16,7 @@ import {
   DetailResultItemGroupedItems,
   DetailResultItemPaginatedData,
   DetailResultItemType,
+  InfoBoxProps,
   PaginatedData as PaginatedDataType,
 } from '../../../../map/types/details'
 import { AuthError } from '../../../../shared/services/api/customError'
@@ -28,10 +29,10 @@ import useAuthScope from '../../../utils/useAuthScope'
 import useBuildQueryString from '../../../utils/useBuildQueryString'
 import PanoramaPreview, { PreviewContainer } from '../map-search/PanoramaPreview'
 import MapContext from '../MapContext'
-import { panoParam } from '../query-params'
+import { panoFovParam, panoHeadingParam, panoPitchParam } from '../query-params'
 import DetailDefinitionList from './DetailDefinitionList'
 import DetailHeading from './DetailHeading'
-import DetailInfoBox, { InfoBoxProps } from './DetailInfoBox'
+import DetailInfoBox from './DetailInfoBox'
 import DetailLinkList from './DetailLinkList'
 import DetailTable from './DetailTable'
 
@@ -114,6 +115,9 @@ const DetailPanel: FunctionComponent = () => {
   const { buildQueryString } = useBuildQueryString()
 
   async function getDetailData() {
+    if (!type) {
+      return Promise.reject()
+    }
     const serviceDefinition = getServiceDefinition(`${type}/${subType}`)
     // Todo: Redirect to 404?
     if (!serviceDefinition) {
@@ -164,10 +168,15 @@ const DetailPanel: FunctionComponent = () => {
             onClose={() => {
               history.push({
                 pathname: routing.dataSearchGeo.path,
-                search: buildQueryString([[panoParam, null]]),
+                search: buildQueryString([
+                  [panoPitchParam, null],
+                  [panoHeadingParam, null],
+                  [panoFovParam, null],
+                ]),
               })
             }}
           >
+            {/* eslint-disable-next-line @typescript-eslint/no-use-before-define */}
             <RenderDetails details={value} />
           </MapPanelContent>
         </>
@@ -184,6 +193,7 @@ const GroupedItems: FunctionComponent<GroupedItemsProps> = ({ item }) => (
   <>
     {item.entries.map((groupedItem) => (
       <Fragment key={groupedItem?.title}>
+        {/* eslint-disable-next-line @typescript-eslint/no-use-before-define */}
         <Item item={groupedItem} subItem />
         <Spacer />
       </Fragment>
@@ -227,6 +237,7 @@ const Item: FunctionComponent<ItemProps> = ({ item, subItem, hideHeader }) => {
       case DetailResultItemType.LinkList:
         return <DetailLinkList item={item} />
       case DetailResultItemType.PaginatedData:
+        // eslint-disable-next-line @typescript-eslint/no-use-before-define
         return <PaginatedData item={item} />
       case DetailResultItemType.GroupedItems:
         return <GroupedItems item={item} />

@@ -3,23 +3,21 @@ import normalize from 'json-api-normalize'
 
 export const getType = (type) => type && type.replace('node--', '')
 
-function getNormalizedItem(item, extraData = {}) {
-  // Make sure the correct fields have data here to be used by useNormalizedCMSResults()
-  return {
+const getNormalizedItem = (item, extraData = {}) =>
+  // Make sure the correct fields have data here to be used by normalizeCMSResults()
+  ({
     ...extraData,
     ...item,
     type: getType(item.type),
     intro: item.field_intro,
     short_title: item.field_short_title,
-    uuid: item.id,
     media_image_url: item.field_cover_image
       ? item.field_cover_image.field_media_image.uri.url
       : item.media_image_url,
     teaser_url: item.field_teaser_image
       ? item.field_teaser_image.field_media_image.uri.url
       : item.teaser_url,
-  }
-}
+  })
 
 export const reformatJSONApiResults = (normalizedData) => {
   // In case of a Drupal collection resource the returned data will include several objects that need to be normalized
@@ -55,7 +53,7 @@ const cmsJsonApiNormalizer = (data, fields) => {
   const sortedItems = data?.data?.relationships?.field_items?.data ?? []
 
   if (normalizedData?.field_items?.length && sortedItems.length) {
-    const field_items = [...normalizedData.field_items].sort(
+    const fieldItems = [...normalizedData.field_items].sort(
       (a, b) =>
         sortedItems.indexOf(sortedItems.filter(({ id }) => a.id === id)[0]) -
         sortedItems.indexOf(sortedItems.filter(({ id }) => b.id === id)[0]),
@@ -63,7 +61,7 @@ const cmsJsonApiNormalizer = (data, fields) => {
 
     return reformatJSONApiResults({
       ...normalizedData,
-      field_items,
+      field_items: fieldItems,
     })
   }
 

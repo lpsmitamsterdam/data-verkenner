@@ -1,4 +1,5 @@
 import { Alert, Heading, hooks, Link } from '@amsterdam/asc-ui'
+// eslint-disable-next-line import/no-extraneous-dependencies
 import { Feature } from 'geojson'
 import { FunctionComponent, useEffect, useMemo, useReducer, useState } from 'react'
 import { useSelector } from 'react-redux'
@@ -14,7 +15,7 @@ import { toMap } from '../../../store/redux-first-router/actions'
 import useParam from '../../utils/useParam'
 import MapContext, { initialState, MapState } from './MapContext'
 import MapPage from './MapPage'
-import { mapLayersParam, panoFullScreenParam, polygonsParam, polylinesParam } from './query-params'
+import { mapLayersParam, panoFullScreenParam, polygonParam, polylineParam } from './query-params'
 import buildLeafletLayers from './utils/buildLeafletLayers'
 
 type Action =
@@ -47,9 +48,9 @@ const reducer = (state: MapState, action: Action): MapState => {
 const MapContainer: FunctionComponent = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, initialState)
   const [activeMapLayers] = useParam(mapLayersParam)
-  const [polylines] = useParam(polylinesParam)
-  const [polygons] = useParam(polygonsParam)
-  const showDrawContent = polygons.length > 0 || polylines.length > 0
+  const [polyline] = useParam(polylineParam)
+  const [polygon] = useParam(polygonParam)
+  const showDrawContent = !!(polyline || polygon)
   const [showDrawTool, setShowDrawTool] = useState(showDrawContent)
   const [panoFullScreen, setPanoFullScreen] = useParam(panoFullScreenParam)
   const [isMobile] = hooks.useMatchMedia({ maxBreakpoint: 'tabletM' })
@@ -87,8 +88,12 @@ const MapContainer: FunctionComponent = ({ children }) => {
   }
 
   useEffect(() => {
-    getPanelLayers()
-    getMapLayers()
+    Promise.all([getPanelLayers, getMapLayers])
+      .then(() => {})
+      .catch((error: string) => {
+        // eslint-disable-next-line no-console
+        console.error(`MapContainer: problem fetching panel and map layers: ${error}`)
+      })
   }, [])
 
   return (

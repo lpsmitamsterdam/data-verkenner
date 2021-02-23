@@ -165,6 +165,7 @@ export function createConfig(additionalOptions: CreateConfigOptions): Configurat
                     require('autoprefixer'),
                     ...(isProd
                       ? [
+                          // eslint-disable-next-line @typescript-eslint/no-var-requires
                           require('cssnano')({
                             preset: [
                               'default',
@@ -186,12 +187,6 @@ export function createConfig(additionalOptions: CreateConfigOptions): Configurat
               options: { sourceMap: true },
             },
           ],
-        },
-        {
-          test: /\.html$/,
-          use: {
-            loader: 'html-loader',
-          },
         },
         {
           test: /\.svg$/,
@@ -231,6 +226,7 @@ export function createConfig(additionalOptions: CreateConfigOptions): Configurat
         ],
       }),
       new DefinePlugin({
+        // eslint-disable-next-line @typescript-eslint/no-var-requires
         'process.env.VERSION': JSON.stringify(require('./package.json').version),
       }),
       new MiniCssExtractPlugin({

@@ -8,9 +8,13 @@ type SetValueFn<T> = (value: T | null | SetValueCallback<T>, method?: 'push' | '
 
 export interface UrlParam<T> {
   name: string
+  // When the parameter isn't set in the URL, the value of that parameter is the default value.
+  // When setting the value of that parameter to the default value, the parameter will be removed from the URL
   defaultValue: T
-  encode: (value: T) => string | null
+  // Optional initial value that can be used if the value to be set is unknown
+  initialValue?: T
   decode: (value: string) => T
+  encode: (value: T) => string | null
 }
 
 const useParam = <T>(urlParam: UrlParam<T>): [T, SetValueFn<T>] => {
