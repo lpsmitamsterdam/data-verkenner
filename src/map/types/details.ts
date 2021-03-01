@@ -127,6 +127,7 @@ export interface DetailResultItemDefinitionListEntry {
   term: string
   description?: string | null
   href?: string | null
+  external?: boolean
   to?: LocationDescriptor
   alert?: string
 }
