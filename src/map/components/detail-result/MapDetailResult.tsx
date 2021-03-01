@@ -96,7 +96,7 @@ function renderDefinitionListItem(item: DetailResultItemDefinitionList, index: n
             <section className="map-detail-result__item-content">
               <div className="map-detail-result__item-label">{entry.term}</div>
               <div className="map-detail-result__item-value">
-                {renderDescription(entry.description, entry.href, entry.to)}
+                {renderDescription(entry.description, entry.href, entry.to, entry.external)}
               </div>
             </section>
           </li>
@@ -109,10 +109,11 @@ function renderDescription(
   description?: string | null,
   href?: string | null,
   to?: LocationDescriptor,
+  external?: boolean,
 ) {
   if (href) {
     return (
-      <Link href={href} inList>
+      <Link href={href} inList {...(external ? { target: '_blank' } : {})}>
         {description}
       </Link>
     )
