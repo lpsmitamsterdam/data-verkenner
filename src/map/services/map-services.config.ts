@@ -55,6 +55,15 @@ import getRdAndWgs84Coordinates from '../../shared/services/coordinate-reference
 import AuthScope from '../../shared/services/api/authScope'
 import { Root as Vastgoed } from '../../api/vsd/vastgoed/types'
 import { Wsg84Coordinate } from '../../shared/services/coordinate-reference-system/crs-converter'
+import { path as woonplaatsenPath, Single as Woonplaatsen } from '../../api/bag/v1/woonplaatsen'
+import { List as OpenbareRuimtesList } from '../../api/bag/v1/openbareruimtes'
+import { path as algemeenoverlastPath } from '../../api/overlastgebieden/algemeenoverlast'
+import { path as dealeroverlastPath } from '../../api/overlastgebieden/dealeroverlast'
+import { path as alcoholverbodPath } from '../../api/overlastgebieden/alcoholverbod'
+import { path as cameratoezichtPath } from '../../api/overlastgebieden/cameratoezicht'
+import { path as rondleidingverbodPath } from '../../api/overlastgebieden/rondleidingverbod'
+import { path as taxistandplaatsPath } from '../../api/overlastgebieden/taxistandplaats'
+import { Single as OverlastgebiedenSingle } from '../../api/overlastgebieden/types'
 
 export const endpointTypes = {
   adressenLigplaats: 'bag/v1.1/ligplaats/',
@@ -105,11 +114,17 @@ export const endpointTypes = {
   vastgoed: 'vsd/vastgoed',
   vestiging: 'handelsregister/vestiging/',
   winkelgebied: 'vsd/winkgeb',
-  woonplaats: 'bag/v1.1/woonplaats',
+  woonplaats: woonplaatsenPath,
   woningbouwplannen: 'v1/woningbouwplannen/woningbouwplan/',
   woningbouwplannenGebiedBouwblokWoningen: 'v1/woningbouwplannen/gebied_bouwblok_woningen/',
   woningbouwplannenBagPandSloopStatus: 'v1/woningbouwplannen/bag_pand_sloop_status/',
   woningbouwplannenStrategischeRuimtes: 'v1/woningbouwplannen/strategischeruimtes/',
+  overlastgebiedenAlgemeenoverlast: algemeenoverlastPath,
+  overlastgebiedenDealeroverlast: dealeroverlastPath,
+  overlastgebiedenCameratoezicht: cameratoezichtPath,
+  overlastgebiedenAlcoholverbod: alcoholverbodPath,
+  overlastgebiedenRondleidingverbod: rondleidingverbodPath,
+  overlastgebiedenTaxistandplaats: taxistandplaatsPath,
 }
 
 export interface ServiceDefinition extends DetailAuthentication {
@@ -124,8 +139,8 @@ export interface ServiceDefinition extends DetailAuthentication {
   ) => DetailResult | Promise<DetailResult>
 }
 
-function buildMetaData(
-  result: PotentialApiResult,
+function buildMetaData<T = PotentialApiResult>(
+  result: T,
   metadata?: Array<keyof typeof GLOSSARY.META>,
 ): DetailResultItemDefinitionListEntry[] {
   if (!metadata) {
@@ -165,7 +180,7 @@ const getLinkListBlock = (
 const typeAddressDisplayFormatter = (result: PotentialApiResult) => {
   let extraInfo = ''
   if (result.type_adres && result.type_adres !== 'Hoofdadres') {
-    extraInfo = `${result?.type_adres} `
+    extraInfo = `(${result?.type_adres})`
   }
   if (result.situering_nummeraanduiding) {
     if (result.situering_nummeraanduiding === 'Actueel/Bij') {
@@ -193,7 +208,7 @@ const typeAddressDisplayFormatter = (result: PotentialApiResult) => {
   return result.type_adres !== 'Hoofdadres' ? `${result._display} ${extraInfo}` : result._display
 }
 
-const getPaginatedListBlock = (
+export const getPaginatedListBlock = (
   definition: Definition,
   apiUrl?: string | null,
   settings?: {
@@ -218,6 +233,7 @@ const getPaginatedListBlock = (
   toView: (data) => {
     const results = data?.map((result: any) => ({
       to: buildDetailUrl(getDetailPageData(result._links.self.href)),
+      id: result.id || null,
       title: settings?.displayFormatter ? settings.displayFormatter(result) : result._display,
     }))
     return {
@@ -227,7 +243,7 @@ const getPaginatedListBlock = (
   },
 })
 
-const getLocationDefinitionListBlock = (result: any, gridArea: string): DetailResultItem => {
+export const getLocationDefinitionListBlock = (result: any, gridArea: string): DetailResultItem => {
   const buurt = {
     config: GLOSSARY.DEFINITIONS.BUURT,
     value: result.buurt || result._buurt,
@@ -378,9 +394,12 @@ const getConstructionFileList = (detailInfo: DetailInfo) =>
     },
   )
 
-const getMainMetaBlock = (result: PotentialApiResult, definition: Definition): InfoBoxProps => ({
+export const getMainMetaBlock = <T = PotentialApiResult>(
+  result: T,
+  definition: Definition,
+): InfoBoxProps => ({
   ...getInfoBox(definition),
-  meta: buildMetaData(result, definition.meta),
+  meta: buildMetaData<T>(result, definition.meta),
 })
 
 const getCovidBlock = (result: PotentialApiResult): DetailResult => ({
@@ -409,6 +428,32 @@ const getCovidBlock = (result: PotentialApiResult): DetailResult => ({
           href: result.url,
         },
       ],
+    },
+  ],
+})
+
+const getOverlastgebiedenBlock = (
+  result: OverlastgebiedenSingle,
+): DetailResultItemDefinitionList => ({
+  type: DetailResultItemType.DefinitionList,
+  entries: [
+    {
+      term: 'Soort overlastgebied',
+      description: result.soort,
+    },
+    {
+      term: 'Geldigheid',
+      description: result.geldigheidPeriode,
+    },
+    {
+      term: 'Tijd',
+      description: result.geldigheidSpecificatie,
+    },
+    {
+      term: 'Besluit',
+      description: result.url,
+      href: result.url,
+      external: true,
     },
   ],
 })
@@ -615,6 +660,15 @@ const servicesByEndpointType: { [type: string]: ServiceDefinition } = {
           getBagDefinitionList(result),
           getLocationDefinitionListBlock(result, '2 / 1 / 3 / 1'),
           verblijfsobjectData ? getVerblijfsObjectBlock(verblijfsobjectData) : null,
+          verblijfsobjectData
+            ? getPaginatedListBlock(
+                GLOSSARY.DEFINITIONS.NUMMERAANDUIDING,
+                verblijfsobjectData?.adressen?.href,
+                {
+                  displayFormatter: typeAddressDisplayFormatter,
+                },
+              )
+            : null,
           getPaginatedListBlock(GLOSSARY.DEFINITIONS.PAND, verblijfsobjectData?.panden?.href),
           getPaginatedListBlock(
             GLOSSARY.DEFINITIONS.VESTIGING,
@@ -2224,24 +2278,35 @@ const servicesByEndpointType: { [type: string]: ServiceDefinition } = {
   },
   [endpointTypes.woonplaats]: {
     type: 'bag/woonplaats',
-    endpoint: 'bag/v1.1/woonplaats',
-    mapDetail: (result) => ({
-      title: 'Woonplaats',
-      subTitle: result._display,
-      noPanorama: true,
-      infoBox: getMainMetaBlock(result, GLOSSARY.DEFINITIONS.WOONPLAATS),
-      items: [
-        result.openbare_ruimtes
-          ? getPaginatedListBlock(
-              GLOSSARY.DEFINITIONS.OPENBARERUIMTE,
-              result.openbare_ruimtes.href,
-              {
-                pageSize: 25,
-              },
-            )
-          : undefined,
-      ],
-    }),
+    endpoint: woonplaatsenPath,
+    mapDetail: (result) => {
+      const typedResult = (result as unknown) as Woonplaatsen
+      return {
+        title: GLOSSARY.DEFINITIONS.WOONPLAATS.singular,
+        subTitle: typedResult.naam,
+        noPanorama: true,
+        infoBox: getMainMetaBlock<Woonplaatsen>(typedResult, GLOSSARY.DEFINITIONS.WOONPLAATS),
+        items: [
+          typedResult.openbareruimtes
+            ? getPaginatedListBlock(
+                GLOSSARY.DEFINITIONS.WOONPLAATS,
+                `${typedResult.openbareruimtes.href}&_sort=naam&eindGeldigheid[isnull]=true`,
+                {
+                  pageSize: 25,
+                  normalize: (data) => {
+                    const typedData = (data as unknown) as OpenbareRuimtesList
+                    return typedData._embedded.openbareruimtes.map(({ _links, naam, id }) => ({
+                      _display: naam,
+                      _links,
+                      id,
+                    }))
+                  },
+                },
+              )
+            : undefined,
+        ],
+      }
+    },
   },
   [endpointTypes.precarioShips]: {
     type: 'precariobelasting/woonschepen',
@@ -2608,6 +2673,78 @@ const servicesByEndpointType: { [type: string]: ServiceDefinition } = {
         },
       ],
     }),
+  },
+  [endpointTypes.overlastgebiedenAlgemeenoverlast]: {
+    type: 'overlastgebieden/algemeenoverlast',
+    endpoint: endpointTypes.overlastgebiedenAlgemeenoverlast,
+    mapDetail: (result) => {
+      const typedResult = (result as unknown) as OverlastgebiedenSingle
+      return {
+        title: 'Overlastgebieden Algemeenoverlast',
+        subTitle: typedResult.oovNaam,
+        items: [getOverlastgebiedenBlock(typedResult)],
+      }
+    },
+  },
+  [endpointTypes.overlastgebiedenDealeroverlast]: {
+    type: 'overlastgebieden/dealeroverlast',
+    endpoint: endpointTypes.overlastgebiedenDealeroverlast,
+    mapDetail: (result) => {
+      const typedResult = (result as unknown) as OverlastgebiedenSingle
+      return {
+        title: 'Overlastgebieden Dealeroverlast',
+        subTitle: typedResult.oovNaam,
+        items: [getOverlastgebiedenBlock(typedResult)],
+      }
+    },
+  },
+  [endpointTypes.overlastgebiedenCameratoezicht]: {
+    type: 'overlastgebieden/cameratoezicht',
+    endpoint: endpointTypes.overlastgebiedenCameratoezicht,
+    mapDetail: (result) => {
+      const typedResult = (result as unknown) as OverlastgebiedenSingle
+      return {
+        title: 'Overlastgebieden Cameratoezicht',
+        subTitle: typedResult.oovNaam,
+        items: [getOverlastgebiedenBlock(typedResult)],
+      }
+    },
+  },
+  [endpointTypes.overlastgebiedenAlcoholverbod]: {
+    type: 'overlastgebieden/alcoholverbod',
+    endpoint: endpointTypes.overlastgebiedenAlcoholverbod,
+    mapDetail: (result) => {
+      const typedResult = (result as unknown) as OverlastgebiedenSingle
+      return {
+        title: 'Overlastgebieden Alcoholverbod',
+        subTitle: typedResult.oovNaam,
+        items: [getOverlastgebiedenBlock(typedResult)],
+      }
+    },
+  },
+  [endpointTypes.overlastgebiedenRondleidingverbod]: {
+    type: 'overlastgebieden/rondleidingverbod',
+    endpoint: endpointTypes.overlastgebiedenRondleidingverbod,
+    mapDetail: (result) => {
+      const typedResult = (result as unknown) as OverlastgebiedenSingle
+      return {
+        title: 'Overlastgebieden Rondleidingverbod',
+        subTitle: typedResult.oovNaam,
+        items: [getOverlastgebiedenBlock(typedResult)],
+      }
+    },
+  },
+  [endpointTypes.overlastgebiedenTaxistandplaats]: {
+    type: 'overlastgebieden/taxistandplaats',
+    endpoint: taxistandplaatsPath,
+    mapDetail: (result) => {
+      const typedResult = (result as unknown) as OverlastgebiedenSingle
+      return {
+        title: 'Overlastgebieden Taxistandplaats',
+        subTitle: typedResult.oovNaam,
+        items: [getOverlastgebiedenBlock(typedResult)],
+      }
+    },
   },
 }
 

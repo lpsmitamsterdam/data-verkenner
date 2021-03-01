@@ -6,7 +6,7 @@
     "type": "git",
     "url": "git+https://github.com/Amsterdam/atlas.git"
   },
-  "version": "3.24.0",
+  "version": "3.25.0",
   "scripts": {
     "build": "cross-env TS_NODE_PROJECT=tsconfig.webpack.json webpack --config ./webpack.prod.ts",
     "clean": "npm run clean:dirs",
@@ -26,13 +26,13 @@
     "analyze": "cross-env TS_NODE_PROJECT=tsconfig.webpack.json webpack --config webpack.analyze.ts"
   },
   "dependencies": {
-    "@amsterdam/arm-cluster": "^0.4.0",
-    "@amsterdam/arm-core": "^0.4.0",
-    "@amsterdam/arm-draw": "^0.4.1-alpha.125",
-    "@amsterdam/arm-nontiled": "^0.4.0",
-    "@amsterdam/asc-assets": "^0.27.0",
-    "@amsterdam/asc-ui": "^0.27.0",
-    "@amsterdam/react-maps": "^0.10.0",
+    "@amsterdam/arm-cluster": "^0.5.1",
+    "@amsterdam/arm-core": "^0.5.1",
+    "@amsterdam/arm-draw": "^0.5.1",
+    "@amsterdam/arm-nontiled": "^0.5.1",
+    "@amsterdam/asc-assets": "^0.28.0",
+    "@amsterdam/asc-ui": "^0.28.0",
+    "@amsterdam/react-maps": "^0.12.0",
     "@babel/runtime-corejs3": "^7.12.13",
     "@datapunt/matomo-tracker-js": "^0.4.0",
     "@datapunt/matomo-tracker-react": "^0.4.0",
@@ -56,7 +56,7 @@
     "lodash.debounce": "^4.0.8",
     "lodash.defer": "^4.1.0",
     "lodash.isequal": "^4.5.0",
-    "marked": "^2.0.0",
+    "marked": "^2.0.1",
     "marzipano": "^0.10.1",
     "openseadragon": "2.4.2",
     "proj4": "2.7.0",
@@ -116,7 +116,6 @@
     "@types/react-dom": "^17.0.1",
     "@types/react-helmet": "^6.1.0",
     "@types/react-redux": "^7.1.16",
-    "@types/react-resize-detector": "^5.0.0",
     "@types/react-router-dom": "^5.1.7",
     "@types/redux-first-router-link": "^1.4.4",
     "@types/redux-first-router-restore-scroll": "^1.2.1",
@@ -142,7 +141,7 @@
     "clean-webpack-plugin": "^3.0.0",
     "copy-webpack-plugin": "^7.0.0",
     "cross-env": "^7.0.3",
-    "css-loader": "^5.0.2",
+    "css-loader": "^5.1.0",
     "cssnano": "^4.1.10",
     "cypress": "^6.4.0",
     "enzyme": "3.11.0",
@@ -187,7 +186,7 @@
     "sass": "^1.32.8",
     "sass-loader": "^11.0.1",
     "style-loader": "^2.0.0",
-    "ts-jest": "^26.5.1",
+    "ts-jest": "^26.5.2",
     "ts-node": "^9.1.1",
     "typescript": "^4.1.5",
     "webpack": "^5.22.0",
@@ -195,7 +194,7 @@
     "webpack-cli": "^4.5.0",
     "webpack-dev-server": "3.11.2",
     "webpack-merge": "^5.7.3",
-    "workbox-webpack-plugin": "^6.1.0"
+    "workbox-webpack-plugin": "^6.1.1"
   },
   "engines": {
     "node": "^14"
