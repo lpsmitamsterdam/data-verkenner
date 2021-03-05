@@ -369,3 +369,21 @@ export const SHORTLINKS = {
     },
   },
 }
+
+export const ARTICLE_REDIRECT_FRAGMENTS = {
+  ECONOMY_DASHBOARD: {
+    from: {
+      fragment: {
+        acceptance: 'dashboard-kerncijfers-economie/562f52d4-d78a-4d20-94fd-f708f2ba76f7',
+        production: 'dashboard-economie-dashboard/3233adae-70ec-413f-90f2-c74a19ab1a34',
+      },
+    },
+    to: {
+      fragment: {
+        acceptance: 'coronamonitor-dashboard/054e6a90-f02a-4805-b449-4a7849da38a9',
+        production:
+          'dashboard-gevolgen-corona-voor-amsterdam-dashboard/e6d25646-a296-4af9-8081-9fe454db2b02',
+      },
+    },
+  },
+}
