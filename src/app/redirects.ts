@@ -1,6 +1,10 @@
 import { generatePath } from 'react-router-dom'
 import environment from '../environment'
-import { REDIRECTS_ARTICLES, SHORTLINKS } from '../shared/config/content-links'
+import {
+  REDIRECTS_ARTICLES,
+  ARTICLE_REDIRECT_FRAGMENTS,
+  SHORTLINKS,
+} from '../shared/config/content-links'
 import PARAMETERS from '../store/parameters'
 import matomoInstance from './matomo'
 import { MAIN_PATHS, routing } from './routes'
@@ -155,6 +159,21 @@ export const shortUrls: Redirect[] = [
   },
 ]
 
+export const articleRedirectUrls: Redirect[] = [
+  {
+    from: `/specials/dashboard/${
+      ARTICLE_REDIRECT_FRAGMENTS.ECONOMY_DASHBOARD.from.fragment[
+        environment.DEPLOY_ENV as Environment
+      ]
+    }`,
+    to: `/specials/dashboard/${
+      ARTICLE_REDIRECT_FRAGMENTS.ECONOMY_DASHBOARD.to.fragment[
+        environment.DEPLOY_ENV as Environment
+      ]
+    }`,
+  },
+]
+
 export const articleUrls: Redirect[] = REDIRECTS_ARTICLES.map((item) => ({
   from: item.from,
   to: generatePath(routing.articleDetail.path, {
@@ -185,7 +204,14 @@ export const webHooks: Redirect[] = [
   },
 ]
 
-const REDIRECTS = [...legacyRoutes, ...shortUrls, ...articleUrls, ...overviewUrls, ...webHooks]
+const REDIRECTS = [
+  ...legacyRoutes,
+  ...shortUrls,
+  ...articleUrls,
+  ...articleRedirectUrls,
+  ...overviewUrls,
+  ...webHooks,
+]
 
 export default async function resolveRedirects() {
   const currentPath = normalizePath(
