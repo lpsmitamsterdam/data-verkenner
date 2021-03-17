@@ -1,4 +1,4 @@
 import Map from './Map/Map'
-import ConstructionFiles from './ConstructionFiles/ConstructionFiles'
 
-export { ConstructionFiles, Map }
+// eslint-disable-next-line import/prefer-default-export
+export { Map }
