@@ -21,12 +21,12 @@ const DATA_SELECTION_CONFIG = {
       SORT_FILTERS: false,
       FILTERS: [
         {
-          slug: 'stadsdeel_naam',
-          label: 'Stadsdeel',
-        },
-        {
           slug: 'woonplaats',
           label: 'Woonplaats',
+        },
+        {
+          slug: 'stadsdeel_naam',
+          label: 'Stadsdeel',
         },
         {
           slug: 'ggw_naam',
@@ -200,12 +200,12 @@ const DATA_SELECTION_CONFIG = {
           info_url: 'https://www.amsterdam.nl/stelselpedia/brk-index/producten-brk/kadastertabel/',
         },
         {
-          slug: 'stadsdeel_naam',
-          label: 'Stadsdeel',
-        },
-        {
           slug: 'woonplaats',
           label: 'Woonplaats',
+        },
+        {
+          slug: 'stadsdeel_naam',
+          label: 'Stadsdeel',
         },
         {
           slug: 'ggw_naam',
@@ -310,12 +310,12 @@ const DATA_SELECTION_CONFIG = {
           label: 'Bijzondere rechtstoestand',
         },
         {
-          slug: 'stadsdeel_naam',
-          label: 'Stadsdeel',
-        },
-        {
           slug: 'woonplaats',
           label: 'Woonplaats',
+        },
+        {
+          slug: 'stadsdeel_naam',
+          label: 'Stadsdeel',
         },
         {
           slug: 'ggw_naam',
