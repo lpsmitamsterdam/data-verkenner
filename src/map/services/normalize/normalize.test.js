@@ -19,9 +19,13 @@ import {
   winkelgebied,
   YEAR_UNKNOWN,
   meetboutTable,
+  getGarbageContainersByBagObject,
+  getGarbageContainersByAddress,
 } from './normalize'
 
 import { listFixture as meetbouwMetingFixture } from '../../../api/meetbouten/meting'
+import environment from '../../../environment'
+import * as api from '../../../shared/services/api/api'
 
 jest.mock('../../../app/utils/formatDate')
 jest.mock('../../../shared/services/api/api')
@@ -170,7 +174,7 @@ describe('normalize', () => {
   describe('normalizes "adressenPand', () => {
     let input
     let output
-    it('returns the statusLevel and year', () => {
+    it('returns the statusLevel and year', async () => {
       input = {
         status: {
           code: 26,
@@ -179,7 +183,7 @@ describe('normalize', () => {
         oorspronkelijk_bouwjaar: 2012,
       }
 
-      output = adressenPand(input)
+      output = await adressenPand(input)
 
       expect(output).toMatchObject({
         statusLevel: 'info',
@@ -190,7 +194,7 @@ describe('normalize', () => {
         oorspronkelijk_bouwjaar: `${YEAR_UNKNOWN}`,
       }
 
-      output = adressenPand(input)
+      output = await adressenPand(input)
 
       expect(output).toMatchObject({
         statusLevel: undefined,
@@ -698,6 +702,33 @@ ${input.gebruiksdoel[1]}`,
         }),
       ])
       expect(meetboutTable(metingData)).toEqual(output)
+    })
+  })
+
+  describe('getGarbageContainersByBagObject', () => {
+    it('should call fetchWithToken with the right arguments', () => {
+      const fetchWithTokenMock = jest.spyOn(api, 'fetchWithToken')
+      getGarbageContainersByBagObject('123', 'ligplaats')
+      expect(
+        fetchWithTokenMock,
+      ).toHaveBeenCalledWith(
+        `${environment.API_ROOT}v1/huishoudelijkafval/bag_object_loopafstand/`,
+        { format: 'json', bagObjectType: 'ligplaats', bagObjectId: '123' },
+      )
+    })
+  })
+
+  describe('getGarbageContainersByAddress', () => {
+    it('should call fetchWithToken with the right arguments', () => {
+      const fetchWithTokenMock = jest.spyOn(api, 'fetchWithToken')
+      getGarbageContainersByAddress('123')
+      expect(fetchWithTokenMock).toHaveBeenCalledWith(
+        `${environment.API_ROOT}v1/huishoudelijkafval/adres_loopafstand/`,
+        {
+          format: 'json',
+          adresseerbaarobjectId: '123',
+        },
+      )
     })
   })
 })

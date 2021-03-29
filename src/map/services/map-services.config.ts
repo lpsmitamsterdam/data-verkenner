@@ -20,6 +20,7 @@ import {
   DetailResultItemDefinitionListEntry,
   DetailResultItemLinkList,
   DetailResultItemPaginatedData,
+  DetailResultItemTable,
   DetailResultItemType,
   DetailResultNotification,
   ExtraApiResults,
@@ -31,13 +32,14 @@ import adressenNummeraanduiding from './adressen-nummeraanduiding/adressen-numme
 import { fetchDetailData, getServiceDefinition } from './map'
 import categoryLabels from './map-search/category-labels'
 import {
-  addNummeraanduiding,
   adressenPand,
   adressenVerblijfsobject,
   bekendmakingen,
   evenementen,
   explosieven,
   formatSquareMetre,
+  getGarbageContainersByAddress,
+  getGarbageContainersByBagObject,
   grexProject,
   kadastraalObject,
   meetbout,
@@ -207,6 +209,22 @@ const typeAddressDisplayFormatter = (result: PotentialApiResult) => {
   }
 
   return result.type_adres !== 'Hoofdadres' ? `${result._display} ${extraInfo}` : result._display
+}
+
+const getGarbageContainersDistanceTable = (
+  garbageContainersResult: ExtraApiResults['garbageContainers'],
+): DetailResultItemTable => {
+  return {
+    type: DetailResultItemType.Table,
+    title: 'Afvalcontainers',
+    headings: [
+      { title: 'Type', key: 'fractieOmschrijving' },
+      { title: 'Loopafstand (Meter)', key: 'loopafstand' },
+    ],
+    values:
+      garbageContainersResult?._embedded?.bag_object_loopafstand ??
+      garbageContainersResult?._embedded?.adres_loopafstand,
+  }
 }
 
 export const getPaginatedListBlock = (
@@ -563,7 +581,19 @@ const servicesByEndpointType: { [type: string]: ServiceDefinition } = {
   [endpointTypes.adressenLigplaats]: {
     type: 'bag/ligplaats',
     endpoint: 'bag/v1.1/ligplaats',
-    normalization: addNummeraanduiding,
+    normalization: async (result) => {
+      const [nummeraanduidingData, garbageContainers] = await Promise.all([
+        result?.hoofdadres?._links?.self?.href
+          ? fetchWithToken(result.hoofdadres._links.self.href)
+          : null,
+        getGarbageContainersByBagObject(result.ligplaatsidentificatie, 'ligplaats'),
+      ])
+      return {
+        ...result,
+        nummeraanduidingData,
+        garbageContainers,
+      }
+    },
     mapDetail: (result) => {
       const notifications: DetailResultNotification[] = []
 
@@ -621,6 +651,7 @@ const servicesByEndpointType: { [type: string]: ServiceDefinition } = {
               authScopeRequired: true,
             },
           ),
+          getGarbageContainersDistanceTable(result.garbageContainers),
         ],
       }
     },
@@ -628,7 +659,18 @@ const servicesByEndpointType: { [type: string]: ServiceDefinition } = {
   [endpointTypes.adressenNummeraanduiding]: {
     type: 'bag/nummeraanduiding',
     endpoint: 'bag/v1.1/nummeraanduiding',
-    normalization: adressenNummeraanduiding,
+    normalization: async (result) => {
+      const resultWithVerblijfsobject = await adressenNummeraanduiding(result)
+      const garbageContainers = await getGarbageContainersByAddress(
+        // @ts-ignore
+        result?.verblijfsobjectData?.verblijfsobjectidentificatie,
+      )
+
+      return {
+        ...resultWithVerblijfsobject,
+        garbageContainers,
+      }
+    },
     mapDetail: (result, detailInfo) => {
       const notifications: DetailResultNotification[] = []
 
@@ -718,12 +760,25 @@ const servicesByEndpointType: { [type: string]: ServiceDefinition } = {
           getConstructionFileList(detailInfo),
           getPaginatedListBlock(GLOSSARY.DEFINITIONS.STANDPLAATS, result?.standplaats),
           getPaginatedListBlock(GLOSSARY.DEFINITIONS.LIGPLAATS, result?.ligplaats),
+          getGarbageContainersDistanceTable(result.garbageContainers),
         ],
       }
     },
   },
   [endpointTypes.adressenVerblijfsobject]: {
-    normalization: (result) => addNummeraanduiding(adressenVerblijfsobject(result)),
+    normalization: async (result) => {
+      const [nummeraanduidingData, garbageContainers] = await Promise.all([
+        result?.hoofdadres?._links?.self?.href
+          ? fetchWithToken(result.hoofdadres._links.self.href)
+          : null,
+        getGarbageContainersByAddress(result.verblijfsobjectidentificatie),
+      ])
+      return {
+        ...adressenVerblijfsobject(result),
+        nummeraanduidingData,
+        garbageContainers,
+      }
+    },
     endpoint: 'bag/v1.1/verblijfsobject',
     type: 'bag/verblijfsobject',
     mapDetail: (result, detailInfo) => {
@@ -806,6 +861,7 @@ const servicesByEndpointType: { [type: string]: ServiceDefinition } = {
             },
           ),
           getConstructionFileList(detailInfo),
+          getGarbageContainersDistanceTable(result.garbageContainers),
         ],
       }
     },
@@ -843,7 +899,16 @@ const servicesByEndpointType: { [type: string]: ServiceDefinition } = {
     }),
   },
   [endpointTypes.adressenPand]: {
-    normalization: adressenPand,
+    normalization: async (result) => {
+      const garbageContainers = await getGarbageContainersByBagObject(
+        result.pandidentificatie,
+        'pand',
+      )
+      return {
+        ...adressenPand(result),
+        garbageContainers,
+      }
+    },
     type: 'bag/pand',
     endpoint: 'bag/v1.1/pand',
     mapDetail: (result) => {
@@ -895,6 +960,7 @@ const servicesByEndpointType: { [type: string]: ServiceDefinition } = {
             },
           ),
           getPaginatedListBlock(GLOSSARY.DEFINITIONS.MONUMENTEN, result?._monumenten?.href),
+          getGarbageContainersDistanceTable(result.garbageContainers),
         ],
       }
     },
@@ -902,7 +968,19 @@ const servicesByEndpointType: { [type: string]: ServiceDefinition } = {
   [endpointTypes.adressenStandplaats]: {
     type: 'bag/standplaats',
     endpoint: 'bag/v1.1/standplaats',
-    normalization: addNummeraanduiding,
+    normalization: async (result) => {
+      const [nummeraanduidingData, garbageContainers] = await Promise.all([
+        result?.hoofdadres?._links?.self?.href
+          ? fetchWithToken(result.hoofdadres._links.self.href)
+          : null,
+        getGarbageContainersByBagObject(result.standplaatsidentificatie, 'standplaats'),
+      ])
+      return {
+        ...result,
+        nummeraanduidingData,
+        garbageContainers,
+      }
+    },
     mapDetail: (result) => {
       const notifications: DetailResultNotification[] = []
 
@@ -965,6 +1043,7 @@ const servicesByEndpointType: { [type: string]: ServiceDefinition } = {
             GLOSSARY.DEFINITIONS.MONUMENTEN,
             `${environment.API_ROOT}monumenten/situeringen/?betreft_nummeraanduiding=${result.landelijk_id}`,
           ),
+          getGarbageContainersDistanceTable(result.garbageContainers),
         ],
       }
     },

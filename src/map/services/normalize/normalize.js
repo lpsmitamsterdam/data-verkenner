@@ -4,6 +4,7 @@ import formatDate from '../../../app/utils/formatDate'
 import formatNumber from '../../../shared/services/number-formatter/number-formatter'
 import { NORMAL_PAND_STATUSSES, NORMAL_VBO_STATUSSES } from '../map-search/status-labels'
 import { fetchWithToken } from '../../../shared/services/api/api'
+import environment from '../../../environment'
 
 export const YEAR_UNKNOWN = 1005 // The API returns 1005 when a year is unknown
 
@@ -105,6 +106,19 @@ export const napPeilmerk = (result) => {
 
   return normalize(result, additionalFields)
 }
+
+export const getGarbageContainersByBagObject = async (id, type) =>
+  fetchWithToken(`${environment.API_ROOT}v1/huishoudelijkafval/bag_object_loopafstand/`, {
+    format: 'json',
+    bagObjectType: type,
+    bagObjectId: id,
+  })
+
+export const getGarbageContainersByAddress = async (id) =>
+  fetchWithToken(`${environment.API_ROOT}v1/huishoudelijkafval/adres_loopafstand/`, {
+    format: 'json',
+    adresseerbaarobjectId: id,
+  })
 
 export const adressenPand = (result) => {
   const additionalFields = {
