@@ -1,4 +1,5 @@
-export {} // indicate that this is a module
+// eslint-disable-next-line prettier/prettier
+export { } // indicate that this is a module
 
 declare global {
   // eslint-disable-next-line @typescript-eslint/no-namespace
@@ -32,7 +33,6 @@ Cypress.Commands.add('defineAddressDetailRoutes', () => {
   cy.intercept('**/bag/v1.1/verblijfsobject/*').as('getVerblijfsobject')
   cy.intercept('**/bag/v1.1/pand/?verblijfsobjecten__id=*').as('getPanden')
   cy.intercept('**/brk/object/?verblijfsobjecten__id=*').as('getObject')
-  // cy.intercept('**/panorama/thumbnail?*').as('getPanorama')
   cy.intercept('**/monumenten/situeringen/?betreft_nummeraanduiding=*').as('getSitueringen')
   cy.intercept('**/monumenten/monumenten/*').as('getMonument')
   cy.intercept('**/bouwdossier/*').as('getBouwdossier')
@@ -57,7 +57,6 @@ Cypress.Commands.add('waitForAdressDetail', () => {
   cy.wait('@getVerblijfsobject')
   cy.wait('@getPanden')
   cy.wait('@getObject')
-  // cy.wait('@getPanorama')
   cy.wait('@getSitueringen')
   cy.wait('@getBouwdossier')
 })

@@ -184,7 +184,7 @@ describe('Search data', () => {
       cy.wait('@getMonumenten')
       cy.wait('@getNummeraanduidingen')
       cy.wait('@getVestigingen')
-      // cy.wait('@getPanorama')
+      cy.wait('@getPanorama')
 
       cy.get(DATA_SEARCH.infoNotification).should('not.exist')
       cy.get('h2').contains('Vestigingen').should('be.visible')

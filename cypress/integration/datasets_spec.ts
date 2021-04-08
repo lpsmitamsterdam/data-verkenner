@@ -75,40 +75,6 @@ describe('datasets module', () => {
       //  Check if checkbox is checked. Use css.escape because of : in id.
       cy.get(`#${CSS.escape('theme-theme:bestuur')}`).should('be.checked')
     })
-
-    it('should filter datasets', () => {
-      cy.get('[data-test=navigation-block] > [href="/datasets/zoek/"]').should('be.visible').click()
-      cy.url().should('include', '/datasets/zoek')
-
-      cy.wait('@graphql')
-      cy.wait('@graphql')
-
-      cy.contains('Datasets (')
-      // eslint-disable-next-line cypress/no-unnecessary-waiting
-      cy.wait(500)
-      let countDatasets = 0
-      // Count amount of Datasets
-      cy.get('h1')
-        .contains('Datasets')
-        .then(($datasetsText) => {
-          const datasetsNumber = $datasetsText.text().match(/\d+/)?.[0]
-          if (datasetsNumber) {
-            countDatasets += parseInt(datasetsNumber, 10)
-          }
-        })
-
-      cy.get(`#${CSS.escape('theme-theme:bestuur')}`).check({ force: true })
-
-      // Count amount of Datasets again and check against previous
-      // eslint-disable-next-line cypress/no-unnecessary-waiting
-      cy.wait(800)
-      cy.get('h1')
-        .contains('Datasets')
-        .then(($datasetsText) => {
-          const datasetsNumber = $datasetsText.text().match(/\d+/)?.[0]
-          expect(parseInt(datasetsNumber || '0', 10)).lessThan(countDatasets)
-        })
-    })
   })
 
   describe('user should be able to search and see results', () => {
