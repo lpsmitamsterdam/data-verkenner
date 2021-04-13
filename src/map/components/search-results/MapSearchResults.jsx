@@ -53,7 +53,7 @@ const MapSearchResults = ({
   return (
     <section className="map-search-results">
       {/* eslint-disable-next-line no-nested-ternary */}
-      {!error && loading ? (
+      {!error && !loading ? (
         <header
           className={`
           map-search-results__header
