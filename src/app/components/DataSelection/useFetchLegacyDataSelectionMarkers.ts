@@ -36,7 +36,7 @@ const useFetchLegacyDataSelectionMarkers = () => {
       totalResults <= currentDatasetConfig.MAX_NUMBER_OF_CLUSTERED_MARKERS &&
       (polygon?.polygon.length !== 0 || activeFilters)
 
-    if (markersShouldBeFetched) {
+    if (!markersShouldBeFetched) {
       return null
     }
 
