@@ -5,12 +5,12 @@ import usePromise, { isFulfilled, isPending, isRejected } from '@amsterdam/use-p
 import cmsConfig, { SpecialType } from '../../../shared/config/cms.config'
 import ContentContainer from '../../components/ContentContainer/ContentContainer'
 import EditorialPage from '../../components/EditorialPage/EditorialPage'
-import IFrame from '../../components/IFrame/IFrame'
 import { toSpecialDetail } from '../../links'
-import Animation from './specials/Animation'
 import ErrorMessage from '../../components/ErrorMessage/ErrorMessage'
 import LoadingSpinner from '../../components/LoadingSpinner/LoadingSpinner'
 import { fetchSingleFromCms } from '../../utils/fetchFromCms'
+import Animation from './components/Animation'
+import IFrame from './components/IFrame'
 
 const SpecialDetailPage = () => {
   const { id } = useParams<{ id: string }>()
@@ -55,13 +55,14 @@ const SpecialDetailPage = () => {
       <Row>
         <ContentContainer>
           {specialType === SpecialType.Animation && (
-            <Animation contentLink={contentLink} title={title} results={result.value} />
+            <Animation src={contentLink?.uri} title={title} results={result.value} />
           )}
-          {(specialType === SpecialType.Dashboard || specialType === SpecialType.Story) && (
-            <Column wrap span={{ small: 12, medium: 12, big: 12, large: 12, xLarge: 12 }}>
-              <IFrame contentLink={contentLink} title={title} />
-            </Column>
-          )}
+          {(specialType === SpecialType.Dashboard || specialType === SpecialType.Story) &&
+            contentLink && (
+              <Column wrap span={{ small: 12, medium: 12, big: 12, large: 12, xLarge: 12 }}>
+                <IFrame src={contentLink.uri} title={title} />
+              </Column>
+            )}
         </ContentContainer>
       </Row>
     </EditorialPage>
