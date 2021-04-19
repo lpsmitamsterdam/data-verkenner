@@ -73,7 +73,7 @@ describe('MapPanel', () => {
     expect(mockPush).toBeCalledWith({ pathname: '/kaart/geozoek/', search: 'locatie=123%2C123' })
   })
 
-  it('should remove the location parameter when closing geosearch panel', () => {
+  it('should remove the location parameter and navigate to /kaart when closing geosearch panel', () => {
     currentPath = '/kaart/geozoek/'
 
     const { getByTestId, queryByTestId } = render(withMapContext(<MapPanel loading={false} />))
@@ -83,7 +83,7 @@ describe('MapPanel', () => {
     const closeButton = getByTestId('closePanelButton')
     fireEvent.click(closeButton)
 
-    expect(mockPush).toBeCalledWith({ pathname: '/kaart/geozoek/', search: '' })
+    expect(mockPush).toBeCalledWith({ pathname: '/kaart/', search: '' })
   })
 
   it("should not show the panel when location isn't set on geosearch page", () => {

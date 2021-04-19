@@ -67,7 +67,10 @@ const MapPanel: FunctionComponent<MapPanelProps> = ({ loading }) => {
 
   const onClosePanel = useCallback(() => {
     if (matchPath(location.pathname, routing.dataSearchGeo_TEMP.path)) {
-      setLocationParameter(null)
+      history.push({
+        pathname: routing.data_TEMP.path,
+        search: buildQueryString(undefined, [locationParam]),
+      })
     }
     if (matchPath(location.pathname, routing.dataDetail_TEMP.path)) {
       history.push({
@@ -92,6 +95,10 @@ const MapPanel: FunctionComponent<MapPanelProps> = ({ loading }) => {
       // Do not show content panel when legend is active
       legendActive ||
       // Also geosearch-page always needs a location parameter
+      matchPath(location.pathname, {
+        path: routing.data_TEMP.path,
+        exact: true,
+      }) ||
       (matchPath(location.pathname, routing.dataSearchGeo_TEMP.path) && !locationParameter) ||
       ((matchPath(location.pathname, routing.addresses_TEMP.path) ||
         matchPath(location.pathname, routing.establishments_TEMP.path) ||

@@ -19,6 +19,7 @@ jest.mock('leaflet', () => ({
     removeLayer: jest.fn(),
     onRemove: jest.fn(),
     fire: jest.fn(),
+    clearLayers: jest.fn(),
   })),
 }))
 
@@ -88,7 +89,7 @@ describe('DrawTool', () => {
     )
 
     // Todo: update to toHaveBeenCalledWith
-    expect(mockReplace).toHaveBeenCalled()
+    expect(mockPush).toHaveBeenCalled()
   })
   it('removes the dataselection and URL parameter when removing a polygon drawing', () => {})
   it('removes the dataselection and URL parameters from all drawings when closing the draw tool', () => {})
