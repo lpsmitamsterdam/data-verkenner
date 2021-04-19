@@ -1,8 +1,9 @@
 import { breakpoint, Column, Heading, Row, themeColor, themeSpacing } from '@amsterdam/asc-ui'
-import { useEffect } from 'react'
+import usePromise, { isFulfilled, isPending, isRejected } from '@amsterdam/use-promise'
+import { FunctionComponent, useState } from 'react'
 import styled, { css } from 'styled-components'
 import cmsConfig from '../../../shared/config/cms.config'
-import useFromCMS from '../../utils/useFromCMS'
+import { fetchListFromCms } from '../../utils/fetchFromCms'
 import ErrorMessage, { ErrorBackgroundCSS } from '../ErrorMessage/ErrorMessage'
 import AboutCard from './AboutCard'
 
@@ -20,7 +21,7 @@ const StyledCardColumn = styled(Column)`
   }
 `
 
-const StyledRow = styled(Row)`
+const StyledRow = styled(Row)<{ showError: boolean }>`
   ${({ showError, theme }) =>
     showError &&
     css`
@@ -69,25 +70,21 @@ const StyledHeading = styled(Heading)`
   margin-bottom: ${themeSpacing(6)};
 `
 
-const AboutBlock = () => {
-  const {
-    results: resultsAbout,
-    fetchData: fetchDataAbout,
-    loading: loadingAbout,
-    error: errorAbout,
-  } = useFromCMS(cmsConfig.HOME_ABOUT)
-  const {
-    results: resultsAboutData,
-    fetchData: fetchDataAboutData,
-    loading: loadingAboutData,
-    error: errorAboutData,
-  } = useFromCMS(cmsConfig.HOME_ABOUT_DATA)
+const AboutBlock: FunctionComponent = () => {
+  const [retryCount, setRetryCount] = useState(0)
 
-  useEffect(() => {
-    fetchDataAbout()
-    fetchDataAboutData()
-  }, [])
+  // TODO: Combine these Promises using something like Promise.all()
+  const resultAbout = usePromise(
+    () => fetchListFromCms(cmsConfig.HOME_ABOUT.endpoint(), cmsConfig.HOME_ABOUT.fields),
+    [retryCount],
+  )
 
+  const resultAboutData = usePromise(
+    () => fetchListFromCms(cmsConfig.HOME_ABOUT_DATA.endpoint(), cmsConfig.HOME_ABOUT_DATA.fields),
+    [retryCount],
+  )
+
+  // TODO: There is now no loading state when both Promises are pending, we need to add one.
   return (
     <AboutBlockStyle data-test="about-block">
       <Row hasMargin={false}>
@@ -96,25 +93,27 @@ const AboutBlock = () => {
             Over data
           </StyledHeading>
 
-          <StyledRow hasMargin={false} showError={errorAboutData}>
-            {errorAboutData && (
+          <StyledRow hasMargin={false} showError={isRejected(resultAboutData)}>
+            {isRejected(resultAboutData) && (
               <ErrorMessage
                 message="Er is een fout opgetreden bij het laden van dit blok."
                 buttonLabel="Probeer opnieuw"
-                buttonOnClick={fetchDataAboutData}
+                buttonOnClick={() => setRetryCount(retryCount + 1)}
               />
             )}
-            {resultsAboutData?.length
-              ? resultsAboutData.map((aboutData, index) => (
-                  <StyledCardColumn
-                    wrap
-                    key={aboutData.key || index}
-                    span={{ small: 1, medium: 2, big: 3, large: 3, xLarge: 3 }}
-                  >
-                    <AboutCard loading={loadingAboutData} {...aboutData} />
-                  </StyledCardColumn>
-                ))
-              : null}
+            {isFulfilled(resultAboutData) &&
+              resultAboutData.value.map((aboutData, index) => (
+                <StyledCardColumn
+                  wrap
+                  key={aboutData.key || index}
+                  span={{ small: 1, medium: 2, big: 3, large: 3, xLarge: 3 }}
+                >
+                  {
+                    // TODO: Props should not be spread here, but instead be passed as a single value.
+                  }
+                  <AboutCard loading={isPending(resultAbout)} {...aboutData} />
+                </StyledCardColumn>
+              ))}
           </StyledRow>
         </StyledColumn>
         <StyledColumn span={{ small: 1, medium: 2, big: 6, large: 6, xLarge: 6 }}>
@@ -122,25 +121,27 @@ const AboutBlock = () => {
             Over deze site
           </StyledHeading>
 
-          <StyledRow hasMargin={false} showError={errorAbout}>
-            {errorAbout && (
+          <StyledRow hasMargin={false} showError={isRejected(resultAbout)}>
+            {isRejected(resultAbout) && (
               <ErrorMessage
                 message="Er is een fout opgetreden bij het laden van dit blok."
                 buttonLabel="Probeer opnieuw"
-                buttonOnClick={fetchDataAbout}
+                buttonOnClick={() => setRetryCount(retryCount + 1)}
               />
             )}
-            {resultsAbout?.length
-              ? resultsAbout.map((about, index) => (
-                  <StyledCardColumn
-                    wrap
-                    key={about.key || index}
-                    span={{ small: 1, medium: 2, big: 3, large: 3, xLarge: 3 }}
-                  >
-                    <AboutCard loading={loadingAbout} {...about} />
-                  </StyledCardColumn>
-                ))
-              : null}
+            {isFulfilled(resultAbout) &&
+              resultAbout.value.map((about, index) => (
+                <StyledCardColumn
+                  wrap
+                  key={about.key || index}
+                  span={{ small: 1, medium: 2, big: 3, large: 3, xLarge: 3 }}
+                >
+                  {
+                    // TODO: Props should not be spread here, but instead be passed as a single value.
+                  }
+                  <AboutCard loading={isPending(resultAboutData)} {...about} />
+                </StyledCardColumn>
+              ))}
           </StyledRow>
         </StyledColumn>
       </Row>
