@@ -42,7 +42,7 @@ interface MapPanelProps {
 const MapPanel: FunctionComponent<MapPanelProps> = ({ loading }) => {
   const [legendActive, setLegendActive] = useState(false)
   const [drawerState, setDrawerState] = useState(DrawerState.Closed)
-  const [locationParameter, setLocationParameter] = useParam(locationParam)
+  const [locationParameter] = useParam(locationParam)
   const [polygon] = useParam(polygonParam)
   const [showDesktopVariant] = hooks.useMatchMedia({ minBreakpoint: 'tabletM' })
   const history = useHistory()
