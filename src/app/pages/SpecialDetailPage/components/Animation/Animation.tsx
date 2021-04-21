@@ -7,7 +7,6 @@ import {
   Heading,
   Link,
   Paragraph,
-  themeColor,
   themeSpacing,
 } from '@amsterdam/asc-ui'
 import styled from 'styled-components'
