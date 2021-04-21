@@ -23,7 +23,6 @@ const StyledLink = styled(Link)`
   display: flex;
   margin-bottom: ${themeSpacing(4)};
   max-width: 100%;
-  border: 1px solid ${themeColor('tint', 'level3')};
 `
 
 const StyledVideo = styled.video`
