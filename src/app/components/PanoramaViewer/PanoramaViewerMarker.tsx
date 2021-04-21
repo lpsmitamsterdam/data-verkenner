@@ -1,10 +1,10 @@
 import { Marker } from '@amsterdam/arm-core'
-import { useMapEvents } from '@amsterdam/react-maps'
 import { Icon, Marker as LeafletMarker } from 'leaflet'
 import 'leaflet-rotatedmarker'
 import { FunctionComponent, useEffect, useState } from 'react'
 import { MarkerProps } from '../../pages/MapPage/MapMarkers'
 import { panoHeadingParam } from '../../pages/MapPage/query-params'
+import useLeafletEvent from '../../utils/useLeafletEvent'
 import useMapCenterToMarker from '../../utils/useMapCenterToMarker'
 import useParam from '../../utils/useParam'
 
@@ -20,16 +20,14 @@ const pawnIcon = new Icon({
   iconAnchor: [9, 22],
 })
 
-const PanoramaViewerMarker: FunctionComponent<MarkerProps> = ({ location, setLocation }) => {
+const PanoramaViewerMarker: FunctionComponent<MarkerProps> = ({ position, setPosition }) => {
   const [orientationMarker, setOrientationMarker] = useState<LeafletMarker>()
   const [panoHeading] = useParam(panoHeadingParam)
 
   // TODO: be able to give a x & y offset (when MapPanel is open)
-  useMapCenterToMarker(location)
+  useMapCenterToMarker(position)
 
-  useMapEvents({
-    click: ({ latlng }) => setLocation && setLocation(latlng),
-  })
+  useLeafletEvent('click', ({ latlng }) => setPosition?.(latlng), [])
 
   useEffect(() => {
     if (orientationMarker && panoHeading) {
@@ -37,14 +35,14 @@ const PanoramaViewerMarker: FunctionComponent<MarkerProps> = ({ location, setLoc
     }
   }, [orientationMarker, panoHeading])
 
-  return location ? (
+  return position ? (
     <>
       <Marker
         setInstance={setOrientationMarker}
-        latLng={location}
+        latLng={position}
         options={{ icon: orientationIcon }}
       />
-      <Marker latLng={location} options={{ icon: pawnIcon }} />
+      <Marker latLng={position} options={{ icon: pawnIcon }} />
     </>
   ) : null
 }
