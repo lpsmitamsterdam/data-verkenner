@@ -81,8 +81,6 @@ const MapPanel: FunctionComponent = () => {
 
   const showContentPanel = useMemo(() => {
     if (
-      // Do not show content panel when legend is active
-      legendActive ||
       // Also geosearch-page always needs a location parameter
       matchPath(location.pathname, {
         path: routing.data_TEMP.path,
@@ -109,32 +107,34 @@ const MapPanel: FunctionComponent = () => {
         state={drawerState}
         onStateChange={(state) => setDrawerState(state)}
       >
-        <StyledLargeDrawerPanel data-testid="drawerPanel" show={showContentPanel}>
-          <DrawerPanelHeader>
-            <SubtitleHeading as="h6">Een kaartpaneel</SubtitleHeading>
-            <TitleHeading styleAs="h2">Resultaten</TitleHeading>
-          </DrawerPanelHeader>
-          <DrawerContainer>
-            <Switch>
-              <Route path={[routing.dataSearchGeo_TEMP.path, routing.panorama_TEMP.path]}>
-                <MapSearchResults />
-              </Route>
-              <Route path={[routing.dataDetail_TEMP.path]}>
-                <DetailPanel />
-              </Route>
-              <Route
-                path={[
-                  routing.addresses_TEMP.path,
-                  routing.establishments_TEMP.path,
-                  routing.cadastralObjects_TEMP.path,
-                ]}
-                exact
-              >
-                <DrawResults currentOverlay={Overlay.Results} />
-              </Route>
-            </Switch>
-          </DrawerContainer>
-        </StyledLargeDrawerPanel>
+        {showContentPanel && (
+          <StyledLargeDrawerPanel data-testid="drawerPanel" show={!legendActive}>
+            <DrawerPanelHeader>
+              <SubtitleHeading as="h6">Een kaartpaneel</SubtitleHeading>
+              <TitleHeading styleAs="h2">Resultaten</TitleHeading>
+            </DrawerPanelHeader>
+            <DrawerContainer>
+              <Switch>
+                <Route path={[routing.dataSearchGeo_TEMP.path, routing.panorama_TEMP.path]}>
+                  <MapSearchResults />
+                </Route>
+                <Route path={[routing.dataDetail_TEMP.path]}>
+                  <DetailPanel />
+                </Route>
+                <Route
+                  path={[
+                    routing.addresses_TEMP.path,
+                    routing.establishments_TEMP.path,
+                    routing.cadastralObjects_TEMP.path,
+                  ]}
+                  exact
+                >
+                  <DrawResults currentOverlay={Overlay.Results} />
+                </Route>
+              </Switch>
+            </DrawerContainer>
+          </StyledLargeDrawerPanel>
+        )}
         {legendActive && (
           <SmallDrawerPanel data-testid="drawerPanel">
             <DrawerPanelHeader onClose={onCloseLegend}>

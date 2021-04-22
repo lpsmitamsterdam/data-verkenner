@@ -47,6 +47,20 @@ describe('MapPanel', () => {
     expect(queryByTestId('legendPanel')).toBeNull()
   })
 
+  it('should hide (not unmount) the content panel when legend panel is active', () => {
+    currentPath = '/kaart/geozoek/'
+    search = '?locatie=123,123'
+    const { getByTestId, queryAllByTestId } = render(withMapContext(<MapPanel />))
+
+    const legendControlButton = getByTestId('legendControl').querySelector('button')
+
+    expect(getByTestId('drawerPanel')).toHaveStyleRule('display', 'block')
+
+    // Open
+    fireEvent.click(legendControlButton as Element)
+    expect(queryAllByTestId('drawerPanel')[0]).toHaveStyleRule('display', 'none')
+  })
+
   it('should close the legend panel when navigating to a detail panel', () => {
     const { getByTestId, queryByTestId, rerender } = render(withMapContext(<MapPanel />))
 
@@ -95,13 +109,13 @@ describe('MapPanel', () => {
     expect(queryByTestId('legendControl')).toBeDefined()
   })
 
-  it("should not show the panel when location isn't set on geosearch page", () => {
+  it("should not render the panel when location isn't set on geosearch page", () => {
     currentPath = '/kaart/geozoek/'
     search = ''
 
-    const { getByTestId } = render(withMapContext(<MapPanel />))
+    const { queryByTestId } = render(withMapContext(<MapPanel />))
 
-    expect(getByTestId('drawerPanel')).toHaveStyleRule('display', 'none')
+    expect(queryByTestId('drawerPanel')).toBeNull()
   })
 
   it('should show the panel when location is set on geosearch page', () => {
@@ -113,20 +127,20 @@ describe('MapPanel', () => {
     expect(queryByTestId('drawerPanel')).not.toBeNull()
   })
 
-  it("should not show the panel when polygon isn't set on dataselection pages (adressen, vestigingen and kadastrale objecten)", () => {
+  it("should not render the panel when polygon isn't set on dataselection pages (adressen, vestigingen and kadastrale objecten)", () => {
     currentPath = '/kaart/bag/adressen/'
     search = ''
 
-    const { getByTestId, rerender } = render(withMapContext(<MapPanel />))
-    expect(getByTestId('drawerPanel')).toHaveStyleRule('display', 'none')
+    const { queryByTestId, rerender } = render(withMapContext(<MapPanel />))
+    expect(queryByTestId('drawerPanel')).toBeNull()
 
     currentPath = '/kaart/hr/vestigingen/'
     rerender(withMapContext(<MapPanel />))
-    expect(getByTestId('drawerPanel')).toHaveStyleRule('display', 'none')
+    expect(queryByTestId('drawerPanel')).toBeNull()
 
     currentPath = '/kaart/brk/kadastrale-objecten/'
     rerender(withMapContext(<MapPanel />))
-    expect(getByTestId('drawerPanel')).toHaveStyleRule('display', 'none')
+    expect(queryByTestId('drawerPanel')).toBeNull()
   })
 
   it('should show the panel when polygon is set on dataselection pages (adressen, vestigingen and kadastrale objecten)', () => {
