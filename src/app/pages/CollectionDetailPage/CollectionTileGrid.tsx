@@ -10,21 +10,21 @@ import styled from 'styled-components'
 import { Tile, TileLabel } from '../../components/Tile'
 import TileGrid from '../../components/TileGrid/TileGrid'
 import { SizeOnBreakpoint, TileGridItem } from '../../components/TileGrid/TileGridStyle'
-import { CMSResultItem } from '../../utils/useFromCMS'
+import { NormalizedFieldItems } from '../../../normalizations/cms/types'
 
 const StyledHeading = styled(Heading)`
   color: ${themeColor('tint', 'level1')};
   margin-bottom: ${themeSpacing(4)};
 `
 
-type Props = {
-  results: CMSResultItem[]
+export interface CollectionTileGridProps {
+  results?: NormalizedFieldItems[]
   loading: boolean
   title?: string
   description?: string
 }
 
-type Template = {
+interface Template {
   3: [SizeOnBreakpoint, SizeOnBreakpoint, SizeOnBreakpoint]
   4: [SizeOnBreakpoint, SizeOnBreakpoint, SizeOnBreakpoint, SizeOnBreakpoint]
   5: [SizeOnBreakpoint, SizeOnBreakpoint, SizeOnBreakpoint, SizeOnBreakpoint, SizeOnBreakpoint]
@@ -70,7 +70,12 @@ const GRID_ITEM_TEMPLATE: Template = {
 
 const GRID_TEMPLATE: SizeOnBreakpoint = { mobileL: [1, 1], tabletM: [1, 4], laptop: [1, 5] }
 
-const CollectionTileGrid: FunctionComponent<Props> = ({ results, loading, title, description }) => (
+const CollectionTileGrid: FunctionComponent<CollectionTileGridProps> = ({
+  results,
+  loading,
+  title,
+  description,
+}) => (
   <TileGrid grid={GRID_TEMPLATE}>
     <TileGridItem span={{ mobileL: [2, 2] }}>
       <Tile as="div" isLoading={loading}>
@@ -81,34 +86,35 @@ const CollectionTileGrid: FunctionComponent<Props> = ({ results, loading, title,
         {description && <Paragraph strong dangerouslySetInnerHTML={{ __html: description }} />}
       </Tile>
     </TileGridItem>
-    {results.map(({ id, linkProps, teaserImage, shortTitle, title: tileTitle }, i) => {
-      // Only with 3 items, the first tile (the biggest) shouldn't have the compact style
-      const Provider = results.length === 3 && i === 0 ? Fragment : CompactThemeProvider
-      const span = GRID_ITEM_TEMPLATE[results.length][i]
+    {results &&
+      results.map(({ id, linkProps, teaserImage, shortTitle, title: tileTitle }, i) => {
+        // Only with 3 items, the first tile (the biggest) shouldn't have the compact style
+        const Provider = results.length === 3 && i === 0 ? Fragment : CompactThemeProvider
+        const span = GRID_ITEM_TEMPLATE[results.length][i]
 
-      return (
-        <TileGridItem key={id} span={span}>
-          {/*
+        return (
+          <TileGridItem key={id} span={span}>
+            {/*
                     // @ts-ignore */}
-          <Tile
-            {...{
-              ...linkProps,
-              isLoading: loading,
-              span,
-              backgroundImage: teaserImage,
-            }}
-          >
-            <TileLabel>
-              <Provider>
-                <Paragraph strong gutterBottom={0}>
-                  {shortTitle || tileTitle}
-                </Paragraph>
-              </Provider>
-            </TileLabel>
-          </Tile>
-        </TileGridItem>
-      )
-    })}
+            <Tile
+              {...{
+                ...linkProps,
+                isLoading: loading,
+                span,
+                backgroundImage: teaserImage,
+              }}
+            >
+              <TileLabel>
+                <Provider>
+                  <Paragraph strong gutterBottom={0}>
+                    {shortTitle || tileTitle}
+                  </Paragraph>
+                </Provider>
+              </TileLabel>
+            </Tile>
+          </TileGridItem>
+        )
+      })}
   </TileGrid>
 )
 

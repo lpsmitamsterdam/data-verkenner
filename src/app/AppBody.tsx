@@ -9,6 +9,7 @@ import LoadingSpinner from './components/LoadingSpinner/LoadingSpinner'
 import { FeedbackModal } from './components/Modal'
 import NotificationAlert from './components/NotificationAlert/NotificationAlert'
 import { mapSearchPagePaths, mapSplitPagePaths, routing } from './routes'
+import { DataSelectionProvider } from './components/DataSelection/DataSelectionContext'
 
 const HomePage = lazy(() => import(/* webpackChunkName: "HomePage" */ './pages/HomePage'))
 const ActualityPage = lazy(
@@ -111,28 +112,19 @@ const AppBody: FunctionComponent<AppBodyProps> = ({
       ) : (
         <>
           <Suspense fallback={<StyledLoadingSpinner />}>
-            <Switch>
-              <Route
-                path={[
-                  routing.data_TEMP.path,
-                  routing.dataSearchGeo_TEMP.path,
-                  routing.dataDetail_TEMP.path,
-                  routing.panorama_TEMP.path,
-                  routing.addresses_TEMP.path,
-                  routing.establishments_TEMP.path,
-                  routing.cadastralObjects_TEMP.path,
-                ]}
-              >
-                <MapContainer />
-              </Route>
-              <Route>
-                <>
-                  <Helmet>
-                    {/* The viewport must be reset for "old" pages that don't incorporate the grid.
+            <DataSelectionProvider>
+              <Helmet>
+                {/* The viewport must be reset for "old" pages that don't incorporate the grid.
         1024 is an arbirtrary number as the browser doesn't actually care about the exact number,
         but only needs to know it's significantly bigger than the actual viewport */}
-                    <meta name="viewport" content="width=1024, user-scalable=yes" />
-                  </Helmet>
+                <meta name="viewport" content="width=1024, user-scalable=yes" />
+              </Helmet>
+              <Switch>
+                <Route path={[routing.data_TEMP.path]}>
+                  {/* When the mobile map panel is working properly we can disable the meta rule up defined above */}
+                  <MapContainer />
+                </Route>
+                <Route>
                   <div className={`c-dashboard__body ${bodyClasses}`}>
                     <NotificationAlert />
                     {visibilityError && <ErrorAlert />}
@@ -158,9 +150,9 @@ const AppBody: FunctionComponent<AppBodyProps> = ({
                       </div>
                     )}
                   </div>
-                </>
-              </Route>
-            </Switch>
+                </Route>
+              </Switch>
+            </DataSelectionProvider>
             <FeedbackModal id="feedbackModal" />
           </Suspense>
         </>

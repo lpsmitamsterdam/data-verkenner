@@ -22,6 +22,7 @@ type Action =
   | { type: 'setPanelLayers'; payload: MapCollection[] }
   | { type: 'setMapLayers'; payload: MapLayer[] }
   | { type: 'setDetailFeature'; payload: Feature | null }
+  | { type: 'setPanoImageDate'; payload: string | null }
 
 const reducer = (state: MapState, action: Action): MapState => {
   switch (action.type) {
@@ -39,6 +40,11 @@ const reducer = (state: MapState, action: Action): MapState => {
       return {
         ...state,
         detailFeature: action.payload,
+      }
+    case 'setPanoImageDate':
+      return {
+        ...state,
+        panoImageDate: action.payload,
       }
     default:
       return state
@@ -64,6 +70,10 @@ const MapContainer: FunctionComponent = ({ children }) => {
     dispatch({ type: 'setDetailFeature', payload })
   }
 
+  function setPanoImageDate(payload: string | null) {
+    dispatch({ type: 'setPanoImageDate', payload })
+  }
+
   async function getPanelLayers() {
     const panelLayers = await fetchPanelLayers()
 
@@ -75,7 +85,6 @@ const MapContainer: FunctionComponent = ({ children }) => {
 
   async function getMapLayers() {
     const mapLayers = await fetchMapLayers()
-
     dispatch({
       type: 'setMapLayers',
       payload: mapLayers,
@@ -102,6 +111,7 @@ const MapContainer: FunctionComponent = ({ children }) => {
         showDrawContent,
         panoFullScreen,
         setPanoFullScreen,
+        setPanoImageDate,
       }}
     >
       <Alert level="info" dismissible>

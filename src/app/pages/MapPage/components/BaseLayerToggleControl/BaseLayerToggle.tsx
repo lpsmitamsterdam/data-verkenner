@@ -1,5 +1,6 @@
+import styled from 'styled-components'
 import { BaseLayerToggle as BaseLayerToggleComponent } from '@amsterdam/arm-core'
-import React, { useMemo, FunctionComponent } from 'react'
+import { FunctionComponent, useMemo } from 'react'
 import { getMapBaseLayers, MapBaseLayer } from '../../../../../map/services'
 import useParam from '../../../../utils/useParam'
 import { BaseLayer, baseLayerParam } from '../../query-params'
@@ -25,6 +26,12 @@ function toMapLayer({ value, urlTemplate, label }: MapBaseLayer) {
 const topoIds = topoLayers.map(({ id }) => id)
 const aerialIds = aerialLayers.map(({ id }) => id)
 
+const StyledControl = styled(Control)`
+  order: 3;
+  display: inline-flex;
+  align-self: flex-start;
+`
+
 // TODO: Refactor BaseLayerToggle to use an object instead of array of MapBaseLayers
 const BaseLayerToggle: FunctionComponent = () => {
   const [activeBaseLayer, setActiveBaseLayer] = useParam(baseLayerParam)
@@ -40,7 +47,7 @@ const BaseLayerToggle: FunctionComponent = () => {
   )
 
   return (
-    <Control data-testid="baselayerControl">
+    <StyledControl data-testid="baselayerControl">
       <BaseLayerToggleComponent
         aerialLayers={aerialLayers}
         topoLayers={topoLayers}
@@ -56,7 +63,7 @@ const BaseLayerToggle: FunctionComponent = () => {
           setActiveBaseLayer(id as BaseLayer, 'replace')
         }}
       />
-    </Control>
+    </StyledControl>
   )
 }
 

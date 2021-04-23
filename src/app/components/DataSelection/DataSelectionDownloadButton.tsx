@@ -8,23 +8,23 @@ import DATA_SELECTION_CONFIG from '../../../shared/services/data-selection/data-
 import { encodeQueryParams } from '../../../shared/services/query-string-parser/query-string-parser'
 import { getAccessToken } from '../../../shared/services/auth/auth'
 import { getGeometryFilter } from '../../../shared/ducks/data-selection/selectors'
+import { ActiveFilter, DatasetType } from './types'
 
-enum DatasetType {
-  Bag = 'bag',
-  Brk = 'brk',
-  Hr = 'hr',
-}
-
-type Props = {
+export interface DataSelectionDownloadButtonProps {
   dataset: DatasetType
-  activeFilters: any
+  activeFilters: ActiveFilter[]
 }
 
-const DataSelectionDownloadButton: FunctionComponent<Props> = ({ dataset, activeFilters }) => {
+const DataSelectionDownloadButton: FunctionComponent<DataSelectionDownloadButtonProps> = ({
+  dataset,
+  activeFilters,
+}) => {
   const geometryFilter = useSelector(getGeometryFilter)
   const { trackEvent } = useMatomo()
   const filterParams = []
-  let url = `${environment.API_ROOT}${DATA_SELECTION_CONFIG.datasets[dataset].ENDPOINT_EXPORT}`
+  let url = `${environment.API_ROOT}${
+    DATA_SELECTION_CONFIG.datasets[dataset].ENDPOINT_EXPORT ?? ''
+  }`
 
   DATA_SELECTION_CONFIG.datasets[dataset].FILTERS.forEach((filter: { slug: string }) => {
     if (typeof activeFilters[filter.slug] === 'string') {

@@ -1,13 +1,13 @@
 import { fireEvent, render } from '@testing-library/react'
 import { CmsType } from '../../../shared/config/cms.config'
 import EditorialResults from './EditorialResults'
-import { CMSResultItem } from '../../utils/useFromCMS'
 import { LOADING_SPINNER_TEST_ID } from '../LoadingSpinner/LoadingSpinner'
 import withAppContext from '../../utils/withAppContext'
 import {
   ERROR_MESSAGE_RELOAD_BUTTON_TEST_ID,
   ERROR_MESSAGE_TEST_ID,
 } from '../ErrorMessage/ErrorMessage'
+import { NormalizedFieldItems } from '../../../normalizations/cms/types'
 
 describe('EditorialResults', () => {
   Object.defineProperty(window, 'location', {
@@ -17,7 +17,8 @@ describe('EditorialResults', () => {
     },
   })
 
-  const result: CMSResultItem = {
+  const result: NormalizedFieldItems = {
+    key: 1,
     id: '1',
     specialType: null,
     slug: 'slug',
@@ -27,9 +28,7 @@ describe('EditorialResults', () => {
     label: 'label',
     teaser: 'long text',
     type: CmsType.Article,
-    date: '',
     intro: '',
-    link: null,
   }
 
   it('should display the loading indicator', () => {
@@ -70,26 +69,6 @@ describe('EditorialResults', () => {
       withAppContext(<EditorialResults {...props} results={[result, { ...result, id: '2' }]} />),
     )
     expect(queryAllByTestId('editorialCard')).toHaveLength(2)
-  })
-
-  // This test could probably be deleted if all files concerning the Editorial part of the app are fully typed.
-  it('should render no cards if slug or type is missing from result', () => {
-    const props = {
-      query: '',
-      label: 'Label',
-      loading: false,
-      isOverviewPage: false,
-      type: CmsType.Article,
-      errors: [],
-    }
-    const { queryAllByTestId, rerender } = render(
-      withAppContext(<EditorialResults {...props} results={[{ ...result, slug: null }]} />),
-    )
-
-    expect(queryAllByTestId('editorialCard')).toEqual([])
-
-    rerender(withAppContext(<EditorialResults {...props} results={[{ ...result, type: null }]} />))
-    expect(queryAllByTestId('editorialCard')).toEqual([])
   })
 
   it('should render AuthAlert', () => {

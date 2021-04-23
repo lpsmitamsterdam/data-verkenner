@@ -1,13 +1,15 @@
 import { LatLngLiteral } from 'leaflet'
-import { FunctionComponent } from 'react'
+import { FunctionComponent, useMemo } from 'react'
+import { matchPath, useLocation } from 'react-router-dom'
 import PanoramaViewerMarker from '../../components/PanoramaViewer/PanoramaViewerMarker'
 import useParam from '../../utils/useParam'
 import MapSearchMarker from './map-search/MapSearchMarker'
 import { drawToolOpenParam, locationParam } from './query-params'
+import { routing } from '../../routes'
 
 export interface MarkerProps {
-  location: LatLngLiteral | null
-  setLocation?: (location: LatLngLiteral) => void
+  position: LatLngLiteral | null
+  setPosition?: (location: LatLngLiteral) => void
 }
 
 export interface MapMarkersProps {
@@ -15,13 +17,26 @@ export interface MapMarkersProps {
 }
 
 const MapMarkers: FunctionComponent<MapMarkersProps> = ({ panoActive }) => {
-  const [location, setLocation] = useParam(locationParam)
+  const [locationParameter, setLocationParameter] = useParam(locationParam)
+  const location = useLocation()
   const [showDrawTool] = useParam(drawToolOpenParam)
+
+  const renderSearchMarker = useMemo(
+    () =>
+      !panoActive &&
+      !showDrawTool &&
+      (matchPath(location.pathname, { path: routing.dataDetail_TEMP.path, exact: true }) ||
+        matchPath(location.pathname, { path: routing.dataSearchGeo_TEMP.path, exact: true }) ||
+        matchPath(location.pathname, { path: routing.data_TEMP.path, exact: true })),
+    [location, panoActive, showDrawTool],
+  )
 
   return (
     <>
-      {!panoActive && !showDrawTool && <MapSearchMarker location={location} />}
-      {panoActive && <PanoramaViewerMarker location={location} setLocation={setLocation} />}
+      {renderSearchMarker && <MapSearchMarker position={locationParameter} />}
+      {panoActive && (
+        <PanoramaViewerMarker position={locationParameter} setPosition={setLocationParameter} />
+      )}
     </>
   )
 }

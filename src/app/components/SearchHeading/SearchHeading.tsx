@@ -30,13 +30,13 @@ const StyledIcon = styled(Icon)`
 
 interface SearchHeadingProps {
   label: string
-  icon: JSX.Element
+  icon?: JSX.Element
 }
 
 const SearchHeading: FunctionComponent<SearchHeadingProps> = ({ label, icon }) => (
   <>
     <Divider />
-    <StyledHeading forwardedAs="h2">
+    <StyledHeading forwardedAs="h2" data-testid="searchHeading">
       {icon && <StyledIcon>{icon}</StyledIcon>}
       {label}
     </StyledHeading>

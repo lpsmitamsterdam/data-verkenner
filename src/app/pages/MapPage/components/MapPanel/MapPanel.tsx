@@ -1,18 +1,16 @@
 import { Heading, hooks, themeSpacing } from '@amsterdam/asc-ui'
-import React, { FunctionComponent, useCallback, useMemo, useState } from 'react'
+import { FunctionComponent, useEffect, useMemo, useState } from 'react'
 import styled from 'styled-components'
-import { Route, Switch, useHistory, useLocation, matchPath } from 'react-router-dom'
+import { matchPath, Route, Switch, useLocation } from 'react-router-dom'
 import { DrawerPanelHeader, LargeDrawerPanel, SmallDrawerPanel } from '../DrawerPanel'
 import DrawerOverlay, { DeviceMode, DrawerState } from '../DrawerOverlay'
 import { Overlay } from '../../types'
 import { routing } from '../../../../routes'
 import MapSearchResults from '../../map-search/MapSearchResults'
 import DetailPanel from '../../detail/DetailPanel'
-import LoadingSpinner from '../../../../components/LoadingSpinner/LoadingSpinner'
 import LegendPanel from '../LegendPanel/LegendPanel'
 import useMapControls from './useMapControls'
-import { locationParam, panoFovParam, panoHeadingParam, panoPitchParam } from '../../query-params'
-import useBuildQueryString from '../../../../utils/useBuildQueryString'
+import { locationParam, polygonParam } from '../../query-params'
 import DrawResults from '../DrawTool/DrawResults'
 import useParam from '../../../../utils/useParam'
 
@@ -27,21 +25,32 @@ const SubtitleHeading = styled(Heading)`
 
 const DrawerContainer = styled.div`
   padding: ${themeSpacing(0, 4)};
+  margin: ${themeSpacing(3, 0)};
 `
 
-interface MapPanelProps {
-  loading: boolean
-}
+const StyledLargeDrawerPanel = styled(LargeDrawerPanel)<{ show: boolean }>`
+  display: ${({ show }) => (show ? 'block' : 'none')};
+`
 
-const MapPanel: FunctionComponent<MapPanelProps> = ({ loading }) => {
+const MapPanel: FunctionComponent = () => {
   const [legendActive, setLegendActive] = useState(false)
   const [drawerState, setDrawerState] = useState(DrawerState.Closed)
-  const [locationParameter, setLocationParameter] = useParam(locationParam)
+  const [locationParameter] = useParam(locationParam)
+  const [polygon] = useParam(polygonParam)
   const [showDesktopVariant] = hooks.useMatchMedia({ minBreakpoint: 'tabletM' })
-  const history = useHistory()
   const location = useLocation()
-  const { buildQueryString } = useBuildQueryString()
   const mode = showDesktopVariant ? DeviceMode.Desktop : DeviceMode.Mobile
+  // TODO: Replace this logic with 'useRouteMatch()' when the following PR has been released:
+  // https://github.com/ReactTraining/react-router/pull/7822
+  const dataDetailMatch = useMemo(
+    () => matchPath(location.pathname, routing.dataDetail_TEMP.path),
+    [location.pathname, routing.dataDetail_TEMP.path],
+  )
+
+  const dataSearchGeoMatch = useMemo(
+    () => matchPath(location.pathname, routing.dataSearchGeo_TEMP.path),
+    [location.pathname, routing.dataSearchGeo_TEMP.path],
+  )
 
   const onOpenLegend = () => {
     setLegendActive(true)
@@ -52,34 +61,36 @@ const MapPanel: FunctionComponent<MapPanelProps> = ({ loading }) => {
     setLegendActive(false)
   }
 
-  const onClosePanel = useCallback(() => {
-    if (matchPath(location.pathname, routing.dataSearchGeo_TEMP.path)) {
-      setLocationParameter(null)
+  useEffect(() => {
+    if (locationParameter || polygon) {
+      setDrawerState(DrawerState.Open)
     }
-    if (matchPath(location.pathname, routing.dataDetail_TEMP.path)) {
-      history.push({
-        pathname: routing.dataSearchGeo_TEMP.path,
-        search: buildQueryString([
-          [panoPitchParam, null],
-          [panoHeadingParam, null],
-          [panoFovParam, null],
-        ]),
-      })
+  }, [locationParameter, polygon])
+
+  // Hide the legend when any of the following events occur:
+  // - The user selects an item on the map, navigating to a detail panel.
+  // - The user selects a point on the map, navigating to a geo search panel.
+  // - The users moves the point on the map, whilst already having the geo search panel open.
+  useEffect(() => {
+    if (dataDetailMatch || dataSearchGeoMatch) {
+      setLegendActive(false)
     }
-  }, [history, buildQueryString, panoPitchParam, panoHeadingParam, panoFovParam, setDrawerState])
+  }, [dataDetailMatch, dataSearchGeoMatch, locationParameter])
 
   const controls = useMapControls(showDesktopVariant, onOpenLegend)
 
-  const DrawerPanel = useMemo(() => (legendActive ? SmallDrawerPanel : LargeDrawerPanel), [
-    legendActive,
-  ])
-
   const showContentPanel = useMemo(() => {
     if (
-      // Do not show content panel when legend is active
-      legendActive ||
       // Also geosearch-page always needs a location parameter
-      (matchPath(location.pathname, routing.dataSearchGeo_TEMP.path) && !locationParameter)
+      matchPath(location.pathname, {
+        path: routing.data_TEMP.path,
+        exact: true,
+      }) ||
+      (dataSearchGeoMatch && !locationParameter) ||
+      ((matchPath(location.pathname, routing.addresses_TEMP.path) ||
+        matchPath(location.pathname, routing.establishments_TEMP.path) ||
+        matchPath(location.pathname, routing.cadastralObjects_TEMP.path)) &&
+        !polygon)
     ) {
       return false
     }
@@ -97,12 +108,12 @@ const MapPanel: FunctionComponent<MapPanelProps> = ({ loading }) => {
         onStateChange={(state) => setDrawerState(state)}
       >
         {showContentPanel && (
-          <DrawerPanel data-testid="drawerPanel">
-            <DrawerPanelHeader onClose={onClosePanel}>
-              <TitleHeading styleAs="h1">Resultaten</TitleHeading>
+          <StyledLargeDrawerPanel data-testid="drawerPanel" show={!legendActive}>
+            <DrawerPanelHeader>
+              <SubtitleHeading as="h6">Een kaartpaneel</SubtitleHeading>
+              <TitleHeading styleAs="h2">Resultaten</TitleHeading>
             </DrawerPanelHeader>
             <DrawerContainer>
-              {loading && <LoadingSpinner />}
               <Switch>
                 <Route path={[routing.dataSearchGeo_TEMP.path, routing.panorama_TEMP.path]}>
                   <MapSearchResults />
@@ -122,13 +133,12 @@ const MapPanel: FunctionComponent<MapPanelProps> = ({ loading }) => {
                 </Route>
               </Switch>
             </DrawerContainer>
-          </DrawerPanel>
+          </StyledLargeDrawerPanel>
         )}
         {legendActive && (
           <SmallDrawerPanel data-testid="drawerPanel">
             <DrawerPanelHeader onClose={onCloseLegend}>
-              <TitleHeading styleAs="h1">Legenda</TitleHeading>
-              <SubtitleHeading as="h3">Een kaartpaneel</SubtitleHeading>
+              <TitleHeading styleAs="h2">Legenda</TitleHeading>
             </DrawerPanelHeader>
             <LegendPanel />
           </SmallDrawerPanel>

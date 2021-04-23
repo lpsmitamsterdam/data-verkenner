@@ -129,8 +129,14 @@ const DrawTool: FunctionComponent = () => {
    */
   const updateShape = (shape: { polygon: PolyDrawing | null; polyline: PolyDrawing | null }) => {
     if (shape.polygon || shape.polyline) {
-      setPolygon(shape.polygon)
-      setPolyline(shape.polyline, 'replace')
+      const method = shape.polygon ? 'push' : 'replace'
+      history[method]({
+        pathname: routing.addresses_TEMP.path,
+        search: buildQueryString([
+          [polylineParam, shape.polyline],
+          [polygonParam, shape.polygon],
+        ]),
+      })
     } else {
       history.push({
         pathname: routing.dataSearchGeo_TEMP.path,
@@ -216,8 +222,6 @@ const DrawTool: FunctionComponent = () => {
   )
 
   const onClose = () => {
-    removeDataSelection()
-    drawnItemsGroup.clearLayers()
     history.push({
       pathname: routing.dataSearchGeo_TEMP.path,
       search: buildQueryString(undefined, [polylineParam, polygonParam, drawToolOpenParam]),
@@ -227,7 +231,10 @@ const DrawTool: FunctionComponent = () => {
   useEffect(() => {
     mapInstance.on(L.Draw.Event.EDITVERTEX as any, onEditVertex as any)
 
+    // Clean up
     return () => {
+      removeDataSelection()
+      drawnItemsGroup.clearLayers()
       mapInstance.off(L.Draw.Event.EDITVERTEX as any, onEditVertex as any)
     }
   }, [])
