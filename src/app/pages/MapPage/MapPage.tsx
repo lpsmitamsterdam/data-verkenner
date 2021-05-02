@@ -1,6 +1,7 @@
-import { constants, Map as MapComponent, useStateRef } from '@amsterdam/arm-core'
+import { constants, Map as MapComponent, Scale, useStateRef } from '@amsterdam/arm-core'
 import L from 'leaflet'
 import { FunctionComponent, useCallback, useEffect } from 'react'
+import { Theme, themeSpacing } from '@amsterdam/asc-ui'
 import styled, { createGlobalStyle, css } from 'styled-components'
 import PanoramaViewer from '../../components/PanoramaViewer/PanoramaViewer'
 import useParam from '../../utils/useParam'
@@ -18,7 +19,6 @@ import {
   zoomParam,
 } from './query-params'
 import MapPanel from './components/MapPanel'
-import DataSelectionProvider from './components/DrawTool/DataSelectionProvider'
 
 const MapView = styled.div`
   height: 100%;
@@ -36,6 +36,7 @@ const MapView = styled.div`
 const GlobalStyle = createGlobalStyle<{
   panoActive?: boolean
   panoFullScreen: boolean
+  theme: Theme.ThemeInterface
 }>`
   body {
     touch-action: none;
@@ -59,6 +60,9 @@ const GlobalStyle = createGlobalStyle<{
       css`
         display: none;
       `}
+  }
+  .leaflet-control-container .leaflet-control-scale {
+    margin: ${themeSpacing(0, 16, 4, 0)} !important;
   }
 `
 
@@ -105,6 +109,7 @@ const MapPage: FunctionComponent = () => {
           ...DEFAULT_AMSTERDAM_MAPS_OPTIONS,
           zoom: zoom ?? DEFAULT_AMSTERDAM_MAPS_OPTIONS.zoom,
           center: center ?? DEFAULT_AMSTERDAM_MAPS_OPTIONS.center,
+          attributionControl: false,
         }}
         events={{
           zoomend: useCallback(() => {
@@ -119,13 +124,18 @@ const MapPage: FunctionComponent = () => {
           }, [mapInstanceRef, setCenter]),
         }}
       >
-        <DataSelectionProvider>
-          <LeafletLayers />
+        <LeafletLayers />
 
-          {panoActive && <PanoramaViewer />}
-          <MapMarkers panoActive={panoActive} />
-          <MapPanel />
-        </DataSelectionProvider>
+        {panoActive && <PanoramaViewer />}
+        <MapMarkers panoActive={panoActive} />
+        <MapPanel />
+        <Scale
+          options={{
+            position: 'bottomright',
+            metric: true,
+            imperial: false,
+          }}
+        />
       </MapComponent>
     </MapView>
   )

@@ -10,12 +10,13 @@ import useLeafletEvent from '../../../utils/useLeafletEvent'
 import useParam from '../../../utils/useParam'
 import { useMapContext } from '../MapContext'
 import { MarkerProps } from '../MapMarkers'
-import { locationParam, zoomParam } from '../query-params'
+import { locationParam, polygonParam, zoomParam } from '../query-params'
 import { SnapPoint } from '../types'
 
 const MapSearchMarker: FunctionComponent<MarkerProps> = ({ position }) => {
   const { legendLeafletLayers } = useMapContext()
   const [zoom] = useParam(zoomParam)
+  const [polygon] = useParam(polygonParam)
   const location = useLocation()
   const history = useHistory()
   const { buildQueryString } = useBuildQueryString()
@@ -46,7 +47,7 @@ const MapSearchMarker: FunctionComponent<MarkerProps> = ({ position }) => {
     } else {
       history.push({
         pathname: routing.dataSearchGeo_TEMP.path,
-        search: buildQueryString([[locationParam, e.latlng]]),
+        search: buildQueryString([[locationParam, e.latlng]], [polygonParam]),
       })
     }
   }
@@ -62,7 +63,13 @@ const MapSearchMarker: FunctionComponent<MarkerProps> = ({ position }) => {
   )
 
   return position &&
-    !matchPath(location.pathname, { path: routing.dataDetail_TEMP.path, exact: true }) ? (
+    !polygon &&
+    !matchPath(location.pathname, { path: routing.dataDetail_TEMP.path, exact: true }) &&
+    !(
+      matchPath(location.pathname, routing.addresses_TEMP.path) ||
+      matchPath(location.pathname, routing.establishments_TEMP.path) ||
+      matchPath(location.pathname, routing.cadastralObjects_TEMP.path)
+    ) ? (
     <ARMMarker latLng={position} />
   ) : null
 }

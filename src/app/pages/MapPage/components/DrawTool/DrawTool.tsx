@@ -10,10 +10,18 @@ import L, { LatLng, LatLngLiteral, Polygon } from 'leaflet'
 import { FunctionComponent, useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { useHistory } from 'react-router-dom'
 import useParam from '../../../../utils/useParam'
-import { drawToolOpenParam, PolyDrawing, polygonParam, polylineParam } from '../../query-params'
-import { useDataSelectionContext } from './DataSelectionContext'
+import {
+  dataSelectionFiltersParam,
+  drawToolOpenParam,
+  PolyDrawing,
+  polygonParam,
+  polylineParam,
+} from '../../query-params'
 import { routing } from '../../../../routes'
 import useBuildQueryString from '../../../../utils/useBuildQueryString'
+import { useDataSelection } from '../../../../components/DataSelection/DataSelectionContext'
+import useLegacyDataselectionConfig from '../../../../components/DataSelection/useLegacyDataselectionConfig'
+import config from '../../config'
 
 function getTotalDistance(latLngs: LatLng[]) {
   return latLngs.reduce(
@@ -68,17 +76,20 @@ const DrawTool: FunctionComponent = () => {
   const [polygon, setPolygon] = useParam(polygonParam)
   const [polyline, setPolyline] = useParam(polylineParam)
   const [drawtoolOpen] = useParam(drawToolOpenParam)
-  const { setDistanceText } = useDataSelectionContext()
   const history = useHistory()
-
+  const { activeFilters, setDistanceText, setDrawToolLocked } = useDataSelection()
+  const { currentDatasetType } = useLegacyDataselectionConfig()
   const [initialDrawnItems, setInitialDrawnItems] = useState<ExtendedLayer[]>([])
 
   // We needs refs here for leaflet event handlers
+  const currentDatasetTypeRef = useRef(currentDatasetType)
   const polygonRef = useRef(polygon)
-  polygonRef.current = polygon
-
   const polylineRef = useRef(polyline)
+  const activeFiltersRef = useRef(activeFilters)
+  currentDatasetTypeRef.current = currentDatasetType
+  polygonRef.current = polygon
   polylineRef.current = polyline
+  activeFiltersRef.current = activeFilters
 
   const mapInstance = useMapInstance()
   const drawnItemsGroup = useMemo(() => new L.FeatureGroup(), [])
@@ -94,19 +105,32 @@ const DrawTool: FunctionComponent = () => {
    * @param shape
    */
   const updateShape = (shape: { polygon: PolyDrawing | null; polyline: PolyDrawing | null }) => {
-    if (shape.polygon || shape.polyline) {
-      const method = shape.polygon ? 'push' : 'replace'
-      history[method]({
-        pathname: routing.addresses_TEMP.path,
+    const pathname =
+      config[currentDatasetTypeRef.current?.toUpperCase()]?.path ?? routing.addresses_TEMP.path
+    if (shape.polygon) {
+      history.push({
+        pathname,
         search: buildQueryString([
           [polylineParam, shape.polyline],
           [polygonParam, shape.polygon],
         ]),
       })
+    } else if (activeFilters.length) {
+      setDistanceText(undefined)
+      history.push({
+        pathname,
+        search: buildQueryString(
+          [[polylineParam, shape.polyline]],
+          [polygonParam, drawToolOpenParam],
+        ),
+      })
     } else {
       history.push({
         pathname: routing.dataSearchGeo_TEMP.path,
-        search: buildQueryString(undefined, [polylineParam, polygonParam, drawToolOpenParam]),
+        search: buildQueryString(
+          [[polylineParam, shape.polyline]],
+          [dataSelectionFiltersParam, polygonParam, drawToolOpenParam],
+        ),
       })
     }
   }
@@ -137,6 +161,7 @@ const DrawTool: FunctionComponent = () => {
           ? polylineRef.current
           : { id: layer.id, polygon: getLayerCoordinates(layer) }
 
+      setDrawToolLocked(false)
       updateShape({
         polygon: updatedPolygon,
         polyline: updatedPolyline,
@@ -199,6 +224,12 @@ const DrawTool: FunctionComponent = () => {
     }
   }, [])
 
+  useEffect(() => {
+    if (!polygon) {
+      setDistanceText(undefined)
+    }
+  }, [polygon])
+
   /**
    * This effect will handle loading drawings from initial state and
    * handle adding and removing drawings when navigating
@@ -230,6 +261,9 @@ const DrawTool: FunctionComponent = () => {
       onEndInitialItems={attachDataToLayer}
       onDelete={onDeleteDrawing}
       onClose={onClose}
+      onDrawStart={() => {
+        setDrawToolLocked(true)
+      }}
       drawnItems={initialDrawnItems}
       drawnItemsGroup={drawnItemsGroup}
     />

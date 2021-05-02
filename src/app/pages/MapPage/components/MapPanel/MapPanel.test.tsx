@@ -3,8 +3,8 @@ import { screen, fireEvent, render } from '@testing-library/react'
 import MapPanel from './MapPanel'
 import 'jest-styled-components'
 import withMapContext from '../../../../utils/withMapContext'
+import { DataSelectionProvider } from '../../../../components/DataSelection/DataSelectionContext'
 import { MapContextProps } from '../../MapContext'
-import DataSelectionProvider from '../DrawTool/DataSelectionProvider'
 
 jest.mock('react-resize-detector', () => ({
   useResizeDetector: jest.fn(() => ({
@@ -80,7 +80,7 @@ describe('MapPanel', () => {
 
     // Close
     currentPath = '/kaart/parkeervakken/parkeervakken/120876487667/'
-    rerender(withMapContext(<MapPanel />))
+    rerender(renderWithMapAndDataSelectionContext(<MapPanel />))
 
     expect(screen.queryByTestId('legendPanel')).not.toBeInTheDocument()
   })
@@ -96,7 +96,7 @@ describe('MapPanel', () => {
 
     // Close
     currentPath = '/kaart/geozoek/'
-    rerender(withMapContext(<MapPanel />))
+    rerender(renderWithMapAndDataSelectionContext(<MapPanel />))
 
     expect(screen.queryByTestId('legendPanel')).not.toBeInTheDocument()
   })
@@ -104,7 +104,7 @@ describe('MapPanel', () => {
   it('should show the right map controls when panorama is not in full screen mode', () => {
     render(renderWithMapAndDataSelectionContext(<MapPanel />))
 
-    expect(screen.queryByTestId('baselayerControl')).toBeInTheDocument()
+    expect(screen.queryByTestId('mapContextMenuControls')).toBeInTheDocument()
     expect(screen.queryByTestId('drawtoolControl')).toBeInTheDocument()
     expect(screen.queryByTestId('legendControl')).toBeInTheDocument()
   })

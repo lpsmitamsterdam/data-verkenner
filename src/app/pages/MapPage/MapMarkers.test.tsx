@@ -1,7 +1,7 @@
 import { screen, render } from '@testing-library/react'
 import withMapContext from '../../utils/withMapContext'
 import MapMarkers from './MapMarkers'
-import DataSelectionProvider from './components/DrawTool/DataSelectionProvider'
+import { DataSelectionProvider } from '../../components/DataSelection/DataSelectionContext'
 
 let currentPath = '/kaart'
 
