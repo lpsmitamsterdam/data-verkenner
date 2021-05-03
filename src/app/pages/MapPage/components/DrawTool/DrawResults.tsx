@@ -9,13 +9,13 @@ import {
   themeSpacing,
   useMatchMedia,
 } from '@amsterdam/asc-ui'
-import { Link as RouterLink, useHistory } from 'react-router-dom'
-import { FunctionComponent, useEffect, useState } from 'react'
+import { Link as RouterLink } from 'react-router-dom'
+import { FunctionComponent, useState } from 'react'
 import styled from 'styled-components'
 import LoadingSpinner from '../../../../components/LoadingSpinner/LoadingSpinner'
 import config, { DataSelectionType } from '../../config'
 import useBuildQueryString from '../../../../utils/useBuildQueryString'
-import { dataSelectionFiltersParam, polygonParam, ViewMode, viewParam } from '../../query-params'
+import { polygonParam, ViewMode, viewParam } from '../../query-params'
 import useParam from '../../../../utils/useParam'
 import useLegacyDataselectionConfig from '../../../../components/DataSelection/useLegacyDataselectionConfig'
 import { fetchWithToken } from '../../../../../shared/services/api/api'
@@ -31,7 +31,6 @@ import LoginLink from '../../../../components/Links/LoginLink/LoginLink'
 import formatCount from '../../../../utils/formatCount'
 import AuthScope from '../../../../../shared/services/api/authScope'
 import { useMapContext } from '../../MapContext'
-import { routing } from '../../../../routes'
 
 const ResultLink = styled(RouterLink)`
   width: 100%;
@@ -64,26 +63,22 @@ const Results: FunctionComponent = () => {
   const { currentDatasetType, currentDatasetConfig } = useLegacyDataselectionConfig()
   const { setShowMapDrawVisualization } = useMapContext()
   const { buildQueryString } = useBuildQueryString()
-  const history = useHistory()
 
   const result = usePromise(async () => {
-    if (polygon?.polygon || activeFilters.length) {
-      const searchParams = new URLSearchParams({
-        shape: JSON.stringify(polygon?.polygon.map(({ lat, lng }) => [lng, lat])),
-        size: '20',
-        page: paginationPage.toString(),
-        ...createFiltersObject(activeFilters),
-      })
+    const searchParams = new URLSearchParams({
+      shape: JSON.stringify(polygon?.polygon.map(({ lat, lng }) => [lng, lat])),
+      size: '20',
+      page: paginationPage.toString(),
+      ...createFiltersObject(activeFilters),
+    })
 
-      const data = await fetchWithToken(
-        `${
-          // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
-          config[currentDatasetType.toUpperCase()]?.endpointData ?? ''
-        }?${searchParams.toString()}`,
-      )
-      return normalizeData(currentDatasetType.toUpperCase() as DataSelectionType, data)
-    }
-    return { results: [], totalCount: 0 }
+    const data = await fetchWithToken(
+      `${
+        // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
+        config[currentDatasetType.toUpperCase()]?.endpointData ?? ''
+      }?${searchParams.toString()}`,
+    )
+    return normalizeData(currentDatasetType.toUpperCase() as DataSelectionType, data)
   }, [polygon, currentDatasetConfig, currentDatasetType, paginationPage, activeFilters])
 
   useAsyncMapPanelHeader(
@@ -91,15 +86,6 @@ const Results: FunctionComponent = () => {
     isFulfilled(result) ? `${result.value.totalCount} Resultaten` : undefined,
     distanceText && `Locatie: ingetekend (${distanceText})`,
   )
-
-  useEffect(() => {
-    if (!activeFilters.length) {
-      history.push({
-        pathname: routing.dataSearchGeo_TEMP.path,
-        search: buildQueryString(undefined, [dataSelectionFiltersParam, polygonParam]),
-      })
-    }
-  }, [activeFilters])
 
   if (isPending(result)) {
     return <LoadingSpinner size={30} />

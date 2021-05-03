@@ -62,8 +62,8 @@ const createPolyLayer = (drawing: PolyDrawing, line = false): PolylineType | Pol
 const DrawTool: FunctionComponent = () => {
   const { buildQueryString } = useBuildQueryString()
 
-  const [polygon, setPolygon] = useParam(polygonParam)
-  const [polyline, setPolyline] = useParam(polylineParam)
+  const [polygon] = useParam(polygonParam)
+  const [polyline] = useParam(polylineParam)
   const history = useHistory()
   const { activeFilters, setDistanceText, setDrawToolLocked } = useDataSelection()
   const { currentDatasetType } = useLegacyDataselectionConfig()
@@ -105,7 +105,7 @@ const DrawTool: FunctionComponent = () => {
           [polygonParam, shape.polygon],
         ]),
       })
-    } else if (activeFilters.length) {
+    } else {
       setDistanceText(undefined)
       history.push({
         pathname,
@@ -148,41 +148,38 @@ const DrawTool: FunctionComponent = () => {
         polyline: updatedPolyline,
       })
     },
-    [setPolygon, setPolyline],
+    [polygonRef, polylineRef],
   )
 
-  const onDeleteDrawing = useCallback(
-    (deletedLayers: ExtendedLayer[]) => {
-      const deletedLayersIds = deletedLayers.map(({ id }) => id)
-      const deletedLayersBounds = deletedLayers.map((layer) => {
-        const coordinates = layer.getLatLngs()
+  const onDeleteDrawing = useCallback((deletedLayers: ExtendedLayer[]) => {
+    const deletedLayersIds = deletedLayers.map(({ id }) => id)
+    const deletedLayersBounds = deletedLayers.map((layer) => {
+      const coordinates = layer.getLatLngs()
 
-        return layer instanceof Polygon
-          ? (coordinates[0] as LatLngLiteral)
-          : ((coordinates as unknown) as LatLngLiteral)
-      })
+      return layer instanceof Polygon
+        ? (coordinates[0] as LatLngLiteral)
+        : ((coordinates as unknown) as LatLngLiteral)
+    })
 
-      if (deletedLayersBounds.length === 0) {
-        return
-      }
+    if (deletedLayersBounds.length === 0) {
+      return
+    }
 
-      const newPolygon =
-        polygonRef.current?.id && deletedLayersIds.includes(polygonRef.current.id)
-          ? null
-          : polygonRef.current
+    const newPolygon =
+      polygonRef.current?.id && deletedLayersIds.includes(polygonRef.current.id)
+        ? null
+        : polygonRef.current
 
-      const newPolyline =
-        polylineRef.current?.id && deletedLayersIds.includes(polylineRef.current.id)
-          ? null
-          : polylineRef.current
+    const newPolyline =
+      polylineRef.current?.id && deletedLayersIds.includes(polylineRef.current.id)
+        ? null
+        : polylineRef.current
 
-      updateShape({
-        polygon: newPolygon,
-        polyline: newPolyline,
-      })
-    },
-    [setPolygon, setPolyline],
-  )
+    updateShape({
+      polygon: newPolygon,
+      polyline: newPolyline,
+    })
+  }, [])
 
   const onClose = () => {
     history.push({

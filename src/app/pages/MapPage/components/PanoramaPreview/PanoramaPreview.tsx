@@ -96,9 +96,6 @@ const PanoramaPreview: FunctionComponent<PanoramaPreviewProps> = ({
     [location],
   )
 
-  const newLayers = useMemo(() => [...activeLayersWithoutPano, ...PANO_LAYERS], [
-    activeLayersWithoutPano,
-  ])
   const legacyReference = useSelector(getDetailLocation)
   const { buildQueryString } = useBuildQueryString()
 
@@ -126,7 +123,7 @@ const PanoramaPreview: FunctionComponent<PanoramaPreviewProps> = ({
           [panoHeadingParam, result?.value?.heading ?? panoHeadingParam.initialValue],
           [locationParam, location],
           // Zoom to level 11 when opening the PanoramaViewer, to show the panorama map layers
-          [mapLayersParam, newLayers],
+          [mapLayersParam, activeLayersWithoutPano],
           [zoomParam, 11],
         ]),
       }
