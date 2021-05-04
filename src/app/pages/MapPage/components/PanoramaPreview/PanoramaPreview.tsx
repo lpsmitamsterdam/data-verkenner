@@ -1,7 +1,7 @@
 import { Link, perceivedLoading, themeColor, themeSpacing } from '@amsterdam/asc-ui'
 import usePromise, { isPending, isRejected } from '@amsterdam/use-promise'
 import { LatLngLiteral } from 'leaflet'
-import { FunctionComponent, useMemo } from 'react'
+import { FunctionComponent } from 'react'
 import { useSelector } from 'react-redux'
 import { useLocation } from 'react-router-dom'
 import styled from 'styled-components'
@@ -10,7 +10,6 @@ import { ForbiddenError } from '../../../../../shared/services/api/customError'
 import { toPanoramaAndPreserveQuery } from '../../../../../store/redux-first-router/actions'
 import { getDetailLocation } from '../../../../../store/redux-first-router/selectors'
 import PanoAlert from '../../../../components/PanoAlert/PanoAlert'
-import { PANO_LAYERS } from '../PanoramaViewer/PanoramaViewer'
 import pickLinkComponent from '../../../../utils/pickLinkComponent'
 import useBuildQueryString from '../../../../utils/useBuildQueryString'
 import useParam from '../../../../utils/useParam'
@@ -22,6 +21,8 @@ import {
   panoPitchParam,
   zoomParam,
 } from '../../query-params'
+import { MAIN_PATHS } from '../../../../routes'
+import { FEATURE_BETA_MAP, isFeatureEnabled } from '../../../../features'
 
 export interface PanoramaPreviewProps extends FetchPanoramaOptions {
   location: LatLngLiteral
@@ -79,11 +80,6 @@ const PanoramaPreview: FunctionComponent<PanoramaPreviewProps> = ({
   const [activeLayers] = useParam(mapLayersParam)
   const browserLocation = useLocation()
 
-  const activeLayersWithoutPano = useMemo(
-    () => activeLayers.filter((id) => !PANO_LAYERS.includes(id)),
-    [],
-  )
-
   const result = usePromise(
     () =>
       getPanoramaThumbnail(location, {
@@ -114,21 +110,22 @@ const PanoramaPreview: FunctionComponent<PanoramaPreviewProps> = ({
     return <PreviewMessage>Geen panoramabeeld beschikbaar.</PreviewMessage>
   }
 
-  const to = browserLocation.pathname.includes('kaart')
-    ? {
-        pathname: browserLocation.pathname,
-        search: buildQueryString<any>([
-          [panoPitchParam, panoPitchParam.initialValue],
-          [panoFovParam, panoFovParam.initialValue],
-          [panoHeadingParam, result?.value?.heading ?? panoHeadingParam.initialValue],
-          [locationParam, location],
-          // Zoom to level 11 when opening the PanoramaViewer, to show the panorama map layers
-          [mapLayersParam, activeLayersWithoutPano],
-          [zoomParam, 11],
-        ]),
-      }
-    : // eslint-disable-next-line camelcase
-      toPanoramaAndPreserveQuery(result?.value?.pano_id, result?.value?.heading, legacyReference)
+  const to =
+    browserLocation.pathname.includes(MAIN_PATHS.MAP) || isFeatureEnabled(FEATURE_BETA_MAP)
+      ? {
+          pathname: browserLocation.pathname,
+          search: buildQueryString<any>([
+            [panoPitchParam, panoPitchParam.initialValue],
+            [panoFovParam, panoFovParam.initialValue],
+            [panoHeadingParam, result?.value?.heading ?? panoHeadingParam.initialValue],
+            [locationParam, location],
+            // Zoom to level 11 when opening the PanoramaViewer, to show the panorama map layers
+            [mapLayersParam, activeLayers],
+            [zoomParam, 11],
+          ]),
+        }
+      : // eslint-disable-next-line camelcase
+        toPanoramaAndPreserveQuery(result?.value?.pano_id, result?.value?.heading, legacyReference)
 
   return (
     <PreviewContainer {...otherProps} data-testid="panoramaPreview">
