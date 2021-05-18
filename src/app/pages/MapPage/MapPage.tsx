@@ -120,7 +120,6 @@ const MapPage: FunctionComponent = () => {
         {panoActive && <PanoramaViewer />}
         <MapMarker panoActive={panoActive} />
         <MapPanel />
-        <div data-testid="asdasdassdas" style={{ width: '20px' }} />
         <Scale
           options={{
             position: 'bottomright',
