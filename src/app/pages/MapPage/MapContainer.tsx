@@ -1,25 +1,29 @@
-import { FunctionComponent, useEffect, useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { Route, Switch } from 'react-router-dom'
+import type { FunctionComponent } from 'react'
+import type { MapCollection, MapLayer } from '../../../map/services'
 import {
   getMapLayers as fetchMapLayers,
   getPanelLayers as fetchPanelLayers,
-  MapCollection,
-  MapLayer,
 } from '../../../map/services'
 import { getUser } from '../../../shared/ducks/user/user'
 import useParam from '../../utils/useParam'
-import MapContext, { MapState } from './MapContext'
+import type { MapState } from './MapContext'
+import MapContext from './MapContext'
 import MapPage from './MapPage'
 import { mapLayersParam, panoFullScreenParam, ViewMode, viewParam } from './query-params'
 import buildLeafletLayers from './utils/buildLeafletLayers'
 import DataSelection from '../../components/DataSelection/DataSelection'
 import { routing } from '../../routes'
+import { DrawerState } from './components/DrawerOverlay'
 
 const MapContainer: FunctionComponent = ({ children }) => {
   const [activeMapLayers] = useParam(mapLayersParam)
   const [view] = useParam(viewParam)
-
+  const [legendActive, setLegendActive] = useState(false)
+  const [loading, setLoading] = useState(false)
+  const [drawerState, setDrawerState] = useState(DrawerState.Closed)
   const [detailFeature, setDetailFeature] = useState<MapState['detailFeature']>(null)
   const [panoImageDate, setPanoImageDate] = useState<MapState['panoImageDate']>(null)
   const [showMapDrawVisualization, setShowMapDrawVisualization] = useState(false)
@@ -66,6 +70,12 @@ const MapContainer: FunctionComponent = ({ children }) => {
         setPanoImageDate,
         showMapDrawVisualization,
         setShowMapDrawVisualization,
+        setLegendActive,
+        setDrawerState,
+        legendActive,
+        drawerState,
+        setLoading,
+        loading,
       }}
     >
       <Switch>

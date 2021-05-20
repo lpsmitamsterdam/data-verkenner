@@ -1,11 +1,12 @@
 import { Link, perceivedLoading, themeColor, themeSpacing } from '@amsterdam/asc-ui'
 import usePromise, { isPending, isRejected } from '@amsterdam/use-promise'
-import { LatLngLiteral } from 'leaflet'
-import { FunctionComponent } from 'react'
 import { useSelector } from 'react-redux'
 import { useLocation } from 'react-router-dom'
 import styled from 'styled-components'
-import { FetchPanoramaOptions, getPanoramaThumbnail } from '../../../../../api/panorama/thumbnail'
+import type { FunctionComponent } from 'react'
+import type { LatLngLiteral } from 'leaflet'
+import type { FetchPanoramaOptions } from '../../../../../api/panorama/thumbnail'
+import { getPanoramaThumbnail } from '../../../../../api/panorama/thumbnail'
 import { ForbiddenError } from '../../../../../shared/services/api/customError'
 import { toPanoramaAndPreserveQuery } from '../../../../../store/redux-first-router/actions'
 import { getDetailLocation } from '../../../../../store/redux-first-router/selectors'
@@ -19,7 +20,6 @@ import {
   panoFovParam,
   panoHeadingParam,
   panoPitchParam,
-  zoomParam,
 } from '../../query-params'
 import { MAIN_PATHS } from '../../../../routes'
 import { FEATURE_BETA_MAP, isFeatureEnabled } from '../../../../features'
@@ -119,9 +119,7 @@ const PanoramaPreview: FunctionComponent<PanoramaPreviewProps> = ({
             [panoFovParam, panoFovParam.initialValue],
             [panoHeadingParam, result?.value?.heading ?? panoHeadingParam.initialValue],
             [locationParam, location],
-            // Zoom to level 11 when opening the PanoramaViewer, to show the panorama map layers
             [mapLayersParam, activeLayers],
-            [zoomParam, 11],
           ]),
         }
       : // eslint-disable-next-line camelcase

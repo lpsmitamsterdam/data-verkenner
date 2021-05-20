@@ -1,12 +1,13 @@
 import { Container, themeColor } from '@amsterdam/asc-ui'
 import { useMatomo } from '@datapunt/matomo-tracker-react'
-import { LocationDescriptorObject } from 'history'
-import { FunctionComponent, useEffect, useMemo } from 'react'
+import { useEffect, useMemo } from 'react'
 import { Helmet } from 'react-helmet'
 import { useHistory } from 'react-router-dom'
 import styled from 'styled-components'
+import type { FunctionComponent } from 'react'
+import type { LocationDescriptorObject } from 'history'
 import environment from '../../../environment'
-import { routing } from '../../routes'
+import { toNotFound } from '../../links'
 import getImageFromCms from '../../utils/getImageFromCms'
 import useDocumentTitle from '../../utils/useDocumentTitle'
 import LoadingSpinner from '../LoadingSpinner/LoadingSpinner'
@@ -52,7 +53,7 @@ const EditorialPage: FunctionComponent<EditorialPageProps> = ({
 
   useEffect(() => {
     if (error) {
-      window.location.replace(routing.niet_gevonden.path)
+      history.replace(toNotFound())
     }
   }, [error])
 

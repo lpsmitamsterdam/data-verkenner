@@ -3,7 +3,7 @@ import { useIsEmbedded } from '../../../../contexts/ui'
 import useParam from '../../../../utils/useParam'
 import { useMapContext } from '../../MapContext'
 import { locationParam, mapLayersParam, panoHeadingParam } from '../../query-params'
-import { DrawerControl } from '../DrawerOverlay/DrawerOverlay'
+import type { DrawerControl } from '../DrawerOverlay/DrawerOverlay'
 import DrawToolControl from '../DrawToolControl'
 import EmbedControl from '../EmbedControl'
 import LegendControl from '../LegendControl'
@@ -60,24 +60,21 @@ const zoomControl: DrawerControl = {
   node: <ZoomControl />,
 }
 
+const legendControl: DrawerControl = {
+  id: 'legend',
+  hAlign: 'left',
+  vAlign: 'top',
+  node: <LegendControl showDesktopVariant />,
+}
+
 // Todo: consider moving onOpenLegend to a higher context
-const useMapControls = (onOpenLegend: () => void) => {
+const useMapControls = () => {
   const { panoFullScreen } = useMapContext()
   const isEmbedded = useIsEmbedded()
   const [panoHeading] = useParam(panoHeadingParam)
   const [mapLayers] = useParam(mapLayersParam)
   const [location] = useParam(locationParam)
   const panoActive = panoHeading !== null && location !== null
-
-  const legendControl = useMemo<DrawerControl>(
-    () => ({
-      id: 'legend',
-      hAlign: 'left',
-      vAlign: 'top',
-      node: <LegendControl showDesktopVariant onClick={onOpenLegend} />,
-    }),
-    [onOpenLegend],
-  )
 
   return useMemo(() => {
     if (panoFullScreen) {
@@ -110,7 +107,7 @@ const useMapControls = (onOpenLegend: () => void) => {
     mapControls.push(zoomControl)
 
     return mapControls
-  }, [legendControl, isEmbedded, mapLayers])
+  }, [legendControl, isEmbedded, mapLayers, panoFullScreen, panoHeading])
 }
 
 export default useMapControls

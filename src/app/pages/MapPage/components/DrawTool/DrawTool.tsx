@@ -1,16 +1,21 @@
 import { ascDefaultTheme, themeColor } from '@amsterdam/asc-ui'
 import { useMapInstance } from '@amsterdam/react-maps'
-import L, { LatLng, LatLngLiteral, Polygon } from 'leaflet'
-import { FunctionComponent, useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import L, { Polygon } from 'leaflet'
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { useHistory } from 'react-router-dom'
+import type { FunctionComponent } from 'react'
+import type { LatLng, LatLngBounds, LatLngLiteral } from 'leaflet'
 import useParam from '../../../../utils/useParam'
-import { PolyDrawing, polygonParam, polylineParam } from '../../query-params'
-import { BareDrawTool, ExtendedLayer, PolygonType, PolylineType } from './BareDrawTool'
+import type { PolyDrawing } from '../../query-params'
+import { polygonParam, polylineParam } from '../../query-params'
+import type { ExtendedLayer, PolygonType, PolylineType } from './BareDrawTool'
+import { BareDrawTool } from './BareDrawTool'
 import { routing } from '../../../../routes'
 import useBuildQueryString from '../../../../utils/useBuildQueryString'
 import { useDataSelection } from '../../../../components/DataSelection/DataSelectionContext'
 import useLegacyDataselectionConfig from '../../../../components/DataSelection/useLegacyDataselectionConfig'
 import config from '../../config'
+import useMapCenterToMarker from '../../../../utils/useMapCenterToMarker'
 
 function getTotalDistance(latLngs: LatLng[]) {
   return latLngs.reduce(
@@ -67,6 +72,8 @@ const DrawTool: FunctionComponent = () => {
   const history = useHistory()
   const { activeFilters, setDistanceText, setDrawToolLocked } = useDataSelection()
   const { currentDatasetType } = useLegacyDataselectionConfig()
+  const { panToWithPanelOffset } = useMapCenterToMarker()
+
   const [initialDrawnItems, setInitialDrawnItems] = useState<ExtendedLayer[]>([])
 
   // We needs refs here for leaflet event handlers
@@ -93,15 +100,24 @@ const DrawTool: FunctionComponent = () => {
   /**
    * Update the state / URL with the current drawings
    * @param shape
+   * @param bounds
    */
-  const updateShape = (shape: { polygon: PolyDrawing | null; polyline: PolyDrawing | null }) => {
+  const updateShape = (
+    shape: { polygon: PolyDrawing | null; polyline: PolyDrawing | null },
+    bounds?: LatLngBounds,
+  ) => {
     const pathname =
       config[currentDatasetTypeRef.current?.toUpperCase()]?.path ?? routing.addresses_TEMP.path
     if (shape.polygon) {
+      if (bounds) {
+        panToWithPanelOffset(bounds.getCenter())
+      }
       history.push({
         pathname,
         search: buildQueryStringRef.current([
+          // @ts-ignore
           [polylineParam, shape.polyline],
+          // @ts-ignore
           [polygonParam, shape.polygon],
         ]),
       })
@@ -143,10 +159,13 @@ const DrawTool: FunctionComponent = () => {
       setTimeout(() => {
         setDrawToolLocked(false)
       }, 100)
-      updateShape({
-        polygon: updatedPolygon,
-        polyline: updatedPolyline,
-      })
+      updateShape(
+        {
+          polygon: updatedPolygon,
+          polyline: updatedPolyline,
+        },
+        layer.getBounds(),
+      )
     },
     [polygonRef, polylineRef],
   )

@@ -1,12 +1,14 @@
 import { Link, perceivedLoading, themeSpacing } from '@amsterdam/asc-ui'
-import { useState, FunctionComponent } from 'react'
-import RouterLink from 'redux-first-router-link'
+import { useState } from 'react'
+import { Link as RouterLink } from 'react-router-dom'
 import styled from 'styled-components'
 import { useQuery } from 'urql'
-import PARAMETERS from '../../../store/parameters'
-import { toSearch } from '../../../store/redux-first-router/actions'
-import { Filter, FilterOption } from '../../models/filter'
-import { ActiveFilter } from '../../pages/SearchPage/SearchPageDucks'
+import type { FunctionComponent } from 'react'
+import { toSearch } from '../../links'
+import type { Filter, FilterOption } from '../../models/filter'
+import type { ActiveFilter } from '../../pages/SearchPage/query-params'
+import { activeFiltersParam } from '../../pages/SearchPage/query-params'
+import toSearchParams from '../../utils/toSearchParams'
 import useUniqueId from '../../utils/useUniqueId'
 import ErrorMessage from '../ErrorMessage/ErrorMessage'
 import BlockHeading from './BlockHeading'
@@ -131,7 +133,10 @@ const ThemesBlock: FunctionComponent = () => {
               <StyledLink
                 forwardedAs={RouterLink}
                 inList
-                to={toSearch({ [PARAMETERS.FILTERS]: filters })}
+                to={{
+                  ...toSearch(),
+                  search: toSearchParams([[activeFiltersParam, filters]]).toString(),
+                }}
               >
                 {option.label}
               </StyledLink>

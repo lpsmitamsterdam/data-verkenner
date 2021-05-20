@@ -1,12 +1,13 @@
 import { Heading, themeSpacing } from '@amsterdam/asc-ui'
-import { FunctionComponent, useCallback, useEffect, useMemo, useState } from 'react'
+import { useEffect, useMemo } from 'react'
 import { matchPath, Route, Switch, useLocation } from 'react-router-dom'
 import styled from 'styled-components'
+import type { FunctionComponent } from 'react'
 import { useDataSelection } from '../../../../components/DataSelection/DataSelectionContext'
 import { routing } from '../../../../routes'
 import useParam from '../../../../utils/useParam'
 import DetailPanel from '../../detail/DetailPanel'
-import MapSearchResults from '../../map-search/MapSearchResults'
+import MapSearchResults from '../MapSearchResults/MapSearchResults'
 import { useMapContext } from '../../MapContext'
 import { locationParam, polygonParam } from '../../query-params'
 import DrawerOverlay, { DeviceMode, DrawerState } from '../DrawerOverlay'
@@ -33,9 +34,8 @@ const StyledLargeDrawerPanel = styled(LargeDrawerPanel)<{ show: boolean }>`
 `
 
 const MapPanel: FunctionComponent = () => {
-  const { panelHeader } = useMapContext()
-  const [legendActive, setLegendActive] = useState(false)
-  const [drawerState, setDrawerState] = useState(DrawerState.Closed)
+  const { panelHeader, legendActive, drawerState, setLegendActive, setDrawerState } =
+    useMapContext()
   const [locationParameter] = useParam(locationParam)
   const [polygon] = useParam(polygonParam)
   const location = useLocation()
@@ -52,20 +52,23 @@ const MapPanel: FunctionComponent = () => {
     [location.pathname, routing.dataSearchGeo_TEMP.path],
   )
 
-  const onOpenLegend = useCallback(() => {
-    setLegendActive(true)
-    setDrawerState(DrawerState.Open)
-  }, [])
-
   const onCloseLegend = () => {
     setLegendActive(false)
   }
 
   useEffect(() => {
-    if (locationParameter || polygon || activeFilters.length) {
+    if (
+      locationParameter ||
+      polygon ||
+      activeFilters.length ||
+      matchPath(location.pathname, {
+        path: routing.dataDetail_TEMP.path,
+        exact: true,
+      })
+    ) {
       setDrawerState(DrawerState.Open)
     }
-  }, [locationParameter, polygon])
+  }, [locationParameter, polygon, location])
 
   // Hide the legend when any of the following events occur:
   // - The user selects an item on the map, navigating to a detail panel.
@@ -77,7 +80,7 @@ const MapPanel: FunctionComponent = () => {
     }
   }, [dataDetailMatch, dataSearchGeoMatch, locationParameter])
 
-  const controls = useMapControls(onOpenLegend)
+  const controls = useMapControls()
 
   const showContentPanel = useMemo(() => {
     if (

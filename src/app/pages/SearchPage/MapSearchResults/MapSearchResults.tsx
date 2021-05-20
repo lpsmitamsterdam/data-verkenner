@@ -1,12 +1,13 @@
 import { themeSpacing } from '@amsterdam/asc-ui'
-import { FunctionComponent } from 'react'
 import styled from 'styled-components'
+import type { FunctionComponent } from 'react'
 import IconMap from '../../../../shared/assets/icons/data/IconMap.svg'
 import IconMapLayers from '../../../../shared/assets/icons/IconMapLayers.svg'
-import { toMapSearch, toMapSearchType } from '../../../../store/redux-first-router/actions'
+import { toMapSearchType } from '../../../../store/redux-first-router/actions'
 import SearchLink from '../../../components/Links/SearchLink/SearchLink'
 import NoSearchResults from '../../../components/NoSearchResults'
 import SearchHeading from '../../../components/SearchHeading/SearchHeading'
+import { toMapSearch } from '../../../links'
 import formatCount from '../../../utils/formatCount'
 import MapCollectionSearchResults from './MapCollectionSearchResults'
 import MapLayerSearchResults from './MapLayerSearchResults'
@@ -111,7 +112,7 @@ const MapSearchResults: FunctionComponent<MapSearchResultsProps> = ({
       )}
     </>
   ) : (
-    <NoSearchResults query={query} label={label} to={toMapSearch(null, false, false, false)} />
+    <NoSearchResults query={query} label={label} to={toMapSearch()} />
   )
 }
 

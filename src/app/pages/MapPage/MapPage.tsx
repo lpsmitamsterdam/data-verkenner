@@ -1,13 +1,15 @@
 import { constants, Map as MapComponent, Scale, useStateRef } from '@amsterdam/arm-core'
-import L from 'leaflet'
-import { FunctionComponent, useCallback, useEffect } from 'react'
-import { Theme, themeSpacing } from '@amsterdam/asc-ui'
+import { useCallback, useEffect } from 'react'
+import { themeSpacing } from '@amsterdam/asc-ui'
 import styled, { createGlobalStyle, css } from 'styled-components'
+import type L from 'leaflet'
+import type { FunctionComponent } from 'react'
+import type { Theme } from '@amsterdam/asc-ui'
 import PanoramaViewer from './components/PanoramaViewer/PanoramaViewer'
 import useParam from '../../utils/useParam'
 import LeafletLayers from './LeafletLayers'
 import { useMapContext } from './MapContext'
-import MapMarkers from './MapMarkers'
+import MapMarker from './components/MapMarker'
 import {
   centerParam,
   locationParam,
@@ -16,6 +18,7 @@ import {
   zoomParam,
 } from './query-params'
 import MapPanel from './components/MapPanel'
+import { useDataSelection } from '../../components/DataSelection/DataSelectionContext'
 
 const MapView = styled.div`
   height: 100%;
@@ -34,6 +37,7 @@ const GlobalStyle = createGlobalStyle<{
   panoActive?: boolean
   panoFullScreen: boolean
   theme: Theme.ThemeInterface
+  loading: boolean
 }>`
   body {
     touch-action: none;
@@ -52,6 +56,12 @@ const GlobalStyle = createGlobalStyle<{
       page-break-after: always;
     }
 
+    ${({ loading }) =>
+      loading &&
+      css`
+        cursor: progress;
+      `}
+
     ${({ panoFullScreen }) =>
       panoFullScreen &&
       css`
@@ -66,7 +76,8 @@ const GlobalStyle = createGlobalStyle<{
 const { DEFAULT_AMSTERDAM_MAPS_OPTIONS } = constants
 
 const MapPage: FunctionComponent = () => {
-  const { panoFullScreen } = useMapContext()
+  const { panoFullScreen, loading } = useMapContext()
+  const { drawToolLocked } = useDataSelection()
   const [, setMapInstance, mapInstanceRef] = useStateRef<L.Map | null>(null)
   const [center, setCenter] = useParam(centerParam)
   const [zoom, setZoom] = useParam(zoomParam)
@@ -90,7 +101,7 @@ const MapPage: FunctionComponent = () => {
 
   return (
     <MapView>
-      <GlobalStyle panoActive={panoActive} panoFullScreen={panoFullScreen} />
+      <GlobalStyle loading={loading} panoActive={panoActive} panoFullScreen={panoFullScreen} />
       <MapComponent
         setInstance={setMapInstance}
         options={{
@@ -98,6 +109,7 @@ const MapPage: FunctionComponent = () => {
           zoom: zoom ?? DEFAULT_AMSTERDAM_MAPS_OPTIONS.zoom,
           center: center ?? DEFAULT_AMSTERDAM_MAPS_OPTIONS.center,
           attributionControl: false,
+          minZoom: 7,
         }}
         events={{
           zoomend: useCallback(() => {
@@ -115,7 +127,7 @@ const MapPage: FunctionComponent = () => {
         <LeafletLayers />
 
         {panoActive && <PanoramaViewer />}
-        <MapMarkers panoActive={panoActive} />
+        {!drawToolLocked && <MapMarker panoActive={panoActive} />}
         <MapPanel />
         <Scale
           options={{

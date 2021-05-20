@@ -1,4 +1,4 @@
-import { Config } from '@jest/types'
+import type { Config } from '@jest/types'
 
 const config: Config.InitialOptions = {
   preset: 'ts-jest/presets/js-with-ts',
@@ -17,10 +17,10 @@ const config: Config.InitialOptions = {
   coverageDirectory: 'coverage',
   coverageThreshold: {
     global: {
-      statements: 73.78,
-      branches: 50.33,
-      lines: 73.24,
-      functions: 60.26,
+      statements: 76.2,
+      branches: 51.37,
+      lines: 75.77,
+      functions: 61.95,
     },
   },
   coverageReporters: process.env.CI ? ['text'] : ['lcov'],

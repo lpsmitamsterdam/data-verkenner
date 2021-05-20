@@ -1,11 +1,15 @@
 import { NonTiledLayer } from '@amsterdam/arm-nontiled'
 import { GeoJSON, TileLayer } from '@amsterdam/react-maps'
-import { BaseIconOptions, GeoJSONOptions, Icon, Marker } from 'leaflet'
-import { FunctionComponent, useMemo } from 'react'
+import { Icon, Marker } from 'leaflet'
+import { useMemo } from 'react'
+import type { BaseIconOptions, GeoJSON as GeoJSONType, GeoJSONOptions } from 'leaflet'
+import type { FunctionComponent } from 'react'
 import ICON_CONFIG from '../../../map/components/leaflet/services/icon-config.constant'
 import MAP_CONFIG from '../../../map/services/map.config'
-import { TmsOverlay, useMapContext, WmsOverlay } from './MapContext'
+import type { TmsOverlay, WmsOverlay } from './MapContext'
+import { useMapContext } from './MapContext'
 import DrawMapVisualization from './components/DrawTool/DrawMapVisualization'
+import useMapCenterToMarker from '../../utils/useMapCenterToMarker'
 
 const detailGeometryStyle = {
   color: 'red',
@@ -29,6 +33,7 @@ const detailGeometryOptions: GeoJSONOptions = {
 
 const LeafletLayers: FunctionComponent = () => {
   const { legendLeafletLayers, detailFeature } = useMapContext()
+  const { panToWithPanelOffset } = useMapCenterToMarker()
   const tmsLayers = useMemo(
     () => legendLeafletLayers.filter((overlay): overlay is TmsOverlay => overlay.type === 'tms'),
     [legendLeafletLayers],
@@ -39,6 +44,15 @@ const LeafletLayers: FunctionComponent = () => {
     [legendLeafletLayers],
   )
 
+  /**
+   * Center the map and zoom in to the detail object
+   * @param layer
+   */
+  const handleDetailFeatureOnLoad = (layer: GeoJSONType<any>) => {
+    panToWithPanelOffset(layer.getBounds())
+    layer.bringToBack()
+  }
+
   return (
     <>
       <DrawMapVisualization />
@@ -47,7 +61,7 @@ const LeafletLayers: FunctionComponent = () => {
           key={detailFeature.id}
           args={[detailFeature]}
           options={detailGeometryOptions}
-          setInstance={(layer) => layer.bringToBack()}
+          setInstance={handleDetailFeatureOnLoad}
         />
       )}
       {tmsLayers.map(({ id, url, options }) => (

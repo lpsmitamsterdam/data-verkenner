@@ -1,5 +1,8 @@
-import { FunctionComponent, useCallback, useEffect, useRef } from 'react'
-import styled from 'styled-components'
+import { useCallback, useEffect, useRef, useState } from 'react'
+import styled, { css } from 'styled-components'
+import usePromise, { isFulfilled, isPending } from '@amsterdam/use-promise'
+import { useHistory } from 'react-router-dom'
+import type { FunctionComponent } from 'react'
 import { PANO_LABELS } from '../../../../../panorama/ducks/constants'
 import { loadScene } from '../../../../../panorama/services/marzipano/marzipano'
 import {
@@ -17,6 +20,9 @@ import {
 import useMarzipano from '../../../../utils/useMarzipano'
 import useParam from '../../../../utils/useParam'
 import { useMapContext } from '../../MapContext'
+import { HotspotButton } from '../../../../../panorama/components/Hotspot/Hotspot'
+import useBuildQueryString from '../../../../utils/useBuildQueryString'
+import { routing } from '../../../../routes'
 
 const MarzipanoView = styled.div`
   height: 100%;
@@ -24,10 +30,18 @@ const MarzipanoView = styled.div`
   position: relative;
 `
 
-const PanoramaStyle = styled.div<{ panoFullScreen: boolean }>`
+const PanoramaStyle = styled.div<{ panoFullScreen: boolean; loading: boolean }>`
   height: ${({ panoFullScreen }) => (panoFullScreen ? '100%' : '50%')};
   position: relative;
   order: -1; // Put the PanoramaViewer above the Map
+  ${({ loading }) =>
+    loading &&
+    css`
+      ${HotspotButton},
+      canvas + div {
+        cursor: progress !important;
+      }
+    `}
 `
 
 export const PANO_LAYERS = [
@@ -40,25 +54,53 @@ export const PANO_LAYERS = [
 
 const PanoramaViewer: FunctionComponent = () => {
   const ref = useRef<HTMLDivElement>(null)
-  const { setPanoImageDate } = useMapContext()
-  const [panoPitch, setPanoPitch] = useParam(panoPitchParam)
-  const [panoHeading, setPanoHeading] = useParam(panoHeadingParam)
-  const [panoFov, setPanoFov] = useParam(panoFovParam)
+  const { setPanoImageDate, setLoading, loading } = useMapContext()
+  const [panoPitch] = useParam(panoPitchParam)
+  const [panoHeading] = useParam(panoHeadingParam)
+  const [panoFov] = useParam(panoFovParam)
   const [panoTag] = useParam(panoTagParam)
   const [panoFullScreen] = useParam(panoFullScreenParam)
-  const [location, setLocation] = useParam(locationParam)
+  const [location] = useParam(locationParam)
   const { marzipanoViewer, currentMarzipanoView } = useMarzipano(ref)
+  const [hotspotId, setHotspotId] = useState(null)
+  const history = useHistory()
+  const { buildQueryString } = useBuildQueryString()
 
-  const onClickHotspot = useCallback(
-    async (id: string) => {
-      const newPanos = await getImageDataById(
-        id,
-        PANO_LABELS.find(({ id: labelId }) => labelId === panoTag)?.tags,
-      )
-      setLocation({ lat: newPanos.location[0], lng: newPanos.location[1] })
-    },
-    [setLocation, panoTag],
-  )
+  const hotspotResult = usePromise(async () => {
+    if (!hotspotId) {
+      return null
+    }
+    return getImageDataById(
+      hotspotId,
+      PANO_LABELS.find(({ id: labelId }) => labelId === panoTag)?.tags,
+    )
+  }, [hotspotId])
+
+  const imageDataResult = usePromise(async () => {
+    if (!location) {
+      return null
+    }
+    return getImageDataByLocation(
+      [location.lat, location.lng],
+      PANO_LABELS.find(({ id }) => id === panoTag)?.tags || [],
+    )
+  }, [location, panoTag, marzipanoViewer])
+
+  useEffect(() => {
+    setLoading(isPending(hotspotResult))
+
+    if (isFulfilled(hotspotResult) && hotspotResult.value !== null) {
+      history.push({
+        pathname: routing.dataSearchGeo_TEMP.path,
+        search: buildQueryString([
+          [
+            locationParam,
+            { lat: hotspotResult.value.location[0], lng: hotspotResult.value.location[1] },
+          ],
+        ]),
+      })
+    }
+  }, [hotspotResult])
 
   const fetchPanoramaImage = useCallback(
     (res) => {
@@ -66,7 +108,7 @@ const PanoramaViewer: FunctionComponent = () => {
         setPanoImageDate(res.date)
         loadScene(
           marzipanoViewer,
-          onClickHotspot,
+          setHotspotId,
           res.image,
           panoHeading,
           panoPitch || panoPitchParam.initialValue,
@@ -75,15 +117,19 @@ const PanoramaViewer: FunctionComponent = () => {
         )
       }
     },
-    [panoPitch, panoHeading, setPanoImageDate, marzipanoViewer, onClickHotspot],
+    [panoPitch, panoHeading, setPanoImageDate, marzipanoViewer, setHotspotId],
   )
 
   // Update the URL queries when the view changes
   useEffect(() => {
     if (currentMarzipanoView) {
-      setPanoHeading(currentMarzipanoView.heading, 'replace')
-      setPanoPitch(currentMarzipanoView.pitch, 'replace')
-      setPanoFov(currentMarzipanoView.fov, 'replace')
+      history.replace({
+        search: buildQueryString([
+          [panoHeadingParam, currentMarzipanoView.heading],
+          [panoPitchParam, currentMarzipanoView.pitch],
+          [panoFovParam, currentMarzipanoView.fov],
+        ]),
+      })
     }
   }, [currentMarzipanoView])
 
@@ -100,25 +146,16 @@ const PanoramaViewer: FunctionComponent = () => {
     }
   }, [marzipanoViewer, panoFullScreen])
 
-  // Fetch image when the location changes
   useEffect(() => {
-    if (marzipanoViewer && location && panoHeading) {
-      ;(() => {
-        // @ts-ignore
-        getImageDataByLocation(
-          [location.lat, location.lng],
-          PANO_LABELS.find(({ id }) => id === panoTag)?.tags || [],
-        )
-          .then((res) => {
-            fetchPanoramaImage(res)
-          })
-          .catch(() => {})
-      })()
+    setLoading(isPending(imageDataResult))
+
+    if (isFulfilled(imageDataResult) && imageDataResult.value !== null) {
+      fetchPanoramaImage(imageDataResult.value)
     }
-  }, [marzipanoViewer, location, panoTag])
+  }, [imageDataResult])
 
   return (
-    <PanoramaStyle panoFullScreen={panoFullScreen}>
+    <PanoramaStyle loading={loading} panoFullScreen={panoFullScreen}>
       <MarzipanoView ref={ref} />
     </PanoramaStyle>
   )

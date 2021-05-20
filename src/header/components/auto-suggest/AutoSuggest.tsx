@@ -3,11 +3,13 @@ import { forwardRef, useMemo } from 'react'
 import { useHistory } from 'react-router-dom'
 import styled from 'styled-components'
 import LoadingSpinner from '../../../app/components/LoadingSpinner/LoadingSpinner'
+import { toSearch } from '../../../app/links'
 import { SearchType } from '../../../app/pages/SearchPage/constants'
-import { searchQueryParam } from '../../../app/pages/SearchPage/query-params'
-import { routing } from '../../../app/routes'
-import { CmsType } from '../../../shared/config/cms.config'
-import { AutoSuggestSearchResult, LABELS } from '../../services/auto-suggest/auto-suggest'
+import { queryParam } from '../../../app/pages/SearchPage/query-params'
+import toSearchParams from '../../../app/utils/toSearchParams'
+import type { CmsType } from '../../../shared/config/cms.config'
+import type { AutoSuggestSearchResult } from '../../services/auto-suggest/auto-suggest'
+import { LABELS } from '../../services/auto-suggest/auto-suggest'
 import AutoSuggestCategory from './AutoSuggestCategory'
 
 export type SearchCategory = CmsType | SearchType
@@ -82,8 +84,8 @@ const AutoSuggest = forwardRef<HTMLDivElement, AutoSuggestProps>(
               // Side effect: clear the searchbar filter and navigate to main search page
               setSearchBarFilterValue(SearchType.Search)
               history.push({
-                pathname: routing.search.path,
-                search: `${searchQueryParam.name}=${inputValue}`,
+                ...toSearch(),
+                search: toSearchParams([[queryParam, inputValue]]).toString(),
               })
             }}
           >

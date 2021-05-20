@@ -1,13 +1,14 @@
 /**
  * @jest-environment jsdom-global
  */
-import { PropsWithChildren } from 'react'
 import { render, screen } from '@testing-library/react'
+import type { PropsWithChildren } from 'react'
 import MapPage from './MapPage'
 import withMapContext from '../../utils/withMapContext'
 import { DataSelectionProvider } from '../../components/DataSelection/DataSelectionContext'
 
-jest.mock('./MapMarkers', () => () => <div data-testid="mapMarkers" />)
+jest.mock('@amsterdam/react-maps')
+jest.mock('./components/MapMarker/MapMarker', () => () => <div data-testid="mapMarkers" />)
 jest.mock('./components/MapPanel/MapPanel', () => () => <div data-testid="mapPanel" />)
 jest.mock('./components/DrawTool/DrawResults', () => () => <div data-testid="drawResults" />)
 jest.mock('./components/PanoramaViewer/PanoramaViewer', () => () => (

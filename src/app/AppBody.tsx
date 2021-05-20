@@ -1,8 +1,9 @@
 import { useMatomo } from '@datapunt/matomo-tracker-react'
-import { FunctionComponent, lazy, Suspense } from 'react'
+import { lazy, Suspense } from 'react'
 import { Helmet } from 'react-helmet'
 import { Route, Switch } from 'react-router-dom'
 import styled from 'styled-components'
+import type { FunctionComponent } from 'react'
 import EmbedIframeComponent from './components/EmbedIframe/EmbedIframe'
 import ErrorAlert from './components/ErrorAlert/ErrorAlert'
 import LoadingSpinner from './components/LoadingSpinner/LoadingSpinner'
@@ -102,7 +103,7 @@ const AppBody: FunctionComponent<AppBodyProps> = ({
                   component={CollectionDetailPage}
                 />
                 <Route path={routing.actuality.path} exact component={ActualityPage} />
-                <Route path={routing.niet_gevonden.path} exact component={NotFoundPage} />
+                <Route path={routing.notFound.path} exact component={NotFoundPage} />
                 <Route path={mapSearchPagePaths} component={SearchPage} />
               </Switch>
             </Suspense>

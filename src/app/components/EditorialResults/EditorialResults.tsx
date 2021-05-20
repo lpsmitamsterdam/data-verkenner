@@ -1,17 +1,17 @@
 import { CardContainer } from '@amsterdam/asc-ui'
-import { GraphQLFormattedError } from 'graphql'
-import { FunctionComponent } from 'react'
 import { Link as RouterLink } from 'react-router-dom'
 import styled from 'styled-components'
+import type { GraphQLFormattedError } from 'graphql'
+import type { FunctionComponent } from 'react'
 import { EDITORIAL_DETAIL_ACTIONS } from '../../../normalizations/cms/normalizeCMSResults'
-import { NormalizedFieldItems } from '../../../normalizations/cms/types'
+import type { NormalizedFieldItems } from '../../../normalizations/cms/types'
 import { CmsType } from '../../../shared/config/cms.config'
 import {
   toArticleSearch,
   toCollectionSearch,
   toPublicationSearch,
   toSpecialSearch,
-} from '../../../store/redux-first-router/actions'
+} from '../../links'
 import getErrorsForPath from '../../utils/getErrorsForPath'
 import getLoadingErrors from '../../utils/getLoadingErrors'
 import getUnauthorizedLabels from '../../utils/getUnauthorizedLabels'
@@ -123,7 +123,7 @@ const EditorialResults: FunctionComponent<EditorialResultsProps> = ({
             <NoSearchResults
               query={query}
               label={label}
-              to={EDITORIAL_OVERVIEW_ACTIONS[overviewType](null, false, false, false)}
+              to={EDITORIAL_OVERVIEW_ACTIONS[overviewType]()}
             />
           )}
           {!hasLoadingError && unauthorizedLabels.length > 0 && (

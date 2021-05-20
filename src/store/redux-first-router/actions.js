@@ -1,3 +1,5 @@
+import { legendOpenParam, mapLayersParam, viewParam } from '../../app/pages/MapPage/query-params'
+import { activeFiltersParam } from '../../app/pages/SearchPage/query-params'
 import { ROUTER_NAMESPACE, routing } from '../../app/routes'
 import { ViewMode } from '../../shared/ducks/ui/ui'
 import PARAMETERS from '../parameters'
@@ -67,7 +69,7 @@ export const toDataSearch = toSearchOfType(routing.dataSearch.type)
 export const toDataSearchType = (type) =>
   toDataSearch(
     {
-      [PARAMETERS.FILTERS]: [
+      [activeFiltersParam.name]: [
         {
           type: 'dataTypes',
           values: [type],
@@ -84,19 +86,19 @@ export const toMap = (preserve = false, forceSaga = true) => ({
     preserve,
     forceSaga,
     additionalParams: {
-      [PARAMETERS.VIEW]: ViewMode.Map,
+      [viewParam.name]: ViewMode.Map,
     },
     query: {
-      [PARAMETERS.VIEW]: ViewMode.Map,
+      [viewParam.name]: ViewMode.Map,
     },
   },
 })
 
 export const toMapWithLegendOpen = (layers) => {
   const additionalParams = {
-    [PARAMETERS.VIEW]: ViewMode.Map,
-    [PARAMETERS.LEGEND]: true,
-    [PARAMETERS.LAYERS]: layers,
+    [viewParam.name]: ViewMode.Map,
+    [legendOpenParam.name]: true,
+    [mapLayersParam.name]: layers,
   }
 
   return {
@@ -132,7 +134,7 @@ export const toPanoramaAndPreserveQuery = (
     heading,
     ...(reference.length === 3 ? { [PARAMETERS.DETAIL_REFERENCE]: reference } : {}),
     ...(pageReference ? { [PARAMETERS.PAGE_REFERENCE]: pageReference } : {}),
-    [PARAMETERS.VIEW]: ViewMode.Split,
+    [viewParam.name]: ViewMode.Split,
   })
 
 export const extractIdEndpoint = (endpoint) => {
@@ -174,7 +176,7 @@ export const getDetailPageData = (endpoint) => {
 export const toDetailFromEndpoint = (endpoint, view) => {
   const { type, subtype, id } = getDetailPageData(endpoint)
   return toDataDetail([id, type, subtype], {
-    [PARAMETERS.VIEW]: view,
+    [viewParam.name]: view,
   })
 }
 
@@ -200,4 +202,4 @@ export const toCollectionSearch = toSearchOfType(routing.collectionSearch.type)
 export const toMapSearch = toSearchOfType(routing.mapSearch.type)
 
 export const toMapSearchType = (type) =>
-  toMapSearch({ [PARAMETERS.FILTERS]: [{ type: 'map-type', values: [type] }] }, false, true)
+  toMapSearch({ [activeFiltersParam.name]: [{ type: 'map-type', values: [type] }] }, false, true)

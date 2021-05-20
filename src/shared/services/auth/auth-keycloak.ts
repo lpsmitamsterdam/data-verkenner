@@ -42,10 +42,15 @@ export function getReturnPath() {
 }
 
 export function getScopes() {
-  const rolesByResource = Object.values(keycloak.resourceAccess ?? {})
-  const roles = rolesByResource.flatMap((resource) => resource.roles)
+  const realmRoles = keycloak.realmAccess?.roles ?? []
+  const resourceRoles = Object.values(keycloak.resourceAccess ?? {}).flatMap(
+    (resource) => resource.roles,
+  )
 
-  return roles
+  // The roles returned from Keycloak use a different format than AuthZ, so we have to convert them to match the ones we use in our application.
+  // For example: 'brk_ro' will have to be converted to 'BRK/RO'.
+  // TODO: Once we enable Keycloak by default we need to change our enums to match this new convention and remove this conversion code.
+  return [...realmRoles, ...resourceRoles].map((role) => role.toUpperCase().replace('_', '/'))
 }
 
 export function getName() {
@@ -54,7 +59,11 @@ export function getName() {
   }
 
   // eslint-disable-next-line @typescript-eslint/naming-convention
-  const { given_name } = keycloak.userInfo as any
+  const { preferred_username, given_name } = keycloak.userInfo as any
+
+  if (typeof preferred_username === 'string') {
+    return preferred_username
+  }
 
   if (typeof given_name === 'string') {
     return given_name

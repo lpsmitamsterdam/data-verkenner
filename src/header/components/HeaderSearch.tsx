@@ -1,18 +1,18 @@
 import { srOnlyStyle } from '@amsterdam/asc-ui'
-import { FunctionComponent, useCallback, useRef, useState } from 'react'
+import { useCallback, useRef, useState } from 'react'
 import { useHistory } from 'react-router-dom'
 import styled from 'styled-components'
+import type { FunctionComponent } from 'react'
 import SearchBar from '../../app/components/SearchBar'
 import { LOCAL_STORAGE_KEY } from '../../app/components/SearchBarFilter/SearchBarFilter'
 import SEARCH_PAGE_CONFIG from '../../app/pages/SearchPage/config'
 import { SearchType } from '../../app/pages/SearchPage/constants'
-import { searchQueryParam } from '../../app/pages/SearchPage/query-params'
+import { queryParam } from '../../app/pages/SearchPage/query-params'
+import toSearchParams from '../../app/utils/toSearchParams'
 import useParam from '../../app/utils/useParam'
 import useTraverseList from '../../app/utils/useTraverseList'
-import autoSuggestSearch, {
-  AutoSuggestSearchResult,
-  MIN_QUERY_LENGTH,
-} from '../services/auto-suggest/auto-suggest'
+import type { AutoSuggestSearchResult } from '../services/auto-suggest/auto-suggest'
+import autoSuggestSearch, { MIN_QUERY_LENGTH } from '../services/auto-suggest/auto-suggest'
 import AutoSuggest from './auto-suggest/AutoSuggest'
 
 // TODO: Add the screen reader only "styling" to asc-ui
@@ -25,7 +25,7 @@ const ACTIVE_ITEM_CLASS = 'auto-suggest__dropdown-item--active'
 const HeaderSearch: FunctionComponent = () => {
   const history = useHistory()
 
-  const [searchQuery, setSearchQuery] = useParam(searchQueryParam)
+  const [searchQuery, setSearchQuery] = useParam(queryParam)
 
   const [showSuggestions, setShowSuggestions] = useState(false)
   const [loading, setLoading] = useState(false)
@@ -95,14 +95,14 @@ const HeaderSearch: FunctionComponent = () => {
       if (selectedElement) {
         document.querySelector<HTMLAnchorElement>(`.${ACTIVE_ITEM_CLASS}`)?.click()
       } else {
-        const actionType = Object.values(SEARCH_PAGE_CONFIG).find(
+        const config = Object.values(SEARCH_PAGE_CONFIG).find(
           ({ type: configType }) => searchBarFilterValue === configType,
         )
 
-        if (actionType) {
+        if (config) {
           history.push({
-            pathname: actionType.path,
-            search: new URLSearchParams({ term: inputValue.trim() }).toString(),
+            ...config.to,
+            search: toSearchParams([[queryParam, inputValue.trim()]]).toString(),
           })
         }
       }

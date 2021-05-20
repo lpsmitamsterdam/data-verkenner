@@ -1,13 +1,14 @@
 import { breakpoint, themeSpacing } from '@amsterdam/asc-ui'
-import { LatLngLiteral } from 'leaflet'
-import { useMemo, FunctionComponent } from 'react'
+import { useMemo } from 'react'
 import styled from 'styled-components'
+import type { LatLngLiteral } from 'leaflet'
+import type { FunctionComponent } from 'react'
 import { wgs84ToRd } from '../../../shared/services/coordinate-reference-system'
 import formatDate from '../../utils/formatDate'
 
 const ViewerInfoBarStyle = styled.div`
   background-color: rgba(255, 255, 255, 0.3);
-  @media screen and ${breakpoint('max-width', 'tabletM')} {
+  @media screen and ${breakpoint('max-width', 'laptop')} {
     display: none;
   }
 

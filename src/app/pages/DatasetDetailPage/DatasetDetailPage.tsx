@@ -13,24 +13,25 @@ import {
 import { useMatomo } from '@datapunt/matomo-tracker-react'
 import classNames from 'classnames'
 import marked from 'marked'
-import { FunctionComponent, useMemo } from 'react'
+import { useMemo } from 'react'
 import { Helmet } from 'react-helmet'
 import { useSelector } from 'react-redux'
 import { useHistory, useParams } from 'react-router-dom'
 import styled from 'styled-components'
-import { DcatTemporal } from '../../../api/dcatd/datasets'
+import type { FunctionComponent } from 'react'
+import type { DcatTemporal } from '../../../api/dcatd/datasets'
+import getDatasetData from '../../../api/dcatd/datasets/getDatasetData'
 import { getUserScopes } from '../../../shared/ducks/user/user'
+import { NotFoundError } from '../../../shared/services/api/customError'
 import { dcatdScopes } from '../../../shared/services/auth/auth'
-import { DatasetFilterOption } from '../../../shared/services/datasets-filters/datasets-filters'
+import type { DatasetFilterOption } from '../../../shared/services/datasets-filters/datasets-filters'
 import ContentContainer from '../../components/ContentContainer/ContentContainer'
 import DefinitionList, { DefinitionListItem } from '../../components/DefinitionList'
+import PromiseResult from '../../components/PromiseResult/PromiseResult'
 import ShareBar from '../../components/ShareBar/ShareBar'
+import { toNotFound } from '../../links'
 import formatDate from '../../utils/formatDate'
 import redirectToDcatd from '../../utils/redirectToDcatd'
-import getDatasetData from '../../../api/dcatd/datasets/getDatasetData'
-import PromiseResult from '../../components/PromiseResult/PromiseResult'
-import { routing } from '../../routes'
-import { NotFoundError } from '../../../shared/services/api/customError'
 
 function kebabCase(input?: string): string {
   return input?.toLowerCase().replace(/[: ][ ]*/g, '-') ?? ''
@@ -137,7 +138,7 @@ const DatasetDetailPage: FunctionComponent = () => {
 
   const onError = (e: Error) => {
     if (e instanceof NotFoundError && e.code === 404) {
-      history.push(routing.niet_gevonden.path)
+      history.push(toNotFound())
     }
   }
 

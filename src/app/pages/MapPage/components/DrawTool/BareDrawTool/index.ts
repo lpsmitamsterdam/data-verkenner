@@ -1,3 +1,4 @@
-export { default as BareDrawTool, DrawToolProps } from './BareDrawTool'
-export { DrawToolControlsProps } from './DrawToolControls'
-export { ExtendedLayer, PolygonType, PolylineType } from './types'
+export { default as BareDrawTool } from './BareDrawTool'
+export type { DrawToolProps } from './BareDrawTool'
+export type { DrawToolControlsProps } from './DrawToolControls'
+export type { ExtendedLayer, PolygonType, PolylineType } from './types'

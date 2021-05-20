@@ -1,24 +1,25 @@
 import { Alert, Heading, Link, Paragraph, themeColor, themeSpacing } from '@amsterdam/asc-ui'
-import { FunctionComponent } from 'react'
 import { useSelector } from 'react-redux'
 import { Link as RouterLink } from 'react-router-dom'
 import styled from 'styled-components'
 import usePromise, { isFulfilled, isPending, isRejected } from '@amsterdam/use-promise'
-import mapSearch, {
+import type { FunctionComponent } from 'react'
+import type {
   MapSearchCategory,
   MapSearchResult,
-} from '../../../../map/services/map-search/map-search'
-import { getUser } from '../../../../shared/ducks/user/user'
-import formatNumber from '../../../../shared/services/number-formatter/number-formatter'
-import { getDetailPageData } from '../../../../store/redux-first-router/actions'
-import AuthAlert from '../../../components/Alerts/AuthAlert'
-import ShowMore from '../../../components/ShowMore'
-import useParam from '../../../utils/useParam'
-import buildDetailUrl from '../detail/buildDetailUrl'
-import { locationParam } from '../query-params'
-import PanoramaPreview from '../components/PanoramaPreview/PanoramaPreview'
-import useAsyncMapPanelHeader from '../utils/useAsyncMapPanelHeader'
-import LoadingSpinner from '../../../components/LoadingSpinner/LoadingSpinner'
+} from '../../../../../map/services/map-search/map-search'
+import { getUser } from '../../../../../shared/ducks/user/user'
+import formatNumber from '../../../../../shared/services/number-formatter/number-formatter'
+import { getDetailPageData } from '../../../../../store/redux-first-router/actions'
+import AuthAlert from '../../../../components/Alerts/AuthAlert'
+import ShowMore from '../../../../components/ShowMore'
+import useParam from '../../../../utils/useParam'
+import buildDetailUrl from '../../detail/buildDetailUrl'
+import { locationParam } from '../../query-params'
+import PanoramaPreview from '../PanoramaPreview/PanoramaPreview'
+import useAsyncMapPanelHeader from '../../utils/useAsyncMapPanelHeader'
+import LoadingSpinner from '../../../../components/LoadingSpinner/LoadingSpinner'
+import mapSearch from '../../../../../map/services/map-search/map-search'
 
 const RESULT_LIMIT = 10
 

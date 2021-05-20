@@ -1,28 +1,25 @@
 import { Enlarge, Minimise } from '@amsterdam/asc-assets'
 import { Alert, Button, List, ListItem, Paragraph, themeSpacing } from '@amsterdam/asc-ui'
-import { Fragment, FunctionComponent, useEffect, useState } from 'react'
+import { Fragment, useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import styled, { css } from 'styled-components'
 import usePromise, { isFulfilled, isPending, isRejected } from '@amsterdam/use-promise'
-import {
-  fetchDetailData,
-  getServiceDefinition,
-  MapDetails,
-  toMapDetails,
-} from '../../../../map/services/map'
-import {
+import type { FunctionComponent } from 'react'
+import type { MapDetails } from '../../../../map/services/map'
+import { fetchDetailData, getServiceDefinition, toMapDetails } from '../../../../map/services/map'
+import type {
   DetailResultItem,
   DetailResultItemGroupedItems,
   DetailResultItemPaginatedData,
-  DetailResultItemType,
   InfoBoxProps,
   PaginatedData as PaginatedDataType,
 } from '../../../../map/types/details'
-import { AuthError } from '../../../../shared/services/api/customError'
+import { DetailResultItemType } from '../../../../map/types/details'
+import { AuthError, ForbiddenError } from '../../../../shared/services/api/customError'
 import AuthAlert from '../../../components/Alerts/AuthAlert'
 import PromiseResult from '../../../components/PromiseResult/PromiseResult'
 import Spacer from '../../../components/Spacer/Spacer'
-import { DataDetailParams } from '../../../links'
+import type { DataDetailParams } from '../../../links'
 import useAuthScope from '../../../utils/useAuthScope'
 import AuthenticationWrapper from '../components/AuthenticationWrapper'
 import PanoramaPreview, { PreviewContainer } from '../components/PanoramaPreview/PanoramaPreview'
@@ -35,6 +32,9 @@ import DetailTable from './DetailTable'
 import LoadingSpinner from '../../../components/LoadingSpinner/LoadingSpinner'
 import useAsyncMapPanelHeader from '../utils/useAsyncMapPanelHeader'
 import GeneralErrorAlert from '../../../components/Alerts/GeneralErrorAlert'
+import AuthScope from '../../../../shared/services/api/authScope'
+import LoginLink from '../../../components/Links/LoginLink/LoginLink'
+import useLegacyDataselectionConfig from '../../../components/DataSelection/useLegacyDataselectionConfig'
 
 const Message = styled(Paragraph)`
   margin: ${themeSpacing(4)} 0;
@@ -103,6 +103,7 @@ const DetailPanel: FunctionComponent = () => {
   const { setDetailFeature } = useMapContext()
   const { isUserAuthorized } = useAuthScope()
   const { type, subtype: subType, id: rawId } = useParams<DataDetailParams>()
+  const { currentDatasetConfig } = useLegacyDataselectionConfig()
   const id = rawId.includes('id') ? rawId.substr(2) : rawId
 
   async function getDetailData() {
@@ -157,6 +158,19 @@ const DetailPanel: FunctionComponent = () => {
   )
 
   if (isRejected(results)) {
+    if (results.reason instanceof AuthError || results.reason instanceof ForbiddenError) {
+      return (
+        <Alert level="info" dismissible>
+          <Paragraph>
+            {currentDatasetConfig?.AUTH_SCOPE === AuthScope.BrkRsn
+              ? `Medewerkers met speciale bevoegdheden kunnen inloggen om kadastrale objecten met
+            zakelijk rechthebbenden te bekijken.`
+              : `Medewerkers/ketenpartners van Gemeente Amsterdam kunnen inloggen om maatschappelijke activiteiten en vestigingen te bekijken. `}
+          </Paragraph>
+          <LoginLink />
+        </Alert>
+      )
+    }
     return <GeneralErrorAlert />
   }
 
@@ -337,12 +351,18 @@ export interface RenderDetailsProps extends LegacyLayout {
 }
 
 export const RenderDetails: FunctionComponent<RenderDetailsProps> = ({ details, legacyLayout }) => {
+  const { detailFeature } = useMapContext()
   if (!details) {
     // Todo: redirect to 404?
     return <Message>Geen detailweergave beschikbaar.</Message>
   }
   return (
     <Wrapper legacyLayout={legacyLayout} data-testid="data-detail">
+      {!detailFeature && (
+        <Alert level="warning" dismissible>
+          Er zijn geen resultaten op de kaart bij dit object
+        </Alert>
+      )}
       {details.showAuthAlert && <StyledAuthAlert excludedResults={details.authExcludedInfo} />}
       {/* eslint-disable-next-line no-nested-ternary */}
       {details.location && !details.data.noPanorama ? (

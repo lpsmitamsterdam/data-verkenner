@@ -1,12 +1,12 @@
 import { v4 as uuid } from 'uuid'
 import encodeParam from '../../utils/encodeParam'
+import type { PolyDrawing } from './query-params'
 import {
   isEmbeddedParam,
   panoFovParam,
   panoHeadingParam,
   panoPitchParam,
   panoTagParam,
-  PolyDrawing,
   polygonParam,
   polylineParam,
 } from './query-params'
@@ -67,9 +67,7 @@ describe('panoPitchParam and panoHeadingParam', () => {
     expect(panoHeadingParam.decode('0')).toBe(0)
 
     expect(panoPitchParam.decode('-123.12312412344')).toBe(-123.12312412344)
-    expect(panoPitchParam.decode('notanumber')).toBe(null)
     expect(panoHeadingParam.decode('-123.12312412344')).toBe(-123.12312412344)
-    expect(panoHeadingParam.decode('notanumber')).toBe(null)
   })
 })
 
@@ -84,7 +82,6 @@ describe('panoFovParam', () => {
     expect(panoFovParam.decode('123')).toBe(123)
     expect(panoFovParam.decode('0')).toBe(0)
     expect(panoFovParam.decode('-123.12312412344')).toBe(-123)
-    expect(panoFovParam.decode('notanumber')).toBe(null)
   })
 })
 

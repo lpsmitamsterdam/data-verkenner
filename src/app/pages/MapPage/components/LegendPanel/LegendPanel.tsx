@@ -1,6 +1,7 @@
-import { FunctionComponent, useMemo } from 'react'
+import { useMemo } from 'react'
 import { useSelector } from 'react-redux'
 import styled from 'styled-components'
+import type { FunctionComponent } from 'react'
 import MapPanel from '../../../../../map/containers/panel/MapPanel'
 import { getUser } from '../../../../../shared/ducks/user/user'
 import useParam from '../../../../utils/useParam'
@@ -11,6 +12,9 @@ const MapPanelContent = styled.div`
   overflow: hidden; // This can be removed if the new design for the legend is added
 
   .map-panel {
+    // The embed mode hides the legend panel, so we need to force it to show.
+    // TODO: Once we introduce the new LegendPanel we should remove these styles.
+    display: block !important;
     max-height: 100%;
     height: 100%;
     max-width: 100%;

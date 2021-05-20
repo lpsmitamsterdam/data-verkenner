@@ -1,9 +1,14 @@
-import { LocationDescriptorObject } from 'history'
-import { FunctionComponent } from 'react'
 import { Link } from 'react-router-dom'
+import type { LocationDescriptorObject } from 'history'
+import type { FunctionComponent } from 'react'
 import SEARCH_PAGE_CONFIG from '../../../app/pages/SearchPage/config'
-import PARAMETERS from '../../../store/parameters'
-import { AutoSuggestSearchResult } from '../../services/auto-suggest/auto-suggest'
+import {
+  activeFiltersParam,
+  pageParam,
+  queryParam,
+} from '../../../app/pages/SearchPage/query-params'
+import toSearchParams from '../../../app/utils/toSearchParams'
+import type { AutoSuggestSearchResult } from '../../services/auto-suggest/auto-suggest'
 import AutoSuggestItem from './AutoSuggestItem'
 
 export interface AutoSuggestCategoryProps {
@@ -58,27 +63,21 @@ function getMoreResultsLink(
   inputValue: string,
   subType?: string,
 ): LocationDescriptorObject | null {
-  const actionType = Object.values(SEARCH_PAGE_CONFIG).find(
+  const config = Object.values(SEARCH_PAGE_CONFIG).find(
     ({ type: configType }) => type === configType,
   )
 
-  if (!actionType) {
+  if (!config) {
     return null
   }
 
-  const { path } = actionType
-
   return {
-    pathname: path,
-    search: new URLSearchParams({
-      [PARAMETERS.QUERY]: `${inputValue}`,
-      [PARAMETERS.PAGE]: '1',
-      ...(subType
-        ? {
-            [PARAMETERS.FILTERS]: `dataTypes;${subType}`,
-          }
-        : {}),
-    }).toString(),
+    ...config.to,
+    search: toSearchParams([
+      [queryParam, inputValue],
+      [pageParam, pageParam.defaultValue],
+      [activeFiltersParam, subType ? [{ type: 'dataTypes', values: [subType] }] : []],
+    ]).toString(),
   }
 }
 
