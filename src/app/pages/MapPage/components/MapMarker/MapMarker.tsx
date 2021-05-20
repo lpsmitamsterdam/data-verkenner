@@ -62,7 +62,7 @@ const MapMarker: FunctionComponent<MarkerProps> = ({ panoActive }) => {
   }
 
   useEffect(() => {
-    if (position) {
+    if (position && matchPath(location.pathname, routing.dataSearchGeo_TEMP.path)) {
       panToWithPanelOffset(position)
     }
   }, [position])
