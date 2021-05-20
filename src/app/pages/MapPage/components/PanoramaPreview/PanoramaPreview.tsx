@@ -42,7 +42,7 @@ const PreviewImage = styled.img`
   object-fit: cover;
 `
 
-const PreviewLink = styled(Link)`
+const PreviewText = styled.span`
   padding: ${themeSpacing(2, 2)};
   position: absolute;
   right: 0;
@@ -127,12 +127,10 @@ const PanoramaPreview: FunctionComponent<PanoramaPreviewProps> = ({
 
   return (
     <PreviewContainer {...otherProps} data-testid="panoramaPreview">
-      <PreviewImage src={result.value.url} alt="Voorvertoning van panoramabeeld" />
-      {/*
-      // @ts-ignore */}
-      <PreviewLink forwardedAs={pickLinkComponent(to)} to={to} inList>
-        Bekijk panoramabeeld
-      </PreviewLink>
+      <Link as={pickLinkComponent(to)} to={to}>
+        <PreviewImage src={result.value.url} alt="Voorvertoning van panoramabeeld" />
+        <PreviewText>Bekijk panoramabeeld</PreviewText>
+      </Link>
     </PreviewContainer>
   )
 }
