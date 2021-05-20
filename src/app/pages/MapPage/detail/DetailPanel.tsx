@@ -100,7 +100,7 @@ interface LegacyLayout {
 }
 
 const DetailPanel: FunctionComponent = () => {
-  const { setDetailFeature } = useMapContext()
+  const { setDetailFeature, detailFeature } = useMapContext()
   const { isUserAuthorized } = useAuthScope()
   const { type, subtype: subType, id: rawId } = useParams<DataDetailParams>()
   const { currentDatasetConfig } = useLegacyDataselectionConfig()
@@ -179,7 +179,7 @@ const DetailPanel: FunctionComponent = () => {
   }
 
   // eslint-disable-next-line @typescript-eslint/no-use-before-define
-  return <RenderDetails details={results.value} />
+  return <RenderDetails showNoMapObjectsAlert={!detailFeature} details={results.value} />
 }
 
 interface GroupedItemsProps {
@@ -348,17 +348,21 @@ const PaginatedData: FunctionComponent<PaginatedDataProps> = ({ item }) => {
 
 export interface RenderDetailsProps extends LegacyLayout {
   details: (MapDetails & { showAuthAlert: boolean; authExcludedInfo?: string }) | null
+  showNoMapObjectsAlert?: boolean
 }
 
-export const RenderDetails: FunctionComponent<RenderDetailsProps> = ({ details, legacyLayout }) => {
-  const { detailFeature } = useMapContext()
+export const RenderDetails: FunctionComponent<RenderDetailsProps> = ({
+  details,
+  legacyLayout,
+  showNoMapObjectsAlert,
+}) => {
   if (!details) {
     // Todo: redirect to 404?
     return <Message>Geen detailweergave beschikbaar.</Message>
   }
   return (
     <Wrapper legacyLayout={legacyLayout} data-testid="data-detail">
-      {!detailFeature && (
+      {showNoMapObjectsAlert === true && (
         <Alert level="warning" dismissible>
           Er zijn geen resultaten op de kaart bij dit object
         </Alert>

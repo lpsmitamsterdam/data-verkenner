@@ -4,8 +4,9 @@ import { createGlobalStyle } from 'styled-components'
 import { Icon, LatLng, Marker } from 'leaflet'
 import usePromise, { isPending, isRejected } from '@amsterdam/use-promise'
 import { useHistory } from 'react-router-dom'
-import type { BaseIconOptions } from 'leaflet'
+import { useCallback } from 'react'
 import type { FunctionComponent } from 'react'
+import type { BaseIconOptions } from 'leaflet'
 import geoJsonConfig from '../../../../../map/components/leaflet/services/geo-json-config.constant'
 import type { DataSelectionType } from '../../config'
 import config, { DataSelectionMapVisualizationType } from '../../config'
@@ -19,6 +20,7 @@ import { createFiltersObject } from '../../../../../shared/services/data-selecti
 import { useMapContext } from '../../MapContext'
 import ICON_CONFIG from '../../../../../map/components/leaflet/services/icon-config.constant'
 import useBuildQueryString from '../../../../utils/useBuildQueryString'
+import useMapCenterToMarker from '../../../../utils/useMapCenterToMarker'
 
 const GlobalStyle = createGlobalStyle`
   .dataselection-detail-marker {
@@ -33,6 +35,19 @@ const DrawMapVisualization: FunctionComponent = () => {
   const { showMapDrawVisualization } = useMapContext()
   const history = useHistory()
   const { buildQueryString } = useBuildQueryString()
+  const { panToWithPanelOffset } = useMapCenterToMarker()
+
+  const setClusterInstance = useCallback((clusterLayer) => {
+    if (clusterLayer) {
+      // Since there is a delay in leaflet clusters (and thus cannot figure out why), we need to wrap this in a timeout
+      setTimeout(() => {
+        const bounds = clusterLayer.getBounds()
+        if (!polygon && Object.keys(bounds).length !== 0) {
+          panToWithPanelOffset(bounds)
+        }
+      }, 0)
+    }
+  }, [])
 
   const mapVisualizations = usePromise(async () => {
     if (!polygon && !activeFilters.length) {
@@ -86,6 +101,7 @@ const DrawMapVisualization: FunctionComponent = () => {
       {mapVisualizations.value.type === DataSelectionMapVisualizationType.Markers && (
         <MarkerClusterGroup
           key={mapVisualizations.value.id}
+          setInstance={setClusterInstance}
           markers={mapVisualizations.value.data.map(({ latLng, id }) => {
             const lat = latLng[0]
             const lng = latLng[1]
