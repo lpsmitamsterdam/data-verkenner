@@ -9,7 +9,7 @@ import useParam from '../../../../utils/useParam'
 import DetailPanel from '../../detail/DetailPanel'
 import MapSearchResults from '../MapSearchResults/MapSearchResults'
 import { useMapContext } from '../../MapContext'
-import { locationParam, polygonParam } from '../../query-params'
+import { locationParam, panoFullScreenParam, polygonParam } from '../../query-params'
 import DrawerOverlay, { DeviceMode, DrawerState } from '../DrawerOverlay'
 import { DrawerPanelHeader, LargeDrawerPanel, SmallDrawerPanel } from '../DrawerPanel'
 import DrawResults from '../DrawTool/DrawResults'
@@ -38,6 +38,7 @@ const MapPanel: FunctionComponent = () => {
     useMapContext()
   const [locationParameter] = useParam(locationParam)
   const [polygon] = useParam(polygonParam)
+  const [panoFullScreen] = useParam(panoFullScreenParam)
   const location = useLocation()
   const { activeFilters } = useDataSelection()
   // TODO: Replace this logic with 'useRouteMatch()' when the following PR has been released:
@@ -58,17 +59,18 @@ const MapPanel: FunctionComponent = () => {
 
   useEffect(() => {
     if (
-      locationParameter ||
-      polygon ||
-      activeFilters.length ||
-      matchPath(location.pathname, {
-        path: routing.dataDetail.path,
-        exact: true,
-      })
+      !panoFullScreen &&
+      (locationParameter ||
+        polygon ||
+        activeFilters.length ||
+        matchPath(location.pathname, {
+          path: routing.dataDetail.path,
+          exact: true,
+        }))
     ) {
       setDrawerState(DrawerState.Open)
     }
-  }, [locationParameter, polygon, location])
+  }, [locationParameter, polygon, location, panoFullScreen])
 
   // Hide the legend when any of the following events occur:
   // - The user selects an item on the map, navigating to a detail panel.
