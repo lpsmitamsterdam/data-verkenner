@@ -164,8 +164,10 @@ const DrawTool: FunctionComponent = () => {
           ? polylineRef.current
           : { id: layer.id, polygon: getLayerCoordinates(layer) }
 
-      // Ended drawing, so be able to click on the map to search by (geo) location
-      setDrawToolLocked(false)
+      setTimeout(() => {
+        // Ended drawing, so be able to click on the map to search by (geo) location
+        setDrawToolLocked(false)
+      }, 500) // Safari hack: using this arbitrary value because in some cases leaflet is firing the mapmarker click event slightly later, causing the user to navigate to geosearch page instead of showing the polygon
 
       if (layer instanceof Polygon) {
         // Open the drawer when finishing drawing a polygon (show updated results)
