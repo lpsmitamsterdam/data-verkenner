@@ -1,7 +1,7 @@
-import { BaseLayerToggle as BaseLayerToggleComponent } from '@amsterdam/arm-core'
 import type { FunctionComponent } from 'react'
 import { useMemo } from 'react'
 import { useMatomo } from '@datapunt/matomo-tracker-react'
+import BaseLayerToggleComponent from './BareBaseLayerToggle/BareBaseLayerToggle'
 import type { MapBaseLayer } from '../../../../../map/services'
 import { getMapBaseLayers } from '../../../../../map/services'
 import { useIsEmbedded } from '../../../../contexts/ui'

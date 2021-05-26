@@ -1,5 +1,4 @@
 import {
-  ChevronDown,
   Ellipsis,
   Email,
   Embed,
@@ -8,16 +7,11 @@ import {
   Print,
   Twitter,
 } from '@amsterdam/asc-assets'
-import {
-  ContextMenu as ContextMenuComponent,
-  ContextMenuItem,
-  Icon,
-  themeSpacing,
-} from '@amsterdam/asc-ui'
+import { ContextMenu as ContextMenuComponent, ContextMenuItem, Icon } from '@amsterdam/asc-ui'
 import { useMatomo } from '@datapunt/matomo-tracker-react'
+import type { FunctionComponent, ReactNode } from 'react'
 import { useState } from 'react'
 import styled from 'styled-components'
-import type { FunctionComponent, ReactNode } from 'react'
 import getShareUrl, { ShareTarget } from '../../../../../shared/services/share-url/share-url'
 import { useIsEmbedded } from '../../../../contexts/ui'
 import useDocumentTitle from '../../../../utils/useDocumentTitle'
@@ -55,7 +49,6 @@ const socialItemsArray: Array<{
 ]
 
 const StyledContextMenuComponent = styled(ContextMenuComponent)`
-  margin-left: ${themeSpacing(2)};
   height: 100%;
   button {
     height: inherit;
@@ -91,12 +84,7 @@ const MapContextMenu: FunctionComponent = () => {
     <StyledContextMenuComponent
       data-test="context-menu"
       title="Actiemenu"
-      arrowIcon={<ChevronDown />}
-      icon={
-        <Icon padding={4} inline size={24}>
-          <Ellipsis />
-        </Icon>
-      }
+      arrowIcon={<Ellipsis />}
       position="bottom"
       open={open}
       onClick={() => setOpen((currentValue) => !currentValue)}
