@@ -20,7 +20,7 @@ const config: Config.InitialOptions = {
       statements: 76.23,
       branches: 51,
       lines: 75.81,
-      functions: 62.13,
+      functions: 62,
     },
   },
   coverageReporters: process.env.CI ? ['text'] : ['lcov'],

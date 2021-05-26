@@ -107,3 +107,13 @@ export const DATASELECTION_REMOVE_FILTER: TrackEventParams = {
   category: isFeatureEnabled(FEATURE_BETA_MAP) ? CATEGORY : 'kaart',
   action: 'dataselectie-filter-verwijderen',
 }
+
+export const DATASELECTION_TABLE_BUTTON: TrackEventParams = {
+  category: CATEGORY,
+  action: 'dataselectie-tabel-toggle',
+}
+
+export const DATASELECTION_MAP_BUTTON: TrackEventParams = {
+  category: isFeatureEnabled(FEATURE_BETA_MAP) ? CATEGORY : 'kaart',
+  action: 'dataselectie-kaart-toggle',
+}

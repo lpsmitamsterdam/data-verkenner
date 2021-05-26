@@ -190,6 +190,12 @@ const DrawTool: FunctionComponent = () => {
     const deletedLayersBounds = deletedLayers.map((layer) => {
       const coordinates = layer.getLatLngs()
 
+      if (layer instanceof Polygon) {
+        trackEvent(DRAWTOOL_REMOVE_POLYGON)
+      } else {
+        trackEvent(DRAWTOOL_REMOVE_POLYLINE)
+      }
+
       return layer instanceof Polygon
         ? (coordinates[0] as LatLngLiteral)
         : (coordinates as unknown as LatLngLiteral)
@@ -208,14 +214,6 @@ const DrawTool: FunctionComponent = () => {
       polylineRef.current?.id && deletedLayersIds.includes(polylineRef.current.id)
         ? null
         : polylineRef.current
-
-    if (newPolygon) {
-      trackEvent(DRAWTOOL_REMOVE_POLYGON)
-    }
-
-    if (newPolyline) {
-      trackEvent(DRAWTOOL_REMOVE_POLYLINE)
-    }
 
     updateShape({
       polygon: newPolygon,
