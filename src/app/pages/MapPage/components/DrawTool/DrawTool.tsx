@@ -4,7 +4,7 @@ import type { LatLng, LatLngLiteral } from 'leaflet'
 import L, { Polygon } from 'leaflet'
 import type { FunctionComponent } from 'react'
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
-import { useHistory } from 'react-router-dom'
+import { useHistory, useLocation } from 'react-router-dom'
 import { useMatomo } from '@datapunt/matomo-tracker-react'
 import useParam from '../../../../utils/useParam'
 import type { PolyDrawing } from '../../query-params'
@@ -80,6 +80,7 @@ const createPolyLayer = (drawing: PolyDrawing, line = false): PolylineType | Pol
 const DrawTool: FunctionComponent = () => {
   const { buildQueryString } = useBuildQueryString()
 
+  const location = useLocation()
   const [polygon] = useParam(polygonParam)
   const [polyline] = useParam(polylineParam)
   const history = useHistory()
@@ -117,7 +118,7 @@ const DrawTool: FunctionComponent = () => {
    * @param shape
    */
   const updateShape = (shape: { polygon: PolyDrawing | null; polyline: PolyDrawing | null }) => {
-    const geoOrAddressPage = shape.polygon ? routing.addresses.path : routing.dataSearchGeo.path
+    const geoOrAddressPage = shape.polygon ? routing.addresses.path : location.pathname
     const pathname = config[currentDatasetTypeRef.current?.toUpperCase()]?.path ?? geoOrAddressPage
     if (shape.polygon) {
       history.push({
