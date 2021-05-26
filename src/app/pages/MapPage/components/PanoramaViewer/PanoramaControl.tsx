@@ -79,7 +79,7 @@ const PanoramaControl = () => {
         onClick={() => {
           trackEvent({
             ...PANORAMA_FULLSCREEN_TOGGLE,
-            name: panoFullScreen ? 'volledig' : 'klein',
+            name: panoFullScreen ? 'klein' : 'volledig',
           })
           setPanoFullScreen(!panoFullScreen)
         }}
