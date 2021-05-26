@@ -1,12 +1,13 @@
-import { BaseLayerToggle as BaseLayerToggleComponent } from '@amsterdam/arm-core'
-import { useMemo } from 'react'
 import type { FunctionComponent } from 'react'
+import { useMemo } from 'react'
+import { useMatomo } from '@datapunt/matomo-tracker-react'
+import BaseLayerToggleComponent from './BareBaseLayerToggle/BareBaseLayerToggle'
 import type { MapBaseLayer } from '../../../../../map/services'
 import { getMapBaseLayers } from '../../../../../map/services'
-import { useIsEmbedded } from '../../../../contexts/ui'
 import useParam from '../../../../utils/useParam'
 import type { BaseLayer } from '../../query-params'
 import { baseLayerParam } from '../../query-params'
+import { BASE_LAYER_CHANGE } from '../../matomo-events'
 
 const aerialLayers = getMapBaseLayers()
   .filter(({ category }) => category === 'aerial')
@@ -31,7 +32,7 @@ const aerialIds = aerialLayers.map(({ id }) => id)
 // TODO: Refactor BaseLayerToggle to use an object instead of array of MapBaseLayers
 const BaseLayerToggle: FunctionComponent = () => {
   const [activeBaseLayer, setActiveBaseLayer] = useParam(baseLayerParam)
-  const isEmbedded = useIsEmbedded()
+  const { trackEvent } = useMatomo()
 
   const aerialIndex = useMemo(
     () => (aerialIds.includes(activeBaseLayer) && aerialIds.indexOf(activeBaseLayer)) || 0,
@@ -45,7 +46,6 @@ const BaseLayerToggle: FunctionComponent = () => {
 
   return (
     <BaseLayerToggleComponent
-      style={isEmbedded ? { display: 'none' } : undefined}
       aerialLayers={aerialLayers}
       topoLayers={topoLayers}
       aerialDefaultIndex={aerialIndex}
@@ -57,6 +57,10 @@ const BaseLayerToggle: FunctionComponent = () => {
           : 'topografie'
       } // TODO: Should take the id instead of the type
       onChangeLayer={(id) => {
+        trackEvent({
+          ...BASE_LAYER_CHANGE,
+          name: id,
+        })
         setActiveBaseLayer(id as BaseLayer, 'replace')
       }}
     />

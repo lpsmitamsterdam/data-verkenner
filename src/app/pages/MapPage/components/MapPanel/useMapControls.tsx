@@ -7,7 +7,7 @@ import type { DrawerControl } from '../DrawerOverlay/DrawerOverlay'
 import DrawToolControl from '../DrawToolControl'
 import EmbedControl from '../EmbedControl'
 import LegendControl from '../LegendControl'
-import MapContextMenuControl from '../MapContextMenuControl/MapContextMenuControl'
+import MapContextMenuControl from '../MapMenuControl/MapMenuControl'
 import { PanoramaControl, PanoramaMenuControl, PanoramaViewerInfoBar } from '../PanoramaViewer'
 import ZoomControl from '../ZoomControl'
 

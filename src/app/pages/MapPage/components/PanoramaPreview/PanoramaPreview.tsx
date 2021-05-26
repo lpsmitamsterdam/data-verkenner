@@ -5,6 +5,7 @@ import { useLocation } from 'react-router-dom'
 import styled from 'styled-components'
 import type { FunctionComponent } from 'react'
 import type { LatLngLiteral } from 'leaflet'
+import { useMatomo } from '@datapunt/matomo-tracker-react'
 import type { FetchPanoramaOptions } from '../../../../../api/panorama/thumbnail'
 import { getPanoramaThumbnail } from '../../../../../api/panorama/thumbnail'
 import { ForbiddenError } from '../../../../../shared/services/api/customError'
@@ -23,6 +24,7 @@ import {
 } from '../../query-params'
 import { MAIN_PATHS } from '../../../../routes'
 import { FEATURE_BETA_MAP, isFeatureEnabled } from '../../../../features'
+import { PANORAMA_THUMBNAIL } from '../../matomo-events'
 
 export interface PanoramaPreviewProps extends FetchPanoramaOptions {
   location: LatLngLiteral
@@ -42,7 +44,7 @@ const PreviewImage = styled.img`
   object-fit: cover;
 `
 
-const PreviewLink = styled(Link)`
+const PreviewText = styled.span`
   padding: ${themeSpacing(2, 2)};
   position: absolute;
   right: 0;
@@ -79,6 +81,7 @@ const PanoramaPreview: FunctionComponent<PanoramaPreviewProps> = ({
 }) => {
   const [activeLayers] = useParam(mapLayersParam)
   const browserLocation = useLocation()
+  const { trackEvent } = useMatomo()
 
   const result = usePromise(
     () =>
@@ -127,12 +130,16 @@ const PanoramaPreview: FunctionComponent<PanoramaPreviewProps> = ({
 
   return (
     <PreviewContainer {...otherProps} data-testid="panoramaPreview">
-      <PreviewImage src={result.value.url} alt="Voorvertoning van panoramabeeld" />
-      {/*
-      // @ts-ignore */}
-      <PreviewLink forwardedAs={pickLinkComponent(to)} to={to} inList>
-        Bekijk panoramabeeld
-      </PreviewLink>
+      <Link
+        onClick={() => {
+          trackEvent(PANORAMA_THUMBNAIL)
+        }}
+        as={pickLinkComponent(to)}
+        to={to}
+      >
+        <PreviewImage src={result.value.url} alt="Voorvertoning van panoramabeeld" />
+        <PreviewText>Bekijk panoramabeeld</PreviewText>
+      </Link>
     </PreviewContainer>
   )
 }

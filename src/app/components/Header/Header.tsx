@@ -27,6 +27,10 @@ const HeaderWrapper = styled.section<HeaderWrapperProps>`
   // As position: sticky isn't supported on IE, this is needed to have position the header on top of the other content
   position: relative;
 
+  @media print {
+    display: none;
+  }
+
   ${({ isHomePage }) =>
     isHomePage
       ? css`

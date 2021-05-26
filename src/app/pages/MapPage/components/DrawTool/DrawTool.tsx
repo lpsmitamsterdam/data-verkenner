@@ -1,10 +1,11 @@
 import { ascDefaultTheme, themeColor } from '@amsterdam/asc-ui'
 import { useMapInstance } from '@amsterdam/react-maps'
+import type { LatLng, LatLngLiteral } from 'leaflet'
 import L, { Polygon } from 'leaflet'
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
-import { useHistory } from 'react-router-dom'
 import type { FunctionComponent } from 'react'
-import type { LatLng, LatLngBounds, LatLngLiteral } from 'leaflet'
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import { useHistory, useLocation } from 'react-router-dom'
+import { useMatomo } from '@datapunt/matomo-tracker-react'
 import useParam from '../../../../utils/useParam'
 import type { PolyDrawing } from '../../query-params'
 import { polygonParam, polylineParam } from '../../query-params'
@@ -16,6 +17,16 @@ import { useDataSelection } from '../../../../components/DataSelection/DataSelec
 import useLegacyDataselectionConfig from '../../../../components/DataSelection/useLegacyDataselectionConfig'
 import config from '../../config'
 import useMapCenterToMarker from '../../../../utils/useMapCenterToMarker'
+import { useMapContext } from '../../MapContext'
+import { DrawerState } from '../DrawerOverlay'
+import {
+  DRAWTOOL_ADD_POLYGON,
+  DRAWTOOL_ADD_POLYLINE,
+  DRAWTOOL_EDIT_POLYGON,
+  DRAWTOOL_EDIT_POLYLINE,
+  DRAWTOOL_REMOVE_POLYGON,
+  DRAWTOOL_REMOVE_POLYLINE,
+} from '../../matomo-events'
 
 function getTotalDistance(latLngs: LatLng[]) {
   return latLngs.reduce(
@@ -50,7 +61,9 @@ function getDistanceLabel(layer: ExtendedLayer) {
 }
 
 const bindDistanceAndAreaToTooltip = (layer: ExtendedLayer, toolTipText: string) => {
-  layer.bindTooltip(toolTipText, { direction: 'bottom' }).openTooltip()
+  layer
+    .bindTooltip(toolTipText, { direction: 'bottom', permanent: !(layer instanceof Polygon) })
+    .openTooltip()
 }
 
 const createPolyLayer = (drawing: PolyDrawing, line = false): PolylineType | PolygonType => {
@@ -67,12 +80,15 @@ const createPolyLayer = (drawing: PolyDrawing, line = false): PolylineType | Pol
 const DrawTool: FunctionComponent = () => {
   const { buildQueryString } = useBuildQueryString()
 
+  const location = useLocation()
   const [polygon] = useParam(polygonParam)
   const [polyline] = useParam(polylineParam)
   const history = useHistory()
   const { activeFilters, setDistanceText, setDrawToolLocked } = useDataSelection()
   const { currentDatasetType } = useLegacyDataselectionConfig()
   const { panToWithPanelOffset } = useMapCenterToMarker()
+  const { setDrawerState } = useMapContext()
+  const { trackEvent } = useMatomo()
 
   const [initialDrawnItems, setInitialDrawnItems] = useState<ExtendedLayer[]>([])
 
@@ -100,18 +116,11 @@ const DrawTool: FunctionComponent = () => {
   /**
    * Update the state / URL with the current drawings
    * @param shape
-   * @param bounds
    */
-  const updateShape = (
-    shape: { polygon: PolyDrawing | null; polyline: PolyDrawing | null },
-    bounds?: LatLngBounds,
-  ) => {
-    const pathname =
-      config[currentDatasetTypeRef.current?.toUpperCase()]?.path ?? routing.addresses_TEMP.path
+  const updateShape = (shape: { polygon: PolyDrawing | null; polyline: PolyDrawing | null }) => {
+    const geoOrAddressPage = shape.polygon ? routing.addresses.path : location.pathname
+    const pathname = config[currentDatasetTypeRef.current?.toUpperCase()]?.path ?? geoOrAddressPage
     if (shape.polygon) {
-      if (bounds) {
-        panToWithPanelOffset(bounds.getCenter())
-      }
       history.push({
         pathname,
         search: buildQueryStringRef.current([
@@ -157,15 +166,22 @@ const DrawTool: FunctionComponent = () => {
           : { id: layer.id, polygon: getLayerCoordinates(layer) }
 
       setTimeout(() => {
+        // Ended drawing, so be able to click on the map to search by (geo) location
         setDrawToolLocked(false)
-      }, 100)
-      updateShape(
-        {
-          polygon: updatedPolygon,
-          polyline: updatedPolyline,
-        },
-        layer.getBounds(),
-      )
+      }, 500) // Safari hack: using this arbitrary value because in some cases leaflet is firing the mapmarker click event slightly later, causing the user to navigate to geosearch page instead of showing the polygon
+
+      if (layer instanceof Polygon) {
+        // Open the drawer when finishing drawing a polygon (show updated results)
+        setDrawerState(DrawerState.Open)
+
+        // Also pan and zoom to the drawing
+        panToWithPanelOffset(layer.getBounds())
+      }
+
+      updateShape({
+        polygon: updatedPolygon,
+        polyline: updatedPolyline,
+      })
     },
     [polygonRef, polylineRef],
   )
@@ -174,6 +190,12 @@ const DrawTool: FunctionComponent = () => {
     const deletedLayersIds = deletedLayers.map(({ id }) => id)
     const deletedLayersBounds = deletedLayers.map((layer) => {
       const coordinates = layer.getLatLngs()
+
+      if (layer instanceof Polygon) {
+        trackEvent(DRAWTOOL_REMOVE_POLYGON)
+      } else {
+        trackEvent(DRAWTOOL_REMOVE_POLYLINE)
+      }
 
       return layer instanceof Polygon
         ? (coordinates[0] as LatLngLiteral)
@@ -202,15 +224,29 @@ const DrawTool: FunctionComponent = () => {
 
   const onClose = () => {
     history.push({
-      pathname: routing.dataSearchGeo_TEMP.path,
+      pathname: routing.dataSearchGeo.path,
       search: buildQueryString(undefined, [polylineParam, polygonParam]),
     })
+  }
+
+  const onDrawEnd = (layer: ExtendedLayer) => {
+    updateDrawings(layer)
+    if (layer instanceof Polygon) {
+      trackEvent(DRAWTOOL_ADD_POLYGON)
+    } else {
+      trackEvent(DRAWTOOL_ADD_POLYLINE)
+    }
   }
 
   useEffect(() => {
     const onEditVertex = (e: L.DrawEvents.EditVertex) => {
       setDrawToolLocked(true)
       updateDrawings(e.poly as ExtendedLayer)
+      if (e.poly instanceof Polygon) {
+        trackEvent(DRAWTOOL_EDIT_POLYGON)
+      } else {
+        trackEvent(DRAWTOOL_EDIT_POLYLINE)
+      }
     }
 
     mapInstance.on(L.Draw.Event.EDITVERTEX as any, onEditVertex as any)
@@ -255,7 +291,7 @@ const DrawTool: FunctionComponent = () => {
   return (
     <BareDrawTool
       data-testid="drawTool"
-      onDrawEnd={updateDrawings}
+      onDrawEnd={onDrawEnd}
       onEndInitialItems={attachDataToLayer}
       onDelete={onDeleteDrawing}
       onClose={onClose}

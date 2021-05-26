@@ -9,8 +9,8 @@ import useParam from '../../../../utils/useParam'
 import DetailPanel from '../../detail/DetailPanel'
 import MapSearchResults from '../MapSearchResults/MapSearchResults'
 import { useMapContext } from '../../MapContext'
-import { locationParam, polygonParam } from '../../query-params'
-import DrawerOverlay, { DeviceMode, DrawerState } from '../DrawerOverlay'
+import { locationParam } from '../../query-params'
+import DrawerOverlay, { DeviceMode } from '../DrawerOverlay'
 import { DrawerPanelHeader, LargeDrawerPanel, SmallDrawerPanel } from '../DrawerPanel'
 import DrawResults from '../DrawTool/DrawResults'
 import LegendPanel from '../LegendPanel/LegendPanel'
@@ -34,41 +34,26 @@ const StyledLargeDrawerPanel = styled(LargeDrawerPanel)<{ show: boolean }>`
 `
 
 const MapPanel: FunctionComponent = () => {
-  const { panelHeader, legendActive, drawerState, setLegendActive, setDrawerState } =
+  const { setDrawerState, panelHeader, legendActive, drawerState, setLegendActive } =
     useMapContext()
   const [locationParameter] = useParam(locationParam)
-  const [polygon] = useParam(polygonParam)
   const location = useLocation()
   const { activeFilters } = useDataSelection()
   // TODO: Replace this logic with 'useRouteMatch()' when the following PR has been released:
   // https://github.com/ReactTraining/react-router/pull/7822
   const dataDetailMatch = useMemo(
-    () => matchPath(location.pathname, routing.dataDetail_TEMP.path),
-    [location.pathname, routing.dataDetail_TEMP.path],
+    () => matchPath(location.pathname, routing.dataDetail.path),
+    [location.pathname, routing.dataDetail.path],
   )
 
   const dataSearchGeoMatch = useMemo(
-    () => matchPath(location.pathname, routing.dataSearchGeo_TEMP.path),
-    [location.pathname, routing.dataSearchGeo_TEMP.path],
+    () => matchPath(location.pathname, routing.dataSearchGeo.path),
+    [location.pathname, routing.dataSearchGeo.path],
   )
 
   const onCloseLegend = () => {
     setLegendActive(false)
   }
-
-  useEffect(() => {
-    if (
-      locationParameter ||
-      polygon ||
-      activeFilters.length ||
-      matchPath(location.pathname, {
-        path: routing.dataDetail_TEMP.path,
-        exact: true,
-      })
-    ) {
-      setDrawerState(DrawerState.Open)
-    }
-  }, [locationParameter, polygon, location])
 
   // Hide the legend when any of the following events occur:
   // - The user selects an item on the map, navigating to a detail panel.
@@ -86,7 +71,7 @@ const MapPanel: FunctionComponent = () => {
     if (
       // Also geosearch-page always needs a location parameter
       matchPath(location.pathname, {
-        path: routing.data_TEMP.path,
+        path: routing.data.path,
         exact: true,
       }) ||
       (dataSearchGeoMatch && !locationParameter)
@@ -104,7 +89,7 @@ const MapPanel: FunctionComponent = () => {
         mode={DeviceMode.Desktop}
         controls={controls}
         state={drawerState}
-        onStateChange={(state) => setDrawerState(state)}
+        onStateChange={setDrawerState}
       >
         {showContentPanel && (
           <StyledLargeDrawerPanel data-testid="drawerPanel" show={!legendActive}>
@@ -114,17 +99,17 @@ const MapPanel: FunctionComponent = () => {
             </DrawerPanelHeader>
             <DrawerContainer>
               <Switch>
-                <Route path={[routing.dataSearchGeo_TEMP.path, routing.panorama_TEMP.path]}>
+                <Route path={[routing.dataSearchGeo.path, routing.panorama.path]}>
                   <MapSearchResults />
                 </Route>
-                <Route path={[routing.dataDetail_TEMP.path]}>
+                <Route path={[routing.dataDetail.path]}>
                   <DetailPanel />
                 </Route>
                 <Route
                   path={[
-                    routing.addresses_TEMP.path,
-                    routing.establishments_TEMP.path,
-                    routing.cadastralObjects_TEMP.path,
+                    routing.addresses.path,
+                    routing.establishments.path,
+                    routing.cadastralObjects.path,
                   ]}
                   exact
                 >

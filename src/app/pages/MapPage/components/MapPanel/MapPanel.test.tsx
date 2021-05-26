@@ -18,7 +18,7 @@ jest.mock('react-resize-detector', () => ({
 }))
 
 const mockPush = jest.fn()
-let currentPath = '/kaart/bag/foo/bar' // detail page
+let currentPath = '/data/bag/foo/bar' // detail page
 let search = '?locatie=123,123'
 jest.mock('react-router-dom', () => ({
   // @ts-ignore
@@ -57,8 +57,7 @@ describe('MapPanel', () => {
 
     const legendControlButton = screen.getByTestId('legendControl').querySelector('button')
 
-    // Hide the legend and open the drawer by default onload (since we are on a detail page)
-    expect(setDrawerStateMock).toHaveBeenCalledWith(DrawerState.Open)
+    // Effect should be called, since we are on a detail page
     expect(setLegendActiveMock).toHaveBeenCalledWith(false)
 
     // Open
@@ -70,6 +69,7 @@ describe('MapPanel', () => {
       }),
     )
     fireEvent.click(legendControlButton as Element)
+    expect(setDrawerStateMock).toHaveBeenCalledWith(DrawerState.Open)
     expect(setLegendActiveMock).toHaveBeenCalledWith(true)
 
     // Close
@@ -79,7 +79,7 @@ describe('MapPanel', () => {
   })
 
   it('should hide (not unmount) the content panel when legend panel is active', () => {
-    currentPath = '/kaart/geozoek/'
+    currentPath = '/data/geozoek/'
     search = '?locatie=123,123'
     const { rerender } = render(
       renderWithWrapper(<MapPanel />, { drawerState: DrawerState.Open, legendActive: false }),
@@ -106,7 +106,7 @@ describe('MapPanel', () => {
     expect(setDrawerStateMock).toHaveBeenCalledWith(DrawerState.Open)
 
     // Close
-    currentPath = '/kaart/parkeervakken/parkeervakken/120876487667/'
+    currentPath = '/data/parkeervakken/parkeervakken/120876487667/'
     rerender(renderWithWrapper(<MapPanel />))
 
     expect(screen.queryByTestId('legendPanel')).not.toBeInTheDocument()
@@ -125,7 +125,7 @@ describe('MapPanel', () => {
     expect(setDrawerStateMock).toHaveBeenCalledWith(DrawerState.Open)
 
     // Close
-    currentPath = '/kaart/geozoek/'
+    currentPath = '/data/geozoek/'
     rerender(renderWithWrapper(<MapPanel />))
 
     expect(screen.queryByTestId('legendPanel')).not.toBeInTheDocument()
@@ -134,7 +134,7 @@ describe('MapPanel', () => {
   it('should show the right map controls when panorama is not in full screen mode', () => {
     render(renderWithWrapper(<MapPanel />))
 
-    expect(screen.queryByTestId('mapContextMenuControls')).toBeInTheDocument()
+    expect(screen.queryByTestId('mapMenuControls')).toBeInTheDocument()
     expect(screen.queryByTestId('drawtoolControl')).toBeInTheDocument()
     expect(screen.queryByTestId('legendControl')).toBeInTheDocument()
   })
@@ -148,7 +148,7 @@ describe('MapPanel', () => {
   })
 
   it("should not render the panel when location isn't set on geosearch page", () => {
-    currentPath = '/kaart/geozoek/'
+    currentPath = '/data/geozoek/'
     search = ''
 
     render(renderWithWrapper(<MapPanel />))
@@ -157,7 +157,7 @@ describe('MapPanel', () => {
   })
 
   it('should show the panel when location is set on geosearch page', () => {
-    currentPath = '/kaart/geozoek/'
+    currentPath = '/data/geozoek/'
     search = '?locatie=123,123'
 
     render(renderWithWrapper(<MapPanel />))

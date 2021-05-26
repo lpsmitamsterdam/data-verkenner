@@ -1,8 +1,9 @@
+import type { FunctionComponent } from 'react'
 import { useCallback, useEffect, useRef, useState } from 'react'
 import styled, { css } from 'styled-components'
 import usePromise, { isFulfilled, isPending } from '@amsterdam/use-promise'
 import { useHistory } from 'react-router-dom'
-import type { FunctionComponent } from 'react'
+import { useMatomo } from '@datapunt/matomo-tracker-react'
 import { PANO_LABELS } from '../../../../../panorama/ducks/constants'
 import { loadScene } from '../../../../../panorama/services/marzipano/marzipano'
 import {
@@ -34,6 +35,7 @@ const PanoramaStyle = styled.div<{ panoFullScreen: boolean; loading: boolean }>`
   height: ${({ panoFullScreen }) => (panoFullScreen ? '100%' : '50%')};
   position: relative;
   order: -1; // Put the PanoramaViewer above the Map
+  transition: height 0.3s linear;
   ${({ loading }) =>
     loading &&
     css`
@@ -65,6 +67,7 @@ const PanoramaViewer: FunctionComponent = () => {
   const [hotspotId, setHotspotId] = useState(null)
   const history = useHistory()
   const { buildQueryString } = useBuildQueryString()
+  const { trackEvent } = useMatomo()
 
   const hotspotResult = usePromise(async () => {
     if (!hotspotId) {
@@ -91,7 +94,7 @@ const PanoramaViewer: FunctionComponent = () => {
 
     if (isFulfilled(hotspotResult) && hotspotResult.value !== null) {
       history.push({
-        pathname: routing.dataSearchGeo_TEMP.path,
+        pathname: routing.dataSearchGeo.path,
         search: buildQueryString([
           [
             locationParam,
@@ -114,6 +117,7 @@ const PanoramaViewer: FunctionComponent = () => {
           panoPitch || panoPitchParam.initialValue,
           panoFov || panoFovParam.initialValue,
           res.hotspots,
+          trackEvent,
         )
       }
     },

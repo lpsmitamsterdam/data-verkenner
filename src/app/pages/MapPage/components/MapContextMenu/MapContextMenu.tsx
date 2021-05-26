@@ -1,5 +1,4 @@
 import {
-  ChevronDown,
   Ellipsis,
   Email,
   Embed,
@@ -8,19 +7,13 @@ import {
   Print,
   Twitter,
 } from '@amsterdam/asc-assets'
-import {
-  ContextMenu as ContextMenuComponent,
-  ContextMenuItem,
-  Icon,
-  themeSpacing,
-} from '@amsterdam/asc-ui'
+import { ContextMenu as ContextMenuComponent, ContextMenuItem, Icon } from '@amsterdam/asc-ui'
 import { useMatomo } from '@datapunt/matomo-tracker-react'
-import { useState } from 'react'
-import styled from 'styled-components'
 import type { FunctionComponent, ReactNode } from 'react'
+import { useCallback, useState } from 'react'
+import styled from 'styled-components'
 import getShareUrl, { ShareTarget } from '../../../../../shared/services/share-url/share-url'
-import { useIsEmbedded } from '../../../../contexts/ui'
-import useDocumentTitle from '../../../../utils/useDocumentTitle'
+import { CONTEXT_MENU_EMBED, CONTEXT_MENU_PRINT, CONTEXT_MENU_SHARE } from '../../matomo-events'
 
 const socialItemsArray: Array<{
   id: number
@@ -55,7 +48,6 @@ const socialItemsArray: Array<{
 ]
 
 const StyledContextMenuComponent = styled(ContextMenuComponent)`
-  margin-left: ${themeSpacing(2)};
   height: 100%;
   button {
     height: inherit;
@@ -65,20 +57,12 @@ const StyledContextMenuComponent = styled(ContextMenuComponent)`
 
 const MapContextMenu: FunctionComponent = () => {
   const { trackEvent } = useMatomo()
-  const { documentTitle } = useDocumentTitle()
-  const isEmbedded = useIsEmbedded()
   const [open, setOpen] = useState(false)
-
-  // Hide the context menu if embedded.
-  if (isEmbedded) {
-    return null
-  }
 
   const handlePageShare = (target: ShareTarget) => {
     trackEvent({
-      category: 'menu',
-      action: `menu-delen-${target}`,
-      name: documentTitle,
+      ...CONTEXT_MENU_SHARE,
+      name: target,
     })
 
     const link = getShareUrl(target)
@@ -87,16 +71,29 @@ const MapContextMenu: FunctionComponent = () => {
     }
   }
 
+  const handlePrint = useCallback(() => {
+    trackEvent(CONTEXT_MENU_PRINT)
+    setOpen(false)
+    window.print()
+  }, [trackEvent, setOpen])
+
+  const handleEmbed = useCallback(async () => {
+    setOpen(false)
+    trackEvent(CONTEXT_MENU_EMBED)
+    const params = new URLSearchParams(window.location.search)
+    params.set('embed', 'true')
+    await navigator.clipboard.writeText(
+      `${window.location.origin}${window.location.pathname}?${params.toString()}`,
+    )
+    // eslint-disable-next-line no-alert
+    alert('Embed URL is gekopieerd naar klembord')
+  }, [trackEvent, setOpen])
+
   return (
     <StyledContextMenuComponent
       data-test="context-menu"
       title="Actiemenu"
-      arrowIcon={<ChevronDown />}
-      icon={
-        <Icon padding={4} inline size={24}>
-          <Ellipsis />
-        </Icon>
-      }
+      arrowIcon={<Ellipsis />}
       position="bottom"
       open={open}
       onClick={() => setOpen((currentValue) => !currentValue)}
@@ -105,10 +102,7 @@ const MapContextMenu: FunctionComponent = () => {
         role="button"
         data-test="print"
         divider
-        onClick={() => {
-          setOpen(false)
-          window.print()
-        }}
+        onClick={handlePrint}
         icon={
           <Icon padding={4} inline size={24}>
             <Print />
@@ -122,16 +116,7 @@ const MapContextMenu: FunctionComponent = () => {
         role="button"
         data-test="context-menu-embed"
         divider
-        onClick={async () => {
-          setOpen(false)
-          const params = new URLSearchParams(window.location.search)
-          params.set('embed', 'true')
-          await navigator.clipboard.writeText(
-            `${window.location.origin}${window.location.pathname}?${params.toString()}`,
-          )
-          // eslint-disable-next-line no-alert
-          alert('Embed URL is gekopieerd naar klembord')
-        }}
+        onClick={handleEmbed}
         icon={
           <Icon padding={4} inline size={24}>
             <Embed />

@@ -3,6 +3,7 @@ import { Button, Tab, Tabs, themeSpacing } from '@amsterdam/asc-ui'
 import styled from 'styled-components'
 import { Map, Table } from '@amsterdam/asc-assets'
 import { Link as RouterLink, useHistory, useLocation } from 'react-router-dom'
+import { useMatomo } from '@datapunt/matomo-tracker-react'
 import type { FunctionComponent } from 'react'
 import { getUser } from '../../../shared/ducks/user/user'
 import useBuildQueryString from '../../utils/useBuildQueryString'
@@ -12,6 +13,7 @@ import { ViewMode, viewParam } from '../../pages/MapPage/query-params'
 import { DATASETS } from '../../../shared/ducks/data-selection/constants'
 import DataSelectionDownloadButton from './DataSelectionDownloadButton'
 import useParam from '../../utils/useParam'
+import { DATASELECTION_MAP_BUTTON } from '../../pages/MapPage/matomo-events'
 
 const StyledTabs = styled(Tabs)`
   margin-bottom: ${themeSpacing(2)};
@@ -30,6 +32,7 @@ const DataSelectionHeader: FunctionComponent = () => {
   const location = useLocation()
   const history = useHistory()
   const { buildQueryString } = useBuildQueryString()
+  const { trackEvent } = useMatomo()
   const { activeFilters, totalResults } = useDataSelection()
   const { currentDatasetConfig, currentDatasetType, config } = useLegacyDataselectionConfig()
   if (!currentDatasetConfig) {
@@ -67,6 +70,9 @@ const DataSelectionHeader: FunctionComponent = () => {
             variant="primaryInverted"
             as={RouterLink}
             title={`Resultaten in ${isTableView ? 'kaart' : 'tabel'} weergeven`}
+            onClick={() => {
+              trackEvent(DATASELECTION_MAP_BUTTON)
+            }}
             iconSize={21}
             iconLeft={isTableView ? <Map /> : <Table />}
             // @ts-ignore

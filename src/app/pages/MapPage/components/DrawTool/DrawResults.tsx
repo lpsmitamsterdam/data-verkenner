@@ -10,9 +10,10 @@ import {
   useMatchMedia,
 } from '@amsterdam/asc-ui'
 import { Link as RouterLink } from 'react-router-dom'
+import type { FunctionComponent } from 'react'
 import { useState } from 'react'
 import styled from 'styled-components'
-import type { FunctionComponent } from 'react'
+import { useMatomo } from '@datapunt/matomo-tracker-react'
 import LoadingSpinner from '../../../../components/LoadingSpinner/LoadingSpinner'
 import type { DataSelectionType } from '../../config'
 import config from '../../config'
@@ -33,6 +34,7 @@ import LoginLink from '../../../../components/Links/LoginLink/LoginLink'
 import formatCount from '../../../../utils/formatCount'
 import AuthScope from '../../../../../shared/services/api/authScope'
 import { useMapContext } from '../../MapContext'
+import { DATASELECTION_TABLE_BUTTON } from '../../matomo-events'
 
 const ResultLink = styled(RouterLink)`
   width: 100%;
@@ -164,6 +166,7 @@ const DrawResults: FunctionComponent = () => {
   const { currentDatasetType } = useLegacyDataselectionConfig()
 
   const { buildQueryString } = useBuildQueryString()
+  const { trackEvent } = useMatomo()
 
   return (
     <>
@@ -174,6 +177,9 @@ const DrawResults: FunctionComponent = () => {
           as={TableRouterLink}
           variant="primaryInverted"
           type="button"
+          onClick={() => {
+            trackEvent(DATASELECTION_TABLE_BUTTON)
+          }}
           title="Resultaten in tabel weergeven"
           /* @ts-ignore */
           to={{
