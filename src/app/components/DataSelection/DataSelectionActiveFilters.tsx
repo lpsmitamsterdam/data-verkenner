@@ -1,10 +1,12 @@
 import { useDispatch } from 'react-redux'
 import { FilterTag } from '@amsterdam/asc-ui'
 import styled from 'styled-components'
+import { useMatomo } from '@datapunt/matomo-tracker-react'
 import { removeGeometryFilter } from '../../../shared/ducks/data-selection/actions'
 import { useDataSelection } from './DataSelectionContext'
 import useParam from '../../utils/useParam'
 import { polygonParam } from '../../pages/MapPage/query-params'
+import { DATASELECTION_REMOVE_FILTER } from '../../pages/MapPage/matomo-events'
 
 const List = styled.ul`
   display: flex;
@@ -15,7 +17,9 @@ const List = styled.ul`
 const DataSelectionActiveFilters = () => {
   const dispatch = useDispatch()
   const { removeFilter, activeFilters } = useDataSelection()
+  const { trackEvent } = useMatomo()
   const [, setPolygon] = useParam(polygonParam)
+
   return activeFilters.length ? (
     <List data-testid="activeFilters">
       {activeFilters.map(({ key, label, value }) => (
@@ -24,6 +28,7 @@ const DataSelectionActiveFilters = () => {
             type="button"
             aria-label={`Filter verwijderen: ${label}: ${value}`}
             onClick={() => {
+              trackEvent(DATASELECTION_REMOVE_FILTER)
               if (key === 'shape') {
                 setPolygon(null)
                 dispatch(removeGeometryFilter())

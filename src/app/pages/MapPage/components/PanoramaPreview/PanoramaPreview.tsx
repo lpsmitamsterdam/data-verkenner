@@ -24,6 +24,7 @@ import {
 } from '../../query-params'
 import { MAIN_PATHS } from '../../../../routes'
 import { FEATURE_BETA_MAP, isFeatureEnabled } from '../../../../features'
+import { PANORAMA_THUMBNAIL } from '../../matomo-events'
 
 export interface PanoramaPreviewProps extends FetchPanoramaOptions {
   location: LatLngLiteral
@@ -131,10 +132,7 @@ const PanoramaPreview: FunctionComponent<PanoramaPreviewProps> = ({
     <PreviewContainer {...otherProps} data-testid="panoramaPreview">
       <Link
         onClick={() => {
-          trackEvent({
-            category: isFeatureEnabled(FEATURE_BETA_MAP) ? 'kaart-2.0' : 'kaart',
-            action: 'panorama-thumbnail',
-          })
+          trackEvent(PANORAMA_THUMBNAIL)
         }}
         as={pickLinkComponent(to)}
         to={to}

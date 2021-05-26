@@ -1,4 +1,5 @@
 import type { TrackEventParams } from '@datapunt/matomo-tracker-react/lib/types'
+import { FEATURE_BETA_MAP, isFeatureEnabled } from '../../features'
 
 const CATEGORY = 'kaart-2.0'
 
@@ -57,6 +58,11 @@ export const PANORAMA_SELECT: TrackEventParams = {
   action: 'panorama-selecteer',
 }
 
+export const PANORAMA_THUMBNAIL: TrackEventParams = {
+  category: isFeatureEnabled(FEATURE_BETA_MAP) ? CATEGORY : 'kaart',
+  action: 'panorama-thumbnail',
+}
+
 export const LEGEND_OPEN: TrackEventParams = {
   category: CATEGORY,
   action: 'legenda-open',
@@ -90,4 +96,14 @@ export const CONTEXT_MENU_EMBED: TrackEventParams = {
 export const DRAWER_HANDLE: TrackEventParams = {
   category: CATEGORY,
   action: 'panel-handle',
+}
+
+export const DATASELECTION_ADD_FILTER: TrackEventParams = {
+  category: isFeatureEnabled(FEATURE_BETA_MAP) ? CATEGORY : 'kaart',
+  action: 'dataselectie-filter-toevoegen',
+}
+
+export const DATASELECTION_REMOVE_FILTER: TrackEventParams = {
+  category: isFeatureEnabled(FEATURE_BETA_MAP) ? CATEGORY : 'kaart',
+  action: 'dataselectie-filter-verwijderen',
 }

@@ -1,13 +1,15 @@
+import type { FunctionComponent } from 'react'
 import { useMemo, useState } from 'react'
 import { Button, Heading, Link, themeColor, themeSpacing } from '@amsterdam/asc-ui'
 import styled from 'styled-components'
 import { Enlarge, Minimise } from '@amsterdam/asc-assets'
-import type { FunctionComponent } from 'react'
+import { useMatomo } from '@datapunt/matomo-tracker-react'
 import { DEFAULT_LOCALE } from '../../../shared/config/locale.config'
 import Metadata from '../../../shared/assets/icons/metadata.svg'
 import { useDataSelection } from './DataSelectionContext'
 import type { AvailableFilter } from './types'
 import useLegacyDataselectionConfig from './useLegacyDataselectionConfig'
+import { DATASELECTION_ADD_FILTER } from '../../pages/MapPage/matomo-events'
 
 const StyledHeading = styled(Heading)`
   display: flex;
@@ -34,6 +36,7 @@ const DataSelectionFilters: FunctionComponent = () => {
   const [expandedFilters, setExpandedFilters] = useState<string[]>([])
   const { addFilter, activeFilters, availableFilters } = useDataSelection()
   const { currentDatasetConfig } = useLegacyDataselectionConfig()
+  const { trackEvent } = useMatomo()
   const filteredAvailableFilters = useMemo(() => {
     if (!activeFilters.length) {
       return []
@@ -142,6 +145,7 @@ const DataSelectionFilters: FunctionComponent = () => {
                           type="button"
                           forwardedAs="button"
                           onClick={() => {
+                            trackEvent(DATASELECTION_ADD_FILTER)
                             addFilter({
                               [filter.slug]: option.id,
                             })
