@@ -28,9 +28,10 @@ const StyledAlert = styled(Alert)`
 const StyledContainer = styled.section`
   display: flex;
   flex-direction: column;
-  margin: ${themeSpacing(4, 0)};
+  margin: ${themeSpacing(4, 0, 0)};
   padding: ${themeSpacing(0, 4)};
   background-color: ${themeColor('tint', 'level1')};
+  overflow-x: scroll;
 `
 
 const Wrapper = styled.div<{ view: ViewMode }>`
