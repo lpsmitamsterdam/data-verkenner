@@ -43,8 +43,6 @@ const DrawerPanel = styled.div<DrawerPanelProps>`
 
   @media print {
     position: relative;
-    min-height: 100vh;
-    height: 1200px;
     page-break-before: always;
   }
 

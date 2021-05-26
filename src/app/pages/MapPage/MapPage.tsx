@@ -1,10 +1,10 @@
 import { constants, Map as MapComponent, Scale, useStateRef } from '@amsterdam/arm-core'
+import type { FunctionComponent } from 'react'
 import { useCallback, useEffect } from 'react'
+import type { Theme } from '@amsterdam/asc-ui'
 import { themeSpacing } from '@amsterdam/asc-ui'
 import styled, { createGlobalStyle, css } from 'styled-components'
 import type L from 'leaflet'
-import type { FunctionComponent } from 'react'
-import type { Theme } from '@amsterdam/asc-ui'
 import PanoramaViewer from './components/PanoramaViewer/PanoramaViewer'
 import useParam from '../../utils/useParam'
 import LeafletLayers from './LeafletLayers'
@@ -19,6 +19,7 @@ import {
 } from './query-params'
 import MapPanel from './components/MapPanel'
 import { useDataSelection } from '../../components/DataSelection/DataSelectionContext'
+import { useIsEmbedded } from '../../contexts/ui'
 
 const MapView = styled.div`
   height: 100%;
@@ -51,6 +52,8 @@ const GlobalStyle = createGlobalStyle<{
   .leaflet-container {
     position: sticky !important;
     height: ${({ panoActive }) => (panoActive ? '50%' : '100%')};
+    transition: height 0.3s linear;
+
     @media print {
       min-height: 100vh;
       page-break-after: always;
@@ -84,6 +87,7 @@ const MapPage: FunctionComponent = () => {
   const [location] = useParam(locationParam)
   const [panoPitch] = useParam(panoPitchParam)
   const [panoHeading] = useParam(panoHeadingParam)
+  const isEmbedded = useIsEmbedded()
 
   const panoActive = panoHeading !== null && location !== null
 
@@ -110,6 +114,7 @@ const MapPage: FunctionComponent = () => {
           center: center ?? DEFAULT_AMSTERDAM_MAPS_OPTIONS.center,
           attributionControl: false,
           minZoom: 7,
+          scrollWheelZoom: !isEmbedded,
         }}
         events={{
           zoomend: useCallback(() => {

@@ -4,7 +4,6 @@ import { useMatomo } from '@datapunt/matomo-tracker-react'
 import BaseLayerToggleComponent from './BareBaseLayerToggle/BareBaseLayerToggle'
 import type { MapBaseLayer } from '../../../../../map/services'
 import { getMapBaseLayers } from '../../../../../map/services'
-import { useIsEmbedded } from '../../../../contexts/ui'
 import useParam from '../../../../utils/useParam'
 import type { BaseLayer } from '../../query-params'
 import { baseLayerParam } from '../../query-params'
@@ -33,7 +32,6 @@ const aerialIds = aerialLayers.map(({ id }) => id)
 // TODO: Refactor BaseLayerToggle to use an object instead of array of MapBaseLayers
 const BaseLayerToggle: FunctionComponent = () => {
   const [activeBaseLayer, setActiveBaseLayer] = useParam(baseLayerParam)
-  const isEmbedded = useIsEmbedded()
   const { trackEvent } = useMatomo()
 
   const aerialIndex = useMemo(
@@ -48,7 +46,6 @@ const BaseLayerToggle: FunctionComponent = () => {
 
   return (
     <BaseLayerToggleComponent
-      style={isEmbedded ? { display: 'none' } : undefined}
       aerialLayers={aerialLayers}
       topoLayers={topoLayers}
       aerialDefaultIndex={aerialIndex}

@@ -71,3 +71,18 @@ export const ZOOM_OUT: TrackEventParams = {
   category: CATEGORY,
   action: 'zoom-uit-knop',
 }
+
+export const CONTEXT_MENU_SHARE: TrackEventParams = {
+  category: CATEGORY,
+  action: 'menu-delen',
+}
+
+export const CONTEXT_MENU_PRINT: TrackEventParams = {
+  category: CATEGORY,
+  action: 'menu-printen',
+}
+
+export const CONTEXT_MENU_EMBED: TrackEventParams = {
+  category: CATEGORY,
+  action: 'menu-embed',
+}

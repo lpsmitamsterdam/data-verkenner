@@ -6,6 +6,7 @@ import type { PropsWithChildren } from 'react'
 import MapPage from './MapPage'
 import withMapContext from '../../utils/withMapContext'
 import { DataSelectionProvider } from '../../components/DataSelection/DataSelectionContext'
+import { UiProvider } from '../../contexts/ui'
 
 jest.mock('@amsterdam/react-maps')
 jest.mock('./components/MapMarker/MapMarker', () => () => <div data-testid="mapMarkers" />)
@@ -35,9 +36,11 @@ describe('MapPage', () => {
   it('should show the PanoramaViewer when panoHeading and locatie parameters are set', async () => {
     render(
       withMapContext(
-        <DataSelectionProvider>
-          <MapPage />
-        </DataSelectionProvider>,
+        <UiProvider>
+          <DataSelectionProvider>
+            <MapPage />
+          </DataSelectionProvider>
+        </UiProvider>,
       ),
     )
 
