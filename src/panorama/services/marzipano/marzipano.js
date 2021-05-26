@@ -18,7 +18,7 @@ function calculateHotspotPitch(height, distance) {
 /*
   Create hotspot element that will be placed in the hotspot container
 */
-function createHotspotTemplate(viewer, scene, view, hotspot, onClickHandler) {
+function createHotspotTemplate(viewer, scene, view, hotspot, onClickHandler, trackEvent) {
   const hotspotPitch = calculateHotspotPitch(PANORAMA_CONFIG.CAMERA_HEIGHT, hotspot.distance)
 
   const realLifeHotspotSize = 0.6
@@ -56,6 +56,12 @@ function createHotspotTemplate(viewer, scene, view, hotspot, onClickHandler) {
 
   // Add onClick event to hotspot
   hotspotElement.addEventListener('click', () => {
+    if (trackEvent) {
+      trackEvent({
+        category: 'kaart-2.0',
+        action: 'panorama-hotspot',
+      })
+    }
     onClickHandler(hotspot.id, hotspot.heading)
   })
 
@@ -84,7 +90,16 @@ export function initialize(domElement) {
 /*
   Load the Marzipano viewer into its view components
 */
-export function loadScene(viewer, onClickHandler, image, heading, pitch, fov, hotspots) {
+export function loadScene(
+  viewer,
+  onClickHandler,
+  image,
+  heading,
+  pitch,
+  fov,
+  hotspots,
+  trackEvent,
+) {
   const source = Marzipano.ImageUrlSource.fromString(image.pattern, {
     cubeMapPreviewUrl: image.preview,
   })
@@ -108,7 +123,9 @@ export function loadScene(viewer, onClickHandler, image, heading, pitch, fov, ho
 
   hotspotsObject
     .sort((hotspotA, hotspotB) => hotspotB.distance - hotspotA.distance)
-    .forEach((hotspot) => createHotspotTemplate(viewer, scene, view, hotspot, onClickHandler))
+    .forEach((hotspot) =>
+      createHotspotTemplate(viewer, scene, view, hotspot, onClickHandler, trackEvent),
+    )
 
   view.setYaw(degreesToRadians(heading))
   view.setPitch(degreesToRadians(pitch))

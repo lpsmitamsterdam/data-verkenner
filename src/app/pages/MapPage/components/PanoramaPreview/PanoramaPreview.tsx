@@ -5,6 +5,7 @@ import { useLocation } from 'react-router-dom'
 import styled from 'styled-components'
 import type { FunctionComponent } from 'react'
 import type { LatLngLiteral } from 'leaflet'
+import { useMatomo } from '@datapunt/matomo-tracker-react'
 import type { FetchPanoramaOptions } from '../../../../../api/panorama/thumbnail'
 import { getPanoramaThumbnail } from '../../../../../api/panorama/thumbnail'
 import { ForbiddenError } from '../../../../../shared/services/api/customError'
@@ -79,6 +80,7 @@ const PanoramaPreview: FunctionComponent<PanoramaPreviewProps> = ({
 }) => {
   const [activeLayers] = useParam(mapLayersParam)
   const browserLocation = useLocation()
+  const { trackEvent } = useMatomo()
 
   const result = usePromise(
     () =>
@@ -127,7 +129,16 @@ const PanoramaPreview: FunctionComponent<PanoramaPreviewProps> = ({
 
   return (
     <PreviewContainer {...otherProps} data-testid="panoramaPreview">
-      <Link as={pickLinkComponent(to)} to={to}>
+      <Link
+        onClick={() => {
+          trackEvent({
+            category: isFeatureEnabled(FEATURE_BETA_MAP) ? 'kaart-2.0' : 'kaart',
+            action: 'panorama-thumbnail',
+          })
+        }}
+        as={pickLinkComponent(to)}
+        to={to}
+      >
         <PreviewImage src={result.value.url} alt="Voorvertoning van panoramabeeld" />
         <PreviewText>Bekijk panoramabeeld</PreviewText>
       </Link>

@@ -86,3 +86,8 @@ export const CONTEXT_MENU_EMBED: TrackEventParams = {
   category: CATEGORY,
   action: 'menu-embed',
 }
+
+export const DRAWER_HANDLE: TrackEventParams = {
+  category: CATEGORY,
+  action: 'panel-handle',
+}

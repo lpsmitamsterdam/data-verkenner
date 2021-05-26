@@ -3,6 +3,7 @@ import { useCallback, useEffect, useRef, useState } from 'react'
 import styled, { css } from 'styled-components'
 import usePromise, { isFulfilled, isPending } from '@amsterdam/use-promise'
 import { useHistory } from 'react-router-dom'
+import { useMatomo } from '@datapunt/matomo-tracker-react'
 import { PANO_LABELS } from '../../../../../panorama/ducks/constants'
 import { loadScene } from '../../../../../panorama/services/marzipano/marzipano'
 import {
@@ -66,6 +67,7 @@ const PanoramaViewer: FunctionComponent = () => {
   const [hotspotId, setHotspotId] = useState(null)
   const history = useHistory()
   const { buildQueryString } = useBuildQueryString()
+  const { trackEvent } = useMatomo()
 
   const hotspotResult = usePromise(async () => {
     if (!hotspotId) {
@@ -115,6 +117,7 @@ const PanoramaViewer: FunctionComponent = () => {
           panoPitch || panoPitchParam.initialValue,
           panoFov || panoFovParam.initialValue,
           res.hotspots,
+          trackEvent,
         )
       }
     },

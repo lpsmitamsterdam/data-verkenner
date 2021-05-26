@@ -1,6 +1,13 @@
 import { ChevronRight } from '@amsterdam/asc-assets'
 import { Button, Icon, styles, themeColor, themeSpacing } from '@amsterdam/asc-ui'
 import { useResizeDetector } from 'react-resize-detector'
+import type {
+  CSSProperties,
+  FunctionComponent,
+  ReactComponentElement,
+  ReactElement,
+  TouchEvent,
+} from 'react'
 import {
   Children,
   cloneElement,
@@ -11,16 +18,11 @@ import {
   useState,
 } from 'react'
 import styled, { css } from 'styled-components'
-import type {
-  CSSProperties,
-  FunctionComponent,
-  ReactComponentElement,
-  ReactElement,
-  TouchEvent,
-} from 'react'
+import { useMatomo } from '@datapunt/matomo-tracker-react'
 import useAnimationFrame from '../../../../utils/useAnimationFrame'
 import type Control from '../Control'
 import MapOverlay from '../MapOverlay'
+import { DRAWER_HANDLE } from '../../matomo-events'
 
 const HANDLE_SIZE_MOBILE = 70
 const HANDLE_SIZE_DESKTOP = 40
@@ -247,6 +249,7 @@ const DrawerOverlay: FunctionComponent<DrawerOverlayProps> = ({
   const lastDragPositionRef = useRef<number | null>(null)
   const [isDragging, setIsDragging] = useState(false)
   const numChildren = Children.toArray(children).length
+  const { trackEvent } = useMatomo()
 
   const drawerContainerRef = useRef<HTMLDivElement>(null)
   const drawerContainerSize = useResizeDetector({ targetRef: drawerContainerRef })
@@ -293,6 +296,11 @@ const DrawerOverlay: FunctionComponent<DrawerOverlayProps> = ({
     if (!onStateChange) {
       return
     }
+
+    trackEvent({
+      ...DRAWER_HANDLE,
+      name: state === DrawerState.Closed ? DrawerState.Open : DrawerState.Closed,
+    })
 
     if (isMobile(mode)) {
       onStateChange(state === DrawerState.Preview ? DrawerState.Closed : DrawerState.Preview)
