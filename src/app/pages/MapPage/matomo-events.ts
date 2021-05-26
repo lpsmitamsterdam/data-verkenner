@@ -68,6 +68,11 @@ export const LEGEND_OPEN: TrackEventParams = {
   action: 'legenda-open',
 }
 
+export const LEGEND_CLOSE: TrackEventParams = {
+  category: CATEGORY,
+  action: 'legenda-sluit',
+}
+
 export const ZOOM_IN: TrackEventParams = {
   category: CATEGORY,
   action: 'zoom-in-knop',

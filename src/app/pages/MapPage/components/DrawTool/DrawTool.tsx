@@ -117,8 +117,8 @@ const DrawTool: FunctionComponent = () => {
    * @param shape
    */
   const updateShape = (shape: { polygon: PolyDrawing | null; polyline: PolyDrawing | null }) => {
-    const pathname =
-      config[currentDatasetTypeRef.current?.toUpperCase()]?.path ?? routing.addresses.path
+    const geoOrAddressPage = shape.polygon ? routing.addresses.path : routing.dataSearchGeo.path
+    const pathname = config[currentDatasetTypeRef.current?.toUpperCase()]?.path ?? geoOrAddressPage
     if (shape.polygon) {
       history.push({
         pathname,
