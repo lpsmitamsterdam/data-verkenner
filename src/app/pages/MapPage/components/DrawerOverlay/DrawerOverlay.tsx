@@ -8,15 +8,7 @@ import type {
   ReactElement,
   TouchEvent,
 } from 'react'
-import {
-  Children,
-  cloneElement,
-  Fragment,
-  isValidElement,
-  useEffect,
-  useRef,
-  useState,
-} from 'react'
+import { Children, cloneElement, Fragment, isValidElement, useRef, useState } from 'react'
 import styled, { css } from 'styled-components'
 import { useMatomo } from '@datapunt/matomo-tracker-react'
 import useAnimationFrame from '../../../../utils/useAnimationFrame'
@@ -268,13 +260,6 @@ const DrawerOverlay: FunctionComponent<DrawerOverlayProps> = ({
 
   const DrawerHandle = isMobile(mode) ? DrawerHandleMobile : DrawerHandleDesktop
   const requestFrame = useAnimationFrame()
-
-  // Force close the drawer if no children are present.
-  useEffect(() => {
-    if (numChildren === 0 && state !== DrawerState.Closed) {
-      onStateChange?.(DrawerState.Closed)
-    }
-  }, [numChildren])
 
   // These are the controls that are locked to the position of the drawer.
   const lockedControls = sortControls(

@@ -2,13 +2,13 @@
 import { icons, useStateRef } from '@amsterdam/arm-core'
 import { ascDefaultTheme, themeColor } from '@amsterdam/asc-ui'
 import { useMapInstance } from '@amsterdam/react-maps'
+import type { DrawEvents, DrawMap, LayerEvent, LeafletKeyboardEvent } from 'leaflet'
 import { Draw, drawLocal, Edit, FeatureGroup } from 'leaflet'
 import 'leaflet-draw'
+import type { FunctionComponent } from 'react'
 import { useEffect, useMemo, useState } from 'react'
 import { createGlobalStyle } from 'styled-components'
 import { v4 as uuidv4 } from 'uuid'
-import type { FunctionComponent } from 'react'
-import type { DrawEvents, DrawMap, LayerEvent, LeafletKeyboardEvent } from 'leaflet'
 import DrawToolControls from './DrawToolControls'
 import type { ExtendedLayer, PolygonType, PolylineType } from './types'
 
@@ -29,8 +29,7 @@ const { tooltip: tooltipPolyline } = drawLocal.draw.handlers.polyline
 
 tooltipPolygon.start = 'Klik op de kaart om te beginnen'
 tooltipPolygon.cont = 'Klik op de kaart om een punt toe te voegen'
-tooltipPolygon.end =
-  'Klik op de kaart om verder te gaan of eindig met dubbelklik of klik op de eerste punt om te eindigen'
+tooltipPolygon.end = 'Klik op de kaart om verder te gaan of klik op de eerste punt om te eindigen'
 
 tooltipPolyline.start = 'Klik op de kaart om te meten'
 tooltipPolyline.cont = 'Klik op de kaart om een lijn te maken'
