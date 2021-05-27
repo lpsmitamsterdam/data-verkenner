@@ -45,7 +45,6 @@ interface ToggleButtonProps {
 }
 
 const Wrapper = styled.div`
-  outline: 2px solid rgb(0, 0, 0, 0.1);
   background-color: rgb(0, 0, 0, 0.1);
   padding: 0;
   display: flex;

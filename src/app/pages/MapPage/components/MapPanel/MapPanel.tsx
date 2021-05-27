@@ -1,8 +1,8 @@
 import { Heading, themeSpacing } from '@amsterdam/asc-ui'
+import type { FunctionComponent } from 'react'
 import { useEffect, useMemo } from 'react'
 import { matchPath, Route, Switch, useLocation } from 'react-router-dom'
 import styled from 'styled-components'
-import type { FunctionComponent } from 'react'
 import { useDataSelection } from '../../../../components/DataSelection/DataSelectionContext'
 import { routing } from '../../../../routes'
 import useParam from '../../../../utils/useParam'
@@ -10,7 +10,7 @@ import DetailPanel from '../../detail/DetailPanel'
 import MapSearchResults from '../MapSearchResults/MapSearchResults'
 import { useMapContext } from '../../MapContext'
 import { locationParam } from '../../query-params'
-import DrawerOverlay, { DeviceMode } from '../DrawerOverlay'
+import DrawerOverlay, { DeviceMode, DrawerState } from '../DrawerOverlay'
 import { DrawerPanelHeader, LargeDrawerPanel, SmallDrawerPanel } from '../DrawerPanel'
 import DrawResults from '../DrawTool/DrawResults'
 import LegendPanel from '../LegendPanel/LegendPanel'
@@ -88,7 +88,7 @@ const MapPanel: FunctionComponent = () => {
       <DrawerOverlay
         mode={DeviceMode.Desktop}
         controls={controls}
-        state={drawerState}
+        state={!showContentPanel && !legendActive ? DrawerState.Closed : drawerState}
         onStateChange={setDrawerState}
       >
         {showContentPanel && (

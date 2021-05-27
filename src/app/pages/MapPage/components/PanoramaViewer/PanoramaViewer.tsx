@@ -35,7 +35,6 @@ const PanoramaStyle = styled.div<{ panoFullScreen: boolean; loading: boolean }>`
   height: ${({ panoFullScreen }) => (panoFullScreen ? '100%' : '50%')};
   position: relative;
   order: -1; // Put the PanoramaViewer above the Map
-  transition: height 0.3s linear;
   ${({ loading }) =>
     loading &&
     css`
