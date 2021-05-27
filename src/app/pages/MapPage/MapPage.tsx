@@ -52,6 +52,11 @@ const GlobalStyle = createGlobalStyle<{
   .leaflet-container {
     position: sticky !important;
     height: ${({ panoActive }) => (panoActive ? '50%' : '100%')};
+    ${({ panoActive }) =>
+      panoActive &&
+      css`
+        border-top: 2px solid;
+      `};
 
     @media print {
       min-height: 100vh;
