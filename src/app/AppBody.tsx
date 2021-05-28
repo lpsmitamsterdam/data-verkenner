@@ -1,9 +1,9 @@
 import { useMatomo } from '@datapunt/matomo-tracker-react'
+import type { FunctionComponent } from 'react'
 import { lazy, Suspense } from 'react'
 import { Helmet } from 'react-helmet'
 import { Route, Switch } from 'react-router-dom'
 import styled from 'styled-components'
-import type { FunctionComponent } from 'react'
 import EmbedIframeComponent from './components/EmbedIframe/EmbedIframe'
 import ErrorAlert from './components/ErrorAlert/ErrorAlert'
 import LoadingSpinner from './components/LoadingSpinner/LoadingSpinner'
@@ -122,13 +122,6 @@ const AppBody: FunctionComponent<AppBodyProps> = ({
                 <meta name="viewport" content="width=1024, user-scalable=yes" />
               </Helmet>
               <Switch>
-                {isFeatureEnabled(FEATURE_BETA_MAP) && (
-                  <Route path={[routing.data.path]}>
-                    {/* When the mobile map panel is working properly we can disable the meta rule up defined above */}
-                    <MapContainer />
-                  </Route>
-                )}
-
                 <Route>
                   <div className={`c-dashboard__body ${bodyClasses}`}>
                     <NotificationAlert />
@@ -158,6 +151,12 @@ const AppBody: FunctionComponent<AppBodyProps> = ({
                     )}
                   </div>
                 </Route>
+                {isFeatureEnabled(FEATURE_BETA_MAP) && (
+                  <Route path={[routing.data.path]}>
+                    {/* When the mobile map panel is working properly we can disable the meta rule up defined above */}
+                    <MapContainer />
+                  </Route>
+                )}
               </Switch>
             </DataSelectionProvider>
             <FeedbackModal id="feedbackModal" />
