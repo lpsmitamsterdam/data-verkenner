@@ -122,7 +122,13 @@ const AppBody: FunctionComponent<AppBodyProps> = ({
                 <meta name="viewport" content="width=1024, user-scalable=yes" />
               </Helmet>
               <Switch>
-                <Route>
+                <Route
+                  path={[
+                    ...(isFeatureEnabled(FEATURE_BETA_MAP) ? [] : mapSplitPagePaths),
+                    routing.constructionDossier.path,
+                    routing.datasetDetail.path,
+                  ]}
+                >
                   <div className={`c-dashboard__body ${bodyClasses}`}>
                     <NotificationAlert />
                     {visibilityError && <ErrorAlert />}
