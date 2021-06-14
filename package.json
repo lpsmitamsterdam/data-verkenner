@@ -115,7 +115,7 @@
     "copy-webpack-plugin": "^9.0.0",
     "cross-env": "^7.0.3",
     "css-loader": "^5.2.6",
-    "cssnano": "^5.0.5",
+    "cssnano": "^5.0.6",
     "cypress": "^7.5.0",
     "eslint": "^7.28.0",
     "eslint-config-airbnb-typescript": "^12.3.1",
