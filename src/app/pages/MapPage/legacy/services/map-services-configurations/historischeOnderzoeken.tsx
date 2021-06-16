@@ -30,6 +30,10 @@ const historischeOnderzoeken: ServiceDefinition<HistorischeOnderzoeken> = {
               description: result.datumRapport,
             },
             {
+              term: 'Auteur',
+              description: result.auteurRapport,
+            },
+            {
               term: 'Nummer rapport',
               description: result.nummerRapport,
             },

@@ -9,6 +9,7 @@ export interface HistorischeOnderzoeken {
   naamRapport: string | null
   beschrijving: string | null
   datumRapport: string | null
+  auteurRapport?: string | null
   nummerRapport: string | null
   opdrachtgever: string | null
   opdrachtnemer: string | null
