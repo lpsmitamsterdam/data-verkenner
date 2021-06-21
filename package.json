@@ -152,7 +152,7 @@
     "lodash.clonedeep": "^4.5.0",
     "mini-css-extract-plugin": "^1.6.0",
     "msw": "^0.29.0",
-    "postcss": "^8.3.4",
+    "postcss": "^8.3.5",
     "postcss-loader": "^6.1.0",
     "prettier": "2.3.1",
     "react-refresh": "^0.10.0",
