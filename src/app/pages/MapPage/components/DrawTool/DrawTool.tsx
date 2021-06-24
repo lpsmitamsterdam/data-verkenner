@@ -152,8 +152,8 @@ const DrawTool: FunctionComponent = () => {
     bindDistanceAndAreaToTooltip(layer, distanceText)
     const element = layer.getElement()
 
-    if (element instanceof HTMLElement) {
-      L.DomUtil.addClass(element, DRAWN_ITEM_CLASS)
+    if (element) {
+      L.DomUtil.addClass(element as HTMLElement, DRAWN_ITEM_CLASS)
     }
   }
 
