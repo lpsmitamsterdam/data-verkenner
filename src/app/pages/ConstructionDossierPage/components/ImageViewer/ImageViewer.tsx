@@ -1,9 +1,16 @@
 /* eslint-disable no-nested-ternary */
-import { Close, Download, Enlarge, Minimise } from '@amsterdam/asc-assets'
+import {
+  ChevronLeft,
+  ChevronRight,
+  Close,
+  Download,
+  Enlarge,
+  Minimise,
+} from '@amsterdam/asc-assets'
 import { Button, themeColor } from '@amsterdam/asc-ui'
 import usePromise, { isFulfilled, isRejected } from '@amsterdam/use-promise'
 import { useMatomo } from '@datapunt/matomo-tracker-react'
-import type { Options, Viewer } from 'openseadragon'
+import type { Options, TileSourceOptions, Viewer } from 'openseadragon'
 import { IIIFTileSource } from 'openseadragon'
 import type { FunctionComponent } from 'react'
 import { useEffect, useMemo, useState } from 'react'
@@ -30,17 +37,30 @@ const ImageViewerContainer = styled(OSDViewer)`
   }
 `
 
+const NavigationButtons = styled.div`
+  display: flex;
+`
+
+const ZoomControls = styled.div`
+  pointer-events: all;
+`
+
+export interface DossierFile {
+  url: string
+  filename: string
+}
+
 export interface ImageViewerProps {
   title: string
-  fileName: string
-  fileUrl: string
+  selectedFileName: string
+  files: DossierFile[]
   onClose: () => void
 }
 
 const ImageViewer: FunctionComponent<ImageViewerProps> = ({
   title,
-  fileName,
-  fileUrl,
+  selectedFileName,
+  files,
   onClose,
 }) => {
   const { trackEvent } = useMatomo()
@@ -50,7 +70,10 @@ const ImageViewer: FunctionComponent<ImageViewerProps> = ({
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(false)
   const [viewer, setViewer] = useState<Viewer>()
-  const fileExtension = fileName.split('.').pop()
+  const [selectedFileIndex, setSelectedFileIndex] = useState<number>(
+    () => files.findIndex((file) => file.filename === selectedFileName) || 0,
+  )
+  const fileExtension = selectedFileName.split('.').pop()
   const isImage = !!fileExtension?.toLowerCase().match(/(jpg|jpeg|png|gif)/)
   const { token } = useAuthToken()
   const tokenQueryString = useMemo(
@@ -58,26 +81,61 @@ const ImageViewer: FunctionComponent<ImageViewerProps> = ({
     [token],
   )
 
-  async function fetchViewerOptions(): Promise<Options> {
-    const tileSourceOptions = await fetchWithToken(`${fileUrl}/info.json${tokenQueryString}`)
-    const tileSource = new IIIFTileSource(tileSourceOptions)
+  function createTileSource(options: TileSourceOptions): IIIFTileSource {
+    const tileSource = new IIIFTileSource(options)
 
     // Monkey patch the 'getTileUrl' method to return the URL including the token.
     tileSource.getTileUrl = function getTileUrlWithToken(...args) {
       return IIIFTileSource.prototype.getTileUrl.call(this, ...args) + tokenQueryString
     }
 
-    return {
+    return tileSource
+  }
+
+  async function fetchTileSourceData(file: string) {
+    const tileOptions = await fetchWithToken(`${file}/info.json${tokenQueryString}`)
+    const tileSource = createTileSource(tileOptions)
+
+    return tileSource
+  }
+
+  async function fetchMultipleTileSourceData() {
+    const tileSources: IIIFTileSource[] = []
+    const requests = files.map((file) => fetchWithToken(`${file.url}/info.json${tokenQueryString}`))
+
+    await Promise.all(requests).then((results) =>
+      results.forEach((result) => tileSources.push(createTileSource(result))),
+    )
+
+    return tileSources
+  }
+
+  async function fetchViewerOptions(): Promise<Options> {
+    const options = {
       preserveViewport: true,
       visibilityRatio: 1.0,
       minZoomLevel: 0,
       defaultZoomLevel: 0,
-      sequenceMode: true,
+      sequenceMode: false,
       showNavigationControl: false,
+      showReferenceStrip: true,
       showSequenceControl: false,
       loadTilesWithAjax: true,
       ajaxHeaders: headers,
-      tileSources: [tileSource],
+    }
+
+    if (files.length > 1) {
+      return {
+        ...options,
+        sequenceMode: true,
+        initialPage: selectedFileIndex > -1 ? selectedFileIndex : 1,
+        tileSources: await fetchMultipleTileSourceData(),
+      }
+    }
+
+    return {
+      ...options,
+      tileSources: [await fetchTileSourceData(files[0].url)],
     }
   }
 
@@ -90,6 +148,23 @@ const ImageViewer: FunctionComponent<ImageViewerProps> = ({
     }
   }, [viewerOptions.status])
 
+  function nextSlide() {
+    const maxPages = files.length > 1 ? files.length - 1 : 1
+    const currentPage = viewer?.currentPage() as number
+
+    if (currentPage <= maxPages) {
+      viewer?.goToPage(currentPage + 1)
+    }
+  }
+
+  function prevSlide() {
+    const currentPage = viewer?.currentPage() as number
+
+    if (currentPage > 0) {
+      viewer?.goToPage(currentPage - 1)
+    }
+  }
+
   function zoomIn() {
     viewer?.viewport.zoomBy(1.5)
   }
@@ -98,13 +173,19 @@ const ImageViewer: FunctionComponent<ImageViewerProps> = ({
     viewer?.viewport.zoomBy(0.5)
   }
 
-  function handleDownload(imageUrl: string, size: string) {
-    downloadFile(imageUrl + tokenQueryString, { method: 'get', headers }, fileName)
+  function onPageChange() {
+    if (viewer) {
+      setSelectedFileIndex(viewer.currentPage())
+    }
+  }
+
+  function handleDownload(imageUrl: string, filename: string, size: string) {
+    downloadFile(imageUrl + tokenQueryString, { method: 'get', headers }, filename)
 
     trackEvent({
       category: 'download-bouwtekening',
       action: `bouwtekening-download-${size}`,
-      name: fileName,
+      name: filename,
     })
   }
 
@@ -119,6 +200,7 @@ const ImageViewer: FunctionComponent<ImageViewerProps> = ({
             setLoading(false)
             setError(true)
           }}
+          onPageChange={onPageChange}
           data-testid="imageViewer"
         />
       )}
@@ -139,7 +221,8 @@ const ImageViewer: FunctionComponent<ImageViewerProps> = ({
               ? () => window.location.reload()
               : () =>
                   handleDownload(
-                    `${fileUrl}?source_file=true`, // If the file is not an image the source file should be downloadable
+                    `${files[selectedFileIndex].url}?source_file=true`, // If the file is not an image the source file should be downloadable
+                    files[selectedFileIndex].filename,
                     'origineel',
                   )
           }
@@ -148,7 +231,33 @@ const ImageViewer: FunctionComponent<ImageViewerProps> = ({
 
       {!loading && (
         <ViewerControls
-          metaData={[title, fileName]}
+          metaData={[title, files[selectedFileIndex].filename]}
+          topLeftComponent={
+            files.length > 1 ? (
+              <NavigationButtons data-testid="navigationControls">
+                <Button
+                  type="button"
+                  variant="blank"
+                  title="Vorige bestand"
+                  size={32}
+                  icon={<ChevronLeft />}
+                  iconSize={15}
+                  disabled={selectedFileIndex === 0}
+                  onClick={prevSlide}
+                />
+                <Button
+                  type="button"
+                  variant="blank"
+                  title="Volgende bestand"
+                  size={32}
+                  icon={<ChevronRight />}
+                  iconSize={15}
+                  disabled={selectedFileIndex === files.length - 1}
+                  onClick={nextSlide}
+                />
+              </NavigationButtons>
+            ) : null
+          }
           topRightComponent={
             <Button
               type="button"
@@ -162,7 +271,7 @@ const ImageViewer: FunctionComponent<ImageViewerProps> = ({
           }
           bottomRightComponent={
             !error && (
-              <div data-testid="zoomControls">
+              <ZoomControls data-testid="zoomControls">
                 <Button
                   type="button"
                   variant="blank"
@@ -181,7 +290,7 @@ const ImageViewer: FunctionComponent<ImageViewerProps> = ({
                   onClick={zoomOut}
                   icon={<Minimise />}
                 />
-              </div>
+              </ZoomControls>
             )
           }
           bottomLeftComponent={
@@ -189,7 +298,7 @@ const ImageViewer: FunctionComponent<ImageViewerProps> = ({
               <ContextMenu
                 handleDownload={handleDownload}
                 downloadLoading={downloadLoading}
-                fileUrl={fileUrl}
+                file={files[selectedFileIndex]}
                 isImage={isImage}
                 data-testid="contextMenu"
               />

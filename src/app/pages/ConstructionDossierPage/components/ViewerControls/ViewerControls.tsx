@@ -21,7 +21,7 @@ const ViewerControlsItem = styled.div<{
   align-items: flex-end;
   display: flex;
   flex-direction: column;
-  pointer-events: all;
+  pointer-events: none;
   position: absolute;
 
   // These styles are temporary, until we move to the new amsterdam style
@@ -30,9 +30,15 @@ const ViewerControlsItem = styled.div<{
     border: 1px solid #ccc;
     box-shadow: 2px 2px 0 0 #999;
 
-    & + button {
-      margin-top: 2px;
-    }
+    ${({ $topLeft }) => {
+      if (!$topLeft) {
+        return css`
+          & + button {
+            margin-top: 2px;
+          }
+        `
+      }
+    }}
   }
 
   & > * + * {
@@ -79,6 +85,7 @@ const ViewerControlsMeta = styled.div`
   margin-right: ${CONTROL_OFFSET * -0.5}px;
   max-width: 70vw;
   overflow: hidden;
+  pointer-events: all;
   width: 100%;
 `
 
@@ -126,7 +133,7 @@ const ViewerControls: FunctionComponent<ViewerControlsProps> = ({
     <ViewerControlsItem $bottomRight>
       {bottomRightComponent}
       {metaData && (
-        <ViewerControlsMeta>
+        <ViewerControlsMeta data-testid="controlsMeta">
           {metaData.map((name) => (
             <ViewerControlsMetaItem key={name}>
               <span>{name}</span>

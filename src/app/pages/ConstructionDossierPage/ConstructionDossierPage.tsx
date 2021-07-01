@@ -11,7 +11,7 @@ import useDocumentTitle from '../../utils/useDocumentTitle'
 import useParam from '../../utils/useParam'
 import { AuthTokenProvider } from './AuthTokenContext'
 import DossierDetails from './components/DossierDetails'
-import { fileNameParam, fileUrlParam } from './query-params'
+import { documentCodeParam, fileNameParam } from './query-params'
 import GeneralErrorAlert from '../../components/Alerts/GeneralErrorAlert'
 
 const ImageViewer = lazy(
@@ -32,7 +32,7 @@ const ConstructionDossierPage: FunctionComponent = () => {
   const { setDocumentTitle } = useDocumentTitle()
   const { id } = useParams<ConstructionDossierPageParams>()
   const [fileName] = useParam(fileNameParam)
-  const [fileUrl] = useParam(fileUrlParam)
+  const [documentBarcode] = useParam(documentCodeParam)
   const result = usePromise(() => getBouwdossierById(id), [id])
 
   useEffect(() => {
@@ -56,18 +56,18 @@ const ConstructionDossierPage: FunctionComponent = () => {
   }
 
   const dossierId = `${result.value.stadsdeel}${result.value.dossiernr}`
+  const matchingDoc = result.value.documenten.find((doc) => doc.barcode === documentBarcode)
 
   return (
     <AuthTokenProvider>
-      {fileName && fileUrl && (
+      {fileName ? (
         <ImageViewer
           title={result.value.titel}
-          fileName={fileName}
-          fileUrl={fileUrl}
+          files={matchingDoc ? matchingDoc.bestanden : []}
+          selectedFileName={fileName}
           onClose={() => history.replace(toConstructionDossier(dossierId))}
         />
-      )}
-      {!fileName && (
+      ) : (
         <DossierDetails dossierId={dossierId} dossier={result.value} data-testid="dossierDetails" />
       )}
     </AuthTokenProvider>
