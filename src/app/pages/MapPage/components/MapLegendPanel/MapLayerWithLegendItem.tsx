@@ -1,6 +1,6 @@
 import type { ElementType, FunctionComponent } from 'react'
 import { useMemo } from 'react'
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
 import { Checkbox, Label, themeColor, themeSpacing } from '@amsterdam/asc-ui'
 import MAP_CONFIG from '../../legacy/services/map.config'
 import type { ExtendedMapGroup } from '../../legacy/services'
@@ -38,11 +38,18 @@ const MapLegendImage = styled.div`
   }
 `
 
-const MapLayerWithLegendStyle = styled.li`
+const MapLayerWithLegendStyle = styled.li<{ notSelectable: boolean }>`
   align-items: center;
   display: flex;
   padding: ${themeSpacing(0, 3, 0, 2)};
-  border-bottom: 1px solid ${themeColor('tint', 'level4')};
+  ${({ notSelectable }) =>
+    notSelectable
+      ? css`
+          margin-left: 23px;
+        `
+      : css`
+          border-bottom: 1px solid ${themeColor('tint', 'level4')};
+        `}
 `
 
 interface MapLayerWithLegendItemProps {
@@ -69,7 +76,7 @@ const MapLayerWithLegendItem: FunctionComponent<MapLayerWithLegendItemProps> = (
     : new URL(`${MAP_CONFIG.OVERLAY_ROOT}${legendItem.legendIconURI as string}`).toString()
 
   return (
-    <MapLayerWithLegendStyle>
+    <MapLayerWithLegendStyle notSelectable={legendItem.notSelectable}>
       <LegendLabel htmlFor={legendItem.id} label={legendItem.title}>
         {!legendItem.notSelectable ? (
           <StyledCheckbox

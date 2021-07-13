@@ -48,7 +48,7 @@ const MapLayerItemStyle = styled.li`
 `
 
 const ZoomButton = styled(Button)`
-  margin: ${themeSpacing(0, 3)};
+  margin: 0 ${themeSpacing(3)} 0 auto;
   order: 0;
 `
 
@@ -90,7 +90,7 @@ const MapLayerButton: FunctionComponent<MapLayerItemProps> = ({
   onAddLayers,
   onRemoveLayers,
 }) => {
-  const [open, setOpen] = useState(isEmbedView ?? layerIsChecked ?? false)
+  const [open, setOpen] = useState(isEmbedView || layerIsChecked || false)
   const [zoom, setZoom] = useParam(zoomParam)
 
   const onHandleChecked = useCallback(
