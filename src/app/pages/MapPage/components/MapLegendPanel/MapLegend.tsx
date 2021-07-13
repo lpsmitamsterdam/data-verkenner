@@ -1,4 +1,4 @@
-import { themeColor } from '@amsterdam/asc-ui'
+import { themeColor, themeSpacing } from '@amsterdam/asc-ui'
 import { useMatomo } from '@datapunt/matomo-tracker-react'
 import type { FunctionComponent } from 'react'
 import { useEffect, useMemo, useState } from 'react'
@@ -15,6 +15,7 @@ const MapCollectionList = styled.ul`
   list-style-type: none;
   padding: 0;
   user-select: none;
+  margin-bottom: ${themeSpacing(3)};
 `
 
 export interface MapLegendProps {

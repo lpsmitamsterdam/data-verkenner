@@ -1,7 +1,7 @@
 import type { ElementType, FunctionComponent } from 'react'
 import { useMemo } from 'react'
 import styled from 'styled-components'
-import { Checkbox, Label, themeSpacing } from '@amsterdam/asc-ui'
+import { Checkbox, Label, themeColor, themeSpacing } from '@amsterdam/asc-ui'
 import MAP_CONFIG from '../../legacy/services/map.config'
 import type { ExtendedMapGroup } from '../../legacy/services'
 
@@ -42,6 +42,7 @@ const MapLayerWithLegendStyle = styled.li`
   align-items: center;
   display: flex;
   padding: ${themeSpacing(0, 3, 0, 2)};
+  border-bottom: 1px solid ${themeColor('tint', 'level4')};
 `
 
 interface MapLayerWithLegendItemProps {

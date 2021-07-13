@@ -44,10 +44,7 @@ const MapLayerItemStyle = styled.li`
   display: flex;
   flex-wrap: wrap;
   cursor: pointer;
-
-  &:not(:last-of-type) {
-    border-bottom: 1px solid ${themeColor('tint', 'level1')};
-  }
+  border-bottom: 1px solid ${themeColor('tint', 'level4')};
 `
 
 const ZoomButton = styled(Button)`
@@ -164,12 +161,12 @@ const MapLayerButton: FunctionComponent<MapLayerItemProps> = ({
             </ZoomIcon>
           </ZoomButton>
         )}
-        {!isAuthorised(mapGroup) && (
-          <StyledAlert level="info">
-            <LoginLink showChevron={false}>Kaartlaag zichtbaar na inloggen</LoginLink>
-          </StyledAlert>
-        )}
       </ToggleButton>
+      {!isAuthorised(mapGroup) && (
+        <StyledAlert level="info">
+          <LoginLink showChevron={false}>Kaartlaag zichtbaar na inloggen</LoginLink>
+        </StyledAlert>
+      )}
       {isAuthorised(mapGroup) && open && (
         <MapLayerWithLegendList>
           {mapGroup.legendItems?.map((legendItem) => (
