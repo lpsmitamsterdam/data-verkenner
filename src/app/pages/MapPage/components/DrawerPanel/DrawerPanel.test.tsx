@@ -16,15 +16,6 @@ describe('DrawerPanel', () => {
     const { container } = render(withAppContext(<DrawerPanel stackLevel={1} />))
 
     expect(container.firstChild).toHaveStyleRule('margin-top', '32px')
-    expect(container.firstChild).toHaveStyleRule('box-shadow', expect.any(String))
-  })
-
-  it('renders the panel in a stack on desktop', () => {
-    const { container } = render(
-      withAppContext(<DrawerPanel deviceMode={DeviceMode.Desktop} stackLevel={1} />),
-    )
-
-    expect(container.firstChild).toHaveStyleRule('box-shadow', expect.any(String))
   })
 
   it('renders the panel with the correct animation on mobile', () => {
