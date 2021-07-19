@@ -4,6 +4,7 @@ import { createUnsecuredToken, Json } from 'jsontokens'
 import type { FunctionComponent } from 'react'
 import { singleFixture as bouwdossierFixture } from '../../../../../api/iiif-metadata/bouwdossier'
 import withAppContext from '../../../../utils/withAppContext'
+import formatDossierAccessValue from '../../utils/formatDossierAccessValue'
 import AuthTokenContext, { DecodedToken } from '../../AuthTokenContext'
 import FilesGallery from '../FilesGallery'
 import DossierDetails from './DossierDetails'
@@ -75,9 +76,14 @@ describe('DossierDetails', () => {
     const listElements = ['titel', 'datering', 'dossier_type', 'dossiernr', 'access']
 
     listElements.forEach((element) => {
-      const definitionDescription = within(definitionList).getByText(
-        `${bouwdossierFixture[element] as string}`,
-      )
+      let value = bouwdossierFixture[element]
+
+      // 'Access' property is translated in the component
+      if (element === 'access') {
+        value = formatDossierAccessValue(value)
+      }
+
+      const definitionDescription = within(definitionList).getByText(`${value as string}`)
       expect(definitionDescription).toBeInTheDocument()
     })
   })
