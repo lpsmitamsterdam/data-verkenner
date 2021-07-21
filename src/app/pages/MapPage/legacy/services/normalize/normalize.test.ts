@@ -7,7 +7,6 @@ import {
   adressenVerblijfsobject,
   bekendmakingen,
   evenementen,
-  explosieven,
   getGarbageContainersByAddress,
   getGarbageContainersByBagObject,
   grexProject,
@@ -357,32 +356,6 @@ omschrijving 2`,
         cadastralName: false,
         name: false,
       })
-    })
-  })
-
-  describe('normalizes "explosieven"', () => {
-    it('parses the dates', () => {
-      const input = {
-        datum: '2019-12-12',
-        datum_inslag: '2019-12-16',
-      } as unknown as PotentialApiResult
-
-      const output = explosieven(input)
-
-      expect(output.datum?.getTime()).toEqual(new Date('2019-12-12').getTime())
-      expect(output.datum_inslag?.getTime()).toEqual(new Date('2019-12-16').getTime())
-    })
-
-    it('ingores the dates when empty', () => {
-      const input = {
-        datum: null,
-        datum_inslag: null,
-      } as unknown as PotentialApiResult
-
-      const output = explosieven(input)
-
-      expect(output.datum).toEqual(null)
-      expect(output.datum_inslag).toEqual(null)
     })
   })
 

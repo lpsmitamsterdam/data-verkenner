@@ -1,82 +1,82 @@
 {
-  "_display": "GG_004",
   "_links": {
+    "schema": "https://schemas.data.amsterdam.nl/datasets/explosieven/dataset#gevrijwaardgebied",
     "self": {
-      "href": "https://api.data.amsterdam.nl/milieuthemas/explosieven/gevrijwaardgebied/5/?format=json"
+      "href": "https://api.data.amsterdam.nl/v1/explosieven/gevrijwaardgebied/5/?_format=json",
+      "title": "GG_004"
     }
   },
   "id": 5,
   "bron": "Stenenhoofd",
-  "kenmerk": "GG_004",
-  "type": "Vrijgave",
   "datum": "1995-11-08",
-  "opmerkingen": "Vrijgave onbekend (enkel gezocht aan oppervlak waterbodem)",
-  "nauwkeurig": "",
-  "intekening": "Kaartmateriaal",
-  "geometrie": {
+  "kenmerk": "GG_004",
+  "geometry": {
     "type": "MultiPolygon",
     "coordinates": [
       [
         [
           [
-            121393.760300003,
-            489316.478500009
+            121393.76030000299,
+            489316.4785000086
           ],
           [
-            121283.495,
-            489143.983
+            121283.49500000104,
+            489143.9829999991
           ],
           [
-            121271.006600004,
-            489189.491500009
+            121271.00660000369,
+            489189.49150000885
           ],
           [
-            121264.656599998,
-            489187.798100002
+            121264.65659999847,
+            489187.7981000021
           ],
           [
-            121254.696,
-            489222.747600008
+            121254.6959999986,
+            489222.7476000078
           ],
           [
-            121292.7951,
-            489251.443799999
+            121292.79509999976,
+            489251.4437999986
           ],
           [
-            121293.959300004,
-            489248.480400007
+            121293.95930000395,
+            489248.4804000072
           ],
           [
-            121312.003900003,
-            489276.632199995
+            121312.00390000269,
+            489276.6321999952
           ],
           [
-            121315.496400002,
-            489273.615900006
+            121315.49640000239,
+            489273.61590000615
           ],
           [
-            121334.546399999,
-            489301.873500008
+            121334.54639999941,
+            489301.87350000814
           ],
           [
-            121333.276400004,
-            489305.048500009
+            121333.27640000358,
+            489305.0485000089
           ],
           [
-            121336.451400008,
-            489305.207200006
+            121336.45140000805,
+            489305.20720000565
           ],
           [
-            121362.327800002,
-            489345.053500004
+            121362.32780000195,
+            489345.0535000041
           ],
           [
-            121393.760300003,
-            489316.478500009
+            121393.76030000299,
+            489316.4785000086
           ]
         ]
       ]
     ]
   },
-  "dataset": "bommenkaart"
+  "detailType": "Vrijgave",
+  "intekening": "Kaartmateriaal",
+  "nauwkeurig": null,
+  "opmerkingen": "Vrijgave onbekend (enkel gezocht aan oppervlak waterbodem)"
 }

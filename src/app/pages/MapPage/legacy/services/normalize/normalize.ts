@@ -181,15 +181,6 @@ export const bekendmakingen = (result: PotentialApiResult) => {
   return { ...result, ...additionalFields }
 }
 
-export const explosieven = (result: PotentialApiResult) => {
-  const additionalFields = {
-    datum: result.datum ? new Date(result.datum) : null,
-    datum_inslag: result.datum_inslag ? new Date(result.datum_inslag) : null,
-  }
-
-  return { ...result, ...additionalFields }
-}
-
 export const evenementen = (result: PotentialApiResult) => {
   const additionalFields = {
     startDate: result.startdatum && formatDate(new Date(result.startdatum)),

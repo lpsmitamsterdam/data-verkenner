@@ -4,7 +4,7 @@ const config: Config.InitialOptions = {
   preset: 'ts-jest',
   displayName: 'unit',
   rootDir: './',
-  collectCoverageFrom: ['src/**/*.{ts,tsx}'],
+  collectCoverageFrom: ['src/**/{!(generated),}.{ts,tsx}'],
   coverageDirectory: 'coverage',
   coverageThreshold: {
     global: {

@@ -11,7 +11,6 @@ import { path as rondleidingverbodPath } from '../../../../../api/overlastgebied
 import { path as taxistandplaatsPath } from '../../../../../api/overlastgebieden/taxistandplaats'
 import type { Single as OverlastgebiedenSingle } from '../../../../../api/overlastgebieden/types'
 import type { Parkeervak } from '../../../../../api/parkeervakken'
-import type { Ligplaats, OpAfstapplaats } from '../../../../../api/varen'
 import { varenLigplaatsPath, varenOpafstapplaatsPath } from '../../../../../api/varen'
 import type { Root as Vastgoed } from '../../../../../api/vsd/vastgoed/types'
 import environment from '../../../../../environment'
@@ -21,8 +20,6 @@ import AuthScope from '../../../../../shared/services/api/authScope'
 import type { Wsg84Coordinate } from '../../../../../shared/services/coordinate-reference-system/crs-converter'
 import getRdAndWgs84Coordinates from '../../../../../shared/services/coordinate-reference-system/getRdAndWgs84Coordinates'
 import getDetailPageData from '../../../../utils/getDetailPageData'
-import formatDate from '../../../../utils/formatDate'
-import getFileName from '../../../../utils/getFileName'
 import toSearchParams from '../../../../utils/toSearchParams'
 import buildDetailUrl from '../../components/DetailPanel/buildDetailUrl'
 import getListFromApi from '../../components/DetailPanel/getListFromApi'
@@ -55,7 +52,6 @@ import {
   adressenVerblijfsobject,
   bekendmakingen,
   evenementen,
-  explosieven,
   formatSquareMetre,
   getGarbageContainersByAddress,
   getGarbageContainersByBagObject,
@@ -74,7 +70,13 @@ import {
 import normalizeParkeervak, { ParkeervakNormalized } from './normalize/parkeervak'
 import vestiging from './vestiging/vestiging'
 import { historischeOnderzoekenPath } from '../../../../../api/ondergrond/historischeonderzoeken'
-import historischeOnderzoeken from './map-services-configurations/historischeOnderzoeken'
+import historischeonderzoeken from './map-services-configurations/ondergrond/historischeonderzoeken'
+import inslagen from './map-services-configurations/explosieven/inslagen'
+import uitgevoerdonderzoek from './map-services-configurations/explosieven/uitgevoerdonderzoek'
+import verdachtgebied from './map-services-configurations/explosieven/verdachtgebied'
+import gevrijwaardGebied from './map-services-configurations/explosieven/gevrijwaardgebied'
+import ligplaats from './map-services-configurations/varen/ligplaats'
+import opafstapplaats from './map-services-configurations/varen/opafstapplaats'
 
 export const endpointTypes = {
   adressenLigplaats: 'bag/v1.1/ligplaats/',
@@ -92,10 +94,10 @@ export const endpointTypes = {
   covid19Artist: 'v1/covid_19/straatartiestverbod/',
   covid19Mask: 'v1/covid_19/mondmaskerverplichting/',
   evenementen: 'vsd/evenementen/',
-  explosievenGevrijwaardGebied: 'milieuthemas/explosieven/gevrijwaardgebied/',
-  explosievenInslag: 'milieuthemas/explosieven/inslagen/',
-  explosievenUitgevoerdOnderzoek: 'milieuthemas/explosieven/uitgevoerdonderzoek/',
-  explosievenVerdachtGebied: 'milieuthemas/explosieven/verdachtgebied/',
+  explosievenGevrijwaardGebied: 'explosieven/gevrijwaardgebied/',
+  explosievenInslag: 'explosieven/bominslag/',
+  explosievenUitgevoerdOnderzoek: 'explosieven/uitgevoerdonderzoek/',
+  explosievenVerdachtGebied: 'explosieven/verdachtgebied/',
   fietspaaltjes: 'fietspaaltjes/fietspaaltjes',
   gebiedenBouwblok: 'gebieden/bouwblok/',
   gebiedenBuurt: 'gebieden/buurt/',
@@ -612,51 +614,6 @@ const parkeervak: ServiceDefinition<Parkeervak, ParkeervakNormalized> = {
             values: result.regimes,
           }
         : undefined,
-    ],
-  }),
-}
-
-const varenLigplaatsen: ServiceDefinition<Ligplaats> = {
-  type: 'varen/ligplaats',
-  endpoint: varenLigplaatsPath,
-  mapDetail: (result) => ({
-    title: categoryLabels.varenLigplaats.singular,
-    subTitle: result.id,
-    noPanorama: true,
-    items: [
-      {
-        type: DetailResultItemType.DefinitionList,
-        entries: [
-          { term: 'ID', description: result.id },
-          { term: 'Naam vaartuig', description: result.naamVaartuig },
-          { term: 'Rederij', description: result.naamKlantKvk },
-          { term: 'Ligplaats segment', description: result.ligplaatsSegment },
-          { term: 'Locatie ID', description: result.idLigplaats },
-        ],
-      },
-    ],
-  }),
-}
-const varenOpAfstapplaats: ServiceDefinition<OpAfstapplaats> = {
-  type: 'varen/opafstapplaats',
-  endpoint: varenOpafstapplaatsPath,
-  mapDetail: (result) => ({
-    title: categoryLabels.varenOpafstapplaats.singular,
-    subTitle: result.id,
-    noPanorama: true,
-    items: [
-      {
-        type: DetailResultItemType.DefinitionList,
-        entries: [
-          { term: 'ID', description: result.id },
-          { term: 'Volgnummer', description: result.volgnr },
-          { term: 'Indicatie over opstap of afstaplocatie', description: result.opEnAfstap },
-          { term: 'Indicatie voor laden en lossen', description: result.laadLos },
-          { term: 'Indicatie elektrische laadpunt', description: result.eLaadpunt },
-          { term: 'Volgnummer + locatiebeschrijving', description: result.tekstOnMouseover },
-          { term: 'Soort op- en afstaplocatie', description: result.kleurOpKaart },
-        ],
-      },
     ],
   }),
 }
@@ -1236,121 +1193,10 @@ const servicesByEndpointType: { [type: string]: ServiceDefinition<any, any> } = 
     endpoint: 'v1/covid_19/mondmaskerverplichting',
     mapDetail: (result) => getCovidBlock(result),
   },
-  [endpointTypes.explosievenGevrijwaardGebied]: {
-    type: 'explosieven/gevrijwaardgebied',
-    endpoint: 'milieuthemas/explosieven/gevrijwaardgebied',
-    normalization: explosieven,
-    mapDetail: (result) => ({
-      title: 'Gevrijwaard gebied',
-      subTitle: result._display,
-      items: [
-        {
-          type: DetailResultItemType.DefinitionList,
-          entries: [
-            { term: 'Soort handeling', description: result.type as string },
-            { term: 'Bron', description: result.bron },
-            {
-              term: 'Datum rapport',
-              description: result.date && formatDate(new Date(result.date)),
-            },
-            { term: 'Intekening', description: result.intekening },
-            {
-              term: 'Opmerkingen',
-              description: result.opmerkingen,
-            },
-          ],
-        },
-      ],
-    }),
-  },
-  [endpointTypes.explosievenInslag]: {
-    type: 'explosieven/inslagen',
-    endpoint: 'milieuthemas/explosieven/inslagen',
-    normalization: explosieven,
-    mapDetail: (result) => ({
-      title: 'Inslag',
-      subTitle: result._display,
-      items: [
-        {
-          type: DetailResultItemType.DefinitionList,
-          entries: [
-            {
-              term: 'Datum brondocument',
-              description: result.datum && formatDate(new Date(result.datum)),
-            },
-            {
-              term: 'Datum van inslag',
-              description: result.datum_inslag && formatDate(new Date(result.datum_inslag)),
-            },
-            { term: 'Soort handeling', description: result.type as string },
-            { term: 'Bron', description: result.bron },
-            { term: 'Intekening', description: result.intekening },
-            { term: 'Nauwkeurigheid', description: result.nauwkeurig },
-            { term: 'Opmerkingen', description: result.opmerkingen },
-            {
-              term: 'Oorlogsincidentrapport',
-              description: result.pdf && getFileName(result.pdf),
-              href: result.pdf && result.pdf,
-            },
-          ],
-        },
-      ],
-    }),
-  },
-  [endpointTypes.explosievenUitgevoerdOnderzoek]: {
-    type: 'explosieven/uitgevoerdonderzoek',
-    endpoint: 'milieuthemas/explosieven/uitgevoerdonderzoek',
-    normalization: explosieven,
-    mapDetail: (result) => ({
-      title: 'Reeds uitgevoerd CE onderzoek',
-      subTitle: result._display,
-      items: [
-        {
-          type: DetailResultItemType.DefinitionList,
-          entries: [
-            { term: 'Soort rapportage', description: result.type as string },
-            { term: 'Onderzoeksgebied', description: result.onderzoeksgebied },
-            { term: 'Opdrachtnemer', description: result.opdrachtnemer },
-            { term: 'Opdrachtgever', description: result.opdrachtgever },
-            { term: 'Verdacht gebied', description: result.verdacht_gebied },
-            {
-              term: 'Datum rapport',
-              description: result.datum && formatDate(new Date(result.datum)),
-            },
-          ],
-        },
-      ],
-    }),
-  },
-  [endpointTypes.explosievenVerdachtGebied]: {
-    type: 'explosieven/verdachtgebied',
-    endpoint: 'milieuthemas/explosieven/verdachtgebied',
-    mapDetail: (result) => ({
-      title: 'Verdacht gebied',
-      subTitle: result._display,
-      items: [
-        {
-          type: DetailResultItemType.DefinitionList,
-          entries: [
-            { term: 'Hoofdgroep', description: result.type as string },
-            { term: 'Subsoort', description: result.subtype },
-            { term: 'Kaliber', description: result.kaliber },
-            { term: 'Aantallen', description: result.aantal },
-            { term: 'Verschijning', description: result.verschijning },
-            { term: 'Afbakening', description: result.afbakening },
-            { term: 'Horizontaal', description: result.horizontaal },
-            { term: 'Cartografie', description: result.cartografie },
-            { term: 'Opmerkingen', description: result.opmerkingen },
-            {
-              term: 'Oorlogshandelingsrapport',
-              description: result.pdf && getFileName(result.pdf),
-              href: result.pdf && result.pdf,
-            },
-          ],
-        },
-      ],
-    }),
-  },
+  [endpointTypes.explosievenGevrijwaardGebied]: gevrijwaardGebied,
+  [endpointTypes.explosievenInslag]: inslagen,
+  [endpointTypes.explosievenUitgevoerdOnderzoek]: uitgevoerdonderzoek,
+  [endpointTypes.explosievenVerdachtGebied]: verdachtgebied,
   [endpointTypes.fietspaaltjes]: {
     type: 'fietspaaltjes/fietspaaltjes',
     endpoint: 'v1/fietspaaltjes/fietspaaltjes',
@@ -2024,8 +1870,8 @@ const servicesByEndpointType: { [type: string]: ServiceDefinition<any, any> } = 
       }
     },
   },
-  [endpointTypes.varenLigplaats]: varenLigplaatsen,
-  [endpointTypes.varenOpAfstapplaats]: varenOpAfstapplaats,
+  [endpointTypes.varenLigplaats]: ligplaats,
+  [endpointTypes.varenOpAfstapplaats]: opafstapplaats,
   [endpointTypes.vestiging]: {
     type: 'handelsregister/vestiging',
     endpoint: 'handelsregister/vestiging',
@@ -2839,7 +2685,7 @@ const servicesByEndpointType: { [type: string]: ServiceDefinition<any, any> } = 
       }
     },
   },
-  [endpointTypes.historischeOnderzoeken]: historischeOnderzoeken,
+  [endpointTypes.historischeOnderzoeken]: historischeonderzoeken,
   [endpointTypes.overlastgebiedenDealeroverlast]: {
     type: 'overlastgebieden/dealeroverlast',
     endpoint: endpointTypes.overlastgebiedenDealeroverlast,

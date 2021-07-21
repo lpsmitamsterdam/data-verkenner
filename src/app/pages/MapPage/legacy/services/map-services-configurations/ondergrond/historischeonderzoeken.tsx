@@ -1,10 +1,10 @@
-import { DetailResultItemType } from '../../types/details'
-import Rating from '../../../../../components/Rating/Rating'
-import type { HistorischeOnderzoeken } from '../../../../../../api/ondergrond/historischeonderzoeken'
-import { historischeOnderzoekenPath } from '../../../../../../api/ondergrond/historischeonderzoeken'
-import type { ServiceDefinition } from '../map-services.config'
+import { DetailResultItemType } from '../../../types/details'
+import Rating from '../../../../../../components/Rating/Rating'
+import { historischeOnderzoekenPath } from '../../../../../../../api/ondergrond/historischeonderzoeken'
+import type { ServiceDefinition } from '../../map-services.config'
+import type { Ondergrondhistorischeonderzoeken } from '../../../../../../../api/ondergrond/generated'
 
-const historischeOnderzoeken: ServiceDefinition<HistorischeOnderzoeken> = {
+const historischeonderzoeken: ServiceDefinition<Ondergrondhistorischeonderzoeken> = {
   type: 'ondergrond/historischeonderzoeken',
   endpoint: historischeOnderzoekenPath,
   mapDetail: (result) => {
@@ -31,6 +31,8 @@ const historischeOnderzoeken: ServiceDefinition<HistorischeOnderzoeken> = {
             },
             {
               term: 'Auteur',
+              // Todo: remove ts-ignore when API schema has auteurRapport, we expect this field when user is logged in
+              // @ts-ignore
               description: result.auteurRapport,
             },
             {
@@ -72,4 +74,4 @@ const historischeOnderzoeken: ServiceDefinition<HistorischeOnderzoeken> = {
   },
 }
 
-export default historischeOnderzoeken
+export default historischeonderzoeken

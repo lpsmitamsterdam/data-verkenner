@@ -1,6 +1,6 @@
 import fixtureSingle from './inslagen.json'
-import type { Root as Inslagen } from './types'
+import type { Explosievenbominslag } from '../generated'
 
-export const singleFixture = fixtureSingle as Inslagen
-export const path = 'milieuthemas/explosieven/inslagen/'
+export const singleFixture = fixtureSingle as Explosievenbominslag
+export const path = 'v1/explosieven/bominslag/'
 export const fixtureId = '494'

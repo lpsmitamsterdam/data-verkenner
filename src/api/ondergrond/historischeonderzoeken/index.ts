@@ -1,8 +1,6 @@
-import type { HistorischeOnderzoeken } from './types'
 import fixture from './historischeonderzoeken.json'
+import type { Ondergrondhistorischeonderzoeken } from '../generated'
 
-export * from './types'
-
-export const singleFixture = fixture as HistorischeOnderzoeken
+export const singleFixture = fixture as Ondergrondhistorischeonderzoeken
 export const historischeOnderzoekenPath = 'v1/ondergrond/historischeonderzoeken'
 export const fixtureId = 12

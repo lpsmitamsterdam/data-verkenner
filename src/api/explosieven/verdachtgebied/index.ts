@@ -1,6 +1,6 @@
 import fixtureSingle from './verdachtgebied.json'
-import type { Root as Verdachtgebied } from './types'
+import type { Explosievenuitgevoerdonderzoek } from '../generated'
 
-export const singleFixture = fixtureSingle as Verdachtgebied
-export const path = 'milieuthemas/explosieven/verdachtgebied/'
+export const singleFixture = fixtureSingle as Explosievenuitgevoerdonderzoek
+export const path = 'v1/explosieven/verdachtgebied/'
 export const fixtureId = '13'
