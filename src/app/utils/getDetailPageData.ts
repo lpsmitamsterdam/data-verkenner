@@ -10,8 +10,8 @@ const getDetailPageData = (endpoint: string) => {
     .split('?')[0] // Remove query
     .replace('bag/v1.1/', 'bag/') // Clean URL if this is using the new BAG v1.1 API
     .replace('iiif-metadata/', 'bouwdossiers/') // Clean URL if this is using the new IIIF Metadata API
-  // eslint-disable-next-line no-useless-escape
-  const matches = /(\w+)\/([\w-]+)\/([\w\.-]+)\/?$/.exec(url)
+
+  const matches = /(\w+)\/([\w-]+)\/([\w.-]+)\/?$/.exec(url)
 
   if (matches === null) {
     throw Error(

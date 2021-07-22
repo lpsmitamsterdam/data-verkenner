@@ -4,6 +4,7 @@ import { fetchWithToken, UrlParams } from '../../../../../../shared/services/api
 import MAP_CONFIG from '../map.config'
 import type { ExtendedMapGroup } from '../index'
 import type { GeoSearchFeature, GeoSearchProperties } from '../../../../../../api/geosearch'
+import getDetailPageData from '../../../../../utils/getDetailPageData'
 
 // TODO: Replace this type with the 'LatLng' type from Leaflet.
 interface Location {
@@ -38,26 +39,31 @@ const sortResults = (results: MapLayer[]) =>
 
 export interface MapLayer extends GeoSearchProperties {
   detailIsShape?: boolean
+  id: string
 }
 
 const retrieveLayers = (detailItems: GeoSearchFeature[], detailIsShape?: boolean): MapLayer[] =>
   detailItems.map((item) => {
-    let [type, subType] = item.properties.type.split('/')
+    const { type, subtype, id } = getDetailPageData(item.properties.uri)
+
+    let newType = type
+    let newSubType = subtype
 
     // Todo: find out why we need to make this translation
-    if (type === 'kadaster') {
-      type = 'brk'
+    if (newType === 'kadaster') {
+      newType = 'brk'
 
-      if (subType === 'kadastraal_object') {
-        subType = 'object'
+      if (newSubType === 'kadastraal_object') {
+        newSubType = 'object'
       }
     }
 
     return {
       detailIsShape,
       ...item.properties,
-      type,
-      subType,
+      id,
+      type: newType,
+      subType: newSubType,
     }
   })
 

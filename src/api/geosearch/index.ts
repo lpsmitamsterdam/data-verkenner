@@ -1,7 +1,7 @@
 export interface GeoSearchProperties {
   display: string
   distance: number
-  id: string
+  id?: string
   type: string
   uri: string
   opr_type?: string
