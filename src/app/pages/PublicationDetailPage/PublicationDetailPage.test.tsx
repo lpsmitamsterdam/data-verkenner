@@ -44,7 +44,7 @@ describe('PublicationDetailPage', () => {
   }
 
   beforeEach(() => {
-    mockedUseDownload.mockImplementation(() => [false, mockDownloadFile])
+    mockedUseDownload.mockImplementation(() => [false, false, mockDownloadFile])
   })
 
   it('should render the spinner when the request is loading', () => {

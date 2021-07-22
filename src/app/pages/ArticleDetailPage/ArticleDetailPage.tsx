@@ -125,7 +125,7 @@ const ArticleDetailPage: FunctionComponent = () => {
   const { id } = useParams<{ id: string }>()
   const [retryCount, setRetryCount] = useState(0)
 
-  const [downloadLoading, downloadFile] = useDownload()
+  const [, downloadLoading, downloadFile] = useDownload()
 
   const result = usePromise(
     () => fetchSingleFromCms(cmsConfig.ARTICLE.endpoint(id), cmsConfig.ARTICLE.fields),

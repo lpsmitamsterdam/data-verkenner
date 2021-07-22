@@ -1,12 +1,5 @@
 /* eslint-disable no-nested-ternary */
-import {
-  ChevronLeft,
-  ChevronRight,
-  Close,
-  Download,
-  Enlarge,
-  Minimise,
-} from '@amsterdam/asc-assets'
+import { ChevronLeft, ChevronRight, Close, Enlarge, Minimise } from '@amsterdam/asc-assets'
 import { Button, themeColor } from '@amsterdam/asc-ui'
 import usePromise, { isFulfilled, isRejected } from '@amsterdam/use-promise'
 import { useMatomo } from '@datapunt/matomo-tracker-react'
@@ -17,12 +10,12 @@ import { useEffect, useMemo, useState } from 'react'
 import styled from 'styled-components'
 import { fetchWithToken } from '../../../../../shared/services/api/api'
 import { getAccessToken } from '../../../../../shared/services/auth/auth'
-import ErrorMessage from '../../../../components/ErrorMessage/ErrorMessage'
 import useDownload from '../../../../utils/useDownload'
 import { useAuthToken } from '../../AuthTokenContext'
 import ContextMenu from '../ContextMenu'
 import OSDViewer from '../OSDViewer'
 import ViewerControls from '../ViewerControls'
+import ImageViewerError from '../ImageViewerError'
 
 const ImageViewerContainer = styled(OSDViewer)`
   background-color: ${themeColor('tint', 'level5')};
@@ -69,7 +62,7 @@ const ImageViewer: FunctionComponent<ImageViewerProps> = ({
   onClose,
 }) => {
   const { trackEvent } = useMatomo()
-  const [downloadLoading, downloadFile] = useDownload()
+  const [downloadError, downloadLoading, downloadFile] = useDownload()
   const accessToken = getAccessToken()
   const headers = accessToken.length > 0 ? { Authorization: `Bearer ${accessToken}` } : undefined
   const [loading, setLoading] = useState(true)
@@ -82,7 +75,7 @@ const ImageViewer: FunctionComponent<ImageViewerProps> = ({
   const isImage = !!fileExtension?.toLowerCase().match(/(jpg|jpeg|png|gif)/)
   const { token } = useAuthToken()
   const tokenQueryString = useMemo(
-    () => (token ? `?${new URLSearchParams({ auth: token }).toString()}` : ''),
+    () => (token ? `${new URLSearchParams({ auth: token }).toString()}` : ''),
     [token],
   )
 
@@ -91,14 +84,14 @@ const ImageViewer: FunctionComponent<ImageViewerProps> = ({
 
     // Monkey patch the 'getTileUrl' method to return the URL including the token.
     tileSource.getTileUrl = function getTileUrlWithToken(...args) {
-      return IIIFTileSource.prototype.getTileUrl.call(this, ...args) + tokenQueryString
+      return `${IIIFTileSource.prototype.getTileUrl.call(this, ...args)}?${tokenQueryString}`
     }
 
     return tileSource
   }
 
   async function fetchTileSourceData(file: string) {
-    const tileOptions = await fetchWithToken(`${file}/info.json${tokenQueryString}`)
+    const tileOptions = await fetchWithToken(`${file}/info.json?${tokenQueryString}`)
     const tileSource = createTileSource(tileOptions)
 
     return tileSource
@@ -106,7 +99,9 @@ const ImageViewer: FunctionComponent<ImageViewerProps> = ({
 
   async function fetchMultipleTileSourceData() {
     const tileSources: IIIFTileSource[] = []
-    const requests = files.map((file) => fetchWithToken(`${file.url}/info.json${tokenQueryString}`))
+    const requests = files.map((file) =>
+      fetchWithToken(`${file.url}/info.json?${tokenQueryString}`),
+    )
 
     await Promise.all(requests).then((results) =>
       results.forEach((result) => tileSources.push(createTileSource(result))),
@@ -185,7 +180,13 @@ const ImageViewer: FunctionComponent<ImageViewerProps> = ({
   }
 
   function handleDownload(imageUrl: string, filename: string, size: string) {
-    downloadFile(imageUrl + tokenQueryString, { method: 'get', headers }, filename)
+    // In the error message users can request to download non-image files, however, this URL already includes a query parameter
+    const downloadUrl =
+      imageUrl.indexOf('?') > -1
+        ? `${imageUrl}&${tokenQueryString}`
+        : `${imageUrl}?${tokenQueryString}`
+
+    downloadFile(downloadUrl, { method: 'get', headers }, filename)
 
     trackEvent({
       category: 'download-bouwtekening',
@@ -211,26 +212,16 @@ const ImageViewer: FunctionComponent<ImageViewerProps> = ({
       )}
 
       {error && (
-        <ErrorMessage
-          data-testid="errorMessage"
-          absolute
-          message={
-            isImage
-              ? 'Er is een fout opgetreden bij het laden van dit bestand.'
-              : 'Dit bestandsformaat kan niet worden weergegeven op deze pagina.'
-          }
-          buttonLabel={isImage ? 'Probeer opnieuw' : `Download bronbestand`}
-          buttonIcon={!isImage && <Download />}
-          buttonOnClick={
-            isImage
-              ? () => window.location.reload()
-              : () =>
-                  handleDownload(
-                    `${files[selectedFileIndex].url}?source_file=true`, // If the file is not an image the source file should be downloadable
-                    files[selectedFileIndex].filename,
-                    'origineel',
-                  )
-          }
+        <ImageViewerError
+          downloadError={downloadError}
+          isImage={isImage}
+          onDownload={() => {
+            handleDownload(
+              `${files[selectedFileIndex].url}?source_file=true`, // If the file is not an image the source file should be downloadable
+              files[selectedFileIndex].filename,
+              'origineel',
+            )
+          }}
         />
       )}
 

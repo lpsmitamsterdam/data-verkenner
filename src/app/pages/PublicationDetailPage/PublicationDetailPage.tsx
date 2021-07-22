@@ -33,7 +33,7 @@ const PublicationDetailPage = () => {
     [id, retryCount],
   )
 
-  const [downloadLoading, downloadFile] = useDownload()
+  const [, downloadLoading, downloadFile] = useDownload()
   const { trackEvent } = useMatomo()
 
   const link = useMemo(

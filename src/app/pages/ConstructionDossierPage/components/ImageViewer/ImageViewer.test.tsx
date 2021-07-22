@@ -48,7 +48,7 @@ describe('ImageViewer', () => {
   beforeEach(() => {
     mockedGetAccessToken.mockReturnValue('FAKETOKEN')
     mockedUseMatomo.mockReturnValue({ trackEvent: () => {} } as any)
-    mockedUseDownload.mockReturnValue([false, () => {}])
+    mockedUseDownload.mockReturnValue([false, false, () => {}])
     mockedOSDViewer.mockImplementation(
       ({ options, onInit, onOpen, onOpenFailed, onPageChange, ...otherProps }) => (
         <div {...otherProps} />
@@ -245,7 +245,7 @@ describe('ImageViewer', () => {
     const mockedDownloadFile = jest.fn()
 
     mockedUseMatomo.mockReturnValue({ trackEvent: mockedTrackEvent } as any)
-    mockedUseDownload.mockReturnValue([false, mockedDownloadFile])
+    mockedUseDownload.mockReturnValue([false, false, mockedDownloadFile])
     mockedOSDViewer.mockImplementation(
       ({ options, onInit, onOpen, onOpenFailed, onPageChange, ...otherProps }) => {
         useEffect(() => {
@@ -277,7 +277,7 @@ describe('ImageViewer', () => {
     await waitFor(() => fireEvent.click(screen.getByText('Download bronbestand')))
 
     expect(mockedDownloadFile).toHaveBeenCalledWith(
-      `/somefile/url/filename.foobar?source_file=true`,
+      `/somefile/url/filename.foobar?source_file=true&`,
       { method: 'get', headers: { Authorization: `Bearer FAKETOKEN` } },
       'filename.foobar',
     )
