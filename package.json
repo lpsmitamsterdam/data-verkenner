@@ -162,7 +162,7 @@
     "mini-css-extract-plugin": "^2.1.0",
     "msw": "^0.32.0",
     "oazapfts": "^3.4.0",
-    "postcss": "^8.3.5",
+    "postcss": "^8.3.6",
     "postcss-loader": "^6.1.0",
     "prettier": "2.3.2",
     "react-refresh": "^0.10.0",
