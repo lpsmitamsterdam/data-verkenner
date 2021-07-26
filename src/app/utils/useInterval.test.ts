@@ -12,7 +12,7 @@ describe('useInterval', () => {
   })
 
   it('clears the scheduled interval if the provided delay changes', () => {
-    const setIntervalMock = jest.spyOn(global, 'setInterval').mockReturnValue(123)
+    const setIntervalMock = jest.spyOn(global, 'setInterval').mockReturnValue(123 as any)
     const clearIntervalMock = jest.spyOn(global, 'clearInterval')
     let delay = 1000
 

@@ -10,7 +10,7 @@ describe('useAnimationFrame', () => {
   beforeEach(() => {
     rafSpy = jest
       .spyOn(window, 'requestAnimationFrame')
-      .mockImplementation((cb) => setTimeout(() => cb(MOCK_TIME)))
+      .mockImplementation((cb) => setTimeout(() => cb(MOCK_TIME)) as any)
   })
 
   afterEach(() => {
