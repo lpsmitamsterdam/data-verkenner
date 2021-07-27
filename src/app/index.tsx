@@ -8,6 +8,7 @@ import { UiProvider } from './contexts/ui'
 import { disableFeature, enableFeature, getEnabledFeatures } from './features'
 import resolveRedirects from './redirects'
 import './sentry'
+import { isEmbeddedParam } from './pages/MapPage/query-params'
 
 // Able to enable and disable feature-toggles via URL parameters
 const searchParams = new URLSearchParams(window.location.search)
@@ -32,6 +33,11 @@ resolveRedirects(window.location)
     // Return to the original path where the user started authentication.
     if (returnPath) {
       window.location.href = returnPath
+    }
+
+    // Do not initiate keycloak when embedded
+    if (searchParams.get(isEmbeddedParam.name)) {
+      return renderApp()
     }
 
     // Initialize Keycloak
