@@ -141,7 +141,7 @@
     "eslint-plugin-react": "7.24.0",
     "eslint-plugin-react-hooks": "^4.2.0",
     "eslint-plugin-standard": "5.0.0",
-    "eslint-plugin-testing-library": "^4.9.0",
+    "eslint-plugin-testing-library": "^4.10.1",
     "fork-ts-checker-webpack-plugin": "^6.2.13",
     "geojson": "^0.5.0",
     "html-webpack-plugin": "^5.3.2",
