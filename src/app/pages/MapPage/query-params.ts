@@ -235,8 +235,8 @@ function decodeLegacyPolyDrawing(value: RawPolyDrawingLegacy): PolyDrawing {
 
 export const panoFullScreenParam: UrlParam<boolean> = {
   name: 'panoFullScreen',
-  defaultValue: false,
-  decode: (value) => Boolean(value),
+  defaultValue: true,
+  decode: (value) => value === 'true',
   encode: (value) => value.toString(),
 }
 

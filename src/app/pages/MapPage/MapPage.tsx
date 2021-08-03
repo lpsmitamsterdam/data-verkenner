@@ -1,22 +1,30 @@
-import { constants, Map as MapComponent, Scale, useStateRef } from '@amsterdam/arm-core'
+import {
+  constants,
+  ControlButton,
+  Map as MapComponent,
+  Scale,
+  useStateRef,
+} from '@amsterdam/arm-core'
 import type { FunctionComponent } from 'react'
-import { useCallback, useEffect } from 'react'
+import { useCallback, useEffect, useMemo } from 'react'
 import type { Theme } from '@amsterdam/asc-ui'
-import { themeSpacing } from '@amsterdam/asc-ui'
+import { breakpoint, themeSpacing } from '@amsterdam/asc-ui'
 import styled, { createGlobalStyle, css } from 'styled-components'
 import type L from 'leaflet'
 import { useMatomo } from '@datapunt/matomo-tracker-react'
-import PanoramaViewer from './components/PanoramaViewer/PanoramaViewer'
 import useParam from '../../utils/useParam'
-import LeafletLayers from './LeafletLayers'
-import { useMapContext } from './MapContext'
-import MapMarker from './components/MapMarker'
 import { centerParam, panoPitchParam, zoomParam } from './query-params'
-import MapPanel from './components/MapPanel'
-import { useDataSelection } from '../../components/DataSelection/DataSelectionContext'
 import { useIsEmbedded } from '../../contexts/ui'
-import { AFTER_PRINT, BEFORE_PRINT } from './matomo-events'
+import { useMapContext } from './MapContext'
+import { useDataSelection } from '../../components/DataSelection/DataSelectionContext'
+import BareBaseLayer from './components/BaseLayerToggle/BareBaseLayerToggle/BareBaseLayer'
+import LeafletLayers from './LeafletLayers'
+import MapMarker from './components/MapMarker'
+import MapPanel from './components/MapPanel'
+import PanoramaViewer from './components/PanoramaViewer/PanoramaViewer'
+import { AFTER_PRINT, BEFORE_PRINT, PANORAMA_FULLSCREEN_TOGGLE } from './matomo-events'
 import useCustomEvent from '../../utils/useCustomEvent'
+import Enlarge from './components/PanoramaViewer/enlarge.svg'
 
 const MapView = styled.div`
   height: 100%;
@@ -32,6 +40,7 @@ const GlobalStyle = createGlobalStyle<{
   panoFullScreen: boolean
   theme: Theme.ThemeInterface
   loading: boolean
+  panelActive?: boolean
 }>`
   @page {
     size: A4 portrait;
@@ -47,14 +56,9 @@ const GlobalStyle = createGlobalStyle<{
 
   // Need to set the styled globally and not as a Styled Component as this will cause problems with leaflet calculating the map canvas / dimensions
   .leaflet-container {
-    position: sticky !important;
     cursor: default;
-    height: ${({ panoActive }) => (panoActive ? '50%' : '100%')};
-    ${({ panoActive }) =>
-      panoActive &&
-      css`
-        border-top: 2px solid;
-      `};
+    height: 100%;
+    width: 100%;
 
     @media print {
       min-height: 100vh;
@@ -67,21 +71,98 @@ const GlobalStyle = createGlobalStyle<{
         cursor: progress;
       `}
 
-    ${({ panoFullScreen }) =>
+    ${({ panoFullScreen, panoActive }) =>
       panoFullScreen &&
+      panoActive &&
       css`
-        display: none;
+        position: absolute !important; // !important to stop leaflet overriding with position: relative
+        bottom: ${themeSpacing(5)};
+        left: auto;
+        width: 310px;
+        height: 178px;
+        min-height: 178px;
+        transition: left 0.25s ease-in-out;
+        z-index: 901;
+        border: 1px solid #ccc;
+        @media screen and ${breakpoint('min-width', 'laptopL')} {
+          width: 465px;
+          height: 267px;
+          min-height: 267px;
+        }
+      `}
+
+    // MapPanel is inactive and panorama full screen
+    ${({ panoFullScreen, panelActive, panoActive }) =>
+      panoFullScreen &&
+      panoActive &&
+      !panelActive &&
+      css`
+        left: ${themeSpacing(10)};
+      `}
+
+    // MapPanel is active (width + spacing) and panorama is full screen
+    ${({ panoFullScreen, panelActive, panoActive }) =>
+      panoFullScreen &&
+      panoActive &&
+      panelActive &&
+      css`
+        left: 405px;
+        @media screen and ${breakpoint('min-width', 'laptopM')} {
+          left: 645px;
+        }
+      `}
+
+    // Map and Panorama are 50%-50% height
+    ${({ panoFullScreen, panoActive }) =>
+      !panoFullScreen &&
+      panoActive &&
+      css`
+        height: 50%;
+      `}
+
+    ${({ panoFullScreen, panoActive }) =>
+      !panoFullScreen &&
+      panoActive &&
+      css`
+        position: sticky !important;
       `}
   }
   .leaflet-control-container .leaflet-control-scale {
     margin: ${themeSpacing(0, 16, 4, 0)} !important;
   }
+
+  // Hide scale if panorama is full screen (map is mini)
+  ${({ panoFullScreen, panoActive }) =>
+    panoFullScreen &&
+    panoActive &&
+    css`
+      .leaflet-control-scale {
+        display: none;
+      }
+    `}
+`
+
+const ResizeButton = styled(ControlButton)<{ panelActive?: boolean }>`
+  position: absolute;
+  bottom: ${themeSpacing(9)};
+  left: ${themeSpacing(15)};
+  z-index: 902;
+  transition: left 0.25s ease-in-out;
+
+  ${(props) =>
+    props.panelActive &&
+    css`
+      left: 425px;
+      @media screen and ${breakpoint('min-width', 'laptopM')} {
+        left: 665px;
+      }
+    `}
 `
 
 const { DEFAULT_AMSTERDAM_MAPS_OPTIONS } = constants
 
 const MapPage: FunctionComponent = () => {
-  const { panoFullScreen, loading, panoActive } = useMapContext()
+  const { panoFullScreen, setPanoFullScreen, loading, panoActive, drawerState } = useMapContext()
   const { drawToolLocked } = useDataSelection()
   const [, setMapInstance, mapInstanceRef] = useStateRef<L.Map | null>(null)
   const [center, setCenter] = useParam(centerParam)
@@ -104,18 +185,29 @@ const MapPage: FunctionComponent = () => {
     if (mapInstanceRef.current) {
       mapInstanceRef.current.invalidateSize()
     }
-  }, [panoFullScreen, panoPitch, mapInstanceRef])
+  }, [panoActive, panoFullScreen, panoPitch, mapInstanceRef])
 
   useEffect(() => {
     mapInstanceRef.current?.setZoom(zoom)
   }, [zoom])
+
+  useMemo(() => {
+    if (mapInstanceRef && panoFullScreen) {
+      mapInstanceRef.current?.setZoom(12)
+    }
+  }, [panoFullScreen])
 
   useCustomEvent(window, 'beforeprint', onHandleBeforePrint)
   useCustomEvent(window, 'afterprint', onHandleAfterPrint)
 
   return (
     <MapView>
-      <GlobalStyle loading={loading} panoActive={panoActive} panoFullScreen={panoFullScreen} />
+      <GlobalStyle
+        loading={loading}
+        panoActive={panoActive}
+        panoFullScreen={panoFullScreen}
+        panelActive={drawerState === 'OPEN'}
+      />
       <MapComponent
         setInstance={setMapInstance}
         options={{
@@ -139,11 +231,13 @@ const MapPage: FunctionComponent = () => {
           }, [mapInstanceRef, setCenter]),
         }}
       >
-        <LeafletLayers />
+        <BareBaseLayer />
 
+        <LeafletLayers />
         {panoActive && <PanoramaViewer />}
         {!drawToolLocked && <MapMarker panoActive={panoActive} />}
         <MapPanel />
+
         <Scale
           options={{
             position: 'bottomright',
@@ -151,6 +245,26 @@ const MapPage: FunctionComponent = () => {
             imperial: false,
           }}
         />
+
+        {panoActive && panoFullScreen && (
+          <ResizeButton
+            type="button"
+            variant="blank"
+            title="Kaart vergroten"
+            size={44}
+            iconSize={40}
+            data-testid="panoramaMapEnlarge"
+            onClick={() => {
+              trackEvent({
+                ...PANORAMA_FULLSCREEN_TOGGLE,
+                name: 'volledig',
+              })
+              setPanoFullScreen(false)
+            }}
+            icon={<Enlarge />}
+            panelActive={drawerState === 'OPEN'}
+          />
+        )}
       </MapComponent>
     </MapView>
   )
