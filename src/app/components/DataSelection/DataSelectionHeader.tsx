@@ -93,7 +93,7 @@ const DataSelectionHeader: FunctionComponent = () => {
         </div>
       </Header>
       {showTabs && (
-        <StyledTabs label="An example of tabs" initialTab={currentDatasetType}>
+        <StyledTabs label="An example of tabs" activeTab={currentDatasetType}>
           {tabs.map((tab) => (
             <Tab
               key={tab.dataset}
