@@ -648,6 +648,9 @@ omschrijving 2`,
         grexProject({ planstatus: 'T', oppervlakte: 0 } as unknown as PotentialApiResult)
           .planstatusFormatted,
       ).toEqual('Toekomstig')
+
+      // planstatus: 'NOPE' is not a listed case in the grexProject switch statement so will throw the console.warn in the default case
+      jest.spyOn(console, 'warn').mockImplementation(() => {})
       expect(
         grexProject({ planstatus: 'NOPE', oppervlakte: 0 } as unknown as PotentialApiResult)
           .planstatusFormatted,
