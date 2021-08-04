@@ -45,14 +45,9 @@ const useMapCenterToMarker = () => {
     }
   }
 
-  const panToMarker = (position: LatLngLiteral) => {
-    mapInstance.panTo(position)
-  }
-
   return {
     panToWithPanelOffset,
     panToFitPrintMode,
-    panToMarker,
   }
 }
 

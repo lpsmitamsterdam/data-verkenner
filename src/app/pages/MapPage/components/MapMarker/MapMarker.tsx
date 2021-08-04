@@ -34,7 +34,7 @@ const MapMarker: FunctionComponent<MarkerProps> = ({ panoActive }) => {
   const mapInstance = useMapInstance()
   const { trackEvent } = useMatomo()
   const { buildQueryString } = useBuildQueryString()
-  const { panToMarker, panToWithPanelOffset, panToFitPrintMode } = useMapCenterToMarker()
+  const { panToWithPanelOffset, panToFitPrintMode } = useMapCenterToMarker()
 
   const { setPositionFromSnapPoint } = useRequiredContext(MapPanelContext)
 
@@ -92,7 +92,7 @@ const MapMarker: FunctionComponent<MarkerProps> = ({ panoActive }) => {
       // https://leafletjs.com/reference-1.7.1.html#map-invalidatesize
       mapInstance.invalidateSize()
       if (panoFullScreen && panoActive) {
-        panToMarker(position)
+        mapInstance.flyTo(position, 12)
       } else {
         panToWithPanelOffset(position)
       }

@@ -78,7 +78,7 @@ const useMapControls = () => {
   const panoActive = panoHeading !== null && location !== null
 
   return useMemo(() => {
-    if (panoFullScreen) {
+    if (panoActive && panoFullScreen) {
       return [legendControl, panoramaCloseButton]
     }
 

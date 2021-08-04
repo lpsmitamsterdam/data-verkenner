@@ -6,7 +6,7 @@ import {
   useStateRef,
 } from '@amsterdam/arm-core'
 import type { FunctionComponent } from 'react'
-import { useCallback, useEffect, useMemo } from 'react'
+import { useCallback, useEffect } from 'react'
 import type { Theme } from '@amsterdam/asc-ui'
 import { breakpoint, themeSpacing } from '@amsterdam/asc-ui'
 import styled, { createGlobalStyle, css } from 'styled-components'
@@ -185,17 +185,11 @@ const MapPage: FunctionComponent = () => {
     if (mapInstanceRef.current) {
       mapInstanceRef.current.invalidateSize()
     }
-  }, [panoActive, panoFullScreen, panoPitch, mapInstanceRef])
+  }, [panoActive, panoPitch, mapInstanceRef])
 
   useEffect(() => {
     mapInstanceRef.current?.setZoom(zoom)
   }, [zoom])
-
-  useMemo(() => {
-    if (mapInstanceRef && panoFullScreen) {
-      mapInstanceRef.current?.setZoom(12)
-    }
-  }, [panoFullScreen])
 
   useCustomEvent(window, 'beforeprint', onHandleBeforePrint)
   useCustomEvent(window, 'afterprint', onHandleAfterPrint)
