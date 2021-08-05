@@ -7,9 +7,38 @@ import type { ExtendedMapGroup } from '../../legacy/services'
 import { isAuthorised } from '../../legacy/utils/map-layer'
 import LayerLegendZoomButton from './LayerLegendZoomButton'
 
-const StyledLabel = styled(Label)`
+const MapLayerWithLegendStyle = styled.li<{ notSelectable: boolean; disabled?: boolean }>`
+  align-items: center;
+  display: flex;
+  padding: ${themeSpacing(0, 3, 0, 2)};
+  ${({ notSelectable }) =>
+    notSelectable
+      ? css`
+          margin-left: 23px;
+        `
+      : css`
+          border-bottom: 1px solid ${themeColor('tint', 'level4')};
+        `}
+  ${({ disabled }) =>
+    disabled &&
+    css`
+      cursor: not-allowed;
+      opacity: 0.9;
+
+      img {
+        opacity: 0.4;
+      }
+    `}
+`
+
+const StyledLabel = styled(Label)<{ disabled?: boolean }>`
   width: 100%;
   margin-right: auto !important;
+  ${({ disabled }) =>
+    disabled &&
+    css`
+      cursor: not-allowed;
+    `}
 `
 
 const StyledCheckbox = styled(Checkbox)`
@@ -17,9 +46,14 @@ const StyledCheckbox = styled(Checkbox)`
   margin-left: ${themeSpacing(-1)};
 `
 
-const NonSelectableLegendParagraph = styled.p`
+const NonSelectableLegendParagraph = styled.p<{ disabled?: boolean }>`
   margin-bottom: ${themeSpacing(2)};
   margin-right: auto !important;
+  ${({ disabled }) =>
+    disabled &&
+    css`
+      cursor: not-allowed;
+    `}
 `
 
 const MapLegendImage = styled.div`
@@ -40,27 +74,15 @@ const MapLegendImage = styled.div`
   }
 `
 
-const MapLayerWithLegendStyle = styled.li<{ notSelectable: boolean }>`
-  align-items: center;
-  display: flex;
-  padding: ${themeSpacing(0, 3, 0, 2)};
-  ${({ notSelectable }) =>
-    notSelectable
-      ? css`
-          margin-left: 23px;
-        `
-      : css`
-          border-bottom: 1px solid ${themeColor('tint', 'level4')};
-        `}
-`
-
 interface MapLayerWithLegendItemProps {
+  layerIsRestricted?: boolean
   legendItem: ExtendedMapGroup
   onAddLayers: (id: string[]) => void
   onRemoveLayers: (id: string[]) => void
 }
 
 const LayerLegend: FunctionComponent<MapLayerWithLegendItemProps & Partial<HTMLLIElement>> = ({
+  layerIsRestricted,
   legendItem,
   onAddLayers,
   onRemoveLayers,
@@ -77,6 +99,35 @@ const LayerLegend: FunctionComponent<MapLayerWithLegendItemProps & Partial<HTMLL
   const icon = legendItem.iconUrl
     ? legendItem.iconUrl
     : new URL(`${MAP_CONFIG.OVERLAY_ROOT}${legendItem.legendIconURI as string}`).toString()
+
+  if (layerIsRestricted) {
+    return (
+      <MapLayerWithLegendStyle
+        notSelectable={legendItem.notSelectable}
+        className={className}
+        disabled
+      >
+        <LegendLabel htmlFor={legendItem.id} label={legendItem.title} disabled>
+          {!legendItem.notSelectable ? (
+            <StyledCheckbox
+              id={legendItem.id ?? '1'}
+              className="checkbox"
+              // @ts-ignore
+              variant="tertiary"
+              checked={legendItem.isVisible ?? false}
+              name={legendItem.title}
+              disabled
+            />
+          ) : (
+            legendItem.title
+          )}
+        </LegendLabel>
+        <MapLegendImage>
+          <img alt={legendItem.title} src={icon} />
+        </MapLegendImage>
+      </MapLayerWithLegendStyle>
+    )
+  }
 
   return (
     <MapLayerWithLegendStyle notSelectable={legendItem.notSelectable} className={className}>

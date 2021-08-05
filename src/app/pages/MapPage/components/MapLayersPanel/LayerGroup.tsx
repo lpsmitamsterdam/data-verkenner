@@ -10,6 +10,22 @@ import LayerLegend from './LayerLegend'
 import type { ExtendedMapGroup, ExtendedMapGroupLegendItem } from '../../legacy/services'
 import LayerLegendZoomButton from './LayerLegendZoomButton'
 
+const MapLayerItemStyle = styled.li<{ disabled?: boolean }>`
+  display: flex;
+  flex-wrap: wrap;
+  cursor: pointer;
+  border-bottom: 1px solid ${themeColor('tint', 'level4')};
+  ${({ disabled }) =>
+    disabled &&
+    css`
+      opacity: 0.9;
+
+      svg {
+        opacity: 0.4;
+      }
+    `}
+`
+
 const StyledCheckbox = styled(Checkbox)`
   margin-left: ${themeSpacing(-1)};
   padding-right: ${themeSpacing(3)};
@@ -20,8 +36,13 @@ const MapLayerWithLegendList = styled.ul`
   width: 100%;
   order: 2;
 `
-const StyledLabel = styled(Label)`
+const StyledLabel = styled(Label)<{ disabled?: boolean }>`
   text-align: left;
+  ${({ disabled }) =>
+    disabled &&
+    css`
+      cursor: not-allowed;
+    `}
 `
 
 const StyledAlert = styled(Alert)`
@@ -33,20 +54,18 @@ const StyledAlert = styled(Alert)`
   }
 `
 
-const ToggleButton = styled.button`
+const ToggleButton = styled.button<{ disabled?: boolean }>`
   display: flex;
   align-items: center;
   width: 100%;
   background-color: ${themeColor('tint', 'level1')};
   padding: ${themeSpacing(0, 3, 0, 2)};
   justify-content: space-between;
-`
-
-const MapLayerItemStyle = styled.li`
-  display: flex;
-  flex-wrap: wrap;
-  cursor: pointer;
-  border-bottom: 1px solid ${themeColor('tint', 'level4')};
+  ${({ disabled }) =>
+    disabled &&
+    css`
+      cursor: not-allowed;
+    `}
 `
 
 // Make sure the "size" attribute won't be set in the HTML output
@@ -70,6 +89,7 @@ interface MapLayerItemProps {
   mapGroup: ExtendedMapGroup
   layerIsChecked: boolean
   layerIsIndeterminate?: boolean
+  layerIsRestricted: boolean
   onRemoveLayers: any
   onAddLayers: any
   handleLayerToggle: any
@@ -82,6 +102,7 @@ const LayerGroup: FunctionComponent<MapLayerItemProps> = ({
   mapGroup,
   layerIsChecked,
   layerIsIndeterminate,
+  layerIsRestricted,
   addOrRemoveLayer,
   isEmbedView,
   handleLayerToggle,
@@ -128,6 +149,38 @@ const LayerGroup: FunctionComponent<MapLayerItemProps> = ({
     setOpen(hasMatchedLegends ?? false)
   }, [hasMatchedLegends])
 
+  if (layerIsRestricted) {
+    return (
+      <MapLayerItemStyle disabled>
+        <ToggleButton type="button" disabled>
+          <StyledLabel
+            htmlFor={mapGroup.id}
+            key={mapGroup.id}
+            label={mapGroup.title}
+            disabled
+            onClick={(event) => {
+              event.stopPropagation()
+            }}
+          >
+            <StyledCheckbox
+              id={mapGroup.id}
+              className="checkbox"
+              // @ts-ignore
+              variant="tertiary"
+              checked={false}
+              indeterminate={layerIsIndeterminate}
+              name={mapGroup.title}
+              disabled
+            />
+          </StyledLabel>
+          <ChevronIcon open={open} size={15}>
+            <ChevronDown />
+          </ChevronIcon>
+        </ToggleButton>
+      </MapLayerItemStyle>
+    )
+  }
+
   return (
     <MapLayerItemStyle>
       <ToggleButton
@@ -153,6 +206,7 @@ const LayerGroup: FunctionComponent<MapLayerItemProps> = ({
             indeterminate={layerIsIndeterminate}
             name={mapGroup.title}
             onChange={onHandleChecked}
+            disabled
           />
         </StyledLabel>
         <ChevronIcon open={open} size={15}>
