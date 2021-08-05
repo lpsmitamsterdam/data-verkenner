@@ -6,6 +6,7 @@ import {
   isEmbeddedParam,
   mapLayersParam,
   panoFovParam,
+  panoFullScreenParam,
   panoHeadingParam,
   panoPitchParam,
   panoTagParam,
@@ -22,6 +23,18 @@ describe('isEmbeddedParam', () => {
   it('decodes the value from the parameter', () => {
     expect(isEmbeddedParam.decode('true')).toBe(true)
     expect(isEmbeddedParam.decode('false')).toBe(false)
+  })
+})
+
+describe('panoFullScreenParam', () => {
+  it('encodes the value to parameter value', () => {
+    expect(panoFullScreenParam.encode(true)).toBe('true')
+    expect(panoFullScreenParam.encode(false)).toBe('false')
+  })
+
+  it('decodes the value from the parameter', () => {
+    expect(panoFullScreenParam.decode('true')).toBe(true)
+    expect(panoFullScreenParam.decode('false')).toBe(false)
   })
 })
 

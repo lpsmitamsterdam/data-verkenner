@@ -114,13 +114,13 @@ const HighlightBlock = () => {
             {isFulfilled(result) && result.value.length
               ? result.value
                   .slice(1)
-                  .map(({ id, teaserImage, title, linkProps }) => (
+                  .map(({ id, teaserImage, title, field_short_title, linkProps }) => (
                     <HighlightCard
                       key={id}
                       linkProps={linkProps}
                       loading={false}
                       showError={false}
-                      title={title}
+                      title={field_short_title || title}
                       teaserImage={teaserImage ? getImageFromCms(teaserImage, 500, 500) : null}
                     />
                   ))

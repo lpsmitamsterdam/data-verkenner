@@ -63,8 +63,7 @@ const EditorialPage: FunctionComponent<EditorialPageProps> = ({
 
   return (
     <Container>
-      <Helmet>
-        <html lang={lang || 'nl'} />
+      <Helmet htmlAttributes={{ lang: lang || 'nl' }}>
         {canonicalUrl && <link data-testid="canonicalUrl" rel="canonical" href={canonicalUrl} />}
         {description && <meta name="description" content={description} />}
 

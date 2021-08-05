@@ -3,6 +3,7 @@ import { useMatomo } from '@datapunt/matomo-tracker-react'
 import type { LeafletMouseEvent } from 'leaflet'
 import type { FunctionComponent } from 'react'
 import { useCallback, useEffect } from 'react'
+import { useMapInstance } from '@amsterdam/react-maps'
 import { matchPath, useHistory, useLocation } from 'react-router-dom'
 import { toDataDetail, toGeoSearch } from '../../../../links'
 import { routing } from '../../../../routes'
@@ -25,11 +26,12 @@ export interface MarkerProps {
 
 const MapMarker: FunctionComponent<MarkerProps> = ({ panoActive }) => {
   const [position] = useParam(locationParam)
-  const { legendLeafletLayers, setLoading } = useMapContext()
+  const { legendLeafletLayers, setLoading, panoFullScreen } = useMapContext()
   const [zoom] = useParam(zoomParam)
   const [polygon] = useParam(polygonParam)
   const location = useLocation()
   const history = useHistory()
+  const mapInstance = useMapInstance()
   const { trackEvent } = useMatomo()
   const { buildQueryString } = useBuildQueryString()
   const { panToWithPanelOffset, panToFitPrintMode } = useMapCenterToMarker()
@@ -85,9 +87,17 @@ const MapMarker: FunctionComponent<MarkerProps> = ({ panoActive }) => {
 
   useEffect(() => {
     if (position && matchPath(location.pathname, routing.dataSearchGeo.path)) {
-      panToWithPanelOffset(position)
+      // This is necessary to call, because we resize the map dynamically
+      // We call this again to make sure it's called before re-centre the map to the marker
+      // https://leafletjs.com/reference-1.7.1.html#map-invalidatesize
+      mapInstance.invalidateSize()
+      if (panoFullScreen && panoActive) {
+        mapInstance.flyTo(position, 12)
+      } else {
+        panToWithPanelOffset(position)
+      }
     }
-  }, [position])
+  }, [position, panoActive, panoFullScreen])
 
   useLeafletEvent(
     'click',

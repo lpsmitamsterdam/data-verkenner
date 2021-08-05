@@ -5,9 +5,15 @@ import Control from '../Control'
 import BaseLayerToggle from '../BaseLayerToggle'
 import MapContextMenu from '../MapContextMenu/MapContextMenu'
 import { useIsEmbedded } from '../../../../contexts/ui'
+import { useMapContext } from '../../MapContext'
+import PanoramaMapMinimizeButton from '../PanoramaMapMinimizeButton'
 
 const StyledControl = styled(Control)`
   margin-left: ${themeSpacing(2)};
+`
+
+const PanoramaMapMinimizeControl = styled(Control)`
+  margin-right: ${themeSpacing(6)};
 `
 
 const Wrapper = styled.div`
@@ -21,8 +27,14 @@ const Wrapper = styled.div`
 
 const MapMenuControl: FunctionComponent = () => {
   const isEmbedded = useIsEmbedded()
+  const { panoActive } = useMapContext()
   return (
     <Wrapper style={isEmbedded ? { display: 'none' } : undefined} data-testid="mapMenuControls">
+      {panoActive && (
+        <PanoramaMapMinimizeControl>
+          <PanoramaMapMinimizeButton />
+        </PanoramaMapMinimizeControl>
+      )}
       <Control>
         <BaseLayerToggle />
       </Control>

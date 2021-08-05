@@ -36,11 +36,7 @@ describe('PanoramaPreview', () => {
   })
 
   it('should render PanoAlert when API responses with a 403 Forbidden', async () => {
-    const panoramaThumbnailUrl = joinUrl([
-      environment.API_ROOT,
-      'panorama/thumbnail/',
-      '?lat=1&lon=2',
-    ])
+    const panoramaThumbnailUrl = joinUrl([environment.API_ROOT, 'panorama/thumbnail/'])
     server.use(
       rest.get(panoramaThumbnailUrl, async (req, res, ctx) => {
         return res(ctx.status(403))

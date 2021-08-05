@@ -1,4 +1,4 @@
-import { render } from '@testing-library/react'
+import { act, render, screen } from '@testing-library/react'
 import PanoramaViewer from './PanoramaViewer'
 import withMapContext from '../../../../utils/withMapContext'
 
@@ -37,9 +37,14 @@ jest.mock('marzipano', () => ({
 }))
 
 describe('PanoramaViewer', () => {
-  it('render', () => {
-    const { container } = render(withMapContext(<PanoramaViewer />))
+  it('render', async () => {
+    act(() => {
+      render(withMapContext(<PanoramaViewer />))
+    })
 
-    expect(container.firstChild).toBeDefined()
+    await act(async () => {
+      const component = await screen.findByTestId('panoramaViewer')
+      expect(component).toBeInTheDocument()
+    })
   })
 })

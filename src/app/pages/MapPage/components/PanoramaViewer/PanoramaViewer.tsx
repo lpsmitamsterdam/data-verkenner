@@ -29,12 +29,14 @@ const MarzipanoView = styled.div`
   position: relative;
 `
 
-const PanoramaStyle = styled.div<{ panoFullScreen: boolean; loading: boolean }>`
+// Use loading as a transient prop to suppress console warning about loading not being boolean
+// @see https://github.com/styled-components/styled-components/issues/1198#issuecomment-696306096
+const PanoramaStyle = styled.div<{ panoFullScreen: boolean; $loading: boolean }>`
   height: ${({ panoFullScreen }) => (panoFullScreen ? '100%' : '50%')};
   position: relative;
   order: -1; // Put the PanoramaViewer above the Map
-  ${({ loading }) =>
-    loading &&
+  ${({ $loading }) =>
+    $loading &&
     css`
       ${HotspotButton},
       canvas + div {
@@ -171,7 +173,7 @@ const PanoramaViewer: FunctionComponent = () => {
   }, [imageDataResult])
 
   return (
-    <PanoramaStyle loading={loading} panoFullScreen={panoFullScreen}>
+    <PanoramaStyle $loading={loading} panoFullScreen={panoFullScreen} data-testid="panoramaViewer">
       <MarzipanoView ref={ref} />
     </PanoramaStyle>
   )

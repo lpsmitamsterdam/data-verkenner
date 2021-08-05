@@ -50,6 +50,7 @@ interface ModeProp {
 const ControlsContainer = styled.div<ModeProp>`
   display: flex;
   flex-direction: row;
+  align-items: flex-start;
   justify-content: space-between;
   padding: ${themeSpacing(4)};
 

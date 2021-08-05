@@ -140,7 +140,8 @@ describe('MapPanel', () => {
   })
 
   it('should show the right map controls when panorama is in full screen mode', () => {
-    render(renderWithWrapper(<MapPanel />, { panoFullScreen: true }))
+    search = '?locatie=123,123&heading=-144'
+    render(renderWithWrapper(<MapPanel />))
 
     expect(screen.queryByTestId('drawtoolControl')).not.toBeInTheDocument()
     expect(screen.queryByTestId('baselayerControl')).not.toBeInTheDocument()

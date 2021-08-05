@@ -1,5 +1,5 @@
 import type Fuse from 'fuse.js'
-import { themeColor, themeSpacing } from '@amsterdam/asc-ui'
+import { Alert, themeColor, themeSpacing } from '@amsterdam/asc-ui'
 import { useMatomo } from '@datapunt/matomo-tracker-react'
 import type { FunctionComponent } from 'react'
 import { useCallback, useEffect, useMemo, useState } from 'react'
@@ -8,8 +8,10 @@ import { useIsEmbedded } from '../../../../contexts/ui'
 import LayerCollectionButton from './LayerCollectionButton'
 import LayerLegend from './LayerLegend'
 import LayerGroup from './LayerGroup'
+import LoginLink from '../../../../components/Links/LoginLink/LoginLink'
 import type { ExtendedMapGroup } from '../../legacy/services'
 import useCompare from '../../../../utils/useCompare'
+import { isAuthorised } from '../../legacy/utils/map-layer'
 
 const MapCollectionList = styled.ul`
   background-color: ${themeColor('tint', 'level1')};
@@ -18,6 +20,15 @@ const MapCollectionList = styled.ul`
   padding: 0;
   user-select: none;
   margin-bottom: ${themeSpacing(3)};
+`
+
+const StyledAlert = styled(Alert)`
+  margin: ${themeSpacing(3, 0)};
+  padding: ${themeSpacing(3)};
+
+  & * {
+    margin: 0 auto;
+  }
 `
 
 export interface MapLegendProps {
@@ -185,16 +196,25 @@ const LayerCollection: FunctionComponent<MapLegendProps> = ({
     [mapLayers, matches],
   )
 
+  const isUserAuthorised = useMemo(() => mapLayers.every(isAuthorised), [mapLayers])
+
   return (
     <>
       {(!isEmbedView || (isEmbedView && mapLayers.some(({ isEmbedded }) => isEmbedded))) && ( // Also display the collection title when maplayer is embedded
-        <LayerCollectionButton
-          collectionIndeterminate={collectionIndeterminate}
-          isOpen={collectionOpen}
-          onClick={() => setCollectionOpen(!collectionOpen)}
-          allVisible={allVisible}
-          title={title}
-        />
+        <>
+          <LayerCollectionButton
+            collectionIndeterminate={collectionIndeterminate}
+            isOpen={collectionOpen}
+            onClick={() => setCollectionOpen(!collectionOpen)}
+            allVisible={allVisible}
+            title={title}
+          />
+          {!isUserAuthorised && (
+            <StyledAlert level="info">
+              <LoginLink showChevron={false}>Kaartlaag zichtbaar na inloggen</LoginLink>
+            </StyledAlert>
+          )}
+        </>
       )}
       {collectionOpen && (
         <MapCollectionList>
@@ -203,9 +223,10 @@ const LayerCollection: FunctionComponent<MapLegendProps> = ({
               return (
                 <LayerLegend
                   key={mapGroup.id}
+                  layerIsRestricted={!isUserAuthorised}
+                  legendItem={mapGroup}
                   onAddLayers={onAddLayers}
                   onRemoveLayers={onRemoveLayers}
-                  legendItem={mapGroup}
                 />
               )
             }
@@ -216,6 +237,7 @@ const LayerCollection: FunctionComponent<MapLegendProps> = ({
                 mapGroup={mapGroup}
                 layerIsChecked={mapGroup.layerIsChecked}
                 layerIsIndeterminate={mapGroup.layerIsIndeterminate}
+                layerIsRestricted={!isUserAuthorised}
                 addOrRemoveLayer={addOrRemoveLayer}
                 isEmbedView={isEmbedView}
                 handleLayerToggle={handleLayerToggle}

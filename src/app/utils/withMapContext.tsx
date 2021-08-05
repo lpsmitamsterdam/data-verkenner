@@ -5,7 +5,7 @@ import MapContext from '../pages/MapPage/MapContext'
 import withAppContext from './withAppContext'
 import { DrawerState } from '../pages/MapPage/components/DrawerOverlay'
 
-const initialState: MapContextProps = {
+export const initialState: MapContextProps = {
   panelLayers: [],
   legendLeafletLayers: [],
   showMapDrawVisualization: false,
