@@ -64,7 +64,7 @@ const useTraverseList = (
 
       switch (e.key) {
         case next: {
-          if (getIndex(activeElement) !== focusableEls.length - 1) {
+          if (getIndex(activeElement) !== focusableEls.length) {
             el = focusableEls[activeElement ? getIndex(activeElement) + 1 : 0]
             // If there is nothing focussed yet, set the focus on the first element
             if (activeElement && !focusableEls.includes(activeElement)) {
