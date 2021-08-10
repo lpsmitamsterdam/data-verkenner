@@ -1,0 +1,80 @@
+{
+  "jsonapi": {
+    "version": "1.0",
+    "meta": { "links": { "self": { "href": "http://jsonapi.org/format/1.0/" } } }
+  },
+  "data": [
+    {
+      "type": "node--notification",
+      "id": "d1629892-4d9c-41b5-8fce-bd25638c070a",
+      "links": {
+        "self": {
+          "href": "http://acc.cms.data.amsterdam.nl/jsonapi/node/notification/d1629892-4d9c-41b5-8fce-bd25638c070a?resourceVersion=id%3A23053"
+        }
+      },
+      "attributes": {
+        "drupal_internal__nid": 23045,
+        "drupal_internal__vid": 23053,
+        "langcode": "en",
+        "revision_timestamp": "2021-01-05T15:20:04+00:00",
+        "revision_log": null,
+        "status": true,
+        "title": "Hier is een melding",
+        "created": "2021-01-05T15:19:11+00:00",
+        "changed": "2021-04-26T12:20:56+00:00",
+        "promote": false,
+        "sticky": false,
+        "default_langcode": true,
+        "revision_translation_affected": true,
+        "path": { "alias": "", "pid": null, "langcode": "en" },
+        "body": {
+          "value": "\u003Cp\u003EDeze moeten we even laten zien.\u003C/p\u003E\u0026#13;\n",
+          "format": "basic_html",
+          "processed": "\u003Cp\u003EDeze moeten we even laten zien.\u003C/p\u003E",
+          "summary": ""
+        },
+        "field_active": true,
+        "field_notification_title": "Gewoon een melding",
+        "field_notification_type": "warning",
+        "field_position": "header"
+      },
+      "relationships": {
+        "node_type": {
+          "data": { "type": "node_type--node_type", "id": "00236be9-032b-424d-bd74-b0afa922b1f4" },
+          "links": {
+            "related": {
+              "href": "http://acc.cms.data.amsterdam.nl/jsonapi/node/notification/d1629892-4d9c-41b5-8fce-bd25638c070a/node_type?resourceVersion=id%3A23053"
+            },
+            "self": {
+              "href": "http://acc.cms.data.amsterdam.nl/jsonapi/node/notification/d1629892-4d9c-41b5-8fce-bd25638c070a/relationships/node_type?resourceVersion=id%3A23053"
+            }
+          }
+        },
+        "revision_uid": {
+          "data": { "type": "user--user", "id": "f394f098-bf94-4c91-b279-b3a6c4bc5256" },
+          "links": {
+            "related": {
+              "href": "http://acc.cms.data.amsterdam.nl/jsonapi/node/notification/d1629892-4d9c-41b5-8fce-bd25638c070a/revision_uid?resourceVersion=id%3A23053"
+            },
+            "self": {
+              "href": "http://acc.cms.data.amsterdam.nl/jsonapi/node/notification/d1629892-4d9c-41b5-8fce-bd25638c070a/relationships/revision_uid?resourceVersion=id%3A23053"
+            }
+          }
+        },
+        "uid": {
+          "data": { "type": "user--user", "id": "f394f098-bf94-4c91-b279-b3a6c4bc5256" },
+          "links": {
+            "related": {
+              "href": "http://acc.cms.data.amsterdam.nl/jsonapi/node/notification/d1629892-4d9c-41b5-8fce-bd25638c070a/uid?resourceVersion=id%3A23053"
+            },
+            "self": {
+              "href": "http://acc.cms.data.amsterdam.nl/jsonapi/node/notification/d1629892-4d9c-41b5-8fce-bd25638c070a/relationships/uid?resourceVersion=id%3A23053"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "meta": { "count": "1" },
+  "links": { "self": { "href": "http://acc.cms.data.amsterdam.nl/jsonapi/node/notification" } }
+}

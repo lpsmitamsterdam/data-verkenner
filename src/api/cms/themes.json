@@ -1,0 +1,72 @@
+{
+  "data": {
+    "filters": [
+      {
+        "type": "theme",
+        "options": [
+          {
+            "id": "theme:bestuur",
+            "label": "Bestuur",
+            "__typename": "FilterOption"
+          },
+          {
+            "id": "theme:bevolking",
+            "label": "Bevolking",
+            "__typename": "FilterOption"
+          },
+          {
+            "id": "theme:cultuur-en-recreatie",
+            "label": "Cultuur en recreatie",
+            "__typename": "FilterOption"
+          },
+          {
+            "id": "theme:duurzaamheid-en-milieu",
+            "label": "Duurzaamheid en milieu",
+            "__typename": "FilterOption"
+          },
+          {
+            "id": "theme:economie-en-toerisme",
+            "label": "Economie en toerisme",
+            "__typename": "FilterOption"
+          },
+          {
+            "id": "theme:onderwijs-en-wetenschap",
+            "label": "Onderwijs en wetenschap",
+            "__typename": "FilterOption"
+          },
+          {
+            "id": "theme:openbare-orde-en-veiligheid",
+            "label": "Openbare orde en veiligheid",
+            "__typename": "FilterOption"
+          },
+          {
+            "id": "theme:ruimte-en-topografie",
+            "label": "Ruimte en topografie",
+            "__typename": "FilterOption"
+          },
+          {
+            "id": "theme:verkeer",
+            "label": "Verkeer",
+            "__typename": "FilterOption"
+          },
+          {
+            "id": "theme:werk-en-sociale-zekerheid",
+            "label": "Werk en sociale zekerheid",
+            "__typename": "FilterOption"
+          },
+          {
+            "id": "theme:wonen",
+            "label": "Wonen",
+            "__typename": "FilterOption"
+          },
+          {
+            "id": "theme:zorg-en-welzijn",
+            "label": "Zorg en welzijn",
+            "__typename": "FilterOption"
+          }
+        ],
+        "__typename": "Filter"
+      }
+    ]
+  }
+}

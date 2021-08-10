@@ -9,6 +9,9 @@ const iiifMetadataUrl = joinUrl([environment.API_ROOT, 'iiif-metadata/bouwdossie
 const dcatDatasetsUrl = joinUrl([environment.API_ROOT, 'dcatd/datasets', ':id'])
 const dcatDatasetFiltersUrl = joinUrl([environment.API_ROOT, 'dcatd/openapi'])
 const stadsdeelUrl = joinUrl([environment.API_ROOT, 'gebieden/stadsdeel', ':id'])
+const cmsListDataUrl = joinUrl([environment.CMS_ROOT, 'jsonapi/node/list', ':id'])
+const cmsGraphQlUrl = joinUrl([environment.API_ROOT, 'cms_search/graphql'])
+const cmsNotificationUrl = joinUrl([environment.CMS_ROOT, 'jsonapi/node/notification'])
 
 const handlers = [
   rest.get(typeaheadUrl, async (req, res, ctx) => {
@@ -39,6 +42,24 @@ const handlers = [
     const stadsdeelFixture = require('../src/api/gebieden/stadsdeel').singleFixture
 
     return res(ctx.json(stadsdeelFixture))
+  }),
+
+  rest.get(cmsListDataUrl, async (req, res, ctx) => {
+    const cmsListFixture = require('../src/api/cms/list.json')
+
+    return res(ctx.json(cmsListFixture))
+  }),
+
+  rest.post(cmsGraphQlUrl, async (req, res, ctx) => {
+    const cmsThemesFixture = require('../src/api/cms/themes.json')
+
+    return res(ctx.json(cmsThemesFixture))
+  }),
+
+  rest.get(cmsNotificationUrl, async (req, res, ctx) => {
+    const cmsNotificationFixture = require('../src/api/cms/notification.json')
+
+    return res(ctx.json(cmsNotificationFixture))
   }),
 ]
 
