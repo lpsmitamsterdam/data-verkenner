@@ -1,17 +1,37 @@
-import { Link } from 'react-router-dom'
 import type { LocationDescriptorObject } from 'history'
 import type { FunctionComponent } from 'react'
+import styled from 'styled-components'
 import SEARCH_PAGE_CONFIG from '../../../pages/SearchPage/config'
 import { activeFiltersParam, pageParam, queryParam } from '../../../pages/SearchPage/query-params'
 import toSearchParams from '../../../utils/toSearchParams'
 import type { AutoSuggestSearchResult } from '../services/auto-suggest/auto-suggest'
-import AutoSuggestItem from './AutoSuggestItem'
+import AutoSuggestItem, { StyledLink } from './AutoSuggestItem'
 
 export interface AutoSuggestCategoryProps {
   category: AutoSuggestSearchResult
   highlightValue: string
   inputValue: string
 }
+
+const AutoSuggestDropDownCategory = styled.div`
+  &:not(:first-of-type) {
+    border-top: 1px solid #ccc; // was $secondary-gray
+    margin-top: 7px;
+    padding-top: 12px;
+  }
+`
+const AutoSuggestDropdownCategoryHeading = styled.h4`
+  color: #666; // was $secondary-gray60
+  font-weight: 500; // was $medium-weight
+  margin: 0 10px calc(${10 / 2}px); // 10px was $base-whitespace
+`
+
+const AutoSuggestMoreResults = styled(StyledLink)`
+  padding-left: 8px;
+  font-size: 14px;
+  text-decoration: underline;
+  color: #666; // was $secondary-gray60;
+`
 
 const AutoSuggestCategory: FunctionComponent<AutoSuggestCategoryProps> = ({
   category,
@@ -26,8 +46,10 @@ const AutoSuggestCategory: FunctionComponent<AutoSuggestCategoryProps> = ({
     totalResults > content.length ? getMoreResultsLink(type, inputValue, subType) : null
 
   return (
-    <div className="auto-suggest__dropdown-category">
-      <h4 className="auto-suggest__dropdown-category__heading qa-auto-suggest-header">{label}</h4>
+    <AutoSuggestDropDownCategory>
+      <AutoSuggestDropdownCategoryHeading data-testid="qa-auto-suggest-header">
+        {label}
+      </AutoSuggestDropdownCategoryHeading>
       <ul>
         {content.map((suggestion) => (
           <AutoSuggestItem
@@ -41,16 +63,13 @@ const AutoSuggestCategory: FunctionComponent<AutoSuggestCategoryProps> = ({
         ))}
         {moreResultsLink && (
           <li>
-            <Link
-              className="auto-suggest__dropdown-item auto-suggest__dropdown-item--more-results"
-              to={moreResultsLink}
-            >
+            <AutoSuggestMoreResults to={moreResultsLink}>
               Meer resultaten in &apos;{label}&apos;
-            </Link>
+            </AutoSuggestMoreResults>
           </li>
         )}
       </ul>
-    </div>
+    </AutoSuggestDropDownCategory>
   )
 }
 

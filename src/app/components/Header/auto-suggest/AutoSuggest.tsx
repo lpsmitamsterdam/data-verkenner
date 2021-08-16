@@ -1,4 +1,4 @@
-import { Button, Paragraph, themeSpacing } from '@amsterdam/asc-ui'
+import { Button, breakpoint, Paragraph, themeSpacing, themeColor } from '@amsterdam/asc-ui'
 import { forwardRef, useMemo } from 'react'
 import { useHistory } from 'react-router-dom'
 import styled from 'styled-components'
@@ -21,6 +21,38 @@ const NoResults = styled(Paragraph)`
 
 const ResetFilterButton = styled(Button)`
   margin: ${themeSpacing(2)};
+`
+// @todo match with right variables
+const AutosuggestDropDown = styled.div`
+  background-color: ${themeColor('tint', 'level1')};
+  border: 1px solid ${themeColor('tint', 'level7')};
+  border-top-width: 0;
+  display: block;
+  left: 0;
+  padding-bottom: 10px * 0.5;
+  position: absolute;
+  right: 45px; + 10px * 0.5;
+  max-height: calc(100vh - 160px); // 160 is max height of the header
+  overflow: auto;
+  top: 40px;
+
+  @media screen and ${breakpoint('min-width', 'tabletM')} {
+    width: 100%;
+    border-left-width: 0;
+    border-right-width: 0;
+  }
+
+  @media screen and (min-width: 769px) {
+    max-width: calc(100% - 45px);
+  }
+`
+
+const AutoSuggestTip = styled.h3`
+  font-size: 14px; // was font-size($xs-font) (scaled)
+  color: ${themeColor('tint', 'level5')}; //was $secondary-gray60 !note not the same but closest;
+  font-weight: 400; // $normal-weight;
+  margin-top: calc(${10 / 2}px); //math.div($base-whitespace, 2);
+  text-align: center;
 `
 
 export interface AutoSuggestProps {
@@ -59,9 +91,9 @@ const AutoSuggest = forwardRef<HTMLDivElement, AutoSuggestProps>(
     }, [searchBarFilterValue])
 
     return (
-      <div className="auto-suggest__dropdown" ref={ref}>
+      <AutosuggestDropDown ref={ref}>
         {loading && <LoadingSpinner />}
-        {!!suggestions?.length && <h3 className="auto-suggest__tip">Enkele suggesties</h3>}
+        {!!suggestions?.length && <AutoSuggestTip>Enkele suggesties</AutoSuggestTip>}
         {!loading &&
           suggestions.map((category) => (
             <AutoSuggestCategory
@@ -92,7 +124,7 @@ const AutoSuggest = forwardRef<HTMLDivElement, AutoSuggestProps>(
             Alle zoekresultaten weergeven
           </ResetFilterButton>
         )}
-      </div>
+      </AutosuggestDropDown>
     )
   },
 )

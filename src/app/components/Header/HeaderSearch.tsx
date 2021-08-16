@@ -20,6 +20,10 @@ const StyledLegend = styled.legend`
   ${srOnlyStyle}
 `
 
+const StyledForm = styled.form`
+  width: 100%;
+`
+
 const ACTIVE_ITEM_CLASS = 'auto-suggest__dropdown-item--active'
 
 const HeaderSearch: FunctionComponent = () => {
@@ -137,7 +141,7 @@ const HeaderSearch: FunctionComponent = () => {
   }
 
   return (
-    <form onSubmit={onFormSubmit} className="auto-suggest" data-test="search-form">
+    <StyledForm onSubmit={onFormSubmit} data-test="search-form">
       <StyledLegend>Data zoeken</StyledLegend>
       <SearchBar
         expanded={showSuggestions}
@@ -162,7 +166,7 @@ const HeaderSearch: FunctionComponent = () => {
           />
         )}
       </SearchBar>
-    </form>
+    </StyledForm>
   )
 }
 
