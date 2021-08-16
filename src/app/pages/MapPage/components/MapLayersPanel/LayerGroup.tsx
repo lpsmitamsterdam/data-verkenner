@@ -2,7 +2,7 @@ import type Fuse from 'fuse.js'
 import type { FunctionComponent, MouseEvent as ReactMouseEvent } from 'react'
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import styled, { css } from 'styled-components'
-import { Alert, Checkbox, Icon, Label, themeColor, themeSpacing } from '@amsterdam/asc-ui'
+import { Alert, Button, Checkbox, Icon, Label, themeColor, themeSpacing } from '@amsterdam/asc-ui'
 import { ChevronDown } from '@amsterdam/asc-assets'
 import { isAuthorised } from '../../legacy/utils/map-layer'
 import LoginLink from '../../../../components/Links/LoginLink/LoginLink'
@@ -96,6 +96,7 @@ interface MapLayerItemProps {
   addOrRemoveLayer: any
   isEmbedView: boolean
   matches?: readonly Fuse.FuseResultMatch[]
+  onEdit?: (id: string) => void
 }
 
 const LayerGroup: FunctionComponent<MapLayerItemProps> = ({
@@ -109,6 +110,7 @@ const LayerGroup: FunctionComponent<MapLayerItemProps> = ({
   onAddLayers,
   onRemoveLayers,
   matches,
+  onEdit,
 }) => {
   const [open, setOpen] = useState(isEmbedView || layerIsChecked || false)
 
@@ -213,14 +215,17 @@ const LayerGroup: FunctionComponent<MapLayerItemProps> = ({
           <ChevronDown />
         </ChevronIcon>
 
-        {isAuthorised(mapGroup) && layerIsChecked && <LayerLegendZoomButton mapGroup={mapGroup} />}
+        {isAuthorised(mapGroup.authScope) && layerIsChecked && (
+          <LayerLegendZoomButton minZoom={mapGroup.minZoom} />
+        )}
       </ToggleButton>
-      {!isAuthorised(mapGroup) && (
+      {!isAuthorised(mapGroup.authScope) && (
         <StyledAlert level="info">
           <LoginLink showChevron={false}>Kaartlaag zichtbaar na inloggen</LoginLink>
         </StyledAlert>
       )}
-      {isAuthorised(mapGroup) && open && (
+      {onEdit && <Button onClick={() => onEdit(mapGroup.id)}>Edit</Button>}
+      {isAuthorised(mapGroup.authScope) && open && (
         <MapLayerWithLegendList>
           {mapGroup.legendItems
             ?.filter(({ title }) =>

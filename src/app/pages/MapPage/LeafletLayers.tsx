@@ -11,6 +11,8 @@ import MAP_CONFIG from './legacy/services/map.config'
 import type { TmsOverlay, WmsOverlay } from './MapContext'
 import { useMapContext } from './MapContext'
 import useCustomEvent from '../../utils/useCustomEvent'
+import useParam from '../../utils/useParam'
+import { customMapLayer, mapLayersParam } from './query-params'
 
 const detailGeometryStyle = {
   color: 'red',
@@ -34,7 +36,10 @@ const detailGeometryOptions: GeoJSONOptions = {
 
 const LeafletLayers: FunctionComponent = () => {
   const [geoJSONLayer, setGeoJSONLayer] = useState<GeoJSONType<any>>()
+  const [customMapLayers] = useParam(customMapLayer)
   const { legendLeafletLayers, detailFeature } = useMapContext()
+  const [activeLayers] = useParam(mapLayersParam)
+  const activeCustomMapLayer = customMapLayers?.filter(({ id }) => activeLayers.includes(id))
   const { panToWithPanelOffset, panToFitPrintMode } = useMapCenterToMarker()
   const tmsLayers = useMemo(
     () => legendLeafletLayers.filter((overlay): overlay is TmsOverlay => overlay.type === 'tms'),
@@ -74,6 +79,9 @@ const LeafletLayers: FunctionComponent = () => {
   return (
     <>
       <DrawMapVisualization />
+      {activeCustomMapLayer?.map(({ options, url, id }) => (
+        <NonTiledLayer key={id} url={`https://map.data.amsterdam.nl${url}`} options={options} />
+      ))}
       {detailFeature && (
         <GeoJSON
           key={detailFeature.id}

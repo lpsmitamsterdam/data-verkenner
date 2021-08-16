@@ -196,7 +196,10 @@ const LayerCollection: FunctionComponent<MapLegendProps> = ({
     [mapLayers, matches],
   )
 
-  const isUserAuthorised = useMemo(() => mapLayers.every(isAuthorised), [mapLayers])
+  const isUserAuthorised = useMemo(
+    () => mapLayers.every(({ authScope }) => isAuthorised(authScope)),
+    [mapLayers],
+  )
 
   return (
     <>

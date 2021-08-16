@@ -1,13 +1,12 @@
 import type { FunctionComponent } from 'react'
 import styled from 'styled-components'
 import { Button, Icon, themeColor, themeSpacing } from '@amsterdam/asc-ui'
-import type { ExtendedMapGroup } from '../../legacy/services'
 import SearchPlus from '../../../../../shared/assets/icons/search-plus.svg'
 import useParam from '../../../../utils/useParam'
 import { zoomParam } from '../../query-params'
 
 interface MapLayerZoomButtonProps {
-  mapGroup: ExtendedMapGroup
+  minZoom: number
 }
 
 const ZoomIcon = styled(Icon)`
@@ -21,17 +20,17 @@ const ZoomButton = styled(Button)`
   order: 0;
 `
 
-const LayerLegendZoomButton: FunctionComponent<MapLayerZoomButtonProps> = ({ mapGroup }) => {
+const LayerLegendZoomButton: FunctionComponent<MapLayerZoomButtonProps> = ({ minZoom }) => {
   const [zoom, setZoom] = useParam(zoomParam)
 
-  return zoom < mapGroup.minZoom ? (
+  return zoom < minZoom ? (
     <ZoomButton
       title="Kaartlaag zichtbaar bij verder inzoomen"
       size={26}
       variant="blank"
       onClick={(event) => {
         event.stopPropagation()
-        setZoom(mapGroup.minZoom)
+        setZoom(minZoom)
       }}
     >
       <ZoomIcon size={16}>

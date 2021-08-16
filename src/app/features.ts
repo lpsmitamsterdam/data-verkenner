@@ -1,6 +1,11 @@
 const STORAGE_KEY = 'features'
 
 /**
+ * List all the active feature toggle keys below
+ */
+export const CUSTOM_MAP_LAYERS = 'customMapLayers'
+
+/**
  * Get a list of all features currently enabled.
  */
 export function getEnabledFeatures() {
