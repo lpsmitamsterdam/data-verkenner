@@ -46,6 +46,14 @@ const AppContainer = styled.main`
   flex-grow: 1;
 `
 
+const DashboardBody = styled.div`
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  height: calc(100% - 50px);
+  z-index: 1; // was $body-z-index;
+`
+
 const StyledLoadingSpinner = styled(LoadingSpinner)`
   position: absolute;
   top: 200px;
@@ -117,9 +125,8 @@ const AppBody: FunctionComponent<AppBodyProps> = ({ hasGrid }) => {
               </Helmet>
               <Switch>
                 <Route path={[routing.constructionDossier.path, routing.datasetDetail.path]}>
-                  <div className="c-dashboard__body">
+                  <DashboardBody>
                     <NotificationAlert />
-
                     <FullHeightContainer>
                       <FullHeightBlock>
                         <Switch>
@@ -136,7 +143,7 @@ const AppBody: FunctionComponent<AppBodyProps> = ({ hasGrid }) => {
                         </Switch>
                       </FullHeightBlock>
                     </FullHeightContainer>
-                  </div>
+                  </DashboardBody>
                 </Route>
                 <Route path={[routing.data.path]}>
                   {/* When the mobile map panel is working properly we can disable the meta rule up defined above */}
