@@ -30,6 +30,15 @@ import ShareBar from '../../components/ShareBar/ShareBar'
 import { toNotFound } from '../../links'
 import formatDate from '../../utils/formatDate'
 import redirectToDcatd from '../../utils/redirectToDcatd'
+import {
+  DatasetDetailPageHeader,
+  DatasetDetailPageTitle,
+  Content,
+  TagListItem,
+  DatasetDetailPageSubtitle,
+  DatasetDetailPageButtonGroup,
+  DatasetDetailPageBlock,
+} from './DatasetDetailPageStyles'
 
 function kebabCase(input?: string): string {
   return input?.toLowerCase().replace(/[: ][ ]*/g, '-') ?? ''
@@ -115,18 +124,10 @@ const Markdown: FunctionComponent<MarkdownProps> = ({ children }) => {
   return <StyledCustomHTMLBlock body={formattedContent} />
 }
 
-const Content = styled.div`
-  width: 100%;
-`
-
 interface DatasetDetailPageParams {
   id: string
   slug: string
 }
-
-const TagListItem = styled.li`
-  display: inline;
-`
 
 const DatasetDetailPage: FunctionComponent = () => {
   const { trackEvent } = useMatomo()
@@ -156,14 +157,12 @@ const DatasetDetailPage: FunctionComponent = () => {
                     <Helmet>
                       <meta name="description" content={dataset['dct:description']} />
                     </Helmet>
-                    <div className="o-header">
-                      <h1 className="o-header__title u-margin__top--0 u-margin__bottom--1">
-                        {dataset['dct:title']}
-                      </h1>
-                      <h2 className="o-header__subtitle u-margin__bottom--2">
+                    <DatasetDetailPageHeader>
+                      <DatasetDetailPageTitle> {dataset['dct:title']}</DatasetDetailPageTitle>
+                      <DatasetDetailPageSubtitle>
                         <span>Dataset</span>
                         {canEdit && dataset['dct:identifier'] && (
-                          <div className="o-header__buttongroup">
+                          <DatasetDetailPageButtonGroup>
                             <Button
                               variant="primaryInverted"
                               type="button"
@@ -172,10 +171,10 @@ const DatasetDetailPage: FunctionComponent = () => {
                             >
                               Wijzigen
                             </Button>
-                          </div>
+                          </DatasetDetailPageButtonGroup>
                         )}
-                      </h2>
-                    </div>
+                      </DatasetDetailPageSubtitle>
+                    </DatasetDetailPageHeader>
                     <Markdown>{dataset['dct:description']}</Markdown>
                     <div>
                       {['gepland', 'in_onderzoek', 'niet_beschikbaar'].includes(
@@ -191,8 +190,7 @@ const DatasetDetailPage: FunctionComponent = () => {
                       )}
                     </div>
 
-                    <h2 className="o-header__subtitle">Resources</h2>
-
+                    <DatasetDetailPageSubtitle>Resources</DatasetDetailPageSubtitle>
                     <div className="resources">
                       {resources.map((resource) => (
                         <div className="resources-type" key={resource.type}>
@@ -313,8 +311,7 @@ const DatasetDetailPage: FunctionComponent = () => {
                     </div>
 
                     <div>
-                      <h2 className="o-header__subtitle">Details</h2>
-
+                      <DatasetDetailPageSubtitle>Details</DatasetDetailPageSubtitle>
                       <DefinitionList>
                         <DefinitionListItem term="Doel">
                           <Markdown>{dataset['overheidds:doel']}</Markdown>
@@ -439,8 +436,8 @@ const DatasetDetailPage: FunctionComponent = () => {
                       </DefinitionList>
                     </div>
 
-                    <div className="c-detail__block u-padding__bottom--1 u-margin__top--3">
-                      <h2 className="o-header__subtitle">Thema&apos;s</h2>
+                    <DatasetDetailPageBlock>
+                      <DatasetDetailPageSubtitle>Thema&apos;s</DatasetDetailPageSubtitle>
                       <div className="catalog-themes">
                         {dataset['dcat:theme'].map((group: string) => (
                           <div className="catalog-theme" key={group}>
@@ -454,10 +451,10 @@ const DatasetDetailPage: FunctionComponent = () => {
                           </div>
                         ))}
                       </div>
-                    </div>
+                    </DatasetDetailPageBlock>
 
-                    <div className="c-detail__block u-padding__bottom--1">
-                      <h2 className="o-header__subtitle">Tags</h2>
+                    <DatasetDetailPageBlock>
+                      <DatasetDetailPageSubtitle>Tags</DatasetDetailPageSubtitle>
                       <ul>
                         {dataset['dcat:keyword'].map((tag: string) => (
                           <TagListItem key={tag}>
@@ -468,14 +465,14 @@ const DatasetDetailPage: FunctionComponent = () => {
                           </TagListItem>
                         ))}
                       </ul>
-                    </div>
+                    </DatasetDetailPageBlock>
 
-                    <div className="c-detail__block u-padding__bottom--1">
-                      <h2 className="o-header__subtitle">Licentie</h2>
+                    <DatasetDetailPageBlock>
+                      <DatasetDetailPageSubtitle>Licentie</DatasetDetailPageSubtitle>
                       {dataset['ams:license'] && (
                         <div>{getOptionLabel(dataset['ams:license'], filters.licenseTypes)}</div>
                       )}
-                    </div>
+                    </DatasetDetailPageBlock>
                   </>
                 )}
               </PromiseResult>
