@@ -77,6 +77,7 @@ import verdachtgebied from './map-services-configurations/explosieven/verdachtge
 import gevrijwaardGebied from './map-services-configurations/explosieven/gevrijwaardgebied'
 import ligplaats from './map-services-configurations/varen/ligplaats'
 import opafstapplaats from './map-services-configurations/varen/opafstapplaats'
+import bouwstroompunten from './map-services-configurations/bouwstroompunten/bouwstroompunten'
 
 export const endpointTypes = {
   adressenLigplaats: 'bag/v1.1/ligplaats/',
@@ -1134,45 +1135,7 @@ const servicesByEndpointType: { [type: string]: ServiceDefinition<any, any> } = 
       ],
     }),
   },
-  [endpointTypes.bouwstroompunten]: {
-    type: 'bouwstroompunten/bouwstroompunten',
-    endpoint: 'v1/bouwstroompunten/bouwstroompunten',
-    mapDetail: (result) => ({
-      title: categoryLabels.bouwstroompunten.singular,
-      subTitle: result.bouwstroompuntId,
-      items: [
-        {
-          type: DetailResultItemType.DefinitionList,
-          entries: [
-            {
-              term: 'Capaciteit',
-              description: result.capaciteit || 'onbekend',
-            },
-            {
-              term: 'Beschikbare aansluiting(en)',
-              description: result.beschikbareAansluitingen?.map((item: string) => item).join('\n'),
-            },
-            {
-              term: 'Beheerorganisatie',
-              description: result.organisatie || 'onbekend',
-            },
-            {
-              term: 'Contactgegevens',
-              description: result.email || 'onbekend',
-            },
-            {
-              term: 'Licentie benodigd',
-              description: result.vergunningsplichtig ? 'Ja' : 'Nee',
-            },
-            {
-              term: 'Adresgegevens',
-              description: `${result.straat} ${result.huisnummer}, ${result.plaats}`,
-            },
-          ],
-        },
-      ],
-    }),
-  },
+  [endpointTypes.bouwstroompunten]: bouwstroompunten,
   [endpointTypes.covid19Alcohol]: {
     type: 'covid_19/alcoholverkoopverbod',
     endpoint: 'v1/covid_19/alcoholverkoopverbod',
