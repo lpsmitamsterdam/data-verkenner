@@ -8,15 +8,8 @@ import DrawToolControl from '../DrawToolControl'
 import EmbedControl from '../EmbedControl'
 import LegendControl from '../LegendControl'
 import MapContextMenuControl from '../MapMenuControl/MapMenuControl'
-import { PanoramaCloseButton, PanoramaMenuControl, PanoramaViewerInfoBar } from '../PanoramaViewer'
+import { PanoramaPrimaryMenuControl, PanoramaViewerInfoBar } from '../PanoramaViewer'
 import ZoomControl from '../ZoomControl'
-
-const panoramaCloseButton: DrawerControl = {
-  id: 'panoramaCloseButton',
-  hAlign: 'right',
-  vAlign: 'top',
-  node: <PanoramaCloseButton />,
-}
 
 const mapContextMenuControl: DrawerControl = {
   id: 'contextMenuControl',
@@ -32,12 +25,11 @@ const embedControl: DrawerControl = {
   node: <EmbedControl />,
 }
 
-// History context menu
-const panoramaMenuControl: DrawerControl = {
+const panoramaPrimaryMenuControl: DrawerControl = {
   id: 'panoramaMenu',
-  hAlign: 'left',
+  hAlign: 'right',
   vAlign: 'bottom',
-  node: <PanoramaMenuControl />,
+  node: <PanoramaPrimaryMenuControl />,
 }
 
 const panoramaViewerInfoBarControl: DrawerControl = {
@@ -79,7 +71,7 @@ const useMapControls = () => {
 
   return useMemo(() => {
     if (panoActive && panoFullScreen) {
-      return [legendControl, panoramaCloseButton]
+      return [legendControl, panoramaPrimaryMenuControl, panoramaViewerInfoBarControl]
     }
 
     const mapControls: DrawerControl[] = []
@@ -98,8 +90,7 @@ const useMapControls = () => {
     }
 
     if (panoActive) {
-      mapControls.push(panoramaCloseButton)
-      mapControls.push(panoramaMenuControl)
+      mapControls.push(panoramaPrimaryMenuControl)
       mapControls.push(panoramaViewerInfoBarControl)
     } else {
       mapControls.push(drawToolControl)
