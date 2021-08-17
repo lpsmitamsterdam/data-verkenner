@@ -19,6 +19,13 @@ query mapCollectionSearchQuery {
             noDetail
             type
             legendIconURI
+            minZoom
+            detailIsShape
+            detailUrl
+            detailParams {
+              item
+              datasets
+            }
           }
           ... on LegendItem {
             id
