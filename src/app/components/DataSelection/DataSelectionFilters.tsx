@@ -1,7 +1,6 @@
 import type { FunctionComponent } from 'react'
 import { useMemo, useState } from 'react'
-import { Button, Heading, Link, themeColor, themeSpacing } from '@amsterdam/asc-ui'
-import styled from 'styled-components'
+import { Link } from '@amsterdam/asc-ui'
 import { Enlarge, Minimise } from '@amsterdam/asc-assets'
 import { useMatomo } from '@datapunt/matomo-tracker-react'
 import { DEFAULT_LOCALE } from '../../../shared/config/locale.config'
@@ -10,25 +9,16 @@ import { useDataSelection } from './DataSelectionContext'
 import type { AvailableFilter } from './types'
 import useLegacyDataselectionConfig from './useLegacyDataselectionConfig'
 import { DATASELECTION_ADD_FILTER } from '../../pages/MapPage/matomo-events'
-
-const StyledHeading = styled(Heading)`
-  display: flex;
-  justify-content: space-between;
-  color: ${themeColor('tint', 'level7')};
-  margin-bottom: ${themeSpacing(2)};
-`
-
-const InfoButton = styled(Button)`
-  border: 1px solid ${themeColor('tint', 'level4')};
-`
-
-const StyledLink = styled(Link)`
-  background-color: transparent;
-  text-align: left;
-`
-const ShowMoreButton = styled(Button)`
-  margin-top: ${themeSpacing(2)};
-`
+import {
+  StyledHeading,
+  InfoButton,
+  StyledLink,
+  ShowMoreButton,
+  DataSelectionFiltersContainer,
+  DataSelectionFiltersCategory,
+  DataSelectionFiltersItem,
+  DataSelectionFiltersHiddenOptions,
+} from './DataSelectionFilterStyles'
 
 // Note, this component has been migrated from legacy angularJS code
 // Todo: this can be removed when we implement the new interactive table
@@ -102,16 +92,13 @@ const DataSelectionFilters: FunctionComponent = () => {
   const showOptionCounts = currentDatasetConfig.SHOW_FILTER_OPTION_COUNTS
   const activeFilterSlugs = filteredAvailableFilters.map(({ slug }) => slug)
   return (
-    <div
-      className="qa-available-filters c-data-selection-available-filters"
-      data-testid="dataSelectionAvailableFilters"
-    >
+    <DataSelectionFiltersContainer data-testid="dataSelectionAvailableFilters">
       <>
         {availableFilters.map(
           (filter) =>
             !activeFilterSlugs.includes(filter.slug) &&
             hasInactiveFilterOptions(filter) && (
-              <div className="c-data-selection-available-filters__category" key={filter.slug}>
+              <DataSelectionFiltersCategory key={filter.slug}>
                 <StyledHeading as="h3">
                   <span>{filter.label}</span>
                   {filter.info_url && (
@@ -131,7 +118,6 @@ const DataSelectionFilters: FunctionComponent = () => {
                     </InfoButton>
                   )}
                 </StyledHeading>
-
                 <ul>
                   {filter.options
                     .slice(
@@ -139,7 +125,7 @@ const DataSelectionFilters: FunctionComponent = () => {
                       isExpandedFilter(filter.slug) ? filter.options.length : showMoreThreshold,
                     )
                     .map((option) => (
-                      <li key={option.id} className="c-data-selection-available-filters__item">
+                      <DataSelectionFiltersItem key={option.id}>
                         <StyledLink
                           inList
                           type="button"
@@ -156,31 +142,29 @@ const DataSelectionFilters: FunctionComponent = () => {
                             {showOptionCounts && <span>({option.count})</span>}
                           </span>
                         </StyledLink>
-                      </li>
+                      </DataSelectionFiltersItem>
                     ))}
                 </ul>
 
                 {canExpandImplode(filter.slug) && showExpandButton(filter.slug) && (
-                  <div className="c-data-selection-available-filters__show-more">
-                    <ShowMoreButton
-                      type="button"
-                      onClick={() => expandFilter(filter.slug)}
-                      className="qa-show-more-button"
-                      variant="textButton"
-                      iconSize={14}
-                      iconLeft={<Enlarge />}
-                    >
-                      Toon meer
-                    </ShowMoreButton>
-                  </div>
+                  <ShowMoreButton
+                    type="button"
+                    onClick={() => expandFilter(filter.slug)}
+                    className="qa-show-more-button"
+                    variant="textButton"
+                    iconSize={14}
+                    iconLeft={<Enlarge />}
+                  >
+                    Toon meer
+                  </ShowMoreButton>
                 )}
 
                 {canExpandImplode(filter.slug) && isExpandedFilter(filter.slug) && (
-                  <div className="c-data-selection-available-filters__show-more">
+                  <>
                     {nrHiddenOptions(filter) > 0 && (
-                      <div className="c-data-selection-available-filters__hidden-options qa-hidden-options">
+                      <DataSelectionFiltersHiddenOptions>
                         ...nog {nrHiddenOptions(filter).toLocaleString(DEFAULT_LOCALE)} waarden
-                      </div>
+                      </DataSelectionFiltersHiddenOptions>
                     )}
                     <ShowMoreButton
                       type="button"
@@ -192,13 +176,13 @@ const DataSelectionFilters: FunctionComponent = () => {
                     >
                       Toon minder
                     </ShowMoreButton>
-                  </div>
+                  </>
                 )}
-              </div>
+              </DataSelectionFiltersCategory>
             ),
         )}
       </>
-    </div>
+    </DataSelectionFiltersContainer>
   )
 }
 
