@@ -39,12 +39,26 @@ const FileType: FunctionComponent<Props> = ({ formattedValue }) => (
   </div>
 )
 
+// Note: these styles where converted from old sass files to SC
+// Handelsnaam and SBI omschrijving could be very long, this prevents a unnecessary wide table cell
+const HandelsnaamStyle = styled.span`
+  display: inline-block;
+  width: 400px;
+  white-space: normal;
+`
+
+const SBIOmschrijvingStyle = styled.span`
+  display: inline-block;
+  width: 700px;
+  white-space: normal;
+`
+
 const HandelsNaam: FunctionComponent<Props> = ({ variables }) => (
-  <span className="c-handelsnaam">{!Array.isArray(variables) ? variables?.handelsnaam : ''}</span>
+  <HandelsnaamStyle>{!Array.isArray(variables) ? variables?.handelsnaam : ''}</HandelsnaamStyle>
 )
 
 const SBIOmschrijving: FunctionComponent<Props> = ({ variables }) => (
-  <span className="c-sbi-omschrijving">{variables?.[0]?.value}</span>
+  <SBIOmschrijvingStyle>{variables?.[0]?.value}</SBIOmschrijvingStyle>
 )
 
 const TagWrapper = styled.div`

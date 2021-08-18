@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { themeColor, themeSpacing } from '@amsterdam/asc-ui'
+import { Heading, TableContainer, Tag, themeColor, themeSpacing } from '@amsterdam/asc-ui'
 
 export const DatasetDetailPageHeader = styled.div`
   position: relative;
@@ -11,15 +11,16 @@ export const DatasetDetailPageTitle = styled.h1`
   margin-bottom: 10px; // was base-whitespace-1
 `
 
-export const DatasetDetailPageSubtitle = styled.h2`
-  font-size: 20px; // was font-size-responsive($l-header-font);
+export const DatasetDetailPageSubtitle = styled(Heading)`
   color: ${themeColor('secondary')}; // was $primary-contrast;
-  display: block;
-  margin-bottom: 0.4 * 10px;
 `
 
 export const TagListItem = styled.li`
   display: inline;
+`
+
+export const StyledTag = styled(Tag)`
+  margin: ${themeSpacing(0, 2, 2, 0)};
 `
 
 export const Content = styled.div`
@@ -36,4 +37,8 @@ export const DatasetDetailPageBlock = styled.div`
   margin-bottom: ${themeSpacing(10)};
   margin-top: ${themeSpacing(8)};
   padding-bottom: ${themeSpacing(2)};
+`
+
+export const StyledTableContainer = styled(TableContainer)`
+  margin: ${themeSpacing(0, -2, 4)};
 `

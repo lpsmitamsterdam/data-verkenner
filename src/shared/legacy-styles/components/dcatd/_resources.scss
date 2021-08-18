@@ -44,7 +44,7 @@
       color: $black;
       display: flex;
       font-size: 17px;
-      padding: 8px 23px 15px 20px;
+      padding: 8px 0 15px 0;
 
       &-title {
         align-self: center;
@@ -59,14 +59,10 @@
     }
 
     &__content {
-      font-size: $s-font-size;
-      margin: 0 -20px 23px;
-      padding: 0 20px;
 
       &-item {
         border-bottom: 1px solid $pinkish-grey;
         display: flex;
-        padding: 11px 20px;
         width: 100%;
       }
 
