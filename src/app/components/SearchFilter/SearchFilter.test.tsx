@@ -59,7 +59,12 @@ describe('SearchFilter', () => {
   it('should render a list with checkbox inputs', () => {
     render(
       withAppContext(
-        <SearchFilter filter={checkboxFilter} hideCount={false} totalCount={totalCount} />,
+        <SearchFilter
+          filter={checkboxFilter}
+          query="foo"
+          hideCount={false}
+          totalCount={totalCount}
+        />,
       ),
     )
 
@@ -70,7 +75,7 @@ describe('SearchFilter', () => {
   it('should render a list with radio inputs', () => {
     render(
       withAppContext(
-        <SearchFilter filter={radioFilter} hideCount={false} totalCount={totalCount} />,
+        <SearchFilter filter={radioFilter} query="foo" hideCount={false} totalCount={totalCount} />,
       ),
     )
 
@@ -81,7 +86,12 @@ describe('SearchFilter', () => {
   it('should render a select with the filter options', () => {
     render(
       withAppContext(
-        <SearchFilter filter={selectFilter} hideCount={false} totalCount={totalCount} />,
+        <SearchFilter
+          filter={selectFilter}
+          query="foo"
+          hideCount={false}
+          totalCount={totalCount}
+        />,
       ),
     )
 
@@ -92,7 +102,12 @@ describe('SearchFilter', () => {
   it('should handle changes in selection for checkboxes', () => {
     render(
       withAppContext(
-        <SearchFilter filter={checkboxFilter} hideCount={false} totalCount={totalCount} />,
+        <SearchFilter
+          filter={checkboxFilter}
+          query="foo"
+          hideCount={false}
+          totalCount={totalCount}
+        />,
       ),
     )
 
@@ -104,7 +119,7 @@ describe('SearchFilter', () => {
   it('should handle changes in selection for radio buttons', () => {
     render(
       withAppContext(
-        <SearchFilter filter={radioFilter} hideCount={false} totalCount={totalCount} />,
+        <SearchFilter filter={radioFilter} query="foo" hideCount={false} totalCount={totalCount} />,
       ),
     )
 
@@ -125,7 +140,12 @@ describe('SearchFilter', () => {
     it('should track changes added to selection using Matomo', () => {
       render(
         withAppContext(
-          <SearchFilter filter={checkboxFilter} hideCount={false} totalCount={totalCount} />,
+          <SearchFilter
+            filter={checkboxFilter}
+            query="foo"
+            hideCount={false}
+            totalCount={totalCount}
+          />,
         ),
       )
 
@@ -143,7 +163,12 @@ describe('SearchFilter', () => {
     it('should track changes removed from selection using Matomo', () => {
       render(
         withAppContext(
-          <SearchFilter filter={checkboxFilter} hideCount={false} totalCount={totalCount} />,
+          <SearchFilter
+            filter={checkboxFilter}
+            query="foo"
+            hideCount={false}
+            totalCount={totalCount}
+          />,
         ),
       )
 
