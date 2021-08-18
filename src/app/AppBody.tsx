@@ -10,9 +10,7 @@ import { mapSearchPagePaths, routing } from './routes'
 import { DataSelectionProvider } from './components/DataSelection/DataSelectionContext'
 
 const HomePage = lazy(() => import(/* webpackChunkName: "HomePage" */ './pages/HomePage'))
-const ActualityPage = lazy(
-  () => import(/* webpackChunkName: "ActualityPage" */ './pages/ActualityPage'),
-)
+const UpdatesPage = lazy(() => import(/* webpackChunkName: "UpdatesPage" */ './pages/UpdatesPage'))
 const DatasetDetailPage = lazy(
   () => import(/* webpackChunkName: "DatasetDetailPage" */ './pages/DatasetDetailPage'),
 )
@@ -106,7 +104,7 @@ const AppBody: FunctionComponent<AppBodyProps> = ({ hasGrid }) => {
                   exact
                   component={CollectionDetailPage}
                 />
-                <Route path={routing.actuality.path} exact component={ActualityPage} />
+                <Route path={routing.updates.path} exact component={UpdatesPage} />
                 <Route path={routing.notFound.path} exact component={NotFoundPage} />
                 <Route path={mapSearchPagePaths} component={SearchPage} />
               </Switch>

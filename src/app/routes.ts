@@ -95,11 +95,11 @@ export const routing = typeHelper({
     useHooks: true, // indicate to skip legacy documentHead and piwik middleware
     page: PAGES.CONSTRUCTION_DOSSIER,
   },
-  actuality: {
+  updates: {
     title: 'Actualiteit',
     path: `/${MAIN_PATHS.CONTENT}/actualiteit/`,
-    type: `${ROUTER_NAMESPACE}/${PAGES.ACTUALITY}`,
-    page: PAGES.ACTUALITY,
+    type: `${ROUTER_NAMESPACE}/${PAGES.UPDATES}`,
+    page: PAGES.UPDATES,
   },
   inloggen: {
     title: 'Inloggen',
