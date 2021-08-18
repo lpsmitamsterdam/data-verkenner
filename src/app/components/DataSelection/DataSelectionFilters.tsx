@@ -18,6 +18,8 @@ import {
   DataSelectionFiltersCategory,
   DataSelectionFiltersItem,
   DataSelectionFiltersHiddenOptions,
+  DataSelectionFiltersItemLabel,
+  DataSelectionFiltersItemLabelEmpty,
 } from './DataSelectionFilterStyles'
 
 // Note, this component has been migrated from legacy angularJS code
@@ -137,10 +139,16 @@ const DataSelectionFilters: FunctionComponent = () => {
                             })
                           }}
                         >
-                          <span className="c-data-selection-available-filters__item-label">
-                            <span className="qa-option-label">{option.label || '(geen)'}</span>
-                            {showOptionCounts && <span>({option.count})</span>}
-                          </span>
+                          {option.label ? (
+                            <DataSelectionFiltersItemLabel>
+                              {option.label}
+                              {showOptionCounts && <span>({option.count})</span>}
+                            </DataSelectionFiltersItemLabel>
+                          ) : (
+                            <DataSelectionFiltersItemLabelEmpty>
+                              (geen)
+                            </DataSelectionFiltersItemLabelEmpty>
+                          )}
                         </StyledLink>
                       </DataSelectionFiltersItem>
                     ))}

@@ -38,7 +38,18 @@ export const DataSelectionFiltersItem = styled.li`
   overflow: hidden;
 `
 
+export const DataSelectionFiltersShowMore = styled.div`
+  border-bottom: 1px solid ${themeColor('tint', 'level3')};
+`
+
 export const DataSelectionFiltersHiddenOptions = styled.div`
-  margin-bottom: ${themeSpacing(1)}
-  color: ${themeColor('tint', 'level4')}
+  margin-top: ${themeSpacing(1)};
+  margin-bottom: ${themeSpacing(1)};
+  color: ${themeColor('tint', 'level5')};
+`
+export const DataSelectionFiltersItemLabel = styled.div`
+  margin-bottom: ${themeSpacing(2)};
+`
+export const DataSelectionFiltersItemLabelEmpty = styled(DataSelectionFiltersItemLabel)`
+  font-style: italic;
 `
