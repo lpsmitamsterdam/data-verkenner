@@ -36,8 +36,8 @@ const CustomLayerCollection: FunctionComponent<{
           <Alert level="warning">
             Let op: dit zijn kaartlagen die tijdelijk zijn toegevoegd via deze URL om te testen. Als
             deze kaartlagen dienen te worden toegevoegd onder een collectie,{' '}
-            <Link href="mailto:datapunt@amsterdam.nl" variant="inline">
-              neem dan contact op
+            <Link href="mailto:teamdataportaal.ois@amsterdam.nl" variant="inline">
+              neem dan contact op.
             </Link>
           </Alert>
           {customMapLayers.map((item) => {
