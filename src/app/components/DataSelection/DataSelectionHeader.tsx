@@ -1,5 +1,5 @@
 import { Map, Table } from '@amsterdam/asc-assets'
-import { Button, Tab, Tabs, themeSpacing } from '@amsterdam/asc-ui'
+import { Button, Tab, Tabs, themeSpacing, Heading } from '@amsterdam/asc-ui'
 import { useMatomo } from '@datapunt/matomo-tracker-react'
 import type { FunctionComponent } from 'react'
 import { Link as RouterLink, useHistory, useLocation } from 'react-router-dom'
@@ -63,12 +63,16 @@ const DataSelectionHeader: FunctionComponent = () => {
     <>
       <Header>
         {view === ViewMode.Full && (
-          <h1 data-test="data-selection-heading">
+          <Heading data-test="data-selection-heading">
+            {' '}
             {datasetTitle}
             {totalResults > 0 && <span> ({totalResults.toLocaleString('NL-nl')})</span>}
-          </h1>
+          </Heading>
         )}
-        {view === ViewMode.Split && <h1 data-test="data-selection-heading">Resultaten</h1>}
+        {view === ViewMode.Split && (
+          <Heading data-test="data-selection-heading">Resultaten</Heading>
+        )}
+
         <div>
           <Button
             variant="primaryInverted"
