@@ -1,11 +1,8 @@
 @import 'config';
-@import './legacy-utils';
-
 @import 'base/reset';
 @import 'base/typography';
 @import 'base/body';
 
-@import 'components/paragraph';
 @import 'components/tag';
 @import 'components/data-selection/data-selection';
 @import 'components/map';
