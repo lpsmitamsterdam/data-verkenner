@@ -15,6 +15,8 @@ import { Link as RouterLink } from 'react-router-dom'
 import styled from 'styled-components'
 import getDetailPageData from '../../utils/getDetailPageData'
 import { toDataDetail, toDataSearch } from '../../links'
+import toSearchParams from '../../utils/toSearchParams'
+import { queryParam } from '../../pages/SearchPage/query-params'
 import type { DataResult } from '../../pages/SearchPage/types'
 import formatCount from '../../utils/formatCount'
 import type { DataIconType } from './DataIcon'
@@ -76,6 +78,7 @@ interface DataCardProps {
   label: string
   count: number
   results: DataResult[]
+  query: string
 }
 
 const DataCard: FunctionComponent<DataCardProps> = ({
@@ -83,6 +86,7 @@ const DataCard: FunctionComponent<DataCardProps> = ({
   label,
   count,
   results,
+  query,
   ...otherProps
 }) => (
   <StyledCard key={type} horizontal {...otherProps}>
@@ -94,9 +98,13 @@ const DataCard: FunctionComponent<DataCardProps> = ({
     <StyledCardContent>
       <div>
         <Heading as="h3" styleAs="h4">
-          <StyledLink forwardedAs={RouterLink} to={toDataSearch()}>{`${label} (${formatCount(
-            count,
-          )})`}</StyledLink>
+          <StyledLink
+            forwardedAs={RouterLink}
+            to={{
+              ...toDataSearch(),
+              search: toSearchParams([[queryParam, query]]).toString(),
+            }}
+          >{`${label} (${formatCount(count)})`}</StyledLink>
         </Heading>
       </div>
 
