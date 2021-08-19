@@ -67,7 +67,6 @@ const HeadingWrapper = styled.div`
   flex-wrap: wrap;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: ${themeSpacing(7)};
 `
 
 const DetailPanel: FunctionComponent = () => {

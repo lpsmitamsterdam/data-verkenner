@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 
-import { Heading, Button, Link, themeColor, themeSpacing } from '@amsterdam/asc-ui'
+import { Button, Heading, Link, themeColor, themeSpacing } from '@amsterdam/asc-ui'
 
 export const StyledHeading = styled(Heading)`
   display: flex;

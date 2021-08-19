@@ -25,6 +25,8 @@ import PanoramaViewer from './components/PanoramaViewer/PanoramaViewer'
 import { AFTER_PRINT, BEFORE_PRINT, PANORAMA_FULLSCREEN_TOGGLE } from './matomo-events'
 import useCustomEvent from '../../utils/useCustomEvent'
 import Enlarge from './components/PanoramaViewer/enlarge.svg'
+import 'leaflet/dist/leaflet.css'
+import 'leaflet-draw/dist/leaflet.draw.css'
 
 const MapView = styled.div`
   height: 100%;

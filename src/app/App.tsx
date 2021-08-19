@@ -11,7 +11,7 @@ import { MatomoProvider } from '@datapunt/matomo-tracker-react'
 import type { FunctionComponent } from 'react'
 import { useMemo } from 'react'
 import { matchPath, useHistory, useLocation } from 'react-router-dom'
-import styled from 'styled-components'
+import styled, { createGlobalStyle } from 'styled-components'
 import {
   cacheExchange,
   createClient,
@@ -63,6 +63,23 @@ const Dashboard = styled.div`
 
   @media print {
     height: initial;
+  }
+`
+
+const GlobalStyleApp = createGlobalStyle`
+  html, body, .root, .root > div {
+    height: 100%;
+  }
+
+  ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  button {
+    cursor: pointer;
+    border: none;
   }
 `
 
@@ -124,6 +141,7 @@ const App: FunctionComponent = () => {
   return (
     <ThemeProvider>
       <GlobalStyle />
+      <GlobalStyleApp />
       <MatomoProvider value={matomoInstance}>
         <GraphQLProvider value={graphQLClient}>
           <AppWrapper currentPage={currentPage} hasMaxWidth={hasMaxWidth}>
