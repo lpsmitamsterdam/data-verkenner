@@ -67,14 +67,20 @@ const Dashboard = styled.div`
 `
 
 const GlobalStyleApp = createGlobalStyle`
-  html, body, .root, .root > div {
+  html, body {
     height: 100%;
+  }
+  .root, .root > div {
+    min-height: 100%;
+  }
+
+  ul, dd {
+    margin: 0;
+    padding: 0;
   }
 
   ul {
     list-style: none;
-    margin: 0;
-    padding: 0;
   }
 
   button {
