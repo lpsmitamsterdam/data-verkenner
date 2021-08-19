@@ -84,18 +84,6 @@ function createHotspotTemplate(
 }
 
 /*
-  Set the initial Marzipano viewer that is tied to the ref in the PanoramaContainer
-*/
-export function initialize(domElement: HTMLElement) {
-  return new Marzipano.Viewer(domElement, {
-    stage: {
-      preserveDrawingBuffer: true,
-      width: 960,
-    },
-  })
-}
-
-/*
   Load the Marzipano viewer into its view components
 */
 export function loadScene(

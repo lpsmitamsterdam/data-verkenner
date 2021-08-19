@@ -1,5 +1,5 @@
 import { Map, Table } from '@amsterdam/asc-assets'
-import { Button, Tab, Tabs, themeSpacing, Heading } from '@amsterdam/asc-ui'
+import { Button, Heading, Tab, Tabs, themeSpacing } from '@amsterdam/asc-ui'
 import { useMatomo } from '@datapunt/matomo-tracker-react'
 import type { FunctionComponent } from 'react'
 import { Link as RouterLink, useHistory, useLocation } from 'react-router-dom'
@@ -13,6 +13,7 @@ import { useDataSelection } from './DataSelectionContext'
 import DataSelectionDownloadButton from './DataSelectionDownloadButton'
 import { DatasetType } from './types'
 import useLegacyDataselectionConfig from './useLegacyDataselectionConfig'
+import type AuthScope from '../../../shared/services/api/authScope'
 
 const StyledTabs = styled(Tabs)`
   margin-bottom: ${themeSpacing(2)};
@@ -48,7 +49,8 @@ const DataSelectionHeader: FunctionComponent = () => {
   const showDownloadButton =
     view !== ViewMode.Split &&
     totalResults > 0 &&
-    (!currentDatasetConfig.AUTH_SCOPE || getScopes().includes(currentDatasetConfig.AUTH_SCOPE))
+    (!currentDatasetConfig.AUTH_SCOPE ||
+      getScopes().includes(currentDatasetConfig.AUTH_SCOPE as AuthScope))
 
   const showTabs = view === ViewMode.Split
   const tabs = [DATASETS.BAG, DATASETS.HR, DATASETS.BRK].map((ds) => ({

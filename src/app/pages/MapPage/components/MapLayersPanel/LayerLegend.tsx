@@ -6,6 +6,7 @@ import MAP_CONFIG from '../../legacy/services/map.config'
 import type { ExtendedMapGroup } from '../../legacy/services'
 import { isAuthorised } from '../../legacy/utils/map-layer'
 import LayerLegendZoomButton from './LayerLegendZoomButton'
+import type AuthScope from '../../../../../shared/services/api/authScope'
 
 const MapLayerWithLegendStyle = styled.li<{ notSelectable: boolean; disabled?: boolean }>`
   align-items: center;
@@ -164,7 +165,7 @@ const LayerLegend: FunctionComponent<MapLayerWithLegendItemProps & Partial<HTMLL
           legendItem.title
         )}
       </LegendLabel>
-      {isAuthorised(legendItem.authScope) && legendItem.isVisible && (
+      {isAuthorised(legendItem.authScope as AuthScope) && legendItem.isVisible && (
         <LayerLegendZoomButton minZoom={legendItem.minZoom} />
       )}
       {onEdit && <Button onClick={() => onEdit(legendItem.id)}>Edit</Button>}

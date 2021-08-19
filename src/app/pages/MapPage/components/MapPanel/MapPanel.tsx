@@ -132,7 +132,9 @@ const MapPanel: FunctionComponent = () => {
         {showContentPanel && (
           <StyledLargeDrawerPanel data-testid="drawerPanel" show={!legendActive}>
             <DrawerPanelHeader>
-              {panelHeader.type && <SubtitleHeading as="h6">{panelHeader.type}</SubtitleHeading>}
+              {panelHeader.type && (
+                <SubtitleHeading forwardedAs="h5">{panelHeader.type}</SubtitleHeading>
+              )}
               <TitleHeading styleAs="h2">{panelHeader.title}</TitleHeading>
               {panelHeader.customElement && panelHeader.customElement}
               {infoBox && <StyledDetailInfoBox {...infoBox} />}

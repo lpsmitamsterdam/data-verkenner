@@ -1,9 +1,10 @@
 import { createUnsecuredToken, Json } from 'jsontokens'
 import type { DecodedToken } from '../AuthTokenContext'
 import hasUserRights from './hasUserRights'
+import AuthScope from '../../../../shared/services/api/authScope'
 
-const defaultScope = ['BD/R']
-const extendedScope = ['BD/X']
+const defaultScope = [AuthScope.BdR]
+const extendedScope = [AuthScope.BdX]
 
 const VALID_DECODED_TOKEN: DecodedToken = {
   scopes: [],

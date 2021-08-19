@@ -9,6 +9,7 @@ import LoginLink from '../../../../components/Links/LoginLink/LoginLink'
 import LayerLegend from './LayerLegend'
 import type { ExtendedMapGroup, ExtendedMapGroupLegendItem } from '../../legacy/services'
 import LayerLegendZoomButton from './LayerLegendZoomButton'
+import type AuthScope from '../../../../../shared/services/api/authScope'
 
 const MapLayerItemStyle = styled.li<{ disabled?: boolean }>`
   display: flex;
@@ -215,17 +216,17 @@ const LayerGroup: FunctionComponent<MapLayerItemProps> = ({
           <ChevronDown />
         </ChevronIcon>
 
-        {isAuthorised(mapGroup.authScope) && layerIsChecked && (
+        {isAuthorised(mapGroup.authScope as AuthScope) && layerIsChecked && (
           <LayerLegendZoomButton minZoom={mapGroup.minZoom} />
         )}
       </ToggleButton>
-      {!isAuthorised(mapGroup.authScope) && (
+      {!isAuthorised(mapGroup.authScope as AuthScope) && (
         <StyledAlert level="info">
           <LoginLink showChevron={false}>Kaartlaag zichtbaar na inloggen</LoginLink>
         </StyledAlert>
       )}
       {onEdit && <Button onClick={() => onEdit(mapGroup.id)}>Edit</Button>}
-      {isAuthorised(mapGroup.authScope) && open && (
+      {isAuthorised(mapGroup.authScope as AuthScope) && open && (
         <MapLayerWithLegendList>
           {mapGroup.legendItems
             ?.filter(({ title }) =>

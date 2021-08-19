@@ -1,24 +1,12 @@
 import Keycloak from 'keycloak-js'
 import environment from '../../../environment'
+import AuthScope from '../api/authScope'
 
 // Catalogus (Dcatd) admin
 export const dcatdScopes = [
-  'CAT/R', // Redacteursrechten
-  'CAT/W', // Beheerdersrechten
+  AuthScope.CatR, // Redacteursrechten
+  AuthScope.CatW, // Beheerdersrechten
 ]
-
-export const SCOPES = {
-  'BRK/RS': 'BRK/RS',
-  'BRK/RSN': 'BRK/RSN',
-  'BRK/RO': 'BRK/RO',
-  'WKPB/RBDU': 'WKPB/RBDU',
-  'MON/RBC': 'MON/RBC',
-  'MON/RDM': 'MON/RDM',
-  'HR/R': 'HR/R',
-  'BD/R': 'BD/R',
-  'BD/X': 'BD/X',
-  'FP/MDW': 'FP/MDW',
-}
 
 const keycloak = Keycloak({
   url: environment.KEYCLOAK_URL,
@@ -80,7 +68,9 @@ export function getScopes() {
   // The roles returned from Keycloak use a different format than AuthZ, so we have to convert them to match the ones we use in our application.
   // For example: 'brk_ro' will have to be converted to 'BRK/RO'.
   // TODO: Once we enable Keycloak by default we need to change our enums to match this new convention and remove this conversion code.
-  return [...realmRoles, ...resourceRoles].map((role) => role.toUpperCase().replace('_', '/'))
+  return [...realmRoles, ...resourceRoles].map((role) =>
+    role.toUpperCase().replace('_', '/'),
+  ) as AuthScope[]
 }
 
 export function getName() {

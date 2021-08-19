@@ -14,6 +14,7 @@ import { fetchByPandId as fetchMonumentByPandId } from '../monument/monument'
 import { fetchByAddressId, fetchByPandId as fetchVestigingByPandId } from '../vestiging/vestiging'
 import transformResultByType from './transform-result-by-type'
 import type { GeoSearchFeature } from '../../../../../../api/geosearch'
+import AuthScope from '../../../../../../shared/services/api/authScope'
 
 interface Endpoint {
   uri: string
@@ -61,7 +62,7 @@ const relatedResourcesByType: { [key: string]: RelatedResource[] } = {
           fetchByAddressId(result?.id as string),
         ),
       type: 'vestiging',
-      authScope: 'HR/R',
+      authScope: AuthScope.HrR,
     },
   ],
   'bag/pand': [
@@ -72,7 +73,7 @@ const relatedResourcesByType: { [key: string]: RelatedResource[] } = {
     {
       fetch: fetchVestigingByPandId,
       type: 'vestiging',
-      authScope: 'HR/R',
+      authScope: AuthScope.HrR,
     },
     {
       fetch: fetchMonumentByPandId,
@@ -86,7 +87,7 @@ const relatedResourcesByType: { [key: string]: RelatedResource[] } = {
           fetchByAddressId(result?.id as string),
         ),
       type: 'vestiging',
-      authScope: 'HR/R',
+      authScope: AuthScope.HrR,
     },
   ],
 }
@@ -108,7 +109,8 @@ export const fetchRelatedForUser =
 
     const resources = relatedResourcesByType[relatableFeature.properties.type]
     const requests = resources.map((resource) =>
-      resource.authScope && (!isAuthenticated() || !getScopes().includes(resource.authScope))
+      resource.authScope &&
+      (!isAuthenticated() || !getScopes().includes(resource.authScope as AuthScope))
         ? []
         : resource.fetch(relatableFeature.properties.id).then((results) =>
             results.map((result) => ({
@@ -163,7 +165,7 @@ export default function mapSearch(location: LatLngLiteral | null): Promise<MapSe
   }
 
   endpoints.forEach((endpoint) => {
-    const isInScope = !endpoint.authScope || getScopes().includes(endpoint.authScope)
+    const isInScope = !endpoint.authScope || getScopes().includes(endpoint.authScope as AuthScope)
 
     if (!isInScope) {
       return

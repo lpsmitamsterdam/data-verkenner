@@ -6,6 +6,7 @@ import getUnauthorizedLabels from '../../utils/getUnauthorizedLabels'
 import redirectToDcatd from '../../utils/redirectToDcatd'
 import withAppContext from '../../utils/withAppContext'
 import DatasetSearchResults from './DatasetSearchResults'
+import AuthScope from '../../../shared/services/api/authScope'
 
 jest.mock('../../../shared/services/auth/auth', () => {
   const originalModule = jest.requireActual('../../../shared/services/auth/auth')
@@ -108,7 +109,7 @@ describe('DatasetSearchResults', () => {
     // no scopes, no button
     expect(screen.queryByTestId('actionButton')).not.toBeInTheDocument()
 
-    mockedGetScopes.mockReturnValue(['CAT/R'])
+    mockedGetScopes.mockReturnValue([AuthScope.CatR])
 
     rerender(withAppContext(<DatasetSearchResults results={results} isOverviewPage />))
 
@@ -116,7 +117,7 @@ describe('DatasetSearchResults', () => {
   })
 
   it('it calls mockedredirectToDcatd when edit button is clicked', () => {
-    mockedGetScopes.mockReturnValue(['CAT/R'])
+    mockedGetScopes.mockReturnValue([AuthScope.CatR])
 
     render(withAppContext(<DatasetSearchResults results={results} isOverviewPage />))
 

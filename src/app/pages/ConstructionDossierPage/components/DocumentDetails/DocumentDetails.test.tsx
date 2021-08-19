@@ -7,7 +7,8 @@ import withAppContext from '../../../../utils/withAppContext'
 import AuthTokenContext, { DecodedToken } from '../../AuthTokenContext'
 import FilesGallery from '../FilesGallery'
 import DocumentDetails from './DocumentDetails'
-import { SCOPES, getScopes } from '../../../../../shared/services/auth/auth'
+import { getScopes } from '../../../../../shared/services/auth/auth'
+import AuthScope from '../../../../../shared/services/api/authScope'
 
 jest.mock('../FilesGallery')
 jest.mock('../../../../../shared/services/auth/auth')
@@ -213,7 +214,7 @@ describe('DocumentDetails', () => {
   })
 
   it('renders a message if the dossier is restricted and the user has no extended rights', () => {
-    getScopesMock.mockReturnValue([SCOPES['BD/R']])
+    getScopesMock.mockReturnValue([AuthScope.BdR])
 
     render(
       <DocumentDetails
@@ -231,7 +232,7 @@ describe('DocumentDetails', () => {
   })
 
   it('renders a message if the document is restricted and the user has no extended rights', () => {
-    getScopesMock.mockReturnValue([SCOPES['BD/R']])
+    getScopesMock.mockReturnValue([AuthScope.BdR])
 
     render(
       <DocumentDetails

@@ -40,7 +40,7 @@ const useFetchLegacyDataSelectionData = () => {
   const userHasAccessToPage =
     currentPage === PAGES.ADDRESSES ||
     (currentPage === PAGES.ESTABLISHMENTS && isAuthenticated()) ||
-    (currentPage === PAGES.CADASTRAL_OBJECTS && getScopes().includes('BRK/RSN'))
+    (currentPage === PAGES.CADASTRAL_OBJECTS && getScopes().includes(AuthScope.BrkRsn))
 
   const [page] = useParam(pageParam)
   const { setTotalResults, setAvailableFilters, activeFilters } = useDataSelection()
@@ -54,7 +54,7 @@ const useFetchLegacyDataSelectionData = () => {
       throw new Error(DEFAULT_ERROR_MESSAGE)
     }
     const datasetScope = currentDatasetConfig.AUTH_SCOPE
-    const authScopeError = datasetScope ? !getScopes().includes(datasetScope) : false
+    const authScopeError = datasetScope ? !getScopes().includes(datasetScope as AuthScope) : false
     if (!userHasAccessToPage || authScopeError) {
       throw new AuthError(
         401,

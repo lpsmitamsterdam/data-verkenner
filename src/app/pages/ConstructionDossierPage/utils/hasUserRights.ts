@@ -1,4 +1,4 @@
-import { SCOPES } from '../../../../shared/services/auth/auth'
+import AuthScope from '../../../../shared/services/api/authScope'
 
 const hasUserRights = (
   restricted: boolean,
@@ -7,10 +7,10 @@ const hasUserRights = (
   isTokenExpired: boolean,
 ) => {
   if (restricted) {
-    return scopes.includes(SCOPES['BD/X'])
+    return scopes.includes(AuthScope.BdX)
   }
 
-  return scopes.includes(SCOPES['BD/R']) || (token && !isTokenExpired)
+  return scopes.includes(AuthScope.BdR) || (token && !isTokenExpired)
 }
 
 export default hasUserRights
