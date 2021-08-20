@@ -1,9 +1,8 @@
 import { FilterTag } from '@amsterdam/asc-ui'
 import styled from 'styled-components'
+import { Link as RouterLink } from 'react-router-dom'
 import { useMatomo } from '@datapunt/matomo-tracker-react'
 import { useDataSelection } from './DataSelectionContext'
-import useParam from '../../utils/useParam'
-import { polygonParam } from '../../pages/MapPage/query-params'
 import { DATASELECTION_REMOVE_FILTER } from '../../pages/MapPage/matomo-events'
 
 const List = styled.ul`
@@ -12,30 +11,31 @@ const List = styled.ul`
   list-style: none;
 `
 
+const StyledFilterTag = styled(FilterTag)`
+  text-decoration: none;
+`
+
 const DataSelectionActiveFilters = () => {
-  const { removeFilter, activeFilters } = useDataSelection()
+  const { activeFilters, buildFilterLocationDescriptor } = useDataSelection()
   const { trackEvent } = useMatomo()
-  const [, setPolygon] = useParam(polygonParam)
 
   return activeFilters.length ? (
     <List data-testid="activeFilters">
       {activeFilters.map(({ key, label, value }) => (
         <li key={key}>
-          <FilterTag
-            type="button"
+          <StyledFilterTag
+            forwardedAs={RouterLink}
+            to={buildFilterLocationDescriptor({
+              filtersToRemove: [key],
+            })}
             aria-label={`Filter verwijderen: ${label}: ${value}`}
             onClick={() => {
               trackEvent(DATASELECTION_REMOVE_FILTER)
-              if (key === 'shape') {
-                setPolygon(null)
-              } else {
-                removeFilter(key)
-              }
             }}
             data-testid="activeFiltersItem"
           >
             {label}
-          </FilterTag>
+          </StyledFilterTag>
         </li>
       ))}
     </List>

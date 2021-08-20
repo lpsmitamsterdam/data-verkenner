@@ -66,9 +66,7 @@ const DataSelectionHeader: FunctionComponent = () => {
       <Header>
         {view === ViewMode.Full && (
           <Heading data-test="data-selection-heading">
-            {' '}
-            {datasetTitle}
-            {totalResults > 0 && <span> ({totalResults.toLocaleString('NL-nl')})</span>}
+            {datasetTitle} {totalResults > 0 && <> ({totalResults.toLocaleString('NL-nl')})</>}
           </Heading>
         )}
         {view === ViewMode.Split && (

@@ -6,7 +6,7 @@ export const StyledHeading = styled(Heading)`
   display: flex;
   justify-content: space-between;
   color: ${themeColor('tint', 'level7')};
-  margin-bottom: ${themeSpacing(2)};
+  margin-bottom: ${themeSpacing(3)};
 `
 
 export const InfoButton = styled(Button)`
@@ -14,9 +14,10 @@ export const InfoButton = styled(Button)`
 `
 
 export const StyledLink = styled(Link)`
-  background-color: transparent;
-  text-align: left;
+  margin-bottom: ${themeSpacing(2)};
+  line-height: 22px;
 `
+
 export const ShowMoreButton = styled(Button)`
   margin-top: ${themeSpacing(2)};
 `
@@ -34,7 +35,6 @@ export const DataSelectionFiltersCategory = styled.div`
   }
 `
 export const DataSelectionFiltersItem = styled.li`
-  line-height: ${themeSpacing(8)};
   overflow: hidden;
 `
 

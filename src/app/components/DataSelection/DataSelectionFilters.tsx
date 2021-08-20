@@ -3,6 +3,7 @@ import { useMemo, useState } from 'react'
 import { Link } from '@amsterdam/asc-ui'
 import { Enlarge, Minimise } from '@amsterdam/asc-assets'
 import { useMatomo } from '@datapunt/matomo-tracker-react'
+import { Link as RouterLink } from 'react-router-dom'
 import { DEFAULT_LOCALE } from '../../../shared/config/locale.config'
 import Metadata from '../../../shared/assets/icons/metadata.svg'
 import { useDataSelection } from './DataSelectionContext'
@@ -10,25 +11,24 @@ import type { AvailableFilter } from './types'
 import useLegacyDataselectionConfig from './useLegacyDataselectionConfig'
 import { DATASELECTION_ADD_FILTER } from '../../pages/MapPage/matomo-events'
 import {
-  StyledHeading,
-  InfoButton,
-  StyledLink,
-  ShowMoreButton,
-  DataSelectionFiltersContainer,
   DataSelectionFiltersCategory,
-  DataSelectionFiltersItem,
+  DataSelectionFiltersContainer,
   DataSelectionFiltersHiddenOptions,
-  DataSelectionFiltersItemLabel,
-  DataSelectionFiltersItemLabelEmpty,
+  DataSelectionFiltersItem,
+  InfoButton,
+  ShowMoreButton,
+  StyledHeading,
+  StyledLink,
 } from './DataSelectionFilterStyles'
 
 // Note, this component has been migrated from legacy angularJS code
 // Todo: this can be removed when we implement the new interactive table
 const DataSelectionFilters: FunctionComponent = () => {
   const [expandedFilters, setExpandedFilters] = useState<string[]>([])
-  const { addFilter, activeFilters, availableFilters } = useDataSelection()
+  const { buildFilterLocationDescriptor, activeFilters, availableFilters } = useDataSelection()
   const { currentDatasetConfig } = useLegacyDataselectionConfig()
   const { trackEvent } = useMatomo()
+
   const filteredAvailableFilters = useMemo(() => {
     if (!activeFilters.length) {
       return []
@@ -102,7 +102,7 @@ const DataSelectionFilters: FunctionComponent = () => {
             hasInactiveFilterOptions(filter) && (
               <DataSelectionFiltersCategory key={filter.slug}>
                 <StyledHeading as="h3">
-                  <span>{filter.label}</span>
+                  {filter.label}
                   {filter.info_url && (
                     <InfoButton
                       type="button"
@@ -130,24 +130,21 @@ const DataSelectionFilters: FunctionComponent = () => {
                       <DataSelectionFiltersItem key={option.id}>
                         <StyledLink
                           inList
-                          type="button"
-                          forwardedAs="button"
+                          forwardedAs={RouterLink}
+                          to={buildFilterLocationDescriptor({
+                            filtersToAdd: { [filter.slug]: option.id },
+                          })}
                           onClick={() => {
                             trackEvent(DATASELECTION_ADD_FILTER)
-                            addFilter({
-                              [filter.slug]: option.id,
-                            })
                           }}
                         >
                           {option.label ? (
-                            <DataSelectionFiltersItemLabel>
+                            <>
                               {option.label}
                               {showOptionCounts && <span>({option.count})</span>}
-                            </DataSelectionFiltersItemLabel>
+                            </>
                           ) : (
-                            <DataSelectionFiltersItemLabelEmpty>
-                              (geen)
-                            </DataSelectionFiltersItemLabelEmpty>
+                            `(geen)`
                           )}
                         </StyledLink>
                       </DataSelectionFiltersItem>

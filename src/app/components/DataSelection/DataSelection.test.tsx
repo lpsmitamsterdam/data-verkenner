@@ -3,7 +3,6 @@ import { rest } from 'msw'
 import { server } from '../../../../test/server'
 import { singleFixture as bagFixture } from '../../../api/dataselectie/bag'
 import environment from '../../../environment'
-import { toAddresses } from '../../links'
 import { routing } from '../../routes'
 import joinUrl from '../../utils/joinUrl'
 import withAppContext from '../../utils/withAppContext'
@@ -61,14 +60,12 @@ describe('DataSelection', () => {
       await waitFor(() => {
         const filter = screen
           .queryByTestId('dataSelectionAvailableFilters')
-          ?.querySelectorAll('li')[0]
-          .querySelector('button') as Element
+          ?.querySelectorAll('a')[0] as Element
         fireEvent.click(filter)
-
-        expect(pushMock).toHaveBeenCalledWith({
-          ...toAddresses(),
-          search: 'filters=%7B%22woonplaats%22%3A%22Amsterdam%22%7D',
-        })
+        expect(filter).toHaveAttribute(
+          'href',
+          '/?filters=%7B%22woonplaats%22%3A%22Amsterdam%22%7D&modus=volledig',
+        )
       })
     })
 
@@ -82,16 +79,9 @@ describe('DataSelection', () => {
         ),
       )
       await waitFor(() => {
-        const activeFilter = screen
-          .queryByTestId('activeFilters')
-          ?.querySelectorAll('li')[0]
-          .querySelector('button') as Element
+        const activeFilter = screen.getAllByTestId('activeFiltersItem')[0]
         fireEvent.click(activeFilter)
-
-        expect(pushMock).toHaveBeenCalledWith({
-          ...toAddresses(),
-          search: '',
-        })
+        expect(activeFilter).toHaveAttribute('href', '/')
       })
     })
   })

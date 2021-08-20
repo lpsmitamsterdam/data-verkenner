@@ -44,10 +44,6 @@ const GlobalStyle = createGlobalStyle<{
   loading: boolean
   panelActive?: boolean
 }>`
-  @page {
-    size: A4 portrait;
-  }
-
   body {
     touch-action: none;
     overflow: hidden; // This will prevent the scrollBar on iOS due to navigation bar
@@ -129,6 +125,12 @@ const GlobalStyle = createGlobalStyle<{
         position: sticky !important;
       `}
   }
+
+  // Todo: figure out why leaflet css is overriding this
+  .arm__icon--clustergroup-default {
+    display: flex !important;
+  }
+
   .leaflet-control-container .leaflet-control-scale {
     margin: ${themeSpacing(0, 16, 4, 0)} !important;
   }
