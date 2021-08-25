@@ -2,11 +2,11 @@ import { render } from '@testing-library/react'
 import { useEffect } from 'react'
 import type { LatLngLiteral, LatLngTuple } from 'leaflet'
 import useMapCenterToMarker from './useMapCenterToMarker'
-import withAppContext from './withAppContext'
+import withAppContext from '../../utils/withAppContext'
 import {
   LAPTOP_WIDTH,
   TABLET_M_WIDTH,
-} from '../pages/MapPage/components/DrawerPanel/LargeDrawerPanel'
+} from '../../pages/MapPage/components/DrawerPanel/LargeDrawerPanel'
 
 const fitBoundsMock = jest.fn()
 const panToMock = jest.fn()

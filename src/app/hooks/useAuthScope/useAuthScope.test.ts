@@ -1,10 +1,10 @@
 import { renderHook } from '@testing-library/react-hooks'
 import { mocked } from 'ts-jest/utils'
-import AuthScope from '../../shared/services/api/authScope'
-import { getScopes } from '../../shared/services/auth/auth'
+import AuthScope from '../../../shared/services/api/authScope'
+import { getScopes } from '../../../shared/services/auth/auth'
 import useAuthScope from './useAuthScope'
 
-jest.mock('../../shared/services/auth/auth')
+jest.mock('../../../shared/services/auth/auth')
 
 const mockedGetScopes = mocked(getScopes)
 

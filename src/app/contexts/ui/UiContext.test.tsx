@@ -1,9 +1,9 @@
 import { render } from '@testing-library/react'
 import { mocked } from 'ts-jest/utils'
-import useParam from '../../utils/useParam'
+import useParam from '../../hooks/useParam'
 import { UiProvider, useIsEmbedded } from './UiContext'
 
-jest.mock('../../utils/useParam')
+jest.mock('../../hooks/useParam')
 
 const useParamMock = mocked(useParam)
 

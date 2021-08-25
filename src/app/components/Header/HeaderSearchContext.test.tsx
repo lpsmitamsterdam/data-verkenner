@@ -2,13 +2,13 @@ import { render } from '@testing-library/react'
 import { renderHook, act } from '@testing-library/react-hooks'
 import { mocked } from 'ts-jest/utils'
 import withAppContext from '../../utils/withAppContext'
-import useParam from '../../utils/useParam'
+import useParam from '../../hooks/useParam'
 import HeaderSearchContext, { HeaderSearchProvider, useHeaderSearch } from './HeaderSearchContext'
 import type { HeaderSearchContextProps } from './HeaderSearchContext'
 import HeaderSearch from './HeaderSearch'
 
 jest.mock('./HeaderSearch', () => () => <div />)
-jest.mock('../../utils/useParam')
+jest.mock('../../hooks/useParam')
 
 const useParamMock = mocked(useParam)
 

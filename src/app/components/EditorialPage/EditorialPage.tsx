@@ -9,7 +9,7 @@ import type { LocationDescriptorObject } from 'history'
 import environment from '../../../environment'
 import { toNotFound } from '../../links'
 import getImageFromCms from '../../utils/getImageFromCms'
-import useDocumentTitle from '../../utils/useDocumentTitle'
+import useDocumentTitle from '../../hooks/useDocumentTitle'
 import LoadingSpinner from '../LoadingSpinner/LoadingSpinner'
 
 const BodyStyle = styled.div`

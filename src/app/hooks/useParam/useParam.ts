@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useMemo, useRef } from 'react'
 import { useHistory, useLocation } from 'react-router-dom'
-import buildParamQuery from './buildParamQuery'
-import encodeParam from './encodeParam'
+import buildParamQuery from '../../utils/buildParamQuery'
+import encodeParam from '../../utils/encodeParam'
 
 type SetValueCallback<T> = (val: T) => T | null
 type SetValueFn<T> = (value: T | null | SetValueCallback<T>, method?: 'push' | 'replace') => void

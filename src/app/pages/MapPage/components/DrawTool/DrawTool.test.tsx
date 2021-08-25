@@ -23,7 +23,7 @@ jest.mock('leaflet', () => ({
   })),
 }))
 const panToWithPanelOffsetMock = jest.fn()
-jest.mock('../../../../utils/useMapCenterToMarker', () => () => ({
+jest.mock('../../../../hooks/useMapCenterToMarker', () => () => ({
   panToWithPanelOffset: panToWithPanelOffsetMock,
 }))
 

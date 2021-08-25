@@ -1,5 +1,5 @@
 import { useLocation } from 'react-router-dom'
-import { routing } from '../routes'
+import { routing } from '../../routes'
 
 /**
  * Temporary replacement for getCurrentPage selector in redux-first-router.

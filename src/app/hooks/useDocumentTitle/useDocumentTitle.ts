@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { useLocation } from 'react-router-dom'
-import { routing } from '../routes'
+import { routing } from '../../routes'
 
 const TITLE = 'Data en informatie'
 

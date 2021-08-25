@@ -31,7 +31,7 @@ import { CmsType } from '../../../../shared/config/cms.config'
 import getIdEndpoint from '../../../utils/getIdEndpoint'
 import getDetailPageData from '../../../utils/getDetailPageData'
 import type { AutoSuggestSearchContent } from '../services/auto-suggest/auto-suggest'
-import useParam from '../../../utils/useParam'
+import useParam from '../../../hooks/useParam'
 import { routing } from '../../../routes'
 import { useHeaderSearch } from '../HeaderSearchContext'
 

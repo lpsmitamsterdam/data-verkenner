@@ -1,6 +1,6 @@
 import { act, renderHook } from '@testing-library/react-hooks'
 import useDocumentTitle from './useDocumentTitle'
-import withAppContext from './withAppContext'
+import withAppContext from '../../utils/withAppContext'
 
 const historyReplaceMock = jest.fn()
 const pathname = '/'

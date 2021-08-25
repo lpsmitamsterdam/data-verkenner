@@ -1,5 +1,5 @@
-import type AuthScope from '../../shared/services/api/authScope'
-import { getScopes } from '../../shared/services/auth/auth'
+import type AuthScope from '../../../shared/services/api/authScope'
+import { getScopes } from '../../../shared/services/auth/auth'
 
 const useAuthScope = () => {
   const userScopes = getScopes()

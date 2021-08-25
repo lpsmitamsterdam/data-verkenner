@@ -4,7 +4,7 @@ import { createUnsecuredToken, Json } from 'jsontokens'
 import decodeToken from 'jwt-decode'
 import { mocked } from 'ts-jest/utils'
 import { getAccessToken } from '../../../shared/services/auth/auth'
-import useParam from '../../utils/useParam'
+import useParam from '../../hooks/useParam'
 import AuthTokenContext, {
   AuthTokenContextProps,
   AuthTokenProvider,
@@ -12,7 +12,7 @@ import AuthTokenContext, {
   useAuthToken,
 } from './AuthTokenContext'
 
-jest.mock('../../utils/useParam')
+jest.mock('../../hooks/useParam')
 jest.mock('../../../shared/services/auth/auth')
 
 const useParamMock = mocked(useParam)

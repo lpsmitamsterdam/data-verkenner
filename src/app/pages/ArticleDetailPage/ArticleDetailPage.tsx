@@ -35,7 +35,7 @@ import LoadingSpinner from '../../components/LoadingSpinner/LoadingSpinner'
 import ShareBar from '../../components/ShareBar/ShareBar'
 import { toArticleDetail } from '../../links'
 import getImageFromCms from '../../utils/getImageFromCms'
-import useDownload from '../../utils/useDownload'
+import useDownload from '../../hooks/useDownload'
 import ErrorMessage from '../../components/ErrorMessage/ErrorMessage'
 import { fetchSingleFromCms } from '../../utils/fetchFromCms'
 

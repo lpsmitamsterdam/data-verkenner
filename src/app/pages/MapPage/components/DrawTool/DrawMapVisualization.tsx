@@ -11,9 +11,9 @@ import { fetchWithToken } from '../../../../../shared/services/api/api'
 import { createFiltersObject } from '../../../../../shared/services/data-selection/normalizations'
 import { useDataSelection } from '../../../../components/DataSelection/DataSelectionContext'
 import useLegacyDataselectionConfig from '../../../../components/DataSelection/useLegacyDataselectionConfig'
-import useBuildQueryString from '../../../../utils/useBuildQueryString'
-import useMapCenterToMarker from '../../../../utils/useMapCenterToMarker'
-import useParam from '../../../../utils/useParam'
+import useBuildQueryString from '../../../../hooks/useBuildQueryString'
+import useMapCenterToMarker from '../../../../hooks/useMapCenterToMarker'
+import useParam from '../../../../hooks/useParam'
 import config, {
   DataSelectionMapVisualizationType,
   DataSelectionType,

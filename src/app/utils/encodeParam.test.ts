@@ -1,5 +1,5 @@
 import encodeParam from './encodeParam'
-import type { UrlParam } from './useParam'
+import type { UrlParam } from '../hooks/useParam'
 
 describe('encodeParam', () => {
   it('encodes a parameter', () => {

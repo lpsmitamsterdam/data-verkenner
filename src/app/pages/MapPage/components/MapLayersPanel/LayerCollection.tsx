@@ -10,7 +10,7 @@ import LayerLegend from './LayerLegend'
 import LayerGroup from './LayerGroup'
 import LoginLink from '../../../../components/Links/LoginLink/LoginLink'
 import type { ExtendedMapGroup } from '../../legacy/services'
-import useCompare from '../../../../utils/useCompare'
+import useCompare from '../../../../hooks/useCompare/useCompare'
 import { isAuthorised } from '../../legacy/utils/map-layer'
 import type AuthScope from '../../../../../shared/services/api/authScope'
 

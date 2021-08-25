@@ -5,7 +5,7 @@ import { LatLngBounds } from 'leaflet'
 import {
   LAPTOP_WIDTH,
   TABLET_M_WIDTH,
-} from '../pages/MapPage/components/DrawerPanel/LargeDrawerPanel'
+} from '../../pages/MapPage/components/DrawerPanel/LargeDrawerPanel'
 
 const MAX_ZOOM = 14
 const A4_PORTRAIT_SCREEN_WIDTH = 842

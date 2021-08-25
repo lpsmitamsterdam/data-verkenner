@@ -10,9 +10,9 @@ import { useDataSelection } from '../../../../components/DataSelection/DataSelec
 import useLegacyDataselectionConfig from '../../../../components/DataSelection/useLegacyDataselectionConfig'
 import { toGeoSearch } from '../../../../links'
 import { routing } from '../../../../routes'
-import useBuildQueryString from '../../../../utils/useBuildQueryString'
-import useMapCenterToMarker from '../../../../utils/useMapCenterToMarker'
-import useParam from '../../../../utils/useParam'
+import useBuildQueryString from '../../../../hooks/useBuildQueryString'
+import useMapCenterToMarker from '../../../../hooks/useMapCenterToMarker'
+import useParam from '../../../../hooks/useParam'
 import config from '../../config'
 import { useMapContext } from '../../MapContext'
 import {

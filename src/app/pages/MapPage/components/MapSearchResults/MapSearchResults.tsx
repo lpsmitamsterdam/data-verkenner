@@ -10,7 +10,7 @@ import AuthAlert from '../../../../components/Alerts/AuthAlert'
 import LoadingSpinner from '../../../../components/LoadingSpinner/LoadingSpinner'
 import ShowMore from '../../../../components/ShowMore'
 import { toDataDetail } from '../../../../links'
-import useParam from '../../../../utils/useParam'
+import useParam from '../../../../hooks/useParam'
 import type {
   MapSearchCategory,
   MapSearchResult,

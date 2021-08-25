@@ -12,9 +12,9 @@ import {
   panoPitchParam,
   panoTagParam,
 } from '../../query-params'
-import useBuildQueryString from '../../../../utils/useBuildQueryString'
+import useBuildQueryString from '../../../../hooks/useBuildQueryString'
 import { PANO_LAYERS } from './PanoramaViewer'
-import useParam from '../../../../utils/useParam'
+import useParam from '../../../../hooks/useParam'
 import Control from '../Control'
 import { PANORAMA_CLOSE } from '../../matomo-events'
 

@@ -11,7 +11,7 @@ import type {
 import { Children, cloneElement, Fragment, isValidElement, useRef, useState } from 'react'
 import styled, { css } from 'styled-components'
 import { useMatomo } from '@datapunt/matomo-tracker-react'
-import useAnimationFrame from '../../../../utils/useAnimationFrame'
+import useAnimationFrame from '../../../../hooks/useAnimationFrame'
 import type Control from '../Control'
 import MapOverlay from '../MapOverlay'
 import { DRAWER_HANDLE } from '../../matomo-events'

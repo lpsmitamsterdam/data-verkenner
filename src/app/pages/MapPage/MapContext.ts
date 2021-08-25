@@ -5,7 +5,7 @@ import type { Dispatch, ReactElement, SetStateAction } from 'react'
 import type { ExtendedMapGroup } from './legacy/services'
 import type { DrawerState } from './components/DrawerOverlay'
 import createNamedContext from '../../utils/createNamedContext'
-import useRequiredContext from '../../utils/useRequiredContext'
+import useRequiredContext from '../../hooks/useRequiredContext'
 import type { InfoBoxProps } from './legacy/types/details'
 import type { MapCollection } from '../../../api/cms_search/graphql'
 

@@ -7,11 +7,11 @@ import { mocked } from 'ts-jest/utils'
 import { getBouwdossierById, singleFixture } from '../../../api/iiif-metadata/bouwdossier'
 import { toConstructionDossier } from '../../links'
 import { routing } from '../../routes'
-import useDocumentTitle from '../../utils/useDocumentTitle'
+import useDocumentTitle from '../../hooks/useDocumentTitle'
 import ConstructionDossierPage from './ConstructionDossierPage'
 
 jest.mock('../../../api/iiif-metadata/bouwdossier')
-jest.mock('../../utils/useDocumentTitle')
+jest.mock('../../hooks/useDocumentTitle')
 jest.mock('./components/ImageViewer', () => () => <div data-testid="imageViewer" />)
 
 const mockedGetBouwdossierById = mocked(getBouwdossierById)

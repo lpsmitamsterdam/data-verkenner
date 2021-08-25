@@ -5,12 +5,12 @@ import type { LocationDescriptorObject } from 'history'
 import type { DataSelectionFilters } from '../../pages/MapPage/query-params'
 import { dataSelectionFiltersParam, polygonParam } from '../../pages/MapPage/query-params'
 import createNamedContext from '../../utils/createNamedContext'
-import useParam, { UrlParam } from '../../utils/useParam'
-import useRequiredContext from '../../utils/useRequiredContext'
+import useParam, { UrlParam } from '../../hooks/useParam'
+import useRequiredContext from '../../hooks/useRequiredContext'
 import type { ActiveFilter, AvailableFilter } from './types'
 import useLegacyDataselectionConfig from './useLegacyDataselectionConfig'
 import { pageParam } from '../../pages/SearchPage/query-params'
-import useBuildQueryString from '../../utils/useBuildQueryString'
+import useBuildQueryString from '../../hooks/useBuildQueryString'
 
 type Action<T extends keyof DataSelectionContextProps> = Dispatch<
   SetStateAction<DataSelectionContextProps[T]>

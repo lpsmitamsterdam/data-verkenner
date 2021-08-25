@@ -1,6 +1,6 @@
 import { useLocation } from 'react-router-dom'
-import encodeParam from './encodeParam'
-import type { UrlParam } from './useParam'
+import encodeParam from '../../utils/encodeParam'
+import type { UrlParam } from '../useParam'
 
 export default function useBuildQueryString() {
   const location = useLocation()
