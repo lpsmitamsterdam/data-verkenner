@@ -1,8 +1,8 @@
 import { screen, cleanup, render } from '@testing-library/react'
 import SearchBarFilter from './SearchBarFilter'
-import useParam from '../../utils/useParam'
+import useParam from '../../hooks/useParam'
 
-jest.mock('../../utils/useParam')
+jest.mock('../../hooks/useParam')
 
 jest.mock('../../pages/SearchPage/config', () => ({
   article: {

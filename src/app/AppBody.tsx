@@ -10,9 +10,7 @@ import { mapSearchPagePaths, routing } from './routes'
 import { DataSelectionProvider } from './components/DataSelection/DataSelectionContext'
 
 const HomePage = lazy(() => import(/* webpackChunkName: "HomePage" */ './pages/HomePage'))
-const ActualityPage = lazy(
-  () => import(/* webpackChunkName: "ActualityPage" */ './pages/ActualityPage'),
-)
+const UpdatesPage = lazy(() => import(/* webpackChunkName: "UpdatesPage" */ './pages/UpdatesPage'))
 const DatasetDetailPage = lazy(
   () => import(/* webpackChunkName: "DatasetDetailPage" */ './pages/DatasetDetailPage'),
 )
@@ -44,6 +42,14 @@ const SearchPage = lazy(
 // The Container from @amsterdam/asc-ui isnt used here as the margins added do not match the ones in the design
 const AppContainer = styled.main`
   flex-grow: 1;
+`
+
+const DashboardBody = styled.div`
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  height: calc(100% - 50px);
+  z-index: 1; // was $body-z-index;
 `
 
 const StyledLoadingSpinner = styled(LoadingSpinner)`
@@ -98,7 +104,7 @@ const AppBody: FunctionComponent<AppBodyProps> = ({ hasGrid }) => {
                   exact
                   component={CollectionDetailPage}
                 />
-                <Route path={routing.actuality.path} exact component={ActualityPage} />
+                <Route path={routing.updates.path} exact component={UpdatesPage} />
                 <Route path={routing.notFound.path} exact component={NotFoundPage} />
                 <Route path={mapSearchPagePaths} component={SearchPage} />
               </Switch>
@@ -117,9 +123,8 @@ const AppBody: FunctionComponent<AppBodyProps> = ({ hasGrid }) => {
               </Helmet>
               <Switch>
                 <Route path={[routing.constructionDossier.path, routing.datasetDetail.path]}>
-                  <div className="c-dashboard__body">
+                  <DashboardBody>
                     <NotificationAlert />
-
                     <FullHeightContainer>
                       <FullHeightBlock>
                         <Switch>
@@ -136,7 +141,7 @@ const AppBody: FunctionComponent<AppBodyProps> = ({ hasGrid }) => {
                         </Switch>
                       </FullHeightBlock>
                     </FullHeightContainer>
-                  </div>
+                  </DashboardBody>
                 </Route>
                 <Route path={[routing.data.path]}>
                   {/* When the mobile map panel is working properly we can disable the meta rule up defined above */}

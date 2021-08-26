@@ -1,5 +1,5 @@
 import encodeParam from './encodeParam'
-import type { UrlParam } from './useParam'
+import type { UrlParam } from '../hooks/useParam'
 
 export type UrlParamTuple<T> = [UrlParam<T>, T]
 

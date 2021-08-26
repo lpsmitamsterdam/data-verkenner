@@ -62,7 +62,7 @@ const DataSearchResults: FunctionComponent<DataSearchResultsProps> = ({
 
         return (result.results && result.results.length > 0) || hasLoadingError ? (
           <CardWrapper key={result.type} compact={compact}>
-            <Card {...{ ...result, withPagination, hasLoadingError }} />
+            <Card {...{ ...result, withPagination, hasLoadingError, query }} />
           </CardWrapper>
         ) : null
       })}

@@ -63,16 +63,6 @@ const SEARCH_TYPES_CONFIG: { [key: string]: SearchConfig } = {
     component: EditorialResults,
     hideOverviewHeading: false,
   },
-  [routing.mapSearch.page]: {
-    resolver: 'mapSearch',
-    query: mapSearchQuery,
-    to: toMapSearch(),
-    path: routing.mapSearch.path,
-    label: routing.mapSearch.title,
-    type: SearchType.Map,
-    component: MapSearchResults,
-    hideOverviewHeading: true,
-  },
   [routing.dataSearch.page]: {
     resolver: 'dataSearch',
     query: dataSearchQuery,
@@ -82,6 +72,16 @@ const SEARCH_TYPES_CONFIG: { [key: string]: SearchConfig } = {
     type: SearchType.Data,
     component: DataSearchResults,
     hideOverviewHeading: false,
+  },
+  [routing.mapSearch.page]: {
+    resolver: 'mapSearch',
+    query: mapSearchQuery,
+    to: toMapSearch(),
+    path: routing.mapSearch.path,
+    label: routing.mapSearch.title,
+    type: SearchType.Map,
+    component: MapSearchResults,
+    hideOverviewHeading: true,
   },
   [routing.datasetSearch.page]: {
     resolver: 'datasetSearch',

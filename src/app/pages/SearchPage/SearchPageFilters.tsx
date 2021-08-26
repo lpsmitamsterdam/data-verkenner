@@ -107,6 +107,7 @@ const SearchPageFilters: FunctionComponent<SearchPageFiltersProps> = ({
             <SearchFilter
               key={filter.type}
               filter={filter}
+              query={query}
               totalCount={totalCount}
               hideCount={hideCount}
             />

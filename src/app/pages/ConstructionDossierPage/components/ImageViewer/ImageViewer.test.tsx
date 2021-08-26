@@ -9,7 +9,7 @@ import { rest, server } from '../../../../../../test/server'
 import environment from '../../../../../environment'
 import { getAccessToken } from '../../../../../shared/services/auth/auth'
 import joinUrl from '../../../../utils/joinUrl'
-import useDownload from '../../../../utils/useDownload'
+import useDownload from '../../../../hooks/useDownload'
 import withAppContext from '../../../../utils/withAppContext'
 import { AuthTokenProvider } from '../../AuthTokenContext'
 import OSDViewer from '../OSDViewer'
@@ -18,7 +18,7 @@ import ImageViewer from './ImageViewer'
 
 jest.mock('@datapunt/matomo-tracker-react')
 jest.mock('../../../../../shared/services/auth/auth')
-jest.mock('../../../../utils/useDownload')
+jest.mock('../../../../hooks/useDownload')
 jest.mock('../OSDViewer')
 
 const mockedUseMatomo = mocked(useMatomo)

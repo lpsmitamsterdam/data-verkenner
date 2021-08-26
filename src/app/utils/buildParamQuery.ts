@@ -1,4 +1,4 @@
-import type { UrlParam } from './useParam'
+import type { UrlParam } from '../hooks/useParam'
 
 const buildParamQuery = <T>(urlParam: UrlParam<T>, newValue: string | null): URLSearchParams => {
   const newParams = new URLSearchParams(window.location.search)

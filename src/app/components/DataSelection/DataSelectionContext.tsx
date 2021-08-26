@@ -1,12 +1,16 @@
-import { useMemo, useState } from 'react'
 import type { Dispatch, FunctionComponent, SetStateAction } from 'react'
+import { useMemo, useState } from 'react'
+import { useLocation } from 'react-router-dom'
+import type { LocationDescriptorObject } from 'history'
 import type { DataSelectionFilters } from '../../pages/MapPage/query-params'
 import { dataSelectionFiltersParam, polygonParam } from '../../pages/MapPage/query-params'
 import createNamedContext from '../../utils/createNamedContext'
-import useParam from '../../utils/useParam'
-import useRequiredContext from '../../utils/useRequiredContext'
+import useParam, { UrlParam } from '../../hooks/useParam'
+import useRequiredContext from '../../hooks/useRequiredContext'
 import type { ActiveFilter, AvailableFilter } from './types'
 import useLegacyDataselectionConfig from './useLegacyDataselectionConfig'
+import { pageParam } from '../../pages/SearchPage/query-params'
+import useBuildQueryString from '../../hooks/useBuildQueryString'
 
 type Action<T extends keyof DataSelectionContextProps> = Dispatch<
   SetStateAction<DataSelectionContextProps[T]>
@@ -24,6 +28,13 @@ export interface DataSelectionContextProps {
   drawToolLocked: boolean
   setDrawToolLocked: Action<'drawToolLocked'>
   setDistanceText: Action<'distanceText'>
+  buildFilterLocationDescriptor: ({
+    filtersToAdd,
+    filtersToRemove,
+  }: {
+    filtersToAdd?: DataSelectionFilters
+    filtersToRemove?: string[]
+  }) => LocationDescriptorObject
 }
 
 const DataSelectionContext = createNamedContext<DataSelectionContextProps | null>(
@@ -41,6 +52,8 @@ const DataSelectionProvider: FunctionComponent = ({ children }) => {
   >([])
   const [totalResults, setTotalResults] = useState(0)
   const { currentDatasetConfig } = useLegacyDataselectionConfig()
+  const { buildQueryString } = useBuildQueryString()
+  const location = useLocation()
 
   const addFilter = (filter: DataSelectionFilters) => {
     setActiveParamFilters({
@@ -52,6 +65,44 @@ const DataSelectionProvider: FunctionComponent = ({ children }) => {
     // @ts-ignore
     const { [key]: omit, ...rest } = activeParamFilters
     setActiveParamFilters(Object.keys(rest).length ? rest : null)
+  }
+
+  const buildFilterLocationDescriptor = ({
+    filtersToAdd,
+    filtersToRemove,
+  }: {
+    filtersToAdd?: DataSelectionFilters
+    filtersToRemove?: string[]
+  }) => {
+    let activeParamFiltersCopy: any = { ...activeParamFilters }
+    if (filtersToRemove) {
+      filtersToRemove.forEach((key) => {
+        if (activeParamFiltersCopy[key]) {
+          delete activeParamFiltersCopy[key]
+        }
+      })
+    } else if (filtersToAdd) {
+      activeParamFiltersCopy = {
+        ...activeParamFilters,
+        ...filtersToAdd,
+      }
+    }
+
+    if (!Object.keys(activeParamFiltersCopy).length) {
+      activeParamFiltersCopy = null
+    }
+
+    const paramsToRemove: Array<UrlParam<any>> = [pageParam]
+    if (filtersToRemove?.includes('shape')) {
+      paramsToRemove.push(polygonParam)
+    }
+    return {
+      path: location.pathname,
+      search: buildQueryString(
+        [[dataSelectionFiltersParam, activeParamFiltersCopy]],
+        paramsToRemove,
+      ),
+    }
   }
 
   const shape = useMemo(
@@ -97,6 +148,7 @@ const DataSelectionProvider: FunctionComponent = ({ children }) => {
         activeFilters,
         addFilter,
         removeFilter,
+        buildFilterLocationDescriptor,
         totalResults,
         setTotalResults,
         setAvailableFilters,

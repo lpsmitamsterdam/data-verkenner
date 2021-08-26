@@ -12,14 +12,12 @@ import {
   zipCodeFilter,
 } from '../../Filters/Filters'
 import type { DataBodyContent } from '../types'
-import { BezoekAdres, FileType, HandelsNaam, SBIOmschrijving, Tags } from './Templates'
+import { BezoekAdres, HandelsNaam, SBIOmschrijving } from './Templates'
 
 const TEMPLATE_MAPPER = {
   bezoekadres: BezoekAdres,
-  'file-type': FileType,
   handelsnaam: HandelsNaam,
   'sbi-omschrijving': SBIOmschrijving,
-  tags: Tags,
 }
 
 const FORMATTER_MAPPER = {

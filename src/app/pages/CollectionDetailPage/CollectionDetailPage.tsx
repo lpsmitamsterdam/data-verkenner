@@ -9,7 +9,7 @@ import cmsConfig from '../../../shared/config/cms.config'
 import CardListBlock from './components/CardListBlock'
 import ContentContainer from '../../components/ContentContainer/ContentContainer'
 import ErrorMessage from '../../components/ErrorMessage/ErrorMessage'
-import useDocumentTitle from '../../utils/useDocumentTitle'
+import useDocumentTitle from '../../hooks/useDocumentTitle'
 import CollectionTileGrid from './CollectionTileGrid'
 import { fetchSingleFromCms } from '../../utils/fetchFromCms'
 

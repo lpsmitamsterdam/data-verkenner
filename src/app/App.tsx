@@ -8,11 +8,10 @@ import {
   themeSpacing,
 } from '@amsterdam/asc-ui'
 import { MatomoProvider } from '@datapunt/matomo-tracker-react'
-import classNames from 'classnames'
 import type { FunctionComponent } from 'react'
 import { useMemo } from 'react'
 import { matchPath, useHistory, useLocation } from 'react-router-dom'
-import styled from 'styled-components'
+import styled, { createGlobalStyle } from 'styled-components'
 import {
   cacheExchange,
   createClient,
@@ -56,6 +55,45 @@ const SkipNavigationLink = styled(Button)`
   }
 `
 
+const Dashboard = styled.div`
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  background: ${themeColor('tint', 'level1')};
+
+  @media print {
+    height: initial;
+  }
+`
+
+const GlobalStyleApp = createGlobalStyle`
+  html, body {
+    height: 100%;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    margin: 0;
+  }
+
+  .root, .root > div {
+    min-height: 100%;
+  }
+
+  ul, dd {
+    margin: 0;
+    padding: 0;
+  }
+
+  ul {
+    list-style: none;
+  }
+
+  button {
+    cursor: pointer;
+    border: none;
+  }
+`
+
 const graphQLClient = createClient({
   url: `${environment.GRAPHQL_ENDPOINT}`,
   fetchOptions: () => {
@@ -74,23 +112,14 @@ interface AppWrapperProps {
   currentPage?: string
 }
 
-const AppWrapper: FunctionComponent<AppWrapperProps> = ({ children, hasMaxWidth, currentPage }) => {
-  const rootClasses = classNames({
-    'c-dashboard--max-width': hasMaxWidth,
-  })
-
-  // Todo: don't use page types, this will be used
-  const pageTypeClass = currentPage?.toLowerCase()?.replace('_', '-')
-
+const AppWrapper: FunctionComponent<AppWrapperProps> = ({ children, hasMaxWidth }) => {
   return hasMaxWidth ? (
     <StyledContainer beamColor="valid">
       {children}
       <Footer />
     </StyledContainer>
   ) : (
-    <div className={`c-dashboard c-dashboard--page-type-${pageTypeClass ?? ''} ${rootClasses}`}>
-      {children}
-    </div>
+    <Dashboard>{children}</Dashboard>
   )
 }
 
@@ -123,6 +152,7 @@ const App: FunctionComponent = () => {
   return (
     <ThemeProvider>
       <GlobalStyle />
+      <GlobalStyleApp />
       <MatomoProvider value={matomoInstance}>
         <GraphQLProvider value={graphQLClient}>
           <AppWrapper currentPage={currentPage} hasMaxWidth={hasMaxWidth}>

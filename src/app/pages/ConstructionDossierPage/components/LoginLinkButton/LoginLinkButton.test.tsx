@@ -2,11 +2,11 @@ import { screen, fireEvent, render } from '@testing-library/react'
 import { mocked } from 'ts-jest/utils'
 import { useMatomo } from '@datapunt/matomo-tracker-react'
 import LoginLinkButton from './LoginLinkButton'
-import useDocumentTitle from '../../../../utils/useDocumentTitle'
+import useDocumentTitle from '../../../../hooks/useDocumentTitle'
 import { login } from '../../../../../shared/services/auth/auth'
 
 jest.mock('@datapunt/matomo-tracker-react')
-jest.mock('../../../../utils/useDocumentTitle')
+jest.mock('../../../../hooks/useDocumentTitle')
 jest.mock('../../../../../shared/services/auth/auth')
 
 const useMatomoMock = mocked(useMatomo)

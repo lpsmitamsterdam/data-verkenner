@@ -10,6 +10,7 @@ enum AuthScope {
   BdX = 'BD/X',
   CatR = 'CAT/R',
   CatW = 'CAT/W',
+  None = 'None',
 }
 
 export default AuthScope

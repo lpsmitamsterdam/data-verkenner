@@ -11,6 +11,7 @@ import {
   panoHeadingParam,
   panoPitchParam,
 } from './query-params'
+import AuthScope from '../../../shared/services/api/authScope'
 
 // Because we use these types as id's in option values (select), we need to convert them to strings
 export enum DataSelectionType {
@@ -22,12 +23,6 @@ export enum DataSelectionType {
 export enum DataSelectionMapVisualizationType {
   GeoJSON,
   Markers,
-}
-
-enum AuthScope {
-  BRK = 'BRK/RSN',
-  HR = 'HR/R',
-  None = 'None',
 }
 
 export const defaultPanoramaUrl: LocationDescriptorObject = {
@@ -53,7 +48,7 @@ export default {
     endpointMapVisualization: `${environment.API_ROOT}dataselectie/bag/geolocation/`,
   },
   [DataSelectionType.HR]: {
-    authScope: AuthScope.HR,
+    authScope: AuthScope.HrR,
     title: 'Vestigingen',
     path: routing.establishments.path,
     extraParams: {
@@ -65,7 +60,7 @@ export default {
     endpointMapVisualization: `${environment.API_ROOT}dataselectie/hr/geolocation/`,
   },
   [DataSelectionType.BRK]: {
-    authScope: AuthScope.BRK,
+    authScope: AuthScope.BrkRsn,
     title: 'Kadastrale objecten',
     extraParams: {},
     path: routing.cadastralObjects.path,

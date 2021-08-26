@@ -3,9 +3,9 @@ import type { FunctionComponent } from 'react'
 import { useEffect, useState } from 'react'
 import { getAccessToken } from '../../../shared/services/auth/auth'
 import createNamedContext from '../../utils/createNamedContext'
-import useInterval from '../../utils/useInterval'
-import useParam from '../../utils/useParam'
-import useRequiredContext from '../../utils/useRequiredContext'
+import useInterval from '../../hooks/useInterval'
+import useParam from '../../hooks/useParam'
+import useRequiredContext from '../../hooks/useRequiredContext'
 import { authTokenParam } from './query-params'
 
 export interface DecodedToken {

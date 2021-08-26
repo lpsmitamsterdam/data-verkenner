@@ -1,4 +1,4 @@
-import { ChevronRight, DocumentEdit } from '@amsterdam/asc-assets'
+import { DocumentEdit } from '@amsterdam/asc-assets'
 import {
   Alert,
   breakpoint,
@@ -6,15 +6,18 @@ import {
   Column,
   Container,
   CustomHTMLBlock,
-  Icon,
+  Heading,
   Link,
   Row,
+  Table,
+  TableBody,
+  TableCell,
+  TableHeader,
+  TableRow,
 } from '@amsterdam/asc-ui'
 import { useMatomo } from '@datapunt/matomo-tracker-react'
-import classNames from 'classnames'
 import marked from 'marked'
-import type { FunctionComponent } from 'react'
-import { useMemo } from 'react'
+import { Fragment, FunctionComponent, useMemo } from 'react'
 import { Helmet } from 'react-helmet'
 import { useHistory, useParams } from 'react-router-dom'
 import styled from 'styled-components'
@@ -30,10 +33,17 @@ import ShareBar from '../../components/ShareBar/ShareBar'
 import { toNotFound } from '../../links'
 import formatDate from '../../utils/formatDate'
 import redirectToDcatd from '../../utils/redirectToDcatd'
-
-function kebabCase(input?: string): string {
-  return input?.toLowerCase().replace(/[: ][ ]*/g, '-') ?? ''
-}
+import {
+  Content,
+  DatasetDetailPageBlock,
+  DatasetDetailPageButtonGroup,
+  DatasetDetailPageHeader,
+  DatasetDetailPageSubtitle,
+  DatasetDetailPageTitle,
+  StyledTableContainer,
+  StyledTag,
+  TagListItem,
+} from './DatasetDetailPageStyles'
 
 /**
  * Gets the label by the identifier of the specified options, if no option could be found it will default to the id.
@@ -42,7 +52,7 @@ function kebabCase(input?: string): string {
  * @param options The options to get the label from.
  */
 function getOptionLabel(id: string, options: DatasetFilterOption[]) {
-  return options.find((item) => item.id === id)?.label ?? id
+  return options.find((item) => item.id === id)?.label ?? id ?? ''
 }
 
 function getFileSize(bytes: number) {
@@ -115,18 +125,10 @@ const Markdown: FunctionComponent<MarkdownProps> = ({ children }) => {
   return <StyledCustomHTMLBlock body={formattedContent} />
 }
 
-const Content = styled.div`
-  width: 100%;
-`
-
 interface DatasetDetailPageParams {
   id: string
   slug: string
 }
-
-const TagListItem = styled.li`
-  display: inline;
-`
 
 const DatasetDetailPage: FunctionComponent = () => {
   const { trackEvent } = useMatomo()
@@ -156,14 +158,12 @@ const DatasetDetailPage: FunctionComponent = () => {
                     <Helmet>
                       <meta name="description" content={dataset['dct:description']} />
                     </Helmet>
-                    <div className="o-header">
-                      <h1 className="o-header__title u-margin__top--0 u-margin__bottom--1">
-                        {dataset['dct:title']}
-                      </h1>
-                      <h2 className="o-header__subtitle u-margin__bottom--2">
+                    <DatasetDetailPageHeader>
+                      <DatasetDetailPageTitle> {dataset['dct:title']}</DatasetDetailPageTitle>
+                      <DatasetDetailPageSubtitle forwardedAs="h2">
                         <span>Dataset</span>
                         {canEdit && dataset['dct:identifier'] && (
-                          <div className="o-header__buttongroup">
+                          <DatasetDetailPageButtonGroup>
                             <Button
                               variant="primaryInverted"
                               type="button"
@@ -172,10 +172,10 @@ const DatasetDetailPage: FunctionComponent = () => {
                             >
                               Wijzigen
                             </Button>
-                          </div>
+                          </DatasetDetailPageButtonGroup>
                         )}
-                      </h2>
-                    </div>
+                      </DatasetDetailPageSubtitle>
+                    </DatasetDetailPageHeader>
                     <Markdown>{dataset['dct:description']}</Markdown>
                     <div>
                       {['gepland', 'in_onderzoek', 'niet_beschikbaar'].includes(
@@ -191,130 +191,84 @@ const DatasetDetailPage: FunctionComponent = () => {
                       )}
                     </div>
 
-                    <h2 className="o-header__subtitle">Resources</h2>
+                    <DatasetDetailPageSubtitle forwardedAs="h2">
+                      Resources
+                    </DatasetDetailPageSubtitle>
 
-                    <div className="resources">
-                      {resources.map((resource) => (
-                        <div className="resources-type" key={resource.type}>
-                          <div className="resources-type__header">
-                            <h3 className="resources-type__header-title">
-                              {getOptionLabel(resource.type, filters.resourceTypes)}
-                            </h3>
-                          </div>
-                          {resource.rows.map((row) => (
-                            <div className="resources-type__content" key={row['dc:identifier']}>
-                              <div className="resources-type__content-item">
-                                <a
-                                  className="resources-item"
-                                  href={row['ams:purl']}
-                                  rel="noreferrer"
-                                  target="_blank"
-                                  onClick={() => {
-                                    trackEvent({
-                                      category: 'Download',
-                                      action: dataset['dct:title'],
-                                      name: row['ams:purl'],
-                                    })
-                                  }}
-                                >
-                                  <div className="resources-item__left">
-                                    <div className="resources-item__title">{row['dct:title']}</div>
-
-                                    <div className="resources-item__description">
-                                      {row['ams:distributionType'] === 'file' &&
-                                        row['dcat:mediaType'] && (
-                                          <span
-                                            className={classNames(
-                                              'c-data-selection-file-type',
-                                              'c-data-selection-file-type__name',
-                                              `c-data-selection-file-type__format-${kebabCase(
-                                                getOptionLabel(
-                                                  row['dcat:mediaType'],
-                                                  filters.formatTypes,
-                                                ),
-                                              )}`,
-                                            )}
-                                          >
-                                            {getOptionLabel(
-                                              row['dcat:mediaType'],
-                                              filters.formatTypes,
-                                            )}
-                                          </span>
-                                        )}
-                                      {row['ams:distributionType'] === 'api' && (
-                                        <span
-                                          className={classNames(
-                                            'c-data-selection-file-type',
-                                            'c-data-selection-file-type__name',
-                                            `c-data-selection-file-type__format-${kebabCase(
-                                              getOptionLabel(
-                                                row['dcat:serviceType'],
-                                                filters.serviceTypes,
-                                              ),
-                                            )}`,
-                                          )}
-                                        >
-                                          {getOptionLabel(
-                                            row['ams:serviceType'],
-                                            filters.serviceTypes,
-                                          )}
-                                        </span>
-                                      )}
-                                      {row['ams:distributionType'] === 'web' && (
-                                        <span
-                                          className={classNames(
-                                            'c-data-selection-file-type',
-                                            'c-data-selection-file-type__name',
-                                            `c-data-selection-file-type__format-${kebabCase(
-                                              getOptionLabel(
-                                                row['dcat:distributionType'],
-                                                filters.distributionTypes,
-                                              ),
-                                            )}`,
-                                          )}
-                                        >
-                                          {getOptionLabel(
-                                            row['ams:distributionType'],
-                                            filters.distributionTypes,
-                                          )}
-                                        </span>
-                                      )}
-                                      <div>{row['dct:description'] ?? row['ams:purl']}</div>
-                                    </div>
-                                  </div>
-                                  <div className="resources-item__right">
-                                    <div className="resources-item__modified">
-                                      {row['dct:modified'] && (
-                                        <span>
-                                          gewijzigd op {formatDate(new Date(row['dct:modified']))}
-                                        </span>
-                                      )}
-                                    </div>
-                                    <div className="resources-item__navigation">
-                                      {row['dcat:byteSize'] !== undefined &&
-                                        row['dcat:byteSize'] > 0 && (
-                                          <div className="resources-item__navigation-file-size">
-                                            {getFileSize(row['dcat:byteSize'])}
-                                          </div>
-                                        )}
-                                      <div className="resources-item__navigation-arrow">
-                                        <Icon size={16}>
-                                          <ChevronRight />
-                                        </Icon>
-                                      </div>
-                                    </div>
-                                  </div>
-                                </a>
-                              </div>
-                            </div>
-                          ))}
-                        </div>
-                      ))}
-                    </div>
+                    {resources.map((resource) => (
+                      <Fragment key={resource.type}>
+                        <Heading as="h3">
+                          {getOptionLabel(resource.type, filters.resourceTypes)}
+                        </Heading>
+                        <StyledTableContainer>
+                          <Table>
+                            <TableHeader>
+                              <TableRow>
+                                <TableCell as="th">Naam</TableCell>
+                                <TableCell as="th">Bestandstype</TableCell>
+                                <TableCell as="th">Laatst gewijzigd</TableCell>
+                                <TableCell as="th">Type</TableCell>
+                              </TableRow>
+                            </TableHeader>
+                            <TableBody>
+                              {resource.rows.map((row) => (
+                                <TableRow key={row['dc:identifier']}>
+                                  <TableCell>
+                                    <Link
+                                      href={row['ams:purl']}
+                                      rel="noreferrer"
+                                      target="_blank"
+                                      variant="inline"
+                                      onClick={() => {
+                                        trackEvent({
+                                          category: 'Download',
+                                          action: dataset['dct:title'],
+                                          name: row['ams:purl'],
+                                        })
+                                      }}
+                                    >
+                                      {row['dct:title']}
+                                    </Link>
+                                  </TableCell>
+                                  <TableCell>
+                                    {[
+                                      getOptionLabel(
+                                        row['dcat:mediaType'] ?? '',
+                                        filters.formatTypes,
+                                      ),
+                                      getOptionLabel(row['ams:serviceType'], filters.serviceTypes),
+                                    ]
+                                      .filter((item) => item)
+                                      .join(', ')}
+                                  </TableCell>
+                                  <TableCell>
+                                    {row['dct:modified'] &&
+                                      formatDate(new Date(row['dct:modified']))}
+                                  </TableCell>
+                                  <TableCell>
+                                    {[
+                                      getOptionLabel(
+                                        row['ams:distributionType'],
+                                        filters.distributionTypes,
+                                      ),
+                                      getFileSize(row['dcat:byteSize'] ?? 0),
+                                      getOptionLabel(row['dcat:serviceType'], filters.serviceTypes),
+                                    ]
+                                      .filter((item) => item)
+                                      .join(', ')}
+                                  </TableCell>
+                                </TableRow>
+                              ))}
+                            </TableBody>
+                          </Table>
+                        </StyledTableContainer>
+                      </Fragment>
+                    ))}
 
                     <div>
-                      <h2 className="o-header__subtitle">Details</h2>
-
+                      <DatasetDetailPageSubtitle forwardedAs="h2">
+                        Details
+                      </DatasetDetailPageSubtitle>
                       <DefinitionList>
                         <DefinitionListItem term="Doel">
                           <Markdown>{dataset['overheidds:doel']}</Markdown>
@@ -439,43 +393,38 @@ const DatasetDetailPage: FunctionComponent = () => {
                       </DefinitionList>
                     </div>
 
-                    <div className="c-detail__block u-padding__bottom--1 u-margin__top--3">
-                      <h2 className="o-header__subtitle">Thema&apos;s</h2>
-                      <div className="catalog-themes">
+                    <DatasetDetailPageBlock>
+                      <DatasetDetailPageSubtitle forwardedAs="h2">
+                        Thema&apos;s
+                      </DatasetDetailPageSubtitle>
+                      <ul>
                         {dataset['dcat:theme'].map((group: string) => (
-                          <div className="catalog-theme" key={group}>
-                            <span
-                              className={`catalog-theme__detail-icon--${group.substring(
-                                6,
-                              )} catalog-theme__label`}
-                            >
-                              {getOptionLabel(group.split(':')[1], filters.groupTypes)}
-                            </span>
-                          </div>
+                          <StyledTag key={group} forwardedAs="li">
+                            {getOptionLabel(group.split(':')[1], filters.groupTypes)}
+                          </StyledTag>
                         ))}
-                      </div>
-                    </div>
+                      </ul>
+                    </DatasetDetailPageBlock>
 
-                    <div className="c-detail__block u-padding__bottom--1">
-                      <h2 className="o-header__subtitle">Tags</h2>
+                    <DatasetDetailPageBlock>
+                      <DatasetDetailPageSubtitle forwardedAs="h2">Tags</DatasetDetailPageSubtitle>
                       <ul>
                         {dataset['dcat:keyword'].map((tag: string) => (
                           <TagListItem key={tag}>
-                            <div className="dataset-tag">
-                              <i className="dataset-tag__arrow" />
-                              <span className="dataset-tag__label">{tag}</span>
-                            </div>
+                            <StyledTag>{tag}</StyledTag>
                           </TagListItem>
                         ))}
                       </ul>
-                    </div>
+                    </DatasetDetailPageBlock>
 
-                    <div className="c-detail__block u-padding__bottom--1">
-                      <h2 className="o-header__subtitle">Licentie</h2>
+                    <DatasetDetailPageBlock>
+                      <DatasetDetailPageSubtitle forwardedAs="h2">
+                        Licentie
+                      </DatasetDetailPageSubtitle>
                       {dataset['ams:license'] && (
                         <div>{getOptionLabel(dataset['ams:license'], filters.licenseTypes)}</div>
                       )}
-                    </div>
+                    </DatasetDetailPageBlock>
                   </>
                 )}
               </PromiseResult>

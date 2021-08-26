@@ -4,7 +4,7 @@ import { login } from '../../../../shared/services/auth/auth'
 import LoginLink from './LoginLink'
 
 jest.mock('../../../../shared/services/auth/auth')
-jest.mock('../../../utils/useDocumentTitle', () => () => ({
+jest.mock('../../../hooks/useDocumentTitle', () => () => ({
   documentTitle: 'Some title',
 }))
 

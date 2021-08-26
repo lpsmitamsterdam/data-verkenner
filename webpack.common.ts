@@ -140,36 +140,6 @@ export function createConfig(additionalOptions: CreateConfigOptions): WebpackCon
                 sourceMap: true,
               },
             },
-            {
-              loader: 'postcss-loader',
-              options: {
-                sourceMap: true,
-                postcssOptions: {
-                  plugins: [
-                    require('autoprefixer'),
-                    ...(isProd
-                      ? [
-                          // eslint-disable-next-line @typescript-eslint/no-var-requires
-                          require('cssnano')({
-                            preset: [
-                              'default',
-                              {
-                                // Disable SVGO since some of our SVG assets aren't too great.
-                                // TODO: Can be removed once we remove the legacy Angular code.
-                                svgo: false,
-                              },
-                            ],
-                          }),
-                        ]
-                      : []),
-                  ],
-                },
-              },
-            },
-            {
-              loader: 'sass-loader',
-              options: { sourceMap: true },
-            },
           ],
         },
         {

@@ -1,0 +1,108 @@
+{
+  "jsonapi": {
+    "version": "1.0",
+    "meta": {
+      "links": { "self": { "href": "http://jsonapi.org/format/1.0/" } }
+    }
+  },
+  "data": {
+    "type": "node--list",
+    "id": "fffa0199-9a9a-4cce-86c4-7fe7bfed21a0",
+    "links": {
+      "self": {
+        "href": "http://acc.cms.data.amsterdam.nl/jsonapi/node/list/fffa0199-9a9a-4cce-86c4-7fe7bfed21a0?resourceVersion=id%3A55"
+      }
+    },
+    "attributes": {
+      "drupal_internal__nid": 47,
+      "drupal_internal__vid": 55,
+      "langcode": "en",
+      "revision_timestamp": "2019-07-15T15:56:53+00:00",
+      "revision_log": null,
+      "status": true,
+      "title": "Blok voorpagina Uitgelicht",
+      "created": "2019-07-15T15:56:13+00:00",
+      "changed": "2020-11-19T12:42:04+00:00",
+      "promote": false,
+      "sticky": false,
+      "default_langcode": true,
+      "revision_translation_affected": true,
+      "path": { "alias": "", "pid": null, "langcode": "en" },
+      "field_button_link": null,
+      "field_button_text": "Toon een beetje"
+    },
+    "relationships": {
+      "node_type": {
+        "data": {
+          "type": "node_type--node_type",
+          "id": "c02b5d79-c44b-4aec-9ff9-71ba5c808855"
+        },
+        "links": {
+          "related": {
+            "href": "http://acc.cms.data.amsterdam.nl/jsonapi/node/list/fffa0199-9a9a-4cce-86c4-7fe7bfed21a0/node_type?resourceVersion=id%3A55"
+          },
+          "self": {
+            "href": "http://acc.cms.data.amsterdam.nl/jsonapi/node/list/fffa0199-9a9a-4cce-86c4-7fe7bfed21a0/relationships/node_type?resourceVersion=id%3A55"
+          }
+        }
+      },
+      "revision_uid": {
+        "data": {
+          "type": "user--user",
+          "id": "44418b09-7bfb-43ef-a488-7a03211bf407"
+        },
+        "links": {
+          "related": {
+            "href": "http://acc.cms.data.amsterdam.nl/jsonapi/node/list/fffa0199-9a9a-4cce-86c4-7fe7bfed21a0/revision_uid?resourceVersion=id%3A55"
+          },
+          "self": {
+            "href": "http://acc.cms.data.amsterdam.nl/jsonapi/node/list/fffa0199-9a9a-4cce-86c4-7fe7bfed21a0/relationships/revision_uid?resourceVersion=id%3A55"
+          }
+        }
+      },
+      "uid": {
+        "data": {
+          "type": "user--user",
+          "id": "44418b09-7bfb-43ef-a488-7a03211bf407"
+        },
+        "links": {
+          "related": {
+            "href": "http://acc.cms.data.amsterdam.nl/jsonapi/node/list/fffa0199-9a9a-4cce-86c4-7fe7bfed21a0/uid?resourceVersion=id%3A55"
+          },
+          "self": {
+            "href": "http://acc.cms.data.amsterdam.nl/jsonapi/node/list/fffa0199-9a9a-4cce-86c4-7fe7bfed21a0/relationships/uid?resourceVersion=id%3A55"
+          }
+        }
+      },
+      "field_items": {
+        "data": [
+          {
+            "type": "node--special",
+            "id": "4aa697dd-a813-41e1-a528-3a2899646996"
+          },
+          {
+            "type": "node--article",
+            "id": "2105c1a0-c4d5-45bd-8240-a8b707c84b33"
+          },
+          {
+            "type": "node--article",
+            "id": "2ca1051f-1316-4407-ba61-708f83afc5a9"
+          }
+        ],
+        "links": {
+          "related": {
+            "href": "http://acc.cms.data.amsterdam.nl/jsonapi/node/list/fffa0199-9a9a-4cce-86c4-7fe7bfed21a0/field_items?resourceVersion=id%3A55"
+          },
+          "self": {
+            "href": "http://acc.cms.data.amsterdam.nl/jsonapi/node/list/fffa0199-9a9a-4cce-86c4-7fe7bfed21a0/relationships/field_items?resourceVersion=id%3A55"
+          }
+        }
+      }
+    }
+  },
+  "links": {
+    "self": {
+      "href": "http://acc.cms.data.amsterdam.nl/jsonapi/node/list/fffa0199-9a9a-4cce-86c4-7fe7bfed21a0"
+    }
+  }
+}

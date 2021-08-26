@@ -41,13 +41,17 @@ const LayerButton = styled.button<LayerButtonProps>`
   }
 `
 
-const LayerCollectionButton: FunctionComponent<{
+interface LayerCollectionButtonProps {
   onClick: MouseEventHandler<HTMLButtonElement>
   title: string
   collectionIndeterminate: boolean
   allVisible: boolean
   isOpen: boolean
-}> = ({ title, isOpen, onClick, collectionIndeterminate, allVisible }) => {
+}
+
+const LayerCollectionButton: FunctionComponent<
+  LayerCollectionButtonProps & Partial<HTMLButtonElement>
+> = ({ title, isOpen, onClick, collectionIndeterminate, allVisible, className }) => {
   const testId: string = useMemo(
     () =>
       title
@@ -63,6 +67,7 @@ const LayerCollectionButton: FunctionComponent<{
       onClick={onClick}
       isOpen={isOpen}
       hasActiveLayer={collectionIndeterminate || allVisible}
+      className={className}
     >
       <TitleWrapper>
         <StyledLabel key={title} label={title} />

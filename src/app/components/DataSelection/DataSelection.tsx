@@ -1,16 +1,15 @@
-import { Alert, Heading, Paragraph, themeColor, themeSpacing } from '@amsterdam/asc-ui'
+import { Alert, Heading, Pagination, Paragraph, themeColor, themeSpacing } from '@amsterdam/asc-ui'
 import usePromise, { isPending, isRejected } from '@amsterdam/use-promise'
 import styled, { css } from 'styled-components'
 import type { FunctionComponent } from 'react'
 import DataSelectionActiveFilters from './DataSelectionActiveFilters'
 import { ViewMode, viewParam } from '../../pages/MapPage/query-params'
-import useParam from '../../utils/useParam'
+import useParam from '../../hooks/useParam'
 import LoginLink from '../Links/LoginLink/LoginLink'
 import LoadingSpinner from '../LoadingSpinner/LoadingSpinner'
 import ShareBar from '../ShareBar/ShareBar'
 import DataSelectionList from './DataSelectionList'
 import DataSelectionTable from './DataSelectionTable'
-import LegacyPagination from './LegacyPagination'
 import DataSelectionFilters from './DataSelectionFilters'
 import DataSelectionSbiFilters from './DataSelectionSbiFilters'
 import useFetchLegacyDataSelectionData from './useFetchLegacyDataSelectionData'
@@ -21,6 +20,10 @@ import { pageParam } from '../../pages/SearchPage/query-params'
 
 const StyledAlert = styled(Alert)`
   margin-bottom: ${themeSpacing(5)};
+`
+
+const StyledPagination = styled(Pagination)`
+  margin: ${themeSpacing(4, 0)};
 `
 
 const StyledContainer = styled.section`
@@ -52,6 +55,7 @@ const Footer = styled.footer`
 const DataSelectionContent: FunctionComponent = () => {
   const [page] = useParam(pageParam)
   const [view] = useParam(viewParam)
+  const [, setPage] = useParam(pageParam)
   const { activeFilters, totalResults } = useDataSelection()
   const { fetchData } = useFetchLegacyDataSelectionData()
 
@@ -135,7 +139,15 @@ const DataSelectionContent: FunctionComponent = () => {
             </div>
           ) : null}
           <Footer>
-            <LegacyPagination currentPage={page} numberOfPages={numberOfPages} />
+            {numberOfPages > 1 && (
+              <StyledPagination
+                collectionSize={totalResults}
+                pageSize={100}
+                page={page}
+                onPageChange={setPage}
+                paginationLength={10}
+              />
+            )}
             {view === ViewMode.Full && <ShareBar />}
           </Footer>
         </div>

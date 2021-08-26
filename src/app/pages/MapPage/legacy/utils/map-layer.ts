@@ -1,7 +1,7 @@
 import { getScopes } from '../../../../../shared/services/auth/auth'
-import type { ExtendedMapGroup } from '../services'
+import type AuthScope from '../../../../../shared/services/api/authScope'
 
 // eslint-disable-next-line import/prefer-default-export
-export function isAuthorised(layer: ExtendedMapGroup) {
-  return !layer.authScope || getScopes().includes(layer.authScope)
+export function isAuthorised(layerAuthScope?: AuthScope | null) {
+  return !layerAuthScope || getScopes().includes(layerAuthScope)
 }

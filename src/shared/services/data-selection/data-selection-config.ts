@@ -2,6 +2,7 @@ import { routing } from '../../../app/routes'
 import type { BoundingBox, FilterObject } from '../../../app/components/DataSelection/types'
 import getBrkMarkers from './getBrkMarkers'
 import getMarkers from './getMarkers'
+import AuthScope from '../api/authScope'
 
 export interface LegacyDataSelectionConfigType {
   CUSTOM_API: {
@@ -194,7 +195,7 @@ const DATA_SELECTION_CONFIG: {
       },
     },
     brk: {
-      AUTH_SCOPE: 'BRK/RSN',
+      AUTH_SCOPE: AuthScope.BrkRsn,
       CUSTOM_API: {
         // @ts-ignore
         getMarkers: getBrkMarkers,
@@ -310,7 +311,7 @@ const DATA_SELECTION_CONFIG: {
       CUSTOM_API: {
         getMarkers,
       },
-      AUTH_SCOPE: 'HR/R',
+      AUTH_SCOPE: AuthScope.HrR,
       PATH: routing.establishments.path,
       MAX_AVAILABLE_PAGES: 100,
       MAX_NUMBER_OF_CLUSTERED_MARKERS: 10000,

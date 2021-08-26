@@ -40,7 +40,7 @@ export interface DataSelectionResponse {
 export const normalizeMapVisualization = (
   type: DataSelectionType,
   data: any,
-  brkData: { eigenPercelen: any; nietEigenPercelen: any; extent: any },
+  brkData: { eigenPercelen?: any; nietEigenPercelen?: any; extent?: any },
 ): MapVisualization => {
   switch (type) {
     case DataSelectionType.BAG:
@@ -53,11 +53,11 @@ export const normalizeMapVisualization = (
             _source: { centroid },
             _id: id,
           }: {
-            _source: { centroid: [number, number] }
+            _source: { centroid?: [number, number] }
             _id: string
           }) => ({
             id: type === DataSelectionType.HR ? id.split('ves').pop() : id,
-            latLng: [centroid[1], centroid[0]],
+            latLng: centroid ? [centroid[1], centroid[0]] : [0, 0],
           }),
         ),
       }

@@ -1,8 +1,8 @@
 import { constants } from '@amsterdam/arm-core'
-import type { LatLngLiteral, LatLngTuple } from 'leaflet'
+import type { LatLngLiteral, LatLngTuple, WMSOptions } from 'leaflet'
 import { PANO_LABELS } from './components/PanoramaViewer/constants'
 import { normalizeCoordinate } from '../../../shared/services/coordinate-reference-system'
-import type { UrlParam } from '../../utils/useParam'
+import type { UrlParam } from '../../hooks/useParam'
 
 // TODO: Refactor this default export once this issue is resolved: https://github.com/Amsterdam/amsterdam-react-maps/issues/727
 const { DEFAULT_AMSTERDAM_MAPS_OPTIONS } = constants
@@ -259,6 +259,30 @@ export interface DataSelectionFilters {
 
 export const dataSelectionFiltersParam: UrlParam<DataSelectionFilters | null> = {
   name: 'filters',
+  defaultValue: null,
+  decode: (value) => {
+    try {
+      return JSON.parse(value)
+    } catch (error) {
+      return null
+    }
+  },
+  encode: (value) => JSON.stringify(value),
+}
+
+export interface CustomMapLayer {
+  id: string
+  title: string
+  url: string
+  iconUrl: string
+  imageRule: string
+  layers: string[]
+  options: WMSOptions
+  legendItems?: Array<{ id: string; title: string; imageRule: string; notSelectable: boolean }>
+}
+
+export const customMapLayer: UrlParam<CustomMapLayer[] | null> = {
+  name: 'customMapLayer',
   defaultValue: null,
   decode: (value) => {
     try {

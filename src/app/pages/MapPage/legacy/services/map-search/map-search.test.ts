@@ -5,6 +5,7 @@ import { getScopes, isAuthenticated } from '../../../../../../shared/services/au
 import * as address from '../adressen-nummeraanduiding/adressen-nummeraanduiding'
 import * as vestiging from '../vestiging/vestiging'
 import search, { fetchRelatedForUser, MapFeatureProperties } from './map-search'
+import AuthScope from '../../../../../../shared/services/api/authScope'
 
 jest.mock('../../../../../../shared/services/api/api')
 jest.mock('../../../../../../shared/services/auth/auth')
@@ -18,7 +19,7 @@ const mockedGetScopes = mocked(getScopes)
 describe('mapSearch service', () => {
   beforeEach(() => {
     mockedIsAuthenticated.mockReturnValue(true)
-    mockedGetScopes.mockReturnValue(['HR/R'])
+    mockedGetScopes.mockReturnValue([AuthScope.HrR])
   })
 
   describe('search action', () => {
@@ -138,7 +139,7 @@ describe('mapSearch service', () => {
     })
 
     it('should return just the base features when user related features found but user is not authorized', async () => {
-      mockedGetScopes.mockReturnValue(['CAT/W', 'CAT/R'])
+      mockedGetScopes.mockReturnValue([AuthScope.CatW, AuthScope.CatR])
 
       const data: FeatureCollection<Geometry, MapFeatureProperties> = {
         type: 'FeatureCollection',

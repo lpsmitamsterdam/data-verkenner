@@ -1,5 +1,5 @@
 import { Map, Table } from '@amsterdam/asc-assets'
-import { Button, Tab, Tabs, themeSpacing } from '@amsterdam/asc-ui'
+import { Button, Heading, Tab, Tabs, themeSpacing } from '@amsterdam/asc-ui'
 import { useMatomo } from '@datapunt/matomo-tracker-react'
 import type { FunctionComponent } from 'react'
 import { Link as RouterLink, useHistory, useLocation } from 'react-router-dom'
@@ -7,12 +7,13 @@ import styled from 'styled-components'
 import { getScopes } from '../../../shared/services/auth/auth'
 import { DATASELECTION_MAP_BUTTON } from '../../pages/MapPage/matomo-events'
 import { ViewMode, viewParam } from '../../pages/MapPage/query-params'
-import useBuildQueryString from '../../utils/useBuildQueryString'
-import useParam from '../../utils/useParam'
+import useBuildQueryString from '../../hooks/useBuildQueryString'
+import useParam from '../../hooks/useParam'
 import { useDataSelection } from './DataSelectionContext'
 import DataSelectionDownloadButton from './DataSelectionDownloadButton'
 import { DatasetType } from './types'
 import useLegacyDataselectionConfig from './useLegacyDataselectionConfig'
+import type AuthScope from '../../../shared/services/api/authScope'
 
 const StyledTabs = styled(Tabs)`
   margin-bottom: ${themeSpacing(2)};
@@ -48,7 +49,8 @@ const DataSelectionHeader: FunctionComponent = () => {
   const showDownloadButton =
     view !== ViewMode.Split &&
     totalResults > 0 &&
-    (!currentDatasetConfig.AUTH_SCOPE || getScopes().includes(currentDatasetConfig.AUTH_SCOPE))
+    (!currentDatasetConfig.AUTH_SCOPE ||
+      getScopes().includes(currentDatasetConfig.AUTH_SCOPE as AuthScope))
 
   const showTabs = view === ViewMode.Split
   const tabs = [DATASETS.BAG, DATASETS.HR, DATASETS.BRK].map((ds) => ({
@@ -63,12 +65,14 @@ const DataSelectionHeader: FunctionComponent = () => {
     <>
       <Header>
         {view === ViewMode.Full && (
-          <h1 data-test="data-selection-heading">
-            {datasetTitle}
-            {totalResults > 0 && <span> ({totalResults.toLocaleString('NL-nl')})</span>}
-          </h1>
+          <Heading data-test="data-selection-heading">
+            {datasetTitle} {totalResults > 0 && <> ({totalResults.toLocaleString('NL-nl')})</>}
+          </Heading>
         )}
-        {view === ViewMode.Split && <h1 data-test="data-selection-heading">Resultaten</h1>}
+        {view === ViewMode.Split && (
+          <Heading data-test="data-selection-heading">Resultaten</Heading>
+        )}
+
         <div>
           <Button
             variant="primaryInverted"

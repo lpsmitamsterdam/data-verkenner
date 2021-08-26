@@ -6,6 +6,8 @@ import {
   CompactPager,
   Divider,
   Heading,
+  Hidden,
+  Pagination,
   Paragraph,
   themeColor,
   themeSpacing,
@@ -85,9 +87,6 @@ const StyledAlert = styled(Alert)`
 `
 
 const StyledCompactPager = styled(CompactPager)`
-  @media screen and ${breakpoint('min-width', 'laptop')} {
-    width: 240px;
-  }
   width: 100%;
 `
 
@@ -205,20 +204,38 @@ const SearchPageResults: FunctionComponent<SearchPageResultsProps> = ({
             </>
           )}
           {pageInfo && results?.length > 0 && (
-            // TODO: Check if the CompactPager component is structured correctly..
-            <StyledCompactPager
-              page={page}
-              pageSize={Math.ceil(totalCount / pageInfo.totalPages)}
-              collectionSize={totalCount}
-              onPageChange={(pageNumber) => {
-                history.push({
-                  ...pageConfig.to,
-                  search: toSearchParams([[pageParam, pageNumber]], {
-                    initialValue: window.location.search,
-                  }).toString(),
-                })
-              }}
-            />
+            <>
+              <Hidden minBreakpoint="tabletM">
+                <StyledCompactPager
+                  page={page}
+                  pageSize={Math.ceil(totalCount / pageInfo.totalPages)}
+                  collectionSize={totalCount}
+                  onPageChange={(pageNumber) => {
+                    history.push({
+                      ...pageConfig.to,
+                      search: toSearchParams([[pageParam, pageNumber]], {
+                        initialValue: window.location.search,
+                      }).toString(),
+                    })
+                  }}
+                />
+              </Hidden>
+              <Hidden maxBreakpoint="tabletM">
+                <Pagination
+                  page={page}
+                  pageSize={Math.ceil(totalCount / pageInfo.totalPages)}
+                  collectionSize={totalCount}
+                  onPageChange={(pageNumber) => {
+                    history.push({
+                      ...pageConfig.to,
+                      search: toSearchParams([[pageParam, pageNumber]], {
+                        initialValue: window.location.search,
+                      }).toString(),
+                    })
+                  }}
+                />
+              </Hidden>
+            </>
           )}
         </ResultWrapper>
       )}

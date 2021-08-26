@@ -29,8 +29,8 @@ export const LABELS_MAP = ['Kaartcollecties', 'Kaartlagen']
 export const LABELS = {
   [CmsType.Collection]: 'Dossiers',
   [CmsType.Special]: 'Specials',
-  [SearchType.Map]: LABELS_MAP,
   [SearchType.Data]: LABELS_DATA,
+  [SearchType.Map]: LABELS_MAP,
   [SearchType.Dataset]: 'Datasets',
   [CmsType.Publication]: 'Publicaties',
   [CmsType.Article]: 'Artikelen',

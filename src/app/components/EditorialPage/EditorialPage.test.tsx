@@ -5,13 +5,13 @@ import { mocked } from 'ts-jest/utils'
 import type { History } from 'history'
 import type { PropsWithChildren } from 'react'
 import environment from '../../../environment'
-import useDocumentTitle from '../../utils/useDocumentTitle'
+import useDocumentTitle from '../../hooks/useDocumentTitle'
 import EditorialPage from './EditorialPage'
 
 jest.mock('react-helmet', () => ({ Helmet: ({ children }: PropsWithChildren<any>) => children }))
 jest.mock('@datapunt/matomo-tracker-react')
 jest.mock('react-router')
-jest.mock('../../utils/useDocumentTitle')
+jest.mock('../../hooks/useDocumentTitle')
 
 const useMatomoMock = mocked(useMatomo)
 const useHistoryMock = mocked(useHistory)

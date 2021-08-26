@@ -3,7 +3,7 @@ import { mocked } from 'ts-jest/utils'
 import App from './App'
 import { useIsEmbedded } from './contexts/ui'
 import { toNotFound } from './links'
-import useParam from './utils/useParam'
+import useParam from './hooks/useParam'
 import withAppContext from './utils/withAppContext'
 
 // Mock some components because of it's complex dependencies (like using .query files that jest cannot handle)
@@ -12,7 +12,7 @@ jest.mock('./components/SearchBar/SearchBar', () => () => <div data-testid="sear
 
 // For some reason we get styled-components console warnings when MapLegend is rendered ("The component styled.div with the id of "sc-xxxxx" has been created dynamically.")
 jest.mock('./contexts/ui')
-jest.mock('./utils/useParam')
+jest.mock('./hooks/useParam')
 
 const useIsEmbeddedMock = mocked(useIsEmbedded)
 const useParamMock = mocked(useParam)

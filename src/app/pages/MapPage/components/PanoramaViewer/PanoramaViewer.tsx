@@ -5,9 +5,9 @@ import { useCallback, useEffect, useRef, useState } from 'react'
 import { useHistory } from 'react-router-dom'
 import styled, { css } from 'styled-components'
 import { toGeoSearch } from '../../../../links'
-import useBuildQueryString from '../../../../utils/useBuildQueryString'
-import useMarzipano from '../../../../utils/useMarzipano'
-import useParam from '../../../../utils/useParam'
+import useBuildQueryString from '../../../../hooks/useBuildQueryString'
+import useMarzipano from '../../../../hooks/useMarzipano'
+import useParam from '../../../../hooks/useParam'
 import { useMapContext } from '../../MapContext'
 import {
   COORDINATE_PRECISION,

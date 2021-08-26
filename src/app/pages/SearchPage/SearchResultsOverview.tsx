@@ -84,6 +84,7 @@ const SearchResultsOverview: FunctionComponent<SearchResultsOverviewProps> = ({
                       errors: matchingErrors,
                       compact: true, // Results in the search overview page are compact
                       isOverviewPage: true,
+                      query,
                     }}
                   />
                 ) : (

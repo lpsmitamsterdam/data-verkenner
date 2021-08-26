@@ -11,7 +11,7 @@ const pushMock = jest.fn()
 
 let search = '?locatie=123,123'
 
-jest.mock('../../../../utils/useMapCenterToMarker', () => () => ({
+jest.mock('../../../../hooks/useMapCenterToMarker', () => () => ({
   panToWithPanelOffset: jest.fn(),
 }))
 

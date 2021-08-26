@@ -4,9 +4,9 @@ import { useCallback } from 'react'
 import { useHistory, useLocation } from 'react-router-dom'
 import type { Filter } from '../../models/filter'
 import { FilterType } from '../../models/filter'
-import { activeFiltersParam, pageParam } from '../../pages/SearchPage/query-params'
+import { activeFiltersParam, pageParam, queryParam } from '../../pages/SearchPage/query-params'
 import toSearchParams from '../../utils/toSearchParams'
-import useParam from '../../utils/useParam'
+import useParam from '../../hooks/useParam'
 import FilterBox from '../FilterBox'
 import CheckboxFilter from './filters/CheckboxFilter'
 import RadioFilter from './filters/RadioFilter'
@@ -14,6 +14,7 @@ import SelectFilter from './filters/SelectFilter'
 
 export interface SearchFilterProps {
   filter: Filter
+  query: string
   totalCount: number
   hideCount: boolean
 }
@@ -35,7 +36,12 @@ export function getFilterComponent(filterType: FilterType) {
   }
 }
 
-const SearchFilter: FunctionComponent<SearchFilterProps> = ({ filter, totalCount, hideCount }) => {
+const SearchFilter: FunctionComponent<SearchFilterProps> = ({
+  filter,
+  query,
+  totalCount,
+  hideCount,
+}) => {
   const { type, filterType, label, options } = filter
   const { trackEvent } = useMatomo()
   const history = useHistory()
@@ -60,6 +66,7 @@ const SearchFilter: FunctionComponent<SearchFilterProps> = ({ filter, totalCount
       history.replace({
         pathname: location.pathname,
         search: toSearchParams([
+          [queryParam, query],
           [activeFiltersParam, values.length ? [{ type, values }] : []],
           [pageParam, 1],
         ]).toString(),

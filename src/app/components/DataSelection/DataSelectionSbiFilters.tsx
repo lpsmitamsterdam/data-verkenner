@@ -1,10 +1,19 @@
 import { Enlarge, Minimise } from '@amsterdam/asc-assets'
-import { Button, Link, themeSpacing } from '@amsterdam/asc-ui'
+import { Button, Link, themeSpacing, TextField, Heading } from '@amsterdam/asc-ui'
 import { useCallback, useMemo, useState } from 'react'
 import styled from 'styled-components'
 import type { FunctionComponent } from 'react'
 import { DEFAULT_LOCALE } from '../../../shared/config/locale.config'
 import { useDataSelection } from './DataSelectionContext'
+import {
+  DataSelectionFiltersContainer,
+  DataSelectionFiltersCategory,
+  DataSelectionFiltersItem,
+  DataSelectionFiltersShowMore,
+  DataSelectionFiltersHiddenOptions,
+  DataSelectionFiltersItemLabel,
+  DataSelectionFiltersItemLabelEmpty,
+} from './DataSelectionFilterStyles'
 
 const StyledLink = styled(Link)`
   background-color: transparent;
@@ -13,6 +22,14 @@ const StyledLink = styled(Link)`
 
 const ShowMoreButton = styled(Button)`
   margin-top: ${themeSpacing(2)};
+`
+
+const SubmitButton = styled(Button)`
+  margin-left: ${themeSpacing(1)};
+`
+const DataSelectionFilterForm = styled.form`
+  display: flex;
+  margin-bottom: ${themeSpacing(2)};
 `
 
 // Note, this component has been migrated from legacy angularJS code
@@ -91,12 +108,10 @@ const DataSelectionSbiFilters: FunctionComponent = () => {
     return !isExpanded && canExpandImplode()
   }
   return (
-    <div className="qa-sbi-filter c-sbi-filter">
-      <div className="c-sbi-filter__category">
-        <h2 className="c-sbi-filter__category-label qa-category-header">SBI-code</h2>
-
-        <form
-          className="c-sbi-filter__form"
+    <DataSelectionFiltersContainer>
+      <DataSelectionFiltersCategory>
+        <Heading forwardedAs="h2">SBI-code</Heading>
+        <DataSelectionFilterForm
           onSubmit={(e) => {
             e.preventDefault()
             addFilter({
@@ -104,47 +119,43 @@ const DataSelectionSbiFilters: FunctionComponent = () => {
             })
           }}
         >
-          <input
-            className="c-sbi-filter__input qa-sbi-filter-form-input"
+          <TextField
             value={sbiCodeInput}
             onChange={(e) => {
               setSbiCodeInput(e.target.value)
             }}
             placeholder="Codes bijv.: 221, 01, 38211"
           />
-          <button className="c-sbi-filter__submit qa-sbi-filter-form-sumbit" type="submit">
+          <SubmitButton variant="tertiary" type="submit">
             Selecteer
-          </button>
-        </form>
+          </SubmitButton>
+        </DataSelectionFilterForm>
 
         <div>
           <ul>
             {[...currentFilter.options]
               .slice(0, isExpanded ? currentFilter.options.length : showMoreThreshold)
               .map((option) => (
-                <li
-                  key={option.slug}
-                  className={`c-sbi-filter__item c-sbi-filter__item--${option.slug}`}
-                >
+                <DataSelectionFiltersItem>
                   <StyledLink
                     inList
                     type="button"
                     forwardedAs="button"
                     onClick={() => clickFilter(option.id)}
                   >
-                    <span
-                      className={`c-sbi-filter__item-label ${
-                        !option.label ? 'c-sbi-filter__item-label--empty-value' : ''
-                      }`}
-                    >
-                      <span className="qa-option-label">{option.label}</span>
-                    </span>
+                    {option.label ? (
+                      <DataSelectionFiltersItemLabel>{option.label}</DataSelectionFiltersItemLabel>
+                    ) : (
+                      <DataSelectionFiltersItemLabelEmpty>
+                        (geen)
+                      </DataSelectionFiltersItemLabelEmpty>
+                    )}
                   </StyledLink>
-                </li>
+                </DataSelectionFiltersItem>
               ))}
           </ul>
           {showExpandButton() && (
-            <div className="c-sbi-filter__show-more">
+            <DataSelectionFiltersShowMore>
               <ShowMoreButton
                 type="button"
                 onClick={expandFilter}
@@ -155,15 +166,15 @@ const DataSelectionSbiFilters: FunctionComponent = () => {
               >
                 Toon meer
               </ShowMoreButton>
-            </div>
+            </DataSelectionFiltersShowMore>
           )}
 
           {isExpanded && (
-            <div className="c-sbi-filter__show-more">
+            <DataSelectionFiltersShowMore>
               {nrHiddenOptions > 0 && (
-                <div className="c-sbi-filter__hidden-options qa-hidden-options">
+                <DataSelectionFiltersHiddenOptions>
                   ...nog {nrHiddenOptions.toLocaleString(DEFAULT_LOCALE)} waarden
-                </div>
+                </DataSelectionFiltersHiddenOptions>
               )}
               <ShowMoreButton
                 type="button"
@@ -175,11 +186,11 @@ const DataSelectionSbiFilters: FunctionComponent = () => {
               >
                 Toon minder
               </ShowMoreButton>
-            </div>
+            </DataSelectionFiltersShowMore>
           )}
         </div>
-      </div>
-    </div>
+      </DataSelectionFiltersCategory>
+    </DataSelectionFiltersContainer>
   )
 }
 

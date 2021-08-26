@@ -33,7 +33,7 @@ const PAGES = {
   MAP_SEARCH: 'MAP_SEARCH',
 
   // text pages
-  ACTUALITY: 'ACTUALITY',
+  UPDATES: 'UPDATES',
   LOGIN: 'LOGIN',
 
   NOT_FOUND: 'NOT_FOUND',
@@ -42,7 +42,7 @@ const PAGES = {
 export default PAGES
 
 export const isContentPage = (page: string) =>
-  page === PAGES.ACTUALITY || page === PAGES.LOGIN || page === PAGES.NOT_FOUND
+  page === PAGES.UPDATES || page === PAGES.LOGIN || page === PAGES.NOT_FOUND
 
 export const isEditorialDetailPage = (page: string) =>
   page === PAGES.ARTICLE_DETAIL ||

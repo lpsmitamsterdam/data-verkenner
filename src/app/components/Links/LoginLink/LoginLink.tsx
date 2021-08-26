@@ -3,7 +3,7 @@ import { ChevronRight } from '@amsterdam/asc-assets'
 import { useMatomo } from '@datapunt/matomo-tracker-react'
 import type { FunctionComponent } from 'react'
 import { login } from '../../../../shared/services/auth/auth'
-import useDocumentTitle from '../../../utils/useDocumentTitle'
+import useDocumentTitle from '../../../hooks/useDocumentTitle'
 
 export interface LoginLinkProps {
   showChevron?: boolean

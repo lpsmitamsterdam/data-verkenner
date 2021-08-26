@@ -1,6 +1,6 @@
 import type { FunctionComponent } from 'react'
 import { Route, Switch } from 'react-router-dom'
-import useParam from '../../utils/useParam'
+import useParam from '../../hooks/useParam'
 import MapPage from './MapPage'
 import { ViewMode, viewParam } from './query-params'
 import DataSelection from '../../components/DataSelection/DataSelection'

@@ -1,8 +1,8 @@
 import type { FunctionComponent } from 'react'
 import { isEmbeddedParam } from '../../pages/MapPage/query-params'
 import createNamedContext from '../../utils/createNamedContext'
-import useParam from '../../utils/useParam'
-import useRequiredContext from '../../utils/useRequiredContext'
+import useParam from '../../hooks/useParam'
+import useRequiredContext from '../../hooks/useRequiredContext'
 
 export interface UiContextProps {
   /**

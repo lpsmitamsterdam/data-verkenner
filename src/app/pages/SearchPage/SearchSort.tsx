@@ -23,10 +23,6 @@ const SelectboxWrapper = styled.div`
   }
 `
 
-const StyledSelect = styled(Select)`
-  padding-right: ${themeSpacing(8)};
-`
-
 const StyledLabel = styled(Label)`
   color: ${themeColor('tint', 'level6')};
   width: 100%;
@@ -50,7 +46,7 @@ const SearchSort: FunctionComponent<SearchSortProps> = ({ sort, isOverviewPage, 
   return (
     <SelectboxWrapper>
       <StyledLabel htmlFor="sort-select" label="Sorteren:" position="left">
-        <StyledSelect
+        <Select
           id="sort-select"
           data-testid="sort-select"
           value={sort ? sortParam.encode(sort) : ''}
@@ -93,7 +89,7 @@ const SearchSort: FunctionComponent<SearchSortProps> = ({ sort, isOverviewPage, 
           <option value={sortParam.encode({ field: 'title', order: SortOrder.Descending })}>
             Titel Z-A
           </option>
-        </StyledSelect>
+        </Select>
       </StyledLabel>
     </SelectboxWrapper>
   )

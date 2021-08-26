@@ -31,7 +31,7 @@ import { CmsType } from '../../../../shared/config/cms.config'
 import getIdEndpoint from '../../../utils/getIdEndpoint'
 import getDetailPageData from '../../../utils/getDetailPageData'
 import type { AutoSuggestSearchContent } from '../services/auto-suggest/auto-suggest'
-import useParam from '../../../utils/useParam'
+import useParam from '../../../hooks/useParam'
 import { routing } from '../../../routes'
 import { useHeaderSearch } from '../HeaderSearchContext'
 
@@ -43,9 +43,29 @@ export interface AutoSuggestItemProps {
   label: string
 }
 
-const StyledLink = styled(Link)`
+export const StyledLink = styled(Link)`
+  font-size: 16px; // was $s-font
   font-weight: inherit;
   margin-left: ${themeSpacing(1)};
+  background-color: transparent;
+  color: #000; // was $primary-dark
+  cursor: pointer;
+  display: block;
+  font-weight: 400; // was $normal-weight
+  overflow: hidden;
+  padding-bottom: calc(${10 / 2}px); // was $base-whitespace
+  padding-top: calc(${10 / 3}px); // was $base-whitespace
+  position: relative;
+  text-align: left;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  width: 100%;
+  text-decoration: none;
+  &:hover,
+  &.auto-suggest__dropdown-item--active {
+    background-color: #eee; // was $secondary-gray60
+    font-weight: inherit;
+  }
 `
 
 const AutoSuggestItem: FunctionComponent<AutoSuggestItemProps> = ({
@@ -183,13 +203,7 @@ const AutoSuggestItem: FunctionComponent<AutoSuggestItemProps> = ({
 
   return (
     <li>
-      <StyledLink
-        forwardedAs={RouterLink}
-        inList
-        className="auto-suggest__dropdown-item"
-        onClick={handleLinkClick}
-        to={to}
-      >
+      <StyledLink forwardedAs={RouterLink} inList onClick={handleLinkClick} to={to}>
         <div
           // eslint-disable-next-line react/no-danger
           dangerouslySetInnerHTML={{
@@ -204,7 +218,7 @@ const AutoSuggestItem: FunctionComponent<AutoSuggestItemProps> = ({
 function highlightSuggestion(content: string, highlightValue: string) {
   return content.replace(
     new RegExp(`(${escapeStringRegexp(highlightValue.trim())})`, 'gi'),
-    '<span class="auto-suggest__dropdown__highlight">$1</span>',
+    '<span style="font-weight: 700">$1</span>',
   )
 }
 

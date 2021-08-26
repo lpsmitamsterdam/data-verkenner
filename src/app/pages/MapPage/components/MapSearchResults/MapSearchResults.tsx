@@ -5,13 +5,12 @@ import { useMemo } from 'react'
 import { Link as RouterLink } from 'react-router-dom'
 import styled from 'styled-components'
 import { getScopes } from '../../../../../shared/services/auth/auth'
-import formatNumber from '../../../../../shared/services/number-formatter/number-formatter'
 import getDetailPageData from '../../../../utils/getDetailPageData'
 import AuthAlert from '../../../../components/Alerts/AuthAlert'
 import LoadingSpinner from '../../../../components/LoadingSpinner/LoadingSpinner'
 import ShowMore from '../../../../components/ShowMore'
 import { toDataDetail } from '../../../../links'
-import useParam from '../../../../utils/useParam'
+import useParam from '../../../../hooks/useParam'
 import type {
   MapSearchCategory,
   MapSearchResult,
@@ -21,6 +20,7 @@ import { locationParam } from '../../query-params'
 import useAsyncMapPanelHeader from '../../utils/useAsyncMapPanelHeader'
 import PanoramaPreview from '../PanoramaPreview/PanoramaPreview'
 import { wgs84ToRd } from '../../../../../shared/services/coordinate-reference-system'
+import AuthScope from '../../../../../shared/services/api/authScope'
 
 const RESULT_LIMIT = 10
 
@@ -133,7 +133,7 @@ const MapSearchResults: FunctionComponent = () => {
           </CategoryBlock>
         ))
       )}
-      {(!getScopes().includes('HR/R') || !getScopes().includes('BRK/RS')) && (
+      {(!getScopes().includes(AuthScope.HrR) || !getScopes().includes(AuthScope.BrkRs)) && (
         <StyledAuthAlert excludedResults={EXCLUDED_RESULTS} />
       )}
     </>
@@ -165,7 +165,7 @@ function renderResultItems(results: MapSearchResult[]) {
 
 function formatCategoryTitle(category: MapSearchCategory) {
   return category.results.length > 1
-    ? `${category.categoryLabelPlural} (${formatNumber(category.results.length)})`
+    ? `${category.categoryLabelPlural} (${category.results.length.toLocaleString('nl-NL')})`
     : category.categoryLabel
 }
 

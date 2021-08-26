@@ -1,11 +1,12 @@
 import type { ElementType, FunctionComponent } from 'react'
 import { useMemo } from 'react'
 import styled, { css } from 'styled-components'
-import { Checkbox, Label, themeColor, themeSpacing } from '@amsterdam/asc-ui'
+import { Button, Checkbox, Label, themeColor, themeSpacing } from '@amsterdam/asc-ui'
 import MAP_CONFIG from '../../legacy/services/map.config'
 import type { ExtendedMapGroup } from '../../legacy/services'
 import { isAuthorised } from '../../legacy/utils/map-layer'
 import LayerLegendZoomButton from './LayerLegendZoomButton'
+import type AuthScope from '../../../../../shared/services/api/authScope'
 
 const MapLayerWithLegendStyle = styled.li<{ notSelectable: boolean; disabled?: boolean }>`
   align-items: center;
@@ -76,9 +77,20 @@ const MapLegendImage = styled.div`
 
 interface MapLayerWithLegendItemProps {
   layerIsRestricted?: boolean
-  legendItem: ExtendedMapGroup
+  legendItem: Pick<
+    ExtendedMapGroup,
+    | 'id'
+    | 'isVisible'
+    | 'title'
+    | 'legendIconURI'
+    | 'notSelectable'
+    | 'iconUrl'
+    | 'minZoom'
+    | 'authScope'
+  >
   onAddLayers: (id: string[]) => void
   onRemoveLayers: (id: string[]) => void
+  onEdit?: (id: string) => void
 }
 
 const LayerLegend: FunctionComponent<MapLayerWithLegendItemProps & Partial<HTMLLIElement>> = ({
@@ -86,6 +98,7 @@ const LayerLegend: FunctionComponent<MapLayerWithLegendItemProps & Partial<HTMLL
   legendItem,
   onAddLayers,
   onRemoveLayers,
+  onEdit,
   className,
 }) => {
   const LegendLabel = useMemo(
@@ -140,26 +153,22 @@ const LayerLegend: FunctionComponent<MapLayerWithLegendItemProps & Partial<HTMLL
             variant="tertiary"
             checked={legendItem.isVisible ?? false}
             name={legendItem.title}
-            onChange={
-              /* istanbul ignore next */
-              () => {
-                if (!legendItem.isVisible) {
-                  if (onAddLayers) {
-                    onAddLayers([legendItem.id ?? '1'])
-                  }
-                } else if (onRemoveLayers) {
-                  onRemoveLayers([legendItem.id ?? '1'])
-                }
+            onChange={() => {
+              if (!legendItem.isVisible) {
+                onAddLayers([legendItem.id ?? '1'])
+              } else {
+                onRemoveLayers([legendItem.id ?? '1'])
               }
-            }
+            }}
           />
         ) : (
           legendItem.title
         )}
       </LegendLabel>
-      {isAuthorised(legendItem) && legendItem.isVisible && (
-        <LayerLegendZoomButton mapGroup={legendItem} />
+      {isAuthorised(legendItem.authScope as AuthScope) && legendItem.isVisible && (
+        <LayerLegendZoomButton minZoom={legendItem.minZoom} />
       )}
+      {onEdit && <Button onClick={() => onEdit(legendItem.id)}>Edit</Button>}
       <MapLegendImage>
         <img alt={legendItem.title} src={icon} />
       </MapLegendImage>

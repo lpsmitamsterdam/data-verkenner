@@ -10,8 +10,8 @@ import type { FetchPanoramaOptions } from '../../../../../api/panorama/thumbnail
 import { getPanoramaThumbnail } from '../../../../../api/panorama/thumbnail'
 import { ForbiddenError } from '../../../../../shared/services/api/customError'
 import PanoAlert from '../../../../components/PanoAlert/PanoAlert'
-import useBuildQueryString from '../../../../utils/useBuildQueryString'
-import useParam from '../../../../utils/useParam'
+import useBuildQueryString from '../../../../hooks/useBuildQueryString'
+import useParam from '../../../../hooks/useParam'
 import {
   locationParam,
   mapLayersParam,

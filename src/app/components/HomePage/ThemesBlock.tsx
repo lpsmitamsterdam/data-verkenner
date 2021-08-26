@@ -9,7 +9,7 @@ import type { Filter, FilterOption } from '../../models/filter'
 import type { ActiveFilter } from '../../pages/SearchPage/query-params'
 import { activeFiltersParam } from '../../pages/SearchPage/query-params'
 import toSearchParams from '../../utils/toSearchParams'
-import useUniqueId from '../../utils/useUniqueId'
+import useUniqueId from '../../hooks/useUniqueId'
 import ErrorMessage from '../ErrorMessage/ErrorMessage'
 import BlockHeading from './BlockHeading'
 

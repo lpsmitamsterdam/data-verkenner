@@ -12,7 +12,7 @@ import { breakpoint, themeSpacing } from '@amsterdam/asc-ui'
 import styled, { createGlobalStyle, css } from 'styled-components'
 import type L from 'leaflet'
 import { useMatomo } from '@datapunt/matomo-tracker-react'
-import useParam from '../../utils/useParam'
+import useParam from '../../hooks/useParam'
 import { centerParam, panoPitchParam, zoomParam } from './query-params'
 import { useIsEmbedded } from '../../contexts/ui'
 import { useMapContext } from './MapContext'
@@ -23,8 +23,10 @@ import MapMarker from './components/MapMarker'
 import MapPanel from './components/MapPanel'
 import PanoramaViewer from './components/PanoramaViewer/PanoramaViewer'
 import { AFTER_PRINT, BEFORE_PRINT, PANORAMA_FULLSCREEN_TOGGLE } from './matomo-events'
-import useCustomEvent from '../../utils/useCustomEvent'
+import useCustomEvent from '../../hooks/useCustomEvent'
 import Enlarge from './components/PanoramaViewer/enlarge.svg'
+import 'leaflet/dist/leaflet.css'
+import 'leaflet-draw/dist/leaflet.draw.css'
 
 const MapView = styled.div`
   height: 100%;
@@ -42,10 +44,6 @@ const GlobalStyle = createGlobalStyle<{
   loading: boolean
   panelActive?: boolean
 }>`
-  @page {
-    size: A4 portrait;
-  }
-
   body {
     touch-action: none;
     overflow: hidden; // This will prevent the scrollBar on iOS due to navigation bar
@@ -127,6 +125,12 @@ const GlobalStyle = createGlobalStyle<{
         position: sticky !important;
       `}
   }
+
+  // Todo: figure out why leaflet css is overriding this
+  .arm__icon--clustergroup-default {
+    display: flex !important;
+  }
+
   .leaflet-control-container .leaflet-control-scale {
     margin: ${themeSpacing(0, 16, 4, 0)} !important;
   }

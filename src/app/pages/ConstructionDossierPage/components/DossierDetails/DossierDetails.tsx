@@ -9,7 +9,7 @@ import type {
   BouwdossierAccess,
   Single as Bouwdossier,
 } from '../../../../../api/iiif-metadata/bouwdossier'
-import { getScopes, SCOPES } from '../../../../../shared/services/auth/auth'
+import { getScopes } from '../../../../../shared/services/auth/auth'
 import { toDataDetail } from '../../../../links'
 import { useAuthToken } from '../../AuthTokenContext'
 import formatAddresses from '../../utils/formatAddresses'
@@ -18,6 +18,7 @@ import hasUserRights from '../../utils/hasUserRights'
 import ContentBlock, { DefinitionList, DefinitionListItem, SubHeading } from '../ContentBlock'
 import DocumentDetails from '../DocumentDetails'
 import DossierDetailsModal from '../DossierDetailsModal'
+import AuthScope from '../../../../../shared/services/api/authScope'
 
 const Header = styled.header`
   padding: ${themeSpacing(5)};
@@ -87,7 +88,7 @@ const DossierDetails: FunctionComponent<DossierDetailsProps> = ({
       return true
     }
 
-    return scopes.includes(SCOPES['BD/X'])
+    return scopes.includes(AuthScope.BdX)
   }
 
   function handleDownloadAllClick() {

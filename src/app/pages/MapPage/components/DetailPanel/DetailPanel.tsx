@@ -20,7 +20,7 @@ import AuthAlert from '../../../../components/Alerts/AuthAlert'
 import PromiseResult from '../../../../components/PromiseResult/PromiseResult'
 import Spacer from '../../../../components/Spacer/Spacer'
 import type { DataDetailParams } from '../../../../links'
-import useAuthScope from '../../../../utils/useAuthScope'
+import useAuthScope from '../../../../hooks/useAuthScope'
 import AuthenticationWrapper from '../AuthenticationWrapper'
 import PanoramaPreview from '../PanoramaPreview/PanoramaPreview'
 import { useMapContext } from '../../MapContext'
@@ -67,7 +67,6 @@ const HeadingWrapper = styled.div`
   flex-wrap: wrap;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: ${themeSpacing(7)};
 `
 
 const DetailPanel: FunctionComponent = () => {
