@@ -1,13 +1,14 @@
-import styled from 'styled-components'
-import { Paragraph } from '@amsterdam/asc-ui'
+import {
+  Paragraph,
+  Table,
+  TableHeader,
+  TableRow,
+  TableCell,
+  TableBody,
+  TableContainer,
+} from '@amsterdam/asc-ui'
 import type { FunctionComponent } from 'react'
 import type { DetailResultItemTable } from '../../legacy/types/details'
-import { Table, TableData, TableHeader, TableRow } from '../../../../components/Table'
-
-const TableWrapper = styled.div`
-  width: 100%;
-  overflow-x: auto;
-`
 
 export interface DetailTableProps {
   item: DetailResultItemTable
@@ -15,27 +16,29 @@ export interface DetailTableProps {
 
 const DetailTable: FunctionComponent<DetailTableProps> = ({ item }) =>
   item.values?.length ? (
-    <TableWrapper data-testid="detailTable">
+    <TableContainer data-testid="detailTable">
       <Table>
-        <thead>
-          <TableRow header>
+        <TableHeader>
+          <TableRow>
             {item.headings.map(({ key, title }) => (
-              <TableHeader key={key}>{title}</TableHeader>
+              <TableCell as="th" key={key}>
+                {title}
+              </TableCell>
             ))}
           </TableRow>
-        </thead>
-        <tbody>
+        </TableHeader>
+        <TableBody>
           {item.values.map((value, index) => (
             // eslint-disable-next-line react/no-array-index-key
             <TableRow key={index}>
               {item.headings.map(({ key }) => (
-                <TableData key={key}>{value[key]}</TableData>
+                <TableCell key={key}>{value[key]}</TableCell>
               ))}
             </TableRow>
           ))}
-        </tbody>
+        </TableBody>
       </Table>
-    </TableWrapper>
+    </TableContainer>
   ) : (
     <Paragraph>Geen resultaten gevonden</Paragraph>
   )
