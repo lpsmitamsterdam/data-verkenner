@@ -9,7 +9,7 @@ import type {
   Single as Bouwdossier,
 } from '../../../../../api/iiif-metadata/bouwdossier'
 import { getScopes } from '../../../../../shared/services/auth/auth'
-import { useAuthToken } from '../../AuthTokenContext'
+import { useAuthToken } from '../../../../contexts/AuthToken/AuthTokenContext'
 import formatDossierAccessValue from '../../utils/formatDossierAccessValue'
 import hasUserRights from '../../utils/hasUserRights'
 import ContentBlock, { DefinitionList, DefinitionListItem, SubHeading } from '../ContentBlock'

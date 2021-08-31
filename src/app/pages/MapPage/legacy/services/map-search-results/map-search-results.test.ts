@@ -1,7 +1,7 @@
 import { createMapSearchResultsModel, sortByCategoryTypeOrder } from './map-search-results'
 import { basicDataModel, basicSortDataModel, expectedDataModel } from './map-search-results.fixture'
 
-describe('Map search results', () => {
+describe('map search results', () => {
   describe('sortByCategoryTypeOrder', () => {
     it('should order the items correctly', () => {
       const items = sortByCategoryTypeOrder(basicSortDataModel)

@@ -5,7 +5,7 @@ import MapPage from './MapPage'
 import { ViewMode, viewParam } from './query-params'
 import DataSelection from '../../components/DataSelection/DataSelection'
 import { routing } from '../../routes'
-import MapProvider from './MapProvider'
+import MapProvider from '../../contexts/map/MapProvider'
 
 const MapContainer: FunctionComponent = ({ children }) => {
   const [view] = useParam(viewParam)

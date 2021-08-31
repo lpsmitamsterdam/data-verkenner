@@ -11,7 +11,7 @@ import type {
 } from '../../../../../api/iiif-metadata/bouwdossier'
 import { getScopes } from '../../../../../shared/services/auth/auth'
 import { toDataDetail } from '../../../../links'
-import { useAuthToken } from '../../AuthTokenContext'
+import { useAuthToken } from '../../../../contexts/AuthToken/AuthTokenContext'
 import formatAddresses from '../../utils/formatAddresses'
 import formatDossierAccessValue from '../../utils/formatDossierAccessValue'
 import hasUserRights from '../../utils/hasUserRights'

@@ -3,7 +3,7 @@ import { createUrlWithToken } from '../../../../shared/services/api/api'
 import { getAccessToken } from '../../../../shared/services/auth/auth'
 import type { ExtendedMapGroup, ExtendedMapGroupLegendItem } from '../legacy/services'
 import MAP_CONFIG from '../legacy/services/map.config'
-import type { Overlay } from '../MapContext'
+import type { Overlay } from '../../../contexts/map/MapContext'
 
 const findLayer = (layers: Array<ExtendedMapGroup & ExtendedMapGroupLegendItem>, id: string) => {
   return layers.find((layer) => id === layer.id) ?? null

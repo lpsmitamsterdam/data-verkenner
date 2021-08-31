@@ -7,7 +7,7 @@ import styled from 'styled-components'
 import LoadingSpinner from './components/LoadingSpinner/LoadingSpinner'
 import NotificationAlert from './components/NotificationAlert/NotificationAlert'
 import { mapSearchPagePaths, routing } from './routes'
-import { DataSelectionProvider } from './components/DataSelection/DataSelectionContext'
+import { DataSelectionProvider } from './contexts/DataSelection/DataSelectionContext'
 
 const HomePage = lazy(() => import(/* webpackChunkName: "HomePage" */ './pages/HomePage'))
 const UpdatesPage = lazy(() => import(/* webpackChunkName: "UpdatesPage" */ './pages/UpdatesPage'))

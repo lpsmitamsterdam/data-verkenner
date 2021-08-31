@@ -8,7 +8,7 @@ import type { Bestand, Document } from '../../../../../api/iiif-metadata/bouwdos
 import { NOT_FOUND_THUMBNAIL } from '../../../../../shared/config/constants'
 import ActionButton from '../../../../components/ActionButton'
 import { toConstructionDossier } from '../../../../links'
-import { useAuthToken } from '../../AuthTokenContext'
+import { useAuthToken } from '../../../../contexts/AuthToken/AuthTokenContext'
 import IIIFThumbnail from '../IIIFThumbnail'
 
 const StyledRow = styled(Row)<{ hasMarginBottom: boolean }>`

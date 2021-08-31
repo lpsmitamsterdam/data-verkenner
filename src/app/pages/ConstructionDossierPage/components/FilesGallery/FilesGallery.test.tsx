@@ -5,7 +5,7 @@ import type { Bestand, Document } from '../../../../../api/iiif-metadata/bouwdos
 import { singleFixture as bouwdossierFixture } from '../../../../../api/iiif-metadata/bouwdossier'
 import { NOT_FOUND_THUMBNAIL } from '../../../../../shared/config/constants'
 import withAppContext from '../../../../utils/withAppContext'
-import AuthTokenContext, { DecodedToken } from '../../AuthTokenContext'
+import AuthTokenContext, { DecodedToken } from '../../../../contexts/AuthToken/AuthTokenContext'
 import FilesGallery from './FilesGallery'
 
 jest.mock('../IIIFThumbnail', () => ({ ...props }) => (

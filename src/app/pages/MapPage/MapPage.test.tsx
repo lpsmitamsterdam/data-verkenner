@@ -1,10 +1,10 @@
 import { render, screen, fireEvent } from '@testing-library/react'
 import type { PropsWithChildren } from 'react'
 import MapPage from './MapPage'
-import MapContext from './MapContext'
-import { DataSelectionProvider } from '../../components/DataSelection/DataSelectionContext'
+import MapContext from '../../contexts/map/MapContext'
+import { DataSelectionProvider } from '../../contexts/DataSelection/DataSelectionContext'
 import { UiProvider } from '../../contexts/ui'
-import MapProvider from './MapProvider'
+import MapProvider from '../../contexts/map/MapProvider'
 import withAppContext from '../../utils/withAppContext'
 import { initialState } from '../../utils/withMapContext'
 

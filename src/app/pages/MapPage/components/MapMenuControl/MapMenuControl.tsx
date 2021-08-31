@@ -5,7 +5,7 @@ import Control from '../Control'
 import BaseLayerToggle from '../BaseLayerToggle'
 import MapContextMenu from '../MapContextMenu/MapContextMenu'
 import { useIsEmbedded } from '../../../../contexts/ui'
-import { useMapContext } from '../../MapContext'
+import { useMapContext } from '../../../../contexts/map/MapContext'
 import PanoramaMapMinimizeButton from '../PanoramaMapMinimizeButton'
 
 const StyledControl = styled(Control)`

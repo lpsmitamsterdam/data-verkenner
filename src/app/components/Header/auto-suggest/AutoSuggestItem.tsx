@@ -33,7 +33,7 @@ import getDetailPageData from '../../../utils/getDetailPageData'
 import type { AutoSuggestSearchContent } from '../services/auto-suggest/auto-suggest'
 import useParam from '../../../hooks/useParam'
 import { routing } from '../../../routes'
-import { useHeaderSearch } from '../HeaderSearchContext'
+import { useHeaderSearch } from '../../../contexts/HeaderSearch/HeaderSearchContext'
 
 export interface AutoSuggestItemProps {
   content: string

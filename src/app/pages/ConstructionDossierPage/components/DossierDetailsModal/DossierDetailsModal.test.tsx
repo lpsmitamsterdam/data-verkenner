@@ -4,7 +4,7 @@ import type { FunctionComponent } from 'react'
 import { mocked } from 'ts-jest/utils'
 import requestDownloadLink from '../../../../../api/iiif/requestDownloadLink'
 import withAppContext from '../../../../utils/withAppContext'
-import AuthTokenContext from '../../AuthTokenContext'
+import AuthTokenContext from '../../../../contexts/AuthToken/AuthTokenContext'
 import DossierDetailsModal from './DossierDetailsModal'
 
 jest.mock('../../../../../api/iiif/requestDownloadLink')

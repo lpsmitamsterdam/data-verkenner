@@ -1,6 +1,6 @@
 import type { FunctionComponent } from 'react'
 import { isEmbeddedParam } from '../../pages/MapPage/query-params'
-import createNamedContext from '../../utils/createNamedContext'
+import createNamedContext from '../createNamedContext'
 import useParam from '../../hooks/useParam'
 import useRequiredContext from '../../hooks/useRequiredContext'
 

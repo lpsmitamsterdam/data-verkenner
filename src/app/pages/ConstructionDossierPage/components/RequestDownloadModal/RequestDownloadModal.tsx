@@ -7,7 +7,7 @@ import type { FunctionComponent } from 'react'
 import type { Bestand } from '../../../../../api/iiif-metadata/bouwdossier'
 import requestDownloadLink from '../../../../../api/iiif/requestDownloadLink'
 import LoadingSpinner from '../../../../components/LoadingSpinner/LoadingSpinner'
-import { useAuthToken } from '../../AuthTokenContext'
+import { useAuthToken } from '../../../../contexts/AuthToken/AuthTokenContext'
 import ButtonBar from '../ButtonBar'
 
 export interface RequestDownloadModalProps {

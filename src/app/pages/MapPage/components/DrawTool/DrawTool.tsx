@@ -6,7 +6,7 @@ import L, { Polygon } from 'leaflet'
 import type { FunctionComponent } from 'react'
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { useHistory, useLocation } from 'react-router-dom'
-import { useDataSelection } from '../../../../components/DataSelection/DataSelectionContext'
+import { useDataSelection } from '../../../../contexts/DataSelection/DataSelectionContext'
 import useLegacyDataselectionConfig from '../../../../components/DataSelection/useLegacyDataselectionConfig'
 import { toGeoSearch } from '../../../../links'
 import { routing } from '../../../../routes'
@@ -14,7 +14,7 @@ import useBuildQueryString from '../../../../hooks/useBuildQueryString'
 import useMapCenterToMarker from '../../../../hooks/useMapCenterToMarker'
 import useParam from '../../../../hooks/useParam'
 import config from '../../config'
-import { useMapContext } from '../../MapContext'
+import { useMapContext } from '../../../../contexts/map/MapContext'
 import {
   DRAWTOOL_ADD_POLYGON,
   DRAWTOOL_ADD_POLYLINE,

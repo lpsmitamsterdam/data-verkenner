@@ -8,7 +8,7 @@ import { toGeoSearch } from '../../../../links'
 import useBuildQueryString from '../../../../hooks/useBuildQueryString'
 import useMarzipano from '../../../../hooks/useMarzipano'
 import useParam from '../../../../hooks/useParam'
-import { useMapContext } from '../../MapContext'
+import { useMapContext } from '../../../../contexts/map/MapContext'
 import {
   COORDINATE_PRECISION,
   locationParam,

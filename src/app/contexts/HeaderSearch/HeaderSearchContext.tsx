@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import type { FunctionComponent } from 'react'
-import createNamedContext from '../../utils/createNamedContext'
+import createNamedContext from '../createNamedContext'
 import useRequiredContext from '../../hooks/useRequiredContext'
 import { queryParam } from '../../pages/SearchPage/query-params'
 import useParam from '../../hooks/useParam'

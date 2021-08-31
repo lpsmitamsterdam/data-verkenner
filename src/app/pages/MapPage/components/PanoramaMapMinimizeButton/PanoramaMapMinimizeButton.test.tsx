@@ -1,7 +1,7 @@
 import { Map } from '@amsterdam/arm-core'
 import { fireEvent, render, screen } from '@testing-library/react'
 import type { PropsWithChildren } from 'react'
-import MapContext from '../../MapContext'
+import MapContext from '../../../../contexts/map/MapContext'
 import withMapContext, { initialState } from '../../../../utils/withMapContext'
 import withAppContext from '../../../../utils/withAppContext'
 import PanoramaMapMinimizeButton from './PanoramaMapMinimizeButton'

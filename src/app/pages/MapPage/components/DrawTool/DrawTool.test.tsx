@@ -4,7 +4,7 @@ import L, { Polygon } from 'leaflet'
 import { render } from '@testing-library/react'
 import withMapContext from '../../../../utils/withMapContext'
 import DrawTool from './DrawTool'
-import { DataSelectionProvider } from '../../../../components/DataSelection/DataSelectionContext'
+import { DataSelectionProvider } from '../../../../contexts/DataSelection/DataSelectionContext'
 
 jest.mock('leaflet', () => ({
   // @ts-ignore

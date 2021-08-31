@@ -1,7 +1,7 @@
 import { render, screen } from '@testing-library/react'
 import type { FunctionComponent } from 'react'
 import withAppContext from '../../../../utils/withAppContext'
-import AuthTokenContext from '../../AuthTokenContext'
+import AuthTokenContext from '../../../../contexts/AuthToken/AuthTokenContext'
 import LoginAlert from './LoginAlert'
 
 const wrapper: FunctionComponent = ({ children }) =>

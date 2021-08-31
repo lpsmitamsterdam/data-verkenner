@@ -9,7 +9,7 @@ import { useHistory } from 'react-router-dom'
 import { createGlobalStyle } from 'styled-components'
 import { fetchWithToken } from '../../../../../shared/services/api/api'
 import { createFiltersObject } from '../../../../../shared/services/data-selection/normalizations'
-import { useDataSelection } from '../../../../components/DataSelection/DataSelectionContext'
+import { useDataSelection } from '../../../../contexts/DataSelection/DataSelectionContext'
 import useLegacyDataselectionConfig from '../../../../components/DataSelection/useLegacyDataselectionConfig'
 import useBuildQueryString from '../../../../hooks/useBuildQueryString'
 import useMapCenterToMarker from '../../../../hooks/useMapCenterToMarker'
@@ -19,7 +19,7 @@ import config, {
   DataSelectionType,
   DETAIL_ICON,
 } from '../../config'
-import { useMapContext } from '../../MapContext'
+import { useMapContext } from '../../../../contexts/map/MapContext'
 import { polygonParam } from '../../query-params'
 import { normalizeMapVisualization } from './normalize'
 import { DRAWN_ITEM_CLASS } from './DrawTool'

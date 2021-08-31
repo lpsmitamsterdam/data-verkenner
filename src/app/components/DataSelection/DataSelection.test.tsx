@@ -7,7 +7,7 @@ import { routing } from '../../routes'
 import joinUrl from '../../utils/joinUrl'
 import withAppContext from '../../utils/withAppContext'
 import DataSelection from './DataSelection'
-import { DataSelectionProvider } from './DataSelectionContext'
+import { DataSelectionProvider } from '../../contexts/DataSelection/DataSelectionContext'
 
 const pathname = routing.addresses.path
 let search = '?modus=volledig'

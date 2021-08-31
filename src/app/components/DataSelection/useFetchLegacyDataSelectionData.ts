@@ -10,7 +10,7 @@ import { pageParam } from '../../pages/SearchPage/query-params'
 import { routing } from '../../routes'
 import formatCount from '../../utils/formatCount'
 import useParam from '../../hooks/useParam'
-import { useDataSelection } from './DataSelectionContext'
+import { useDataSelection } from '../../contexts/DataSelection/DataSelectionContext'
 import { DatasetType, LegacyDataSelectionViewTypes } from './types'
 import useLegacyDataselectionConfig from './useLegacyDataselectionConfig'
 

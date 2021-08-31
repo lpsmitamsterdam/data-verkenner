@@ -25,7 +25,7 @@ import { fetchWithToken } from '../../../../../shared/services/api/api'
 import { normalizeData } from './normalize'
 import DataSelectionSelectBox from './DataSelectionSelectBox'
 import GeneralErrorAlert from '../../../../components/Alerts/GeneralErrorAlert'
-import { useDataSelection } from '../../../../components/DataSelection/DataSelectionContext'
+import { useDataSelection } from '../../../../contexts/DataSelection/DataSelectionContext'
 import DataSelectionActiveFilters from '../../../../components/DataSelection/DataSelectionActiveFilters'
 import { createFiltersObject } from '../../../../../shared/services/data-selection/normalizations'
 import useAsyncMapPanelHeader from '../../utils/useAsyncMapPanelHeader'
@@ -33,7 +33,7 @@ import { AuthError, ForbiddenError } from '../../../../../shared/services/api/cu
 import LoginLink from '../../../../components/Links/LoginLink/LoginLink'
 import formatCount from '../../../../utils/formatCount'
 import AuthScope from '../../../../../shared/services/api/authScope'
-import { useMapContext } from '../../MapContext'
+import { useMapContext } from '../../../../contexts/map/MapContext'
 import { DATASELECTION_TABLE_BUTTON } from '../../matomo-events'
 
 const ResultLink = styled(RouterLink)`

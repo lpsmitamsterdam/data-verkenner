@@ -5,9 +5,9 @@ import withAppContext from '../../utils/withAppContext'
 import useParam from '../../hooks/useParam'
 import HeaderSearchContext, { HeaderSearchProvider, useHeaderSearch } from './HeaderSearchContext'
 import type { HeaderSearchContextProps } from './HeaderSearchContext'
-import HeaderSearch from './HeaderSearch'
+import HeaderSearch from '../../components/Header/HeaderSearch'
 
-jest.mock('./HeaderSearch', () => () => <div />)
+jest.mock('../../components/Header/HeaderSearch', () => () => <div />)
 jest.mock('../../hooks/useParam')
 
 const useParamMock = mocked(useParam)

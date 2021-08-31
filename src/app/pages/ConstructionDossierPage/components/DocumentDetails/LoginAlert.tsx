@@ -1,7 +1,7 @@
 import { Alert, themeSpacing } from '@amsterdam/asc-ui'
 import type { FunctionComponent } from 'react'
 import styled from 'styled-components'
-import { useAuthToken } from '../../AuthTokenContext'
+import { useAuthToken } from '../../../../contexts/AuthToken/AuthTokenContext'
 import LinkButton from '../LinkButton'
 import LoginLinkButton from '../LoginLinkButton'
 

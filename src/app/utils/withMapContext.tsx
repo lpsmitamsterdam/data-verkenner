@@ -1,7 +1,7 @@
 import { Map as MapComponent } from '@amsterdam/arm-core'
 import type { ReactNode } from 'react'
-import type { MapContextProps } from '../pages/MapPage/MapContext'
-import MapContext from '../pages/MapPage/MapContext'
+import type { MapContextProps } from '../contexts/map/MapContext'
+import MapContext from '../contexts/map/MapContext'
 import withAppContext from './withAppContext'
 import { DrawerState } from '../pages/MapPage/components/DrawerOverlay'
 

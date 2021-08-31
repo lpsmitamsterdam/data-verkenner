@@ -1,7 +1,7 @@
 import { useMemo } from 'react'
 import { useIsEmbedded } from '../../../../contexts/ui'
 import useParam from '../../../../hooks/useParam'
-import { useMapContext } from '../../MapContext'
+import { useMapContext } from '../../../../contexts/map/MapContext'
 import { locationParam, mapLayersParam, panoHeadingParam } from '../../query-params'
 import type { DrawerControl } from '../DrawerOverlay/DrawerOverlay'
 import DrawToolControl from '../DrawToolControl'
