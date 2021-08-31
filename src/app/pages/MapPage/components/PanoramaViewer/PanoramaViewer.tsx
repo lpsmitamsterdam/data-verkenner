@@ -43,6 +43,12 @@ const PanoramaStyle = styled.div<{ panoFullScreen: boolean; $loading: boolean }>
         cursor: progress !important;
       }
     `}
+
+  @media print {
+    canvas:first-of-type {
+      position: relative !important;
+    }
+  }
 `
 
 export const PANO_LAYERS = [

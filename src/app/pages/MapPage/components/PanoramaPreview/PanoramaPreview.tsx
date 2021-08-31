@@ -32,6 +32,10 @@ const PreviewContainer = styled.div`
   width: 100%;
   max-width: 400px; /* Preview images have an aspect ratio of 5 : 2 */
   height: 160px;
+
+  @media print {
+    display: none;
+  }
 `
 
 const PreviewImage = styled.img`

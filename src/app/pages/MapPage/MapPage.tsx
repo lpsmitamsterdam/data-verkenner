@@ -87,6 +87,12 @@ const GlobalStyle = createGlobalStyle<{
           height: 267px;
           min-height: 267px;
         }
+        @media print {
+          min-height: initial;
+          top: 0;
+          left: initial;
+          right: 0;
+        }
       `}
 
     // MapPanel is inactive and panorama full screen
@@ -159,6 +165,9 @@ const ResizeButton = styled(ControlButton)<{ panelActive?: boolean }>`
       left: 425px;
       @media screen and ${breakpoint('min-width', 'laptopM')} {
         left: 665px;
+      }
+      @media print {
+        display: none;
       }
     `}
 `
