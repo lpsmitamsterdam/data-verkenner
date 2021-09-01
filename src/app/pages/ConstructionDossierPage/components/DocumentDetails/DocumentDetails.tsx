@@ -8,7 +8,7 @@ import type {
   Document,
   Single as Bouwdossier,
 } from '../../../../../api/iiif-metadata/bouwdossier'
-import { getScopes } from '../../../../../shared/services/auth/auth'
+import { getScopes } from '../../../../utils/auth/auth'
 import { useAuthToken } from '../../../../contexts/AuthToken/AuthTokenContext'
 import formatDossierAccessValue from '../../utils/formatDossierAccessValue'
 import hasUserRights from '../../utils/hasUserRights'

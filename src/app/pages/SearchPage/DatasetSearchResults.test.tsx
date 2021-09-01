@@ -1,15 +1,15 @@
 import { fireEvent, render, screen } from '@testing-library/react'
 import { mocked } from 'ts-jest/utils'
-import { getScopes } from '../../../shared/services/auth/auth'
+import { getScopes } from '../../utils/auth/auth'
 import getLoadingErrors from '../../utils/getLoadingErrors'
 import getUnauthorizedLabels from '../../utils/getUnauthorizedLabels'
 import redirectToDcatd from '../../utils/redirectToDcatd'
 import withAppContext from '../../utils/withAppContext'
 import DatasetSearchResults from './DatasetSearchResults'
-import AuthScope from '../../../shared/services/api/authScope'
+import AuthScope from '../../utils/api/authScope'
 
-jest.mock('../../../shared/services/auth/auth', () => {
-  const originalModule = jest.requireActual('../../../shared/services/auth/auth')
+jest.mock('../../../app/utils/auth/auth', () => {
+  const originalModule = jest.requireActual('../../../app/utils/auth/auth')
 
   return {
     __esModule: true,

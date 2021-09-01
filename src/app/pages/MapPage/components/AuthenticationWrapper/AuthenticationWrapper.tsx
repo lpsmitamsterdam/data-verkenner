@@ -1,5 +1,5 @@
 import type { FunctionComponent, ReactElement } from 'react'
-import type AuthScope from '../../../../../shared/services/api/authScope'
+import type AuthScope from '../../../../utils/api/authScope'
 import useAuthScope from '../../../../hooks/useAuthScope'
 import type { AuthAlertProps } from '../../../../components/Alerts/AuthAlert'
 import AuthAlert from '../../../../components/Alerts/AuthAlert'

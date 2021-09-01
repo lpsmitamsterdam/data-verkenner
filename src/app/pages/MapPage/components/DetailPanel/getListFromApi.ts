@@ -1,5 +1,5 @@
 import type { Link, PaginatedData } from '../../legacy/types/details'
-import { fetchWithToken } from '../../../../../shared/services/api/api'
+import { fetchWithToken } from '../../../../utils/api/api'
 
 interface ApiLinkObject {
   self: {

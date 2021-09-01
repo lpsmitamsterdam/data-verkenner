@@ -2,8 +2,8 @@
 import type { FeatureCollection, Geometry } from 'geojson'
 import type { LatLngLiteral } from 'leaflet'
 import environment from '../../../../../../environment'
-import { fetchWithToken } from '../../../../../../shared/services/api/api'
-import { getScopes, isAuthenticated } from '../../../../../../shared/services/auth/auth'
+import { fetchWithToken } from '../../../../../utils/api/api'
+import { getScopes, isAuthenticated } from '../../../../../utils/auth/auth'
 import {
   fetchByPandId as fetchAddressByPandId,
   fetchHoofdadresByLigplaatsId,
@@ -14,7 +14,7 @@ import { fetchByPandId as fetchMonumentByPandId } from '../monument/monument'
 import { fetchByAddressId, fetchByPandId as fetchVestigingByPandId } from '../vestiging/vestiging'
 import transformResultByType from './transform-result-by-type'
 import type { GeoSearchFeature } from '../../../../../../api/geosearch'
-import AuthScope from '../../../../../../shared/services/api/authScope'
+import AuthScope from '../../../../../utils/api/authScope'
 
 interface Endpoint {
   uri: string

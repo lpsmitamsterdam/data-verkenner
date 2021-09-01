@@ -2,7 +2,7 @@ import { ThemeProvider } from '@amsterdam/asc-ui'
 import usePromise from '@amsterdam/use-promise'
 import { fireEvent, render, screen } from '@testing-library/react'
 import { mocked } from 'ts-jest/utils'
-import { AuthError } from '../../../shared/services/api/customError'
+import { AuthError } from '../../utils/api/customError'
 import AuthAlert from '../Alerts/AuthAlert'
 import PromiseResult from './PromiseResult'
 

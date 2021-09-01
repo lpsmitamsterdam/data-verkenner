@@ -1,6 +1,6 @@
 import type { LatLngTuple } from 'leaflet'
-import { fetchWithToken } from '../../../../../../shared/services/api/api'
-import getCenter from '../../../../../../shared/services/geo-json/geo-json'
+import { fetchWithToken } from '../../../../../utils/api/api'
+import getCenter from '../../../../../utils/geoJson'
 import environment from '../../../../../../environment'
 
 export const PANORAMA_CONFIG = {

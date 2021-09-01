@@ -6,13 +6,13 @@ import { mocked } from 'ts-jest/utils'
 import type { ResponseComposition, RestContext } from 'msw/lib/types'
 import { rest, server } from '../../../../../../test/server'
 import { NOT_FOUND_THUMBNAIL } from '../../../../../shared/config/constants'
-import { getAccessToken } from '../../../../../shared/services/auth/auth'
+import { getAccessToken } from '../../../../utils/auth/auth'
 import IIIFThumbnail from './IIIFThumbnail'
 
 const MOCK_ACCESS_TOKEN = 'ACCESS_TOKEN'
 const MOCK_OBJECT_URL = 'OBJECT_URL'
 
-jest.mock('../../../../../shared/services/auth/auth')
+jest.mock('../../../../../app/utils/auth/auth')
 jest.mock('@amsterdam/asc-ui', () => {
   const originalModule = jest.requireActual('@amsterdam/asc-ui')
 

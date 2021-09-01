@@ -1,4 +1,4 @@
-import formatNumber from './number-formatter'
+import formatNumber from './numberFormatter'
 
 describe('The number formatter service', () => {
   it('turns a number into a decimal string', () => {

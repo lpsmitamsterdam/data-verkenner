@@ -7,7 +7,7 @@ import path from 'path'
 import type { Viewer, ViewerEvent } from 'openseadragon'
 import { rest, server } from '../../../../../../test/server'
 import environment from '../../../../../environment'
-import { getAccessToken } from '../../../../../shared/services/auth/auth'
+import { getAccessToken } from '../../../../utils/auth/auth'
 import joinUrl from '../../../../utils/joinUrl'
 import useDownload from '../../../../hooks/useDownload'
 import withAppContext from '../../../../utils/withAppContext'
@@ -17,7 +17,7 @@ import type { DossierFile } from './ImageViewer'
 import ImageViewer from './ImageViewer'
 
 jest.mock('@datapunt/matomo-tracker-react')
-jest.mock('../../../../../shared/services/auth/auth')
+jest.mock('../../../../../app/utils/auth/auth')
 jest.mock('../../../../hooks/useDownload')
 jest.mock('../OSDViewer')
 

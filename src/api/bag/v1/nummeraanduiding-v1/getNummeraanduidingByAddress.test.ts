@@ -1,12 +1,12 @@
 import { mocked } from 'ts-jest/utils'
 import joinUrl from '../../../../app/utils/joinUrl'
 import environment from '../../../../environment'
-import { fetchWithoutToken } from '../../../../shared/services/api/api'
+import { fetchWithoutToken } from '../../../../app/utils/api/api'
 import { listFixture, verblijfsobjectFieldFixture } from './index'
 
 import { getNummeraanduidingByAddress } from './getNummeraanduidingByAddress'
 
-jest.mock('../../../../shared/services/api/api')
+jest.mock('../../../../app/utils/api/api')
 
 const mockedFetchWithoutToken = mocked(fetchWithoutToken, true)
 

@@ -4,7 +4,7 @@ import * as auth from '../auth/auth'
 import { createUrlWithToken, fetchProxy, fetchWithToken } from './api'
 import { AuthError, ForbiddenError, NotFoundError } from './customError'
 
-jest.mock('../auth/auth', () => jest.requireActual('../auth/auth'))
+jest.mock('../../../app/utils/auth/auth', () => jest.requireActual('../../../app/utils/auth/auth'))
 
 const getAuthHeadersSpy = jest.spyOn(auth, 'getAuthHeaders').mockImplementation(() => ({}))
 

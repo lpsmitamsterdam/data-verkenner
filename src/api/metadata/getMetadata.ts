@@ -1,6 +1,6 @@
 import joinUrl from '../../app/utils/joinUrl'
 import environment from '../../environment'
-import { fetchWithoutToken } from '../../shared/services/api/api'
+import { fetchWithoutToken } from '../../app/utils/api/api'
 import type { Metadata } from './types'
 
 /**

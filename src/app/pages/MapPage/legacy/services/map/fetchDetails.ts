@@ -3,12 +3,12 @@ import center from '@turf/center'
 // eslint-disable-next-line import/no-extraneous-dependencies
 import type { Geometry, Position } from 'geojson'
 import type { LatLngLiteral } from 'leaflet'
-import { fetchWithToken } from '../../../../../../shared/services/api/api'
+import { fetchWithToken } from '../../../../../utils/api/api'
 import type { DetailInfo, DetailResult } from '../../types/details'
 import { RD, WGS84 } from '../crs-config'
 import type { ServiceDefinition } from '../map-services.config'
 import { getDetailUrl } from './getDetailUrl'
-import { getAccessToken } from '../../../../../../shared/services/auth/auth'
+import { getAccessToken } from '../../../../../utils/auth/auth'
 
 // TODO: Write some tests for this method.
 

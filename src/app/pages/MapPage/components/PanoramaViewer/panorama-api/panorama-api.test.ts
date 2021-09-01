@@ -1,5 +1,5 @@
 import type { LatLngTuple } from 'leaflet'
-import { fetchWithToken } from '../../../../../../shared/services/api/api'
+import { fetchWithToken } from '../../../../../utils/api/api'
 import {
   getImageDataById,
   getImageDataByLocation,
@@ -9,7 +9,7 @@ import {
 } from './panorama-api'
 import environment from '../../../../../../environment'
 
-jest.mock('../../../../../../shared/services/api/api')
+jest.mock('../../../../../../app/utils/api/api')
 
 describe('The Panorama Api', () => {
   beforeEach(() => {

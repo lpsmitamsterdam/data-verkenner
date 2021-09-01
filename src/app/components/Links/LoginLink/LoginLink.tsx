@@ -2,7 +2,7 @@ import { Button } from '@amsterdam/asc-ui'
 import { ChevronRight } from '@amsterdam/asc-assets'
 import { useMatomo } from '@datapunt/matomo-tracker-react'
 import type { FunctionComponent } from 'react'
-import { login } from '../../../../shared/services/auth/auth'
+import { login } from '../../../utils/auth/auth'
 import useDocumentTitle from '../../../hooks/useDocumentTitle'
 
 export interface LoginLinkProps {

@@ -1,7 +1,7 @@
 import jwtDecode from 'jwt-decode'
 import type { FunctionComponent } from 'react'
 import { useEffect, useState } from 'react'
-import { getAccessToken } from '../../../shared/services/auth/auth'
+import { getAccessToken } from '../../utils/auth/auth'
 import createNamedContext from '../createNamedContext'
 import useInterval from '../../hooks/useInterval'
 import useParam from '../../hooks/useParam'

@@ -145,7 +145,7 @@ const AutoSuggestItem: FunctionComponent<AutoSuggestItemProps> = ({
       const rawMapLayers = searchParams.get(mapLayersParam.name)
       const mapLayers = rawMapLayers ? mapLayersParam.decode(rawMapLayers) : []
 
-      // Set detail-page path if current route is on a detail page or on data-selection page, otherwise navigate to geosearch page
+      // Set detail-page path if current route is on a detail page or on dataSelection page, otherwise navigate to geosearch page
       const pathname =
         matchPath(location.pathname, { path: routing.dataDetail.path, exact: true })?.url ??
         view === ViewMode.Map

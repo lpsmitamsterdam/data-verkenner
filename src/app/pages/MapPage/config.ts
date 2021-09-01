@@ -11,7 +11,7 @@ import {
   panoHeadingParam,
   panoPitchParam,
 } from './query-params'
-import AuthScope from '../../../shared/services/api/authScope'
+import AuthScope from '../../utils/api/authScope'
 
 // Because we use these types as id's in option values (select), we need to convert them to strings
 export enum DataSelectionType {

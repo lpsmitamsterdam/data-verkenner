@@ -1,9 +1,9 @@
 import { screen, fireEvent, render } from '@testing-library/react'
 import { mocked } from 'ts-jest/utils'
-import { login } from '../../../../shared/services/auth/auth'
+import { login } from '../../../utils/auth/auth'
 import LoginLink from './LoginLink'
 
-jest.mock('../../../../shared/services/auth/auth')
+jest.mock('../../../../app/utils/auth/auth')
 jest.mock('../../../hooks/useDocumentTitle', () => () => ({
   documentTitle: 'Some title',
 }))

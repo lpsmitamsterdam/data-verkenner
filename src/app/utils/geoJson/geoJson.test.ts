@@ -1,4 +1,4 @@
-import getCenter from './geo-json'
+import getCenter from './geoJson'
 
 describe('getCenter', () => {
   it('returns the coordinates of a point', () => {

@@ -1,7 +1,7 @@
 import { constants } from '@amsterdam/arm-core'
 import type { LatLngLiteral, LatLngTuple, WMSOptions } from 'leaflet'
 import { PANO_LABELS } from './components/PanoramaViewer/constants'
-import { normalizeCoordinate } from '../../../shared/services/coordinate-reference-system'
+import { normalizeCoordinate } from '../../utils/coordinateReferenceSystem'
 import type { UrlParam } from '../../hooks/useParam'
 
 // TODO: Refactor this default export once this issue is resolved: https://github.com/Amsterdam/amsterdam-react-maps/issues/727

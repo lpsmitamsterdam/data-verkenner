@@ -6,7 +6,7 @@ import MAP_CONFIG from '../../legacy/services/map.config'
 import type { ExtendedMapGroup } from '../../legacy/services'
 import { isAuthorised } from '../../legacy/utils/map-layer'
 import LayerLegendZoomButton from './LayerLegendZoomButton'
-import type AuthScope from '../../../../../shared/services/api/authScope'
+import type AuthScope from '../../../../utils/api/authScope'
 
 const MapLayerWithLegendStyle = styled.li<{ notSelectable: boolean; disabled?: boolean }>`
   align-items: center;

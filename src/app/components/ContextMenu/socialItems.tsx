@@ -1,6 +1,6 @@
 import { Email, FacebookPadded, Linkedin, Twitter } from '@amsterdam/asc-assets'
 import { ContextMenuItem, Icon } from '@amsterdam/asc-ui'
-import getShareUrl, { ShareTarget } from '../../../shared/services/share-url/share-url'
+import getShareUrl, { ShareTarget } from '../../utils/shareUrl'
 
 const socialItemsArray = [
   {

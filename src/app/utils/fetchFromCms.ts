@@ -1,6 +1,6 @@
-import { fetchWithToken } from '../../shared/services/api/api'
+import { fetchWithToken } from './api/api'
 import type { Single } from '../../api/cms/article'
-import cmsJsonApiNormalizer from '../../shared/services/cms/cms-json-api-normalizer'
+import cmsJsonApiNormalizer from './cms/cms-json-api-normalizer'
 import normalizeCMSResults from '../../normalizations/cms/normalizeCMSResults'
 import type { DoubleNormalizedResults, NormalizedFieldItems } from '../../normalizations/cms/types'
 

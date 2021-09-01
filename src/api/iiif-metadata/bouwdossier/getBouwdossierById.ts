@@ -1,6 +1,6 @@
 import joinUrl from '../../../app/utils/joinUrl'
 import environment from '../../../environment'
-import { fetchWithToken } from '../../../shared/services/api/api'
+import { fetchWithToken } from '../../../app/utils/api/api'
 import type { Single as Bouwdossier } from './types'
 
 /**

@@ -2,7 +2,7 @@ import { useMemo } from 'react'
 import { useLocation } from 'react-router-dom'
 import { DatasetType } from './types'
 import { routing } from '../../routes'
-import DATA_SELECTION_CONFIG from '../../../shared/services/data-selection/data-selection-config'
+import DATA_SELECTION_CONFIG from '../../utils/dataSelection/dataSelectionConfig'
 
 const ROUTE_DATASET_MAPPER = {
   [routing.cadastralObjects.path]: DatasetType.Brk,

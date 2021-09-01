@@ -1,7 +1,7 @@
 import { Heading, Link, Paragraph } from '@amsterdam/asc-ui'
 import type { FunctionComponent } from 'react'
 import { Link as RouterLink } from 'react-router-dom'
-import { login } from '../../../shared/services/auth/auth'
+import { login } from '../../utils/auth/auth'
 import { toAddresses, toCadastralObjects, toEstablishments } from '../../links'
 import { StyledList, StyledListItem } from './NoSearchResults'
 import { formatNoResultsMessage } from './utils'

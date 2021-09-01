@@ -15,7 +15,7 @@ import DataSelectionSbiFilters from './DataSelectionSbiFilters'
 import useFetchLegacyDataSelectionData from './useFetchLegacyDataSelectionData'
 import { useDataSelection } from '../../contexts/DataSelection/DataSelectionContext'
 import DataSelectionHeader from './DataSelectionHeader'
-import { AuthError } from '../../../shared/services/api/customError'
+import { AuthError } from '../../utils/api/customError'
 import { pageParam } from '../../pages/SearchPage/query-params'
 
 const StyledAlert = styled(Alert)`

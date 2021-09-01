@@ -1,6 +1,6 @@
 import { v4 } from 'uuid'
-import isObject from '../../../app/utils/isObject'
-import type { LegacyDataSelectionConfigType } from './data-selection-config'
+import isObject from '../isObject'
+import type { LegacyDataSelectionConfigType } from './dataSelectionConfig'
 import type {
   ActiveFilter,
   AvailableFilter,
@@ -9,7 +9,7 @@ import type {
   FilterObject,
   LegacyDataSelectionViewTypes,
   ObjectDetailWithLink,
-} from '../../../app/components/DataSelection/types'
+} from '../../components/DataSelection/types'
 import environment from '../../../environment'
 import type { AggsList, Bucket, ObjectDetail } from '../../../api/dataselectie/bag/types'
 

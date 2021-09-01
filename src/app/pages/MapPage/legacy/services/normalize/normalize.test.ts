@@ -1,6 +1,6 @@
 import { listFixture as meetbouwMetingFixture } from '../../../../../../api/meetbouten/meting'
 import environment from '../../../../../../environment'
-import * as api from '../../../../../../shared/services/api/api'
+import * as api from '../../../../../utils/api/api'
 import formatDate from '../../../../../utils/formatDate'
 import {
   adressenPand,
@@ -24,7 +24,7 @@ import {
 import type { PotentialApiResult } from '../../types/details'
 
 jest.mock('../../../../../utils/formatDate')
-jest.mock('../../../../../../shared/services/api/api')
+jest.mock('../../../../../../app/utils/api/api')
 
 const YEAR_UNKNOWN = 1005
 

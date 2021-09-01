@@ -1,7 +1,7 @@
 import { createUnsecuredToken, Json } from 'jsontokens'
 import type { DecodedToken } from '../../../contexts/AuthToken/AuthTokenContext'
 import hasUserRights from './hasUserRights'
-import AuthScope from '../../../../shared/services/api/authScope'
+import AuthScope from '../../../utils/api/authScope'
 
 const defaultScope = [AuthScope.BdR]
 const extendedScope = [AuthScope.BdX]

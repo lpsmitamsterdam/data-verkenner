@@ -3,11 +3,11 @@ import { mocked } from 'ts-jest/utils'
 import { useMatomo } from '@datapunt/matomo-tracker-react'
 import LoginLinkButton from './LoginLinkButton'
 import useDocumentTitle from '../../../../hooks/useDocumentTitle'
-import { login } from '../../../../../shared/services/auth/auth'
+import { login } from '../../../../utils/auth/auth'
 
 jest.mock('@datapunt/matomo-tracker-react')
 jest.mock('../../../../hooks/useDocumentTitle')
-jest.mock('../../../../../shared/services/auth/auth')
+jest.mock('../../../../../app/utils/auth/auth')
 
 const useMatomoMock = mocked(useMatomo)
 const useDocumentTitleMock = mocked(useDocumentTitle)

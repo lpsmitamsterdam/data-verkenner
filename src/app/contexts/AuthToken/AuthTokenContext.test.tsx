@@ -3,7 +3,7 @@ import { renderHook } from '@testing-library/react-hooks'
 import { createUnsecuredToken, Json } from 'jsontokens'
 import decodeToken from 'jwt-decode'
 import { mocked } from 'ts-jest/utils'
-import { getAccessToken } from '../../../shared/services/auth/auth'
+import { getAccessToken } from '../../utils/auth/auth'
 import useParam from '../../hooks/useParam'
 import AuthTokenContext, {
   AuthTokenContextProps,
@@ -13,7 +13,7 @@ import AuthTokenContext, {
 } from './AuthTokenContext'
 
 jest.mock('../../hooks/useParam')
-jest.mock('../../../shared/services/auth/auth')
+jest.mock('../../../app/utils/auth/auth')
 
 const useParamMock = mocked(useParam)
 const getAccessTokenMock = mocked(getAccessToken)

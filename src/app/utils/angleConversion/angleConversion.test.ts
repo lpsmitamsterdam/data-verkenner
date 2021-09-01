@@ -1,4 +1,4 @@
-import { degreesToRadians, radiansToDegrees } from './angle-conversion'
+import { degreesToRadians, radiansToDegrees } from './angleConversion'
 
 describe('The angle conversion service', () => {
   it('can convert degrees to radians', () => {

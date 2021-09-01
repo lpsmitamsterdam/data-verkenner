@@ -1,4 +1,4 @@
-import getShareUrl, { ShareTarget } from './share-url'
+import getShareUrl, { ShareTarget } from './shareUrl'
 
 describe('getShareUrl', () => {
   const windowSpy = jest.spyOn(window, 'window', 'get')

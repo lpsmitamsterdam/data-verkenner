@@ -1,4 +1,4 @@
-import { fetchWithToken } from '../../../../../../shared/services/api/api'
+import { fetchWithToken } from '../../../../../utils/api/api'
 import environment from '../../../../../../environment'
 import { adressenVerblijfsobject } from '../normalize/normalize'
 import type {

@@ -1,8 +1,8 @@
 import { mocked } from 'ts-jest/utils'
-import { fetchWithToken } from '../../../../../../shared/services/api/api'
+import { fetchWithToken } from '../../../../../utils/api/api'
 import fetchNearestDetail from './nearest-detail'
 
-jest.mock('../../../../../../shared/services/api/api')
+jest.mock('../../../../../../app/utils/api/api')
 
 const mockedFetchWithToken = mocked(fetchWithToken)
 

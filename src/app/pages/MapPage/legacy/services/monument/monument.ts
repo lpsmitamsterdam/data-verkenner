@@ -1,4 +1,4 @@
-import { fetchWithToken } from '../../../../../../shared/services/api/api'
+import { fetchWithToken } from '../../../../../utils/api/api'
 import environment from '../../../../../../environment'
 
 export function fetchByPandId(pandId: string) {

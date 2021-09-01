@@ -3,7 +3,7 @@ import { ShareButton, themeSpacing } from '@amsterdam/asc-ui'
 import type { FunctionComponent } from 'react'
 import { useCallback } from 'react'
 import styled, { css } from 'styled-components'
-import getShareUrl from '../../../shared/services/share-url/share-url'
+import getShareUrl from '../../utils/shareUrl'
 
 export interface ShareBarProps {
   hideInPrintMode?: boolean

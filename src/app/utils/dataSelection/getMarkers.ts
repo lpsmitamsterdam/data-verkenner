@@ -1,8 +1,8 @@
 import type { LatLngLiteral } from 'leaflet'
 import { fetchWithToken } from '../api/api'
 import environment from '../../../environment'
-import type { LegacyDataSelectionConfigType } from './data-selection-config'
-import type { FilterObject } from '../../../app/components/DataSelection/types'
+import type { LegacyDataSelectionConfigType } from './dataSelectionConfig'
+import type { FilterObject } from '../../components/DataSelection/types'
 
 function getMarkers(
   signal: AbortSignal,

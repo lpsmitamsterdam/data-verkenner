@@ -3,7 +3,7 @@ import type { FunctionComponent } from 'react'
 import { useMemo } from 'react'
 import styled, { css } from 'styled-components'
 import type { LatLngLiteral } from 'leaflet'
-import { wgs84ToRd } from '../../../shared/services/coordinate-reference-system'
+import { wgs84ToRd } from '../../utils/coordinateReferenceSystem'
 import formatDate from '../../utils/formatDate'
 
 const ViewerInfoBarStyle = styled.div<{ panoFullScreen?: boolean; panelActive: boolean }>`

@@ -4,7 +4,7 @@ import { useMatomo } from '@datapunt/matomo-tracker-react'
 import type { FunctionComponent } from 'react'
 import { Link as RouterLink, useHistory, useLocation } from 'react-router-dom'
 import styled from 'styled-components'
-import { getScopes } from '../../../shared/services/auth/auth'
+import { getScopes } from '../../utils/auth/auth'
 import { DATASELECTION_MAP_BUTTON } from '../../pages/MapPage/matomo-events'
 import { ViewMode, viewParam } from '../../pages/MapPage/query-params'
 import useBuildQueryString from '../../hooks/useBuildQueryString'
@@ -13,7 +13,7 @@ import { useDataSelection } from '../../contexts/DataSelection/DataSelectionCont
 import DataSelectionDownloadButton from './DataSelectionDownloadButton'
 import { DatasetType } from './types'
 import useLegacyDataselectionConfig from './useLegacyDataselectionConfig'
-import type AuthScope from '../../../shared/services/api/authScope'
+import type AuthScope from '../../utils/api/authScope'
 
 const StyledTabs = styled(Tabs)`
   margin-bottom: ${themeSpacing(2)};

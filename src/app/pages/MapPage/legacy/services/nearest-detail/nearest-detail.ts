@@ -1,6 +1,6 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
 import environment from '../../../../../../environment'
-import { fetchWithToken, UrlParams } from '../../../../../../shared/services/api/api'
+import { fetchWithToken, UrlParams } from '../../../../../utils/api/api'
 import MAP_CONFIG from '../map.config'
 import type { ExtendedMapGroup } from '../index'
 import type { GeoSearchFeature, GeoSearchProperties } from '../../../../../../api/geosearch'

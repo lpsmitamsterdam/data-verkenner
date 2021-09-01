@@ -1,4 +1,4 @@
-import { fetchWithToken } from '../../../../../../shared/services/api/api'
+import { fetchWithToken } from '../../../../../utils/api/api'
 import mapFetch from '../map-fetch/map-fetch'
 import normalize, {
   fetchByLigplaatsId,
@@ -8,7 +8,7 @@ import normalize, {
 } from './adressen-nummeraanduiding'
 import type { Single as Nummeraanduiding } from '../../../../../../api/bag/v1.1/nummeraanduiding'
 
-jest.mock('../../../../../../shared/services/api/api')
+jest.mock('../../../../../../app/utils/api/api')
 jest.mock('../normalize/normalize')
 jest.mock('../map-fetch/map-fetch')
 

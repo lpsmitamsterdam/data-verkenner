@@ -15,7 +15,7 @@ import type {
   PaginatedData as PaginatedDataType,
 } from '../../legacy/types/details'
 import { DetailResultItemType } from '../../legacy/types/details'
-import { AuthError, ForbiddenError } from '../../../../../shared/services/api/customError'
+import { AuthError, ForbiddenError } from '../../../../utils/api/customError'
 import AuthAlert from '../../../../components/Alerts/AuthAlert'
 import PromiseResult from '../../../../components/PromiseResult/PromiseResult'
 import Spacer from '../../../../components/Spacer/Spacer'
@@ -32,7 +32,7 @@ import DetailTable from './DetailTable'
 import LoadingSpinner from '../../../../components/LoadingSpinner/LoadingSpinner'
 import useAsyncMapPanelHeader from '../../utils/useAsyncMapPanelHeader'
 import GeneralErrorAlert from '../../../../components/Alerts/GeneralErrorAlert'
-import AuthScope from '../../../../../shared/services/api/authScope'
+import AuthScope from '../../../../utils/api/authScope'
 import LoginLink from '../../../../components/Links/LoginLink/LoginLink'
 import useLegacyDataselectionConfig from '../../../../components/DataSelection/useLegacyDataselectionConfig'
 

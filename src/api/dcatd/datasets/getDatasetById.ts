@@ -1,6 +1,6 @@
 import joinUrl from '../../../app/utils/joinUrl'
 import environment from '../../../environment'
-import { fetchProxy } from '../../../shared/services/api/api'
+import { fetchProxy } from '../../../app/utils/api/api'
 import type { DcatDataset } from './types'
 
 /**

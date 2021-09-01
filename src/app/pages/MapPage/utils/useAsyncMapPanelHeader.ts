@@ -2,7 +2,7 @@ import { ReactElement, useEffect } from 'react'
 import type { PromiseResult } from '@amsterdam/use-promise'
 import { isFulfilled, isPending, isRejected } from '@amsterdam/use-promise'
 import { useMapContext } from '../../../contexts/map/MapContext'
-import { AuthError, ForbiddenError } from '../../../../shared/services/api/customError'
+import { AuthError, ForbiddenError } from '../../../utils/api/customError'
 
 const useAsyncMapPanelHeader = <T = any>(
   results: PromiseResult<T>,

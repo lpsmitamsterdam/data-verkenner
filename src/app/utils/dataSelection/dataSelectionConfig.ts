@@ -1,5 +1,5 @@
-import { routing } from '../../../app/routes'
-import type { BoundingBox, FilterObject } from '../../../app/components/DataSelection/types'
+import { routing } from '../../routes'
+import type { BoundingBox, FilterObject } from '../../components/DataSelection/types'
 import getBrkMarkers from './getBrkMarkers'
 import getMarkers from './getMarkers'
 import AuthScope from '../api/authScope'

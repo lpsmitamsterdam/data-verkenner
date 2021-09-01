@@ -1,6 +1,6 @@
 import type { TileLayerOptions } from 'leaflet'
-import { createUrlWithToken } from '../../../../shared/services/api/api'
-import { getAccessToken } from '../../../../shared/services/auth/auth'
+import { createUrlWithToken } from '../../../utils/api/api'
+import { getAccessToken } from '../../../utils/auth/auth'
 import type { ExtendedMapGroup, ExtendedMapGroupLegendItem } from '../legacy/services'
 import MAP_CONFIG from '../legacy/services/map.config'
 import type { Overlay } from '../../../contexts/map/MapContext'

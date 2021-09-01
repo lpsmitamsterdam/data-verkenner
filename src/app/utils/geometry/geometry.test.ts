@@ -1,5 +1,5 @@
 import type { Point } from 'geojson'
-import * as crsConverter from '../coordinate-reference-system/crs-converter'
+import * as crsConverter from '../coordinateReferenceSystem/crs-converter'
 import getGeometry from './geometry'
 
 describe('geometry', () => {

@@ -1,7 +1,7 @@
 /* eslint-disable camelcase */
 import environment from '../../../../../../environment'
-import { fetchWithToken } from '../../../../../../shared/services/api/api'
-import formatNumber from '../../../../../../shared/services/number-formatter/number-formatter'
+import { fetchWithToken } from '../../../../../utils/api/api'
+import formatNumber from '../../../../../utils/numberFormatter'
 import formatCount from '../../../../../utils/formatCount'
 import formatDate from '../../../../../utils/formatDate'
 import { NORMAL_PAND_STATUSSES, NORMAL_VBO_STATUSSES } from '../map-search/status-labels'

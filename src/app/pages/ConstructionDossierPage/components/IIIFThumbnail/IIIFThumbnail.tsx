@@ -4,7 +4,7 @@ import { useEffect } from 'react'
 import styled from 'styled-components'
 import type { FunctionComponent } from 'react'
 import { NOT_FOUND_THUMBNAIL } from '../../../../../shared/config/constants'
-import { getAccessToken } from '../../../../../shared/services/auth/auth'
+import { getAccessToken } from '../../../../utils/auth/auth'
 
 const StyledCard = styled(Card)`
   border: 1px solid ${themeColor('tint', 'level3')};

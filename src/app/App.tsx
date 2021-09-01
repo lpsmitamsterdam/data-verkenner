@@ -20,7 +20,7 @@ import {
   Provider as GraphQLProvider,
 } from 'urql'
 import environment from '../environment'
-import { getAccessToken } from '../shared/services/auth/auth'
+import { getAccessToken } from './utils/auth/auth'
 import AppBody, { APP_CONTAINER_ID } from './AppBody'
 import Footer, { FOOTER_ID } from './components/Footer/Footer'
 import Header from './components/Header'

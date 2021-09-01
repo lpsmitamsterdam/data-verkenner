@@ -9,7 +9,7 @@ import LoginLink from '../../../../components/Links/LoginLink/LoginLink'
 import LayerLegend from './LayerLegend'
 import type { ExtendedMapGroup, ExtendedMapGroupLegendItem } from '../../legacy/services'
 import LayerLegendZoomButton from './LayerLegendZoomButton'
-import type AuthScope from '../../../../../shared/services/api/authScope'
+import type AuthScope from '../../../../utils/api/authScope'
 
 const MapLayerItemStyle = styled.li<{ disabled?: boolean }>`
   display: flex;

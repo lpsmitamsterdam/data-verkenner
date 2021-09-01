@@ -1,8 +1,8 @@
 import { v4 as uuid } from 'uuid'
-import type { BoundingBox, FilterObject } from '../../../app/components/DataSelection/types'
+import type { BoundingBox, FilterObject } from '../../components/DataSelection/types'
 import environment from '../../../environment'
 import { fetchWithToken } from '../api/api'
-import type { LegacyDataSelectionConfigType } from './data-selection-config'
+import type { LegacyDataSelectionConfigType } from './dataSelectionConfig'
 
 function getBrkMarkers(
   signal: AbortSignal,

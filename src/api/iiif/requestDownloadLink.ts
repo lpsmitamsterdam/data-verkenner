@@ -1,6 +1,6 @@
 import joinUrl from '../../app/utils/joinUrl'
 import environment from '../../environment'
-import { getAccessToken } from '../../shared/services/auth/auth'
+import { getAccessToken } from '../../app/utils/auth/auth'
 
 /**
  * Requests a link to download the list of specified file URLs as a ZIP file.

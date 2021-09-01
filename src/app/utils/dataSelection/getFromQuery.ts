@@ -1,11 +1,11 @@
 import { fetchWithToken } from '../api/api'
 import environment from '../../../environment'
 import { createFiltersObject, formatData, formatFilters } from './normalizations'
-import type { LegacyDataSelectionConfigType } from './data-selection-config'
+import type { LegacyDataSelectionConfigType } from './dataSelectionConfig'
 import type {
   ActiveFilter,
   LegacyDataSelectionViewTypes,
-} from '../../../app/components/DataSelection/types'
+} from '../../components/DataSelection/types'
 
 function getFromQuery(
   signal: AbortSignal,

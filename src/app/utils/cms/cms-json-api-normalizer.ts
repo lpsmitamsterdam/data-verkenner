@@ -3,7 +3,7 @@
 import normalize from 'json-api-normalize'
 import type { Single } from '../../../api/cms/article'
 import type { NormalizedResult } from '../../../normalizations/cms/types'
-import type { CmsType } from '../../config/cms.config'
+import type { CmsType } from '../../../shared/config/cms.config'
 
 export const getType = (type?: string) => type && type.replace('node--', '')
 

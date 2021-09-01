@@ -1,4 +1,4 @@
-import joinUrl from '../../../app/utils/joinUrl'
+import joinUrl from '../joinUrl'
 import environment from '../../../environment'
 import { fetchProxy } from '../api/api'
 

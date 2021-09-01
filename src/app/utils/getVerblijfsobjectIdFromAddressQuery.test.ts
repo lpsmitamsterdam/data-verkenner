@@ -2,7 +2,7 @@ import { mocked } from 'ts-jest/utils'
 import getVerblijfsobjectIdFromAddressQuery from './getVerblijfsobjectIdFromAddressQuery'
 import { getNummeraanduidingByAddress } from '../../api/bag/v1/nummeraanduiding-v1'
 
-jest.mock('../../shared/services/api/api')
+jest.mock('../../app/utils/api/api')
 jest.mock('../../api/bag/v1/nummeraanduiding-v1', () => ({
   // @ts-ignore
   ...jest.requireActual('../../api/bag/v1/nummeraanduiding-v1'),

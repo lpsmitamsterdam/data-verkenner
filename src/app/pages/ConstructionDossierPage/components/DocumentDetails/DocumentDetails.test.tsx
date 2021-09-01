@@ -7,11 +7,11 @@ import withAppContext from '../../../../utils/withAppContext'
 import AuthTokenContext, { DecodedToken } from '../../../../contexts/AuthToken/AuthTokenContext'
 import FilesGallery from '../FilesGallery'
 import DocumentDetails from './DocumentDetails'
-import { getScopes } from '../../../../../shared/services/auth/auth'
-import AuthScope from '../../../../../shared/services/api/authScope'
+import { getScopes } from '../../../../utils/auth/auth'
+import AuthScope from '../../../../utils/api/authScope'
 
 jest.mock('../FilesGallery')
-jest.mock('../../../../../shared/services/auth/auth')
+jest.mock('../../../../../app/utils/auth/auth')
 
 const FilesGalleryMock = mocked(FilesGallery)
 const getScopesMock = mocked(getScopes)

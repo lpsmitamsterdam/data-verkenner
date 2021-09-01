@@ -1,5 +1,5 @@
-import { getScopes } from '../../../../../shared/services/auth/auth'
-import type AuthScope from '../../../../../shared/services/api/authScope'
+import { getScopes } from '../../../../utils/auth/auth'
+import type AuthScope from '../../../../utils/api/authScope'
 
 // eslint-disable-next-line import/prefer-default-export
 export function isAuthorised(layerAuthScope?: AuthScope | null) {
