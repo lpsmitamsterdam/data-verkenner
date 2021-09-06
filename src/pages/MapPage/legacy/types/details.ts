@@ -2,7 +2,7 @@ import type { AlertLevel } from '@amsterdam/asc-ui'
 import type { Geometry, Point } from 'geojson'
 import type { LocationDescriptor, LocationDescriptorObject } from 'history'
 import type { FunctionComponent, ReactNode } from 'react'
-import type AuthScope from '../../../../app/utils/api/authScope'
+import type AuthScope from '../../../../shared/utils/api/authScope'
 import type { Definition } from '../glossary.constant'
 
 export type InfoBoxProps = {

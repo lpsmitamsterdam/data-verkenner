@@ -1,4 +1,4 @@
-import { useIsEmbedded } from '../../../../app/contexts/ui'
+import { useIsEmbedded } from '../../../../shared/contexts/ui'
 import Control from '../Control'
 import DrawTool from '../DrawTool/DrawTool'
 

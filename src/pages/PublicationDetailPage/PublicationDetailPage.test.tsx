@@ -1,11 +1,11 @@
 import usePromise from '@amsterdam/use-promise'
 import { fireEvent, render, screen, within } from '@testing-library/react'
 import { mocked } from 'ts-jest/utils'
-import useDownload from '../../app/hooks/useDownload'
-import withAppContext from '../../app/utils/withAppContext'
+import useDownload from '../../shared/hooks/useDownload'
+import withAppContext from '../../shared/utils/withAppContext'
 import PublicationDetailPage from './PublicationDetailPage'
 
-jest.mock('../../app/hooks/useDownload')
+jest.mock('../../shared/hooks/useDownload')
 
 const mockedUseDownload = mocked(useDownload, true)
 

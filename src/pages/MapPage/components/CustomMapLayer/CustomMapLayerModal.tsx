@@ -4,10 +4,10 @@ import { useState } from 'react'
 import { v4 } from 'uuid'
 import styled from 'styled-components'
 import { Close } from '@amsterdam/asc-assets'
-import { fetchProxy } from '../../../../app/utils/api/api'
-import useParam from '../../../../app/hooks/useParam'
+import { fetchProxy } from '../../../../shared/utils/api/api'
+import useParam from '../../../../shared/hooks/useParam'
 import { customMapLayer } from '../../query-params'
-import ModalBlock from '../../../../app/components/Modal/ModalBlock'
+import ModalBlock from '../../../../shared/components/Modal/ModalBlock'
 
 const StyledDivider = styled(Divider)`
   margin: ${themeSpacing(2, 0)};

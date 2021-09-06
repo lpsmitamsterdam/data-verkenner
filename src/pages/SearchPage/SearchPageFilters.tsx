@@ -13,9 +13,9 @@ import {
 import styled from 'styled-components'
 import type { FunctionComponent, ReactElement } from 'react'
 import CONSTANTS from '../../shared/config/constants'
-import PageFilterBox from '../../app/components/PageFilterBox/PageFilterBox'
-import SearchFilter from '../../app/components/SearchFilter'
-import type { Filter } from '../../app/models/filter'
+import PageFilterBox from '../../shared/components/PageFilterBox/PageFilterBox'
+import SearchFilter from '../../shared/components/SearchFilter'
+import type { Filter } from '../../shared/models/filter'
 
 export interface SearchPageFiltersProps {
   filters: Filter[]

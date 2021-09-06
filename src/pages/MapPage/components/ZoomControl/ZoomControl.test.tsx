@@ -2,7 +2,7 @@ import { useMapInstance } from '@amsterdam/react-maps'
 import { screen, fireEvent, render } from '@testing-library/react'
 import { mocked } from 'ts-jest/utils'
 import type { Map } from 'leaflet'
-import withAppContext from '../../../../app/utils/withAppContext'
+import withAppContext from '../../../../shared/utils/withAppContext'
 import ZoomControl from './ZoomControl'
 
 jest.mock('@amsterdam/react-maps')

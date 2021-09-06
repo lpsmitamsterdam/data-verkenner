@@ -7,11 +7,11 @@ import styled from 'styled-components'
 import type { FunctionComponent } from 'react'
 import cmsConfig from '../../shared/config/cms.config'
 import CardListBlock from './components/CardListBlock'
-import ContentContainer from '../../app/components/ContentContainer/ContentContainer'
-import ErrorMessage from '../../app/components/ErrorMessage/ErrorMessage'
-import useDocumentTitle from '../../app/hooks/useDocumentTitle'
+import ContentContainer from '../../shared/components/ContentContainer/ContentContainer'
+import ErrorMessage from '../../shared/components/ErrorMessage/ErrorMessage'
+import useDocumentTitle from '../../shared/hooks/useDocumentTitle'
 import CollectionTileGrid from './CollectionTileGrid'
-import { fetchSingleFromCms } from '../../app/utils/fetchFromCms'
+import { fetchSingleFromCms } from '../../shared/utils/fetchFromCms'
 
 const StyledCardListBlock = styled(CardListBlock)`
   margin-top: ${themeSpacing(12)};

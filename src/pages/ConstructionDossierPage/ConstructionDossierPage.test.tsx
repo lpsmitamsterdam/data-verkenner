@@ -5,13 +5,13 @@ import { Suspense } from 'react'
 import { Route, Router } from 'react-router-dom'
 import { mocked } from 'ts-jest/utils'
 import { getBouwdossierById, singleFixture } from '../../api/iiif-metadata/bouwdossier'
-import { toConstructionDossier } from '../../app/links'
-import { routing } from '../../app/routes'
-import useDocumentTitle from '../../app/hooks/useDocumentTitle'
+import { toConstructionDossier } from '../../links'
+import { routing } from '../../routes'
+import useDocumentTitle from '../../shared/hooks/useDocumentTitle'
 import ConstructionDossierPage from './ConstructionDossierPage'
 
 jest.mock('../../api/iiif-metadata/bouwdossier')
-jest.mock('../../app/hooks/useDocumentTitle')
+jest.mock('../../shared/hooks/useDocumentTitle')
 jest.mock('./components/ImageViewer', () => () => <div data-testid="imageViewer" />)
 
 const mockedGetBouwdossierById = mocked(getBouwdossierById)

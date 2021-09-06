@@ -3,7 +3,7 @@ import { ControlButton } from '@amsterdam/arm-core'
 import { breakpoint } from '@amsterdam/asc-ui'
 import { useMatomo } from '@datapunt/matomo-tracker-react'
 import styled from 'styled-components'
-import { useMapContext } from '../../../../app/contexts/map/MapContext'
+import { useMapContext } from '../../../../shared/contexts/map/MapContext'
 import { PANORAMA_FULLSCREEN_TOGGLE } from '../../matomo-events'
 import Reduce from '../PanoramaViewer/reduce.svg'
 

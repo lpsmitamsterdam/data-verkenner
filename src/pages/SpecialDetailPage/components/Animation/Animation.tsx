@@ -11,7 +11,7 @@ import {
 import styled from 'styled-components'
 import type { FunctionComponent } from 'react'
 import type { DoubleNormalizedResults } from '../../../../normalizations/cms/types'
-import ShareBar from '../../../../app/components/ShareBar/ShareBar'
+import ShareBar from '../../../../shared/components/ShareBar/ShareBar'
 
 const StyledColumn = styled(Column)`
   margin-bottom: ${themeSpacing(5)};

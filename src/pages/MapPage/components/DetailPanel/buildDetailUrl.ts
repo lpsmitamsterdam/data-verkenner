@@ -1,6 +1,6 @@
 import type { LocationDescriptorObject } from 'history'
-import type { DataDetailParams } from '../../../../app/links'
-import { toDataDetail } from '../../../../app/links'
+import type { DataDetailParams } from '../../../../links'
+import { toDataDetail } from '../../../../links'
 
 export default function buildDetailUrl({
   type,

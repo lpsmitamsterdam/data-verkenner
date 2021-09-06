@@ -2,9 +2,9 @@ import { useEffect } from 'react'
 import { useMapInstance } from '@amsterdam/react-maps'
 import L, { Polygon } from 'leaflet'
 import { render } from '@testing-library/react'
-import withMapContext from '../../../../app/utils/withMapContext'
+import withMapContext from '../../../../shared/utils/withMapContext'
 import DrawTool from './DrawTool'
-import { DataSelectionProvider } from '../../../../app/contexts/DataSelection/DataSelectionContext'
+import { DataSelectionProvider } from '../../../../shared/contexts/DataSelection/DataSelectionContext'
 
 jest.mock('leaflet', () => ({
   // @ts-ignore
@@ -23,7 +23,7 @@ jest.mock('leaflet', () => ({
   })),
 }))
 const panToWithPanelOffsetMock = jest.fn()
-jest.mock('../../../../app/hooks/useMapCenterToMarker', () => () => ({
+jest.mock('../../../../shared/hooks/useMapCenterToMarker', () => () => ({
   panToWithPanelOffset: panToWithPanelOffsetMock,
 }))
 

@@ -1,11 +1,11 @@
 import type { FunctionComponent } from 'react'
 import { Route, Switch } from 'react-router-dom'
-import useParam from '../../app/hooks/useParam'
+import useParam from '../../shared/hooks/useParam'
 import MapPage from './MapPage'
 import { ViewMode, viewParam } from './query-params'
-import DataSelection from '../../app/components/DataSelection/DataSelection'
-import { routing } from '../../app/routes'
-import MapProvider from '../../app/contexts/map/MapProvider'
+import DataSelection from '../../shared/components/DataSelection/DataSelection'
+import { routing } from '../../routes'
+import MapProvider from '../../shared/contexts/map/MapProvider'
 
 const MapContainer: FunctionComponent = ({ children }) => {
   const [view] = useParam(viewParam)

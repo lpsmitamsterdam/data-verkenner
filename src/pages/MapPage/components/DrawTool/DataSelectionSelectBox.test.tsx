@@ -1,7 +1,7 @@
 import { screen, fireEvent, render } from '@testing-library/react'
 import DataSelectionSelectBox from './DataSelectionSelectBox'
-import withAppContext from '../../../../app/utils/withAppContext'
-import { routing } from '../../../../app/routes'
+import withAppContext from '../../../../shared/utils/withAppContext'
+import { routing } from '../../../../routes'
 import { DataSelectionType } from '../../config'
 
 const mockPush = jest.fn()

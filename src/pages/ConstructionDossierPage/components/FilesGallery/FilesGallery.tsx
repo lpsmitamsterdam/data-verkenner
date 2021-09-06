@@ -6,9 +6,9 @@ import { Link as RouterLink } from 'react-router-dom'
 import styled, { css } from 'styled-components'
 import type { Bestand, Document } from '../../../../api/iiif-metadata/bouwdossier'
 import { NOT_FOUND_THUMBNAIL } from '../../../../shared/config/constants'
-import ActionButton from '../../../../app/components/ActionButton'
-import { toConstructionDossier } from '../../../../app/links'
-import { useAuthToken } from '../../../../app/contexts/AuthToken/AuthTokenContext'
+import ActionButton from '../../../../shared/components/ActionButton'
+import { toConstructionDossier } from '../../../../links'
+import { useAuthToken } from '../../../../shared/contexts/AuthToken/AuthTokenContext'
 import IIIFThumbnail from '../IIIFThumbnail'
 
 const StyledRow = styled(Row)<{ hasMarginBottom: boolean }>`

@@ -1,9 +1,9 @@
 import { Map } from '@amsterdam/arm-core'
 import { fireEvent, render, screen } from '@testing-library/react'
 import type { PropsWithChildren } from 'react'
-import MapContext from '../../../../app/contexts/map/MapContext'
-import withMapContext, { initialState } from '../../../../app/utils/withMapContext'
-import withAppContext from '../../../../app/utils/withAppContext'
+import MapContext from '../../../../shared/contexts/map/MapContext'
+import withMapContext, { initialState } from '../../../../shared/utils/withMapContext'
+import withAppContext from '../../../../shared/utils/withAppContext'
 import PanoramaMapMinimizeButton from './PanoramaMapMinimizeButton'
 
 jest.mock('@amsterdam/arm-core', () => ({

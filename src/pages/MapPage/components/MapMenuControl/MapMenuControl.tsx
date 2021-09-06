@@ -4,8 +4,8 @@ import { themeSpacing } from '@amsterdam/asc-ui'
 import Control from '../Control'
 import BaseLayerToggle from '../BaseLayerToggle'
 import MapContextMenu from '../MapContextMenu/MapContextMenu'
-import { useIsEmbedded } from '../../../../app/contexts/ui'
-import { useMapContext } from '../../../../app/contexts/map/MapContext'
+import { useIsEmbedded } from '../../../../shared/contexts/ui'
+import { useMapContext } from '../../../../shared/contexts/map/MapContext'
 import PanoramaMapMinimizeButton from '../PanoramaMapMinimizeButton'
 
 const StyledControl = styled(Control)`

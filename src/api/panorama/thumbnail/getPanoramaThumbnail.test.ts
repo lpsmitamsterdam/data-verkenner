@@ -1,10 +1,10 @@
 import { mocked } from 'ts-jest/utils'
-import joinUrl from '../../../app/utils/joinUrl'
+import joinUrl from '../../../shared/utils/joinUrl'
 import environment from '../../../environment'
-import { fetchProxy } from '../../../app/utils/api/api'
+import { fetchProxy } from '../../../shared/utils/api/api'
 import { getPanoramaThumbnail } from './getPanoramaThumbnail'
 
-jest.mock('../../../app/utils/api/api')
+jest.mock('../../../shared/utils/api/api')
 
 const mockedFetchProxy = mocked(fetchProxy, true)
 

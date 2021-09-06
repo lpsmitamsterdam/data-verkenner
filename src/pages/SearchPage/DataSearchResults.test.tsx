@@ -1,10 +1,10 @@
 import { render, screen } from '@testing-library/react'
 import { mocked } from 'ts-jest/utils'
-import DataCard, { DataList } from '../../app/components/DataCard'
-import withAppContext from '../../app/utils/withAppContext'
+import DataCard, { DataList } from '../../shared/components/DataCard'
+import withAppContext from '../../shared/utils/withAppContext'
 import DataSearchResults, { CombinedDataResult } from './DataSearchResults'
 
-jest.mock('../../app/components/DataCard')
+jest.mock('../../shared/components/DataCard')
 
 const mockedDataCard = mocked(DataCard)
 const mockedDataList = mocked(DataList)

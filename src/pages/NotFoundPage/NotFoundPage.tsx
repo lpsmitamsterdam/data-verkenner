@@ -1,9 +1,9 @@
 import { Column, Heading, Link, Paragraph, Row, themeSpacing } from '@amsterdam/asc-ui'
 import { Link as RouterLink } from 'react-router-dom'
 import styled from 'styled-components'
-import ContentContainer from '../../app/components/ContentContainer/ContentContainer'
-import ShareBar from '../../app/components/ShareBar/ShareBar'
-import { toHome } from '../../app/links'
+import ContentContainer from '../../shared/components/ContentContainer/ContentContainer'
+import ShareBar from '../../shared/components/ShareBar/ShareBar'
+import { toHome } from '../../links'
 
 const StyledHeading = styled(Heading)`
   margin-bottom: ${themeSpacing(5)};

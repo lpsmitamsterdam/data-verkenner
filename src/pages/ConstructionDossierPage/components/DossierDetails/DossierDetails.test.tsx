@@ -3,9 +3,11 @@ import { mocked } from 'ts-jest/utils'
 import { createUnsecuredToken, Json } from 'jsontokens'
 import type { FunctionComponent } from 'react'
 import { singleFixture as bouwdossierFixture } from '../../../../api/iiif-metadata/bouwdossier'
-import withAppContext from '../../../../app/utils/withAppContext'
+import withAppContext from '../../../../shared/utils/withAppContext'
 import formatDossierAccessValue from '../../utils/formatDossierAccessValue'
-import AuthTokenContext, { DecodedToken } from '../../../../app/contexts/AuthToken/AuthTokenContext'
+import AuthTokenContext, {
+  DecodedToken,
+} from '../../../../shared/contexts/AuthToken/AuthTokenContext'
 import FilesGallery from '../FilesGallery'
 import DossierDetails from './DossierDetails'
 

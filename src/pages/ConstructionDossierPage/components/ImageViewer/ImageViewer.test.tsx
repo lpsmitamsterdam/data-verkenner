@@ -7,18 +7,18 @@ import path from 'path'
 import type { Viewer, ViewerEvent } from 'openseadragon'
 import { rest, server } from '../../../../../test/server'
 import environment from '../../../../environment'
-import { getAccessToken } from '../../../../app/utils/auth/auth'
-import joinUrl from '../../../../app/utils/joinUrl'
-import useDownload from '../../../../app/hooks/useDownload'
-import withAppContext from '../../../../app/utils/withAppContext'
-import { AuthTokenProvider } from '../../../../app/contexts/AuthToken/AuthTokenContext'
+import { getAccessToken } from '../../../../shared/utils/auth/auth'
+import joinUrl from '../../../../shared/utils/joinUrl'
+import useDownload from '../../../../shared/hooks/useDownload'
+import withAppContext from '../../../../shared/utils/withAppContext'
+import { AuthTokenProvider } from '../../../../shared/contexts/AuthToken/AuthTokenContext'
 import OSDViewer from '../OSDViewer'
 import type { DossierFile } from './ImageViewer'
 import ImageViewer from './ImageViewer'
 
 jest.mock('@datapunt/matomo-tracker-react')
-jest.mock('../../../../app/utils/auth/auth')
-jest.mock('../../../../app/hooks/useDownload')
+jest.mock('../../../../shared/utils/auth/auth')
+jest.mock('../../../../shared/hooks/useDownload')
 jest.mock('../OSDViewer')
 
 const mockedUseMatomo = mocked(useMatomo)

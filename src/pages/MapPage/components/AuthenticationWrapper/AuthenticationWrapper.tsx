@@ -1,8 +1,8 @@
 import type { FunctionComponent, ReactElement } from 'react'
-import type AuthScope from '../../../../app/utils/api/authScope'
-import useAuthScope from '../../../../app/hooks/useAuthScope'
-import type { AuthAlertProps } from '../../../../app/components/Alerts/AuthAlert'
-import AuthAlert from '../../../../app/components/Alerts/AuthAlert'
+import type AuthScope from '../../../../shared/utils/api/authScope'
+import useAuthScope from '../../../../shared/hooks/useAuthScope'
+import type { AuthAlertProps } from '../../../../shared/components/Alerts/AuthAlert'
+import AuthAlert from '../../../../shared/components/Alerts/AuthAlert'
 
 export interface AuthenticationWrapperProps extends AuthAlertProps {
   authScopes?: AuthScope[]

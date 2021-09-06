@@ -1,15 +1,15 @@
 import { fireEvent, render, screen } from '@testing-library/react'
 import { mocked } from 'ts-jest/utils'
-import { getScopes } from '../../app/utils/auth/auth'
-import getLoadingErrors from '../../app/utils/getLoadingErrors'
-import getUnauthorizedLabels from '../../app/utils/getUnauthorizedLabels'
-import redirectToDcatd from '../../app/utils/redirectToDcatd'
-import withAppContext from '../../app/utils/withAppContext'
+import { getScopes } from '../../shared/utils/auth/auth'
+import getLoadingErrors from '../../shared/utils/getLoadingErrors'
+import getUnauthorizedLabels from '../../shared/utils/getUnauthorizedLabels'
+import redirectToDcatd from '../../shared/utils/redirectToDcatd'
+import withAppContext from '../../shared/utils/withAppContext'
 import DatasetSearchResults from './DatasetSearchResults'
-import AuthScope from '../../app/utils/api/authScope'
+import AuthScope from '../../shared/utils/api/authScope'
 
-jest.mock('../../app/utils/auth/auth', () => {
-  const originalModule = jest.requireActual('../../app/utils/auth/auth')
+jest.mock('../../shared/utils/auth/auth', () => {
+  const originalModule = jest.requireActual('../../shared/utils/auth/auth')
 
   return {
     __esModule: true,
@@ -18,9 +18,9 @@ jest.mock('../../app/utils/auth/auth', () => {
   }
 })
 
-jest.mock('../../app/utils/getUnauthorizedLabels')
-jest.mock('../../app/utils/getLoadingErrors')
-jest.mock('../../app/utils/redirectToDcatd')
+jest.mock('../../shared/utils/getUnauthorizedLabels')
+jest.mock('../../shared/utils/getLoadingErrors')
+jest.mock('../../shared/utils/redirectToDcatd')
 
 const mockedGetScopes = mocked(getScopes)
 const mockedGetUnauthorizedLabels = mocked(getUnauthorizedLabels)

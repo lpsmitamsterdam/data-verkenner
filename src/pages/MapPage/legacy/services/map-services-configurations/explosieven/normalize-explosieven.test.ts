@@ -1,6 +1,6 @@
 import normalizeExplosieven from './normalize-explosieven'
 import type { Explosievenbominslag } from '../../../../../../api/explosieven/generated'
-import formatDate from '../../../../../../app/utils/formatDate'
+import formatDate from '../../../../../../shared/utils/formatDate'
 
 describe('normalize-explosieven', () => {
   it('parses the dates', () => {

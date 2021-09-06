@@ -1,8 +1,8 @@
-import { fetchWithToken } from '../../../../../app/utils/api/api'
+import { fetchWithToken } from '../../../../../shared/utils/api/api'
 import normalize, { fetchByAddressId, fetchByPandId } from './vestiging'
 import type { PotentialApiResult } from '../../types/details'
 
-jest.mock('../../../../../app/utils/api/api')
+jest.mock('../../../../../shared/utils/api/api')
 jest.mock('../map-fetch/map-fetch')
 
 describe('The vestiging resource', () => {

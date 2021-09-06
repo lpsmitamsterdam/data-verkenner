@@ -1,7 +1,7 @@
 /* eslint-disable global-require,@typescript-eslint/no-var-requires */
 
 import { rest } from 'msw'
-import joinUrl from '../src/app/utils/joinUrl'
+import joinUrl from '../src/shared/utils/joinUrl'
 import environment from '../src/environment'
 
 const typeaheadUrl = joinUrl([environment.API_ROOT, 'typeahead'])

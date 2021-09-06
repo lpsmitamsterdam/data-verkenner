@@ -1,6 +1,6 @@
 import servicesByEndpointType, { endpointTypes } from '../map-services.config'
 import environment from '../../../../../environment'
-import joinUrl from '../../../../../app/utils/joinUrl'
+import joinUrl from '../../../../../shared/utils/joinUrl'
 
 export const pageTypeToEndpoint = (type: string, subtype: string, id: string) => {
   const endpointType =

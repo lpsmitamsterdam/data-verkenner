@@ -1,6 +1,6 @@
 import { useQuery } from 'urql'
 import type { DocumentNode, GraphQLFormattedError } from 'graphql'
-import type { ErrorExtensions } from '../../app/models/graphql'
+import type { ErrorExtensions } from '../../shared/models/graphql'
 import type { ActiveFilter } from './query-params'
 
 interface Variables {

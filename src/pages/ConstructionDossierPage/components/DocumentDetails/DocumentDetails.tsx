@@ -8,8 +8,8 @@ import type {
   Document,
   Single as Bouwdossier,
 } from '../../../../api/iiif-metadata/bouwdossier'
-import { getScopes } from '../../../../app/utils/auth/auth'
-import { useAuthToken } from '../../../../app/contexts/AuthToken/AuthTokenContext'
+import { getScopes } from '../../../../shared/utils/auth/auth'
+import { useAuthToken } from '../../../../shared/contexts/AuthToken/AuthTokenContext'
 import formatDossierAccessValue from '../../utils/formatDossierAccessValue'
 import hasUserRights from '../../utils/hasUserRights'
 import ContentBlock, { DefinitionList, DefinitionListItem, SubHeading } from '../ContentBlock'

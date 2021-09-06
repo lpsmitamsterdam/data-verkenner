@@ -6,7 +6,7 @@ import LayerCollectionButton from './LayerCollectionButton'
 import LayerLegend from './LayerLegend'
 import type { CustomMapLayer } from '../../query-params'
 import { mapLayersParam } from '../../query-params'
-import useParam from '../../../../app/hooks/useParam'
+import useParam from '../../../../shared/hooks/useParam'
 import LayerGroup from './LayerGroup'
 
 const StyledLayerCollectionButton = styled(LayerCollectionButton)`

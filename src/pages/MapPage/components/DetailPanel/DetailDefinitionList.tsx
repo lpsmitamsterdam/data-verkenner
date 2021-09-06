@@ -4,7 +4,7 @@ import styled from 'styled-components'
 import type { FunctionComponent } from 'react'
 import type { LocationDescriptor } from 'history'
 import type { DetailResultItemDefinitionList } from '../../legacy/types/details'
-import DefinitionList, { DefinitionListItem } from '../../../../app/components/DefinitionList'
+import DefinitionList, { DefinitionListItem } from '../../../../shared/components/DefinitionList'
 
 const StyledCustomHTMLBlock = styled(CustomHTMLBlock)`
   white-space: pre-line;

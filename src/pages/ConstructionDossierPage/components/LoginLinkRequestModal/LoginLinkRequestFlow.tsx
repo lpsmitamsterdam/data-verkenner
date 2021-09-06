@@ -3,7 +3,7 @@ import usePromise, { isPending, isRejected } from '@amsterdam/use-promise'
 import styled from 'styled-components'
 import type { FunctionComponent } from 'react'
 import requestLoginLink from '../../../../api/iiif/requestLoginLink'
-import LoadingSpinner from '../../../../app/components/LoadingSpinner/LoadingSpinner'
+import LoadingSpinner from '../../../../shared/components/LoadingSpinner/LoadingSpinner'
 import ButtonBar from '../ButtonBar'
 
 const LoadingText = styled(Paragraph)`

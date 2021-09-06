@@ -1,7 +1,7 @@
 import type { ServiceDefinition } from '../../map-services.config'
 import { path } from '../../../../../../api/explosieven/inslagen'
 import { DetailResultItemType } from '../../../types/details'
-import getFileName from '../../../../../../app/utils/getFileName'
+import getFileName from '../../../../../../shared/utils/getFileName'
 import type { NormalizedInslagen } from './normalize-explosieven'
 import normalizeExplosieven from './normalize-explosieven'
 import type { Explosievenbominslag } from '../../../../../../api/explosieven/generated'

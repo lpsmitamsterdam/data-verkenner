@@ -5,9 +5,9 @@ import {
   toCollectionDetail,
   toPublicationDetail,
   toSpecialDetail,
-} from '../../app/links'
-import formatDate from '../../app/utils/formatDate'
-import toSlug from '../../app/utils/toSlug'
+} from '../../links'
+import formatDate from '../../shared/utils/formatDate'
+import toSlug from '../../shared/utils/toSlug'
 import type { SpecialType } from '../../shared/config/cms.config'
 import { CmsType } from '../../shared/config/cms.config'
 import type { FieldLink, NormalizedFieldItems, NormalizedResult } from './types'

@@ -1,5 +1,5 @@
 import { DetailResultItemType } from '../../../types/details'
-import Rating from '../../../../../../app/components/Rating/Rating'
+import Rating from '../../../../../../shared/components/Rating/Rating'
 import { historischeOnderzoekenPath } from '../../../../../../api/ondergrond/historischeonderzoeken'
 import type { ServiceDefinition } from '../../map-services.config'
 import type { Ondergrondhistorischeonderzoeken } from '../../../../../../api/ondergrond/generated'

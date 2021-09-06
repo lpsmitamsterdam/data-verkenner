@@ -1,6 +1,6 @@
 import { fireEvent, render, screen } from '@testing-library/react'
-import { toGeoSearch } from '../../../../app/links'
-import withMapContext from '../../../../app/utils/withMapContext'
+import { toGeoSearch } from '../../../../links'
+import withMapContext from '../../../../shared/utils/withMapContext'
 import DetailPanel from './DetailPanel'
 
 const pushMock = jest.fn()

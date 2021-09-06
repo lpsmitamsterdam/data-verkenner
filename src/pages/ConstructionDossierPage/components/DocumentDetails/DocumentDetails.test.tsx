@@ -3,15 +3,17 @@ import { mocked } from 'ts-jest/utils'
 import { createUnsecuredToken, Json } from 'jsontokens'
 import type { FunctionComponent } from 'react'
 import { singleFixture as dossierFixture } from '../../../../api/iiif-metadata/bouwdossier'
-import withAppContext from '../../../../app/utils/withAppContext'
-import AuthTokenContext, { DecodedToken } from '../../../../app/contexts/AuthToken/AuthTokenContext'
+import withAppContext from '../../../../shared/utils/withAppContext'
+import AuthTokenContext, {
+  DecodedToken,
+} from '../../../../shared/contexts/AuthToken/AuthTokenContext'
 import FilesGallery from '../FilesGallery'
 import DocumentDetails from './DocumentDetails'
-import { getScopes } from '../../../../app/utils/auth/auth'
-import AuthScope from '../../../../app/utils/api/authScope'
+import { getScopes } from '../../../../shared/utils/auth/auth'
+import AuthScope from '../../../../shared/utils/api/authScope'
 
 jest.mock('../FilesGallery')
-jest.mock('../../../../app/utils/auth/auth')
+jest.mock('../../../../shared/utils/auth/auth')
 
 const FilesGalleryMock = mocked(FilesGallery)
 const getScopesMock = mocked(getScopes)

@@ -3,7 +3,7 @@ import { renderToStaticMarkup } from 'react-dom/server'
 import type { Dispatch, SetStateAction } from 'react'
 import type { TrackEventParams } from '@datapunt/matomo-tracker-react/lib/types'
 import { PANORAMA_CONFIG } from '../panorama-api/panorama-api'
-import { degreesToRadians, radiansToDegrees } from '../../../../../app/utils/angleConversion'
+import { degreesToRadians, radiansToDegrees } from '../../../../../shared/utils/angleConversion'
 import Hotspot from '../Hotspot'
 
 /*

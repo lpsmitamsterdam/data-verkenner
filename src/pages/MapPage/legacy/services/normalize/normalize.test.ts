@@ -1,7 +1,7 @@
 import { listFixture as meetbouwMetingFixture } from '../../../../../api/meetbouten/meting'
 import environment from '../../../../../environment'
-import * as api from '../../../../../app/utils/api/api'
-import formatDate from '../../../../../app/utils/formatDate'
+import * as api from '../../../../../shared/utils/api/api'
+import formatDate from '../../../../../shared/utils/formatDate'
 import {
   adressenPand,
   adressenVerblijfsobject,
@@ -23,8 +23,8 @@ import {
 } from './normalize'
 import type { PotentialApiResult } from '../../types/details'
 
-jest.mock('../../../../../app/utils/formatDate')
-jest.mock('../../../../../app/utils/api/api')
+jest.mock('../../../../../shared/utils/formatDate')
+jest.mock('../../../../../shared/utils/api/api')
 
 const YEAR_UNKNOWN = 1005
 

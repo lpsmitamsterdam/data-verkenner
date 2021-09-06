@@ -1,4 +1,4 @@
-import './app/index'
+import './theindex'
 
 if (module.hot) {
   module.hot.accept()

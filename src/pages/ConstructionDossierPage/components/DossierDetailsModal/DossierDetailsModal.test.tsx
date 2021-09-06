@@ -3,8 +3,8 @@ import { screen, render } from '@testing-library/react'
 import type { FunctionComponent } from 'react'
 import { mocked } from 'ts-jest/utils'
 import requestDownloadLink from '../../../../api/iiif/requestDownloadLink'
-import withAppContext from '../../../../app/utils/withAppContext'
-import AuthTokenContext from '../../../../app/contexts/AuthToken/AuthTokenContext'
+import withAppContext from '../../../../shared/utils/withAppContext'
+import AuthTokenContext from '../../../../shared/contexts/AuthToken/AuthTokenContext'
 import DossierDetailsModal from './DossierDetailsModal'
 
 jest.mock('../../../../api/iiif/requestDownloadLink')

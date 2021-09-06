@@ -1,6 +1,6 @@
 import type { LocationDescriptorObject } from 'history'
 import { CmsType } from '../../shared/config/cms.config'
-import EditorialResults from '../../app/components/EditorialResults'
+import EditorialResults from '../../shared/components/EditorialResults'
 import {
   toArticleSearch,
   toCollectionSearch,
@@ -10,8 +10,8 @@ import {
   toPublicationSearch,
   toSearch,
   toSpecialSearch,
-} from '../../app/links'
-import { routing } from '../../app/routes'
+} from '../../links'
+import { routing } from '../../routes'
 import { SearchType } from './constants'
 import DataSearchResults from './DataSearchResults'
 import DatasetSearchResults from './DatasetSearchResults'

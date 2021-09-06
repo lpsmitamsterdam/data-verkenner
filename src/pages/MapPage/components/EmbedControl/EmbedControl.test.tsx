@@ -1,7 +1,7 @@
 import { fireEvent, render, screen } from '@testing-library/react'
 import { MemoryRouter as Router } from 'react-router-dom'
 import type { FunctionComponent } from 'react'
-import { routing } from '../../../../app/routes'
+import { routing } from '../../../../routes'
 import EmbedControl from './EmbedControl'
 
 describe('EmbedControl', () => {

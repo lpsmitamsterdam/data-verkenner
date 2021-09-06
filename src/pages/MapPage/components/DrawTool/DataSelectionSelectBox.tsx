@@ -4,7 +4,7 @@ import { breakpoint, Label, Select } from '@amsterdam/asc-ui'
 import { useLocation, useHistory } from 'react-router-dom'
 import { useMatomo } from '@datapunt/matomo-tracker-react'
 import type { ChangeEvent } from 'react'
-import useLegacyDataselectionConfig from '../../../../app/components/DataSelection/useLegacyDataselectionConfig'
+import useLegacyDataselectionConfig from '../../../../shared/components/DataSelection/useLegacyDataselectionConfig'
 import type { DataSelectionType } from '../../config'
 import config from '../../config'
 

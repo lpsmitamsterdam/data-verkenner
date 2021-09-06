@@ -1,14 +1,14 @@
 import { mocked } from 'ts-jest/utils'
 import { rest, server } from '../../../test/server'
-import joinUrl from '../../app/utils/joinUrl'
+import joinUrl from '../../shared/utils/joinUrl'
 import environment from '../../environment'
 import requestDownloadLink from './requestDownloadLink'
-import { getAccessToken } from '../../app/utils/auth/auth'
+import { getAccessToken } from '../../shared/utils/auth/auth'
 
 const MOCK_ACCESS_TOKEN = 'FAKEACCESSTOKEN'
 const MOCK_URLS = ['https://fake.com/some/path/foo.png', 'https://fake.com/some/path/bar.png']
 
-jest.mock('../../app/utils/auth/auth')
+jest.mock('../../shared/utils/auth/auth')
 
 const getAccessTokenMock = mocked(getAccessToken)
 

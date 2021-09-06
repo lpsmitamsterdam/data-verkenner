@@ -1,4 +1,4 @@
-import formatDate from '../../../../../../app/utils/formatDate'
+import formatDate from '../../../../../../shared/utils/formatDate'
 import type {
   Explosievenbominslag,
   Explosievengevrijwaardgebied,

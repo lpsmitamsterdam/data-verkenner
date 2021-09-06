@@ -1,7 +1,7 @@
 import { render, screen } from '@testing-library/react'
 import { useMapInstance } from '@amsterdam/react-maps'
 import { useEffect } from 'react'
-import withMapContext from '../../../../app/utils/withMapContext'
+import withMapContext from '../../../../shared/utils/withMapContext'
 import MapMarker from './MapMarker'
 import * as nearestDetail from '../../legacy/services/nearest-detail/nearest-detail'
 
@@ -11,7 +11,7 @@ const pushMock = jest.fn()
 
 let search = '?locatie=123,123'
 
-jest.mock('../../../../app/hooks/useMapCenterToMarker', () => () => ({
+jest.mock('../../../../shared/hooks/useMapCenterToMarker', () => () => ({
   panToWithPanelOffset: jest.fn(),
 }))
 

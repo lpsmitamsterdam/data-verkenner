@@ -6,7 +6,7 @@ import { useEffect, useState } from 'react'
 import type { FunctionComponent } from 'react'
 import type { Marker as LeafletMarker } from 'leaflet'
 import { panoHeadingParam } from '../../query-params'
-import useParam from '../../../../app/hooks/useParam'
+import useParam from '../../../../shared/hooks/useParam'
 
 const PAWN_CLASS = 'pawnIcon'
 

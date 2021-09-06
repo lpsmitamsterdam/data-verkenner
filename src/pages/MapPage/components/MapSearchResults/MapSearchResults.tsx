@@ -4,13 +4,13 @@ import type { FunctionComponent } from 'react'
 import { useMemo } from 'react'
 import { Link as RouterLink } from 'react-router-dom'
 import styled from 'styled-components'
-import { getScopes } from '../../../../app/utils/auth/auth'
-import getDetailPageData from '../../../../app/utils/getDetailPageData'
-import AuthAlert from '../../../../app/components/Alerts/AuthAlert'
-import LoadingSpinner from '../../../../app/components/LoadingSpinner/LoadingSpinner'
-import ShowMore from '../../../../app/components/ShowMore'
-import { toDataDetail } from '../../../../app/links'
-import useParam from '../../../../app/hooks/useParam'
+import { getScopes } from '../../../../shared/utils/auth/auth'
+import getDetailPageData from '../../../../shared/utils/getDetailPageData'
+import AuthAlert from '../../../../shared/components/Alerts/AuthAlert'
+import LoadingSpinner from '../../../../shared/components/LoadingSpinner/LoadingSpinner'
+import ShowMore from '../../../../shared/components/ShowMore'
+import { toDataDetail } from '../../../../links'
+import useParam from '../../../../shared/hooks/useParam'
 import type {
   MapSearchCategory,
   MapSearchResult,
@@ -19,8 +19,8 @@ import mapSearch from '../../legacy/services/map-search/map-search'
 import { locationParam } from '../../query-params'
 import useAsyncMapPanelHeader from '../../utils/useAsyncMapPanelHeader'
 import PanoramaPreview from '../PanoramaPreview/PanoramaPreview'
-import { wgs84ToRd } from '../../../../app/utils/coordinateReferenceSystem'
-import AuthScope from '../../../../app/utils/api/authScope'
+import { wgs84ToRd } from '../../../../shared/utils/coordinateReferenceSystem'
+import AuthScope from '../../../../shared/utils/api/authScope'
 
 const RESULT_LIMIT = 10
 

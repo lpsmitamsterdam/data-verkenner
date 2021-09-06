@@ -6,7 +6,9 @@ import { useEffect } from 'react'
 import { mocked } from 'ts-jest/utils'
 import type { Bestand } from '../../../../api/iiif-metadata/bouwdossier'
 import requestDownloadLink from '../../../../api/iiif/requestDownloadLink'
-import AuthTokenContext, { DecodedToken } from '../../../../app/contexts/AuthToken/AuthTokenContext'
+import AuthTokenContext, {
+  DecodedToken,
+} from '../../../../shared/contexts/AuthToken/AuthTokenContext'
 import RequestDownloadModal from './RequestDownloadModal'
 
 jest.mock('@amsterdam/asc-ui', () => {

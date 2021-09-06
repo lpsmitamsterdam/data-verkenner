@@ -1,10 +1,10 @@
 import type { LatLngLiteral } from 'leaflet'
-import { rdToWgs84 } from '../../../../../app/utils/coordinateReferenceSystem'
-import getCenter from '../../../../../app/utils/geoJson'
+import { rdToWgs84 } from '../../../../../shared/utils/coordinateReferenceSystem'
+import getCenter from '../../../../../shared/utils/geoJson'
 import type { ServiceDefinition } from '../map-services.config'
 import type { DetailInfo } from '../../types/details'
 import type { DetailResponse } from '../map'
-import type { Wsg84Coordinate } from '../../../../../app/utils/coordinateReferenceSystem/crs-converter'
+import type { Wsg84Coordinate } from '../../../../../shared/utils/coordinateReferenceSystem/crs-converter'
 
 export default async function mapFetch(
   result: DetailResponse,

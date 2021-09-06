@@ -1,5 +1,5 @@
 import { v4 as uuid } from 'uuid'
-import encodeParam from '../../app/utils/encodeParam'
+import encodeParam from '../../shared/utils/encodeParam'
 import type { PolyDrawing } from './query-params'
 import {
   dataSelectionFiltersParam,

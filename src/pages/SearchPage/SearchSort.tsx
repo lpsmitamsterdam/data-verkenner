@@ -3,7 +3,7 @@ import { useMatomo } from '@datapunt/matomo-tracker-react'
 import type { ChangeEvent, FunctionComponent } from 'react'
 import { useHistory, useLocation } from 'react-router-dom'
 import styled from 'styled-components'
-import toSearchParams from '../../app/utils/toSearchParams'
+import toSearchParams from '../../shared/utils/toSearchParams'
 import { pageParam, Sort, SortOrder, sortParam } from './query-params'
 
 const SelectboxWrapper = styled.div`

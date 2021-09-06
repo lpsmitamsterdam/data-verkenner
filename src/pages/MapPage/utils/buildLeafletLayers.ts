@@ -1,9 +1,9 @@
 import type { TileLayerOptions } from 'leaflet'
-import { createUrlWithToken } from '../../../app/utils/api/api'
-import { getAccessToken } from '../../../app/utils/auth/auth'
+import { createUrlWithToken } from '../../../shared/utils/api/api'
+import { getAccessToken } from '../../../shared/utils/auth/auth'
 import type { ExtendedMapGroup, ExtendedMapGroupLegendItem } from '../legacy/services'
 import MAP_CONFIG from '../legacy/services/map.config'
-import type { Overlay } from '../../../app/contexts/map/MapContext'
+import type { Overlay } from '../../../shared/contexts/map/MapContext'
 
 const findLayer = (layers: Array<ExtendedMapGroup & ExtendedMapGroupLegendItem>, id: string) => {
   return layers.find((layer) => id === layer.id) ?? null

@@ -1,7 +1,7 @@
 import { ascDefaultTheme } from '@amsterdam/asc-ui'
 import { render } from '@testing-library/react'
 import 'jest-styled-components'
-import withAppContext from '../../../../app/utils/withAppContext'
+import withAppContext from '../../../../shared/utils/withAppContext'
 import SmallDrawerPanel from './SmallDrawerPanel'
 
 const { breakpoints } = ascDefaultTheme

@@ -1,14 +1,14 @@
 import { mocked } from 'ts-jest/utils'
 import type { FeatureCollection, Geometry } from 'geojson'
-import { fetchWithToken } from '../../../../../app/utils/api/api'
-import { getScopes, isAuthenticated } from '../../../../../app/utils/auth/auth'
+import { fetchWithToken } from '../../../../../shared/utils/api/api'
+import { getScopes, isAuthenticated } from '../../../../../shared/utils/auth/auth'
 import * as address from '../adressen-nummeraanduiding/adressen-nummeraanduiding'
 import * as vestiging from '../vestiging/vestiging'
 import search, { fetchRelatedForUser, MapFeatureProperties } from './map-search'
-import AuthScope from '../../../../../app/utils/api/authScope'
+import AuthScope from '../../../../../shared/utils/api/authScope'
 
-jest.mock('../../../../../app/utils/api/api')
-jest.mock('../../../../../app/utils/auth/auth')
+jest.mock('../../../../../shared/utils/api/api')
+jest.mock('../../../../../shared/utils/auth/auth')
 jest.mock('../adressen-nummeraanduiding/adressen-nummeraanduiding')
 jest.mock('../monument/monument')
 jest.mock('../vestiging/vestiging')

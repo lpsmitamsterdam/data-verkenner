@@ -12,7 +12,7 @@ import { useMatomo } from '@datapunt/matomo-tracker-react'
 import type { FunctionComponent, ReactNode } from 'react'
 import { useCallback, useState } from 'react'
 import styled from 'styled-components'
-import getShareUrl, { ShareTarget } from '../../../../app/utils/shareUrl'
+import getShareUrl, { ShareTarget } from '../../../../shared/utils/shareUrl'
 import { CONTEXT_MENU_EMBED, CONTEXT_MENU_PRINT, CONTEXT_MENU_SHARE } from '../../matomo-events'
 
 const socialItemsArray: Array<{

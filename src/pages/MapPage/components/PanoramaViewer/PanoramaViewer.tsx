@@ -4,11 +4,11 @@ import type { FunctionComponent } from 'react'
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { useHistory } from 'react-router-dom'
 import styled, { css } from 'styled-components'
-import { toGeoSearch } from '../../../../app/links'
-import useBuildQueryString from '../../../../app/hooks/useBuildQueryString'
-import useMarzipano from '../../../../app/hooks/useMarzipano'
-import useParam from '../../../../app/hooks/useParam'
-import { useMapContext } from '../../../../app/contexts/map/MapContext'
+import { toGeoSearch } from '../../../../links'
+import useBuildQueryString from '../../../../shared/hooks/useBuildQueryString'
+import useMarzipano from '../../../../shared/hooks/useMarzipano'
+import useParam from '../../../../shared/hooks/useParam'
+import { useMapContext } from '../../../../shared/contexts/map/MapContext'
 import {
   COORDINATE_PRECISION,
   locationParam,

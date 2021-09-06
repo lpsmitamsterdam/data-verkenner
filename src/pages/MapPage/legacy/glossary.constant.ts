@@ -1,5 +1,5 @@
 import categoryLabels from './services/map-search/category-labels'
-import { dateFilter } from '../../../app/components/Filters/Filters'
+import { dateFilter } from '../../../shared/components/Filters/Filters'
 
 const META = {
   begin_geldigheid: {

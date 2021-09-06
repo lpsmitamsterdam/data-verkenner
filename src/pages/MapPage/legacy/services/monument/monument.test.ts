@@ -1,4 +1,4 @@
-import * as api from '../../../../../app/utils/api/api'
+import * as api from '../../../../../shared/utils/api/api'
 import { fetchByPandId } from './monument'
 
 describe('The monument resource', () => {

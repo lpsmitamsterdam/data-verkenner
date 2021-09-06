@@ -1,7 +1,7 @@
 import { Card, CardContent, Heading, themeColor, themeSpacing } from '@amsterdam/asc-ui'
 import styled from 'styled-components'
 import type { FunctionComponent } from 'react'
-import EditorialCard from '../../../../app/components/EditorialCard'
+import EditorialCard from '../../../../shared/components/EditorialCard'
 import type { NormalizedFieldItems } from '../../../../normalizations/cms/types'
 
 const StyledCard = styled(Card)`

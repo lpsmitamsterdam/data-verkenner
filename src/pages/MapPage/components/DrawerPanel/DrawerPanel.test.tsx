@@ -1,6 +1,6 @@
 import { render } from '@testing-library/react'
 import 'jest-styled-components'
-import withAppContext from '../../../../app/utils/withAppContext'
+import withAppContext from '../../../../shared/utils/withAppContext'
 import { DeviceMode } from '../DrawerOverlay'
 import DrawerPanel from './DrawerPanel'
 import { slideInDesktop, slideInMobile } from './keyframes'

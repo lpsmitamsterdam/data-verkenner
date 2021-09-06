@@ -1,9 +1,9 @@
 import type { LocationDescriptorObject } from 'history'
 import type { BaseIconOptions } from 'leaflet'
 import environment from '../../environment'
-import { toAddresses, toCadastralObjects, toEstablishments, toGeoSearch } from '../../app/links'
-import { MAIN_PATHS, routing } from '../../app/routes'
-import toSearchParams from '../../app/utils/toSearchParams'
+import { toAddresses, toCadastralObjects, toEstablishments, toGeoSearch } from '../../links'
+import { MAIN_PATHS, routing } from '../../routes'
+import toSearchParams from '../../shared/utils/toSearchParams'
 import {
   centerParam,
   locationParam,
@@ -11,7 +11,7 @@ import {
   panoHeadingParam,
   panoPitchParam,
 } from './query-params'
-import AuthScope from '../../app/utils/api/authScope'
+import AuthScope from '../../shared/utils/api/authScope'
 
 // Because we use these types as id's in option values (select), we need to convert them to strings
 export enum DataSelectionType {

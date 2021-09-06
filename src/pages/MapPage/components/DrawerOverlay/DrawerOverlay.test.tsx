@@ -1,7 +1,7 @@
 import { render } from '@testing-library/react'
 import { mocked } from 'ts-jest/utils'
 import { useResizeDetector } from 'react-resize-detector'
-import withAppContext from '../../../../app/utils/withAppContext'
+import withAppContext from '../../../../shared/utils/withAppContext'
 import DrawerOverlay, { DeviceMode, isDesktop, isMobile } from './DrawerOverlay'
 
 jest.mock('react-resize-detector')

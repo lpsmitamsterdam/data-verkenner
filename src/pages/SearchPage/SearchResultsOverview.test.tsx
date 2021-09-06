@@ -1,5 +1,5 @@
 import { render, screen } from '@testing-library/react'
-import withAppContext from '../../app/utils/withAppContext'
+import withAppContext from '../../shared/utils/withAppContext'
 import SearchResultsOverview from './SearchResultsOverview'
 
 jest.mock('./config', () => ({

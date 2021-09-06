@@ -1,4 +1,4 @@
-import joinUrl from '../../../../../app/utils/joinUrl'
+import joinUrl from '../../../../../shared/utils/joinUrl'
 import environment from '../../../../../environment'
 import type { ServiceDefinition } from '../map-services.config'
 

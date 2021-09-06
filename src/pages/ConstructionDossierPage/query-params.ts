@@ -1,4 +1,4 @@
-import type { UrlParam } from '../../app/hooks/useParam'
+import type { UrlParam } from '../../shared/hooks/useParam'
 
 export const authTokenParam: UrlParam<string | null> = {
   name: 'auth',

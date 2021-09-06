@@ -1,7 +1,7 @@
 import { useMatomo } from '@datapunt/matomo-tracker-react'
 import type { FunctionComponent } from 'react'
-import { login } from '../../../../app/utils/auth/auth'
-import useDocumentTitle from '../../../../app/hooks/useDocumentTitle'
+import { login } from '../../../../shared/utils/auth/auth'
+import useDocumentTitle from '../../../../shared/hooks/useDocumentTitle'
 import LinkButton from '../LinkButton'
 
 const LoginLinkButton: FunctionComponent = ({ children, ...otherProps }) => {

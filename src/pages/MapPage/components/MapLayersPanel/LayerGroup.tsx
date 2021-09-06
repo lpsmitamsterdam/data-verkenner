@@ -5,11 +5,11 @@ import styled, { css } from 'styled-components'
 import { Alert, Button, Checkbox, Icon, Label, themeColor, themeSpacing } from '@amsterdam/asc-ui'
 import { ChevronDown } from '@amsterdam/asc-assets'
 import { isAuthorised } from '../../legacy/utils/map-layer'
-import LoginLink from '../../../../app/components/Links/LoginLink/LoginLink'
+import LoginLink from '../../../../shared/components/Links/LoginLink/LoginLink'
 import LayerLegend from './LayerLegend'
 import type { ExtendedMapGroup, ExtendedMapGroupLegendItem } from '../../legacy/services'
 import LayerLegendZoomButton from './LayerLegendZoomButton'
-import type AuthScope from '../../../../app/utils/api/authScope'
+import type AuthScope from '../../../../shared/utils/api/authScope'
 
 const MapLayerItemStyle = styled.li<{ disabled?: boolean }>`
   display: flex;

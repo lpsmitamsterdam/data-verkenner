@@ -1,5 +1,5 @@
 import { render } from '@testing-library/react'
-import withAppContext from '../../../../app/utils/withAppContext'
+import withAppContext from '../../../../shared/utils/withAppContext'
 import type { CMSCollectionList } from './CardListBlock'
 import CardListBlock from './CardListBlock'
 

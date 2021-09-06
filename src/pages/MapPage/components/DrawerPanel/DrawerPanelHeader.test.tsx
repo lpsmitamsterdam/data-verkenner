@@ -1,5 +1,5 @@
 import { screen, fireEvent, render } from '@testing-library/react'
-import withAppContext from '../../../../app/utils/withAppContext'
+import withAppContext from '../../../../shared/utils/withAppContext'
 import DrawerPanelHeader from './DrawerPanelHeader'
 
 const CLOSE_BUTTON_TITLE = 'Sluit paneel'

@@ -1,7 +1,7 @@
 import { cleanup, fireEvent, render, screen } from '@testing-library/react'
 import SearchSort from './SearchSort'
 import { SortOrder } from './query-params'
-import withAppContext from '../../app/utils/withAppContext'
+import withAppContext from '../../shared/utils/withAppContext'
 
 const mockTrackEvent = jest.fn()
 

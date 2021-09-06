@@ -1,9 +1,9 @@
 /* eslint-disable camelcase */
 import environment from '../../../../../environment'
-import { fetchWithToken } from '../../../../../app/utils/api/api'
-import formatNumber from '../../../../../app/utils/numberFormatter'
-import formatCount from '../../../../../app/utils/formatCount'
-import formatDate from '../../../../../app/utils/formatDate'
+import { fetchWithToken } from '../../../../../shared/utils/api/api'
+import formatNumber from '../../../../../shared/utils/numberFormatter'
+import formatCount from '../../../../../shared/utils/formatCount'
+import formatDate from '../../../../../shared/utils/formatDate'
 import { NORMAL_PAND_STATUSSES, NORMAL_VBO_STATUSSES } from '../map-search/status-labels'
 import type { PotentialApiResult } from '../../types/details'
 import type { List as MetingList } from '../../../../../api/meetbouten/meting'

@@ -1,6 +1,6 @@
 import { act, render, screen } from '@testing-library/react'
 import PanoramaViewer from './PanoramaViewer'
-import withMapContext from '../../../../app/utils/withMapContext'
+import withMapContext from '../../../../shared/utils/withMapContext'
 
 const mockPush = jest.fn()
 

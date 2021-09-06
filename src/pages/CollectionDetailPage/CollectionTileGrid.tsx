@@ -8,10 +8,10 @@ import {
 import { Fragment } from 'react'
 import styled from 'styled-components'
 import type { FunctionComponent } from 'react'
-import { Tile, TileLabel } from '../../app/components/Tile'
-import TileGrid from '../../app/components/TileGrid/TileGrid'
-import type { SizeOnBreakpoint } from '../../app/components/TileGrid/TileGridStyle'
-import { TileGridItem } from '../../app/components/TileGrid/TileGridStyle'
+import { Tile, TileLabel } from '../../shared/components/Tile'
+import TileGrid from '../../shared/components/TileGrid/TileGrid'
+import type { SizeOnBreakpoint } from '../../shared/components/TileGrid/TileGridStyle'
+import { TileGridItem } from '../../shared/components/TileGrid/TileGridStyle'
 import type { NormalizedFieldItems } from '../../normalizations/cms/types'
 
 const StyledHeading = styled(Heading)`

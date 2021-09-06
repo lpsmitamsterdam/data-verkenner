@@ -2,7 +2,7 @@ import { ChevronDown, Download, Ellipsis, Print } from '@amsterdam/asc-assets'
 import { ContextMenu as AscContextMenu, ContextMenuItem, Icon } from '@amsterdam/asc-ui'
 import type { FunctionComponent } from 'react'
 import type { DossierFile } from '../ImageViewer/ImageViewer'
-import socialItems from '../../../../app/components/ContextMenu/socialItems'
+import socialItems from '../../../../shared/components/ContextMenu/socialItems'
 
 export interface ContextMenuProps {
   handleDownload: (imageUrl: string, fileName: string, size: string) => void

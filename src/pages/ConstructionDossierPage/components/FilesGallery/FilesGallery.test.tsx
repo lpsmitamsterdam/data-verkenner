@@ -4,8 +4,10 @@ import type { FunctionComponent } from 'react'
 import type { Bestand, Document } from '../../../../api/iiif-metadata/bouwdossier'
 import { singleFixture as bouwdossierFixture } from '../../../../api/iiif-metadata/bouwdossier'
 import { NOT_FOUND_THUMBNAIL } from '../../../../shared/config/constants'
-import withAppContext from '../../../../app/utils/withAppContext'
-import AuthTokenContext, { DecodedToken } from '../../../../app/contexts/AuthToken/AuthTokenContext'
+import withAppContext from '../../../../shared/utils/withAppContext'
+import AuthTokenContext, {
+  DecodedToken,
+} from '../../../../shared/contexts/AuthToken/AuthTokenContext'
 import FilesGallery from './FilesGallery'
 
 jest.mock('../IIIFThumbnail', () => ({ ...props }) => (

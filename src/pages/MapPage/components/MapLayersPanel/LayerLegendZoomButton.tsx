@@ -2,7 +2,7 @@ import type { FunctionComponent } from 'react'
 import styled from 'styled-components'
 import { Button, Icon, themeColor, themeSpacing } from '@amsterdam/asc-ui'
 import SearchPlus from '../../../../shared/assets/icons/search-plus.svg'
-import useParam from '../../../../app/hooks/useParam'
+import useParam from '../../../../shared/hooks/useParam'
 import { zoomParam } from '../../query-params'
 
 interface MapLayerZoomButtonProps {

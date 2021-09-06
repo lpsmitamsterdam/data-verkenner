@@ -1,6 +1,6 @@
 import { fireEvent, render, screen, waitFor } from '@testing-library/react'
-import withAppContext from '../../../../app/utils/withAppContext'
-import { AuthTokenProvider } from '../../../../app/contexts/AuthToken/AuthTokenContext'
+import withAppContext from '../../../../shared/utils/withAppContext'
+import { AuthTokenProvider } from '../../../../shared/contexts/AuthToken/AuthTokenContext'
 import ImageViewerError from './ImageViewerError'
 
 describe('ImageViewerError', () => {

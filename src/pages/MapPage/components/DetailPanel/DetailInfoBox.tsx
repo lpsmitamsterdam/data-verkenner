@@ -13,7 +13,7 @@ import styled from 'styled-components'
 import Metadata from '../../../../shared/assets/icons/metadata.svg'
 import DetailDefinitionList from './DetailDefinitionList'
 import type { InfoBoxProps } from '../../legacy/types/details'
-import Spacer from '../../../../app/components/Spacer/Spacer'
+import Spacer from '../../../../shared/components/Spacer/Spacer'
 
 const StyledAlert = styled(Alert)`
   margin: ${themeSpacing(2, 0)};

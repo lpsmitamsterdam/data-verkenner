@@ -1,6 +1,6 @@
 import { Download } from '@amsterdam/asc-assets'
 import type { FunctionComponent } from 'react'
-import ErrorMessage from '../../../../app/components/ErrorMessage/ErrorMessage'
+import ErrorMessage from '../../../../shared/components/ErrorMessage/ErrorMessage'
 
 interface ImageViewerErrorProps {
   downloadError: boolean

@@ -14,8 +14,8 @@ import {
 import type { FunctionComponent } from 'react'
 import styled from 'styled-components'
 import { getMetadata } from '../../api/metadata'
-import ContentContainer from '../../app/components/ContentContainer/ContentContainer'
-import PromiseResult from '../../app/components/PromiseResult/PromiseResult'
+import ContentContainer from '../../shared/components/ContentContainer/ContentContainer'
+import PromiseResult from '../../shared/components/PromiseResult/PromiseResult'
 
 const StyledTableRow = styled(TableRow)`
   &:hover {

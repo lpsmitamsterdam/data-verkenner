@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import styled from 'styled-components'
 import type { FunctionComponent } from 'react'
-import LoadingSpinner from '../../../../app/components/LoadingSpinner/LoadingSpinner'
+import LoadingSpinner from '../../../../shared/components/LoadingSpinner/LoadingSpinner'
 
 const IFrameContainer = styled.div`
   position: relative;

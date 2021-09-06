@@ -1,4 +1,4 @@
-import AuthScope from '../../../app/utils/api/authScope'
+import AuthScope from '../../../shared/utils/api/authScope'
 
 const hasUserRights = (
   restricted: boolean,

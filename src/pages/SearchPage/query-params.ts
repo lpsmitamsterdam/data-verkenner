@@ -1,4 +1,4 @@
-import type { UrlParam } from '../../app/hooks/useParam'
+import type { UrlParam } from '../../shared/hooks/useParam'
 
 export interface ActiveFilter {
   type: string

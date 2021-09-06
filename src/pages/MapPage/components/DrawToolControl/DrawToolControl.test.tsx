@@ -1,9 +1,9 @@
 import { render, screen } from '@testing-library/react'
 import { mocked } from 'ts-jest/utils'
-import { useIsEmbedded } from '../../../../app/contexts/ui'
+import { useIsEmbedded } from '../../../../shared/contexts/ui'
 import DrawToolControl from './DrawToolControl'
 
-jest.mock('../../../../app/contexts/ui')
+jest.mock('../../../../shared/contexts/ui')
 jest.mock('../DrawTool/DrawTool', () => () => null)
 
 const useIsEmbeddedMock = mocked(useIsEmbedded)

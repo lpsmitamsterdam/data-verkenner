@@ -1,10 +1,10 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
 import environment from '../../../../../environment'
-import { fetchWithToken, UrlParams } from '../../../../../app/utils/api/api'
+import { fetchWithToken, UrlParams } from '../../../../../shared/utils/api/api'
 import MAP_CONFIG from '../map.config'
 import type { ExtendedMapGroup } from '../index'
 import type { GeoSearchFeature, GeoSearchProperties } from '../../../../../api/geosearch'
-import getDetailPageData from '../../../../../app/utils/getDetailPageData'
+import getDetailPageData from '../../../../../shared/utils/getDetailPageData'
 
 // TODO: Replace this type with the 'LatLng' type from Leaflet.
 interface Location {

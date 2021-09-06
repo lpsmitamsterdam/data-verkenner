@@ -1,5 +1,5 @@
 import { screen, render } from '@testing-library/react'
-import withAppContext from '../../app/utils/withAppContext'
+import withAppContext from '../../shared/utils/withAppContext'
 import NotFoundPage from './NotFoundPage'
 
 describe('NotFoundPage', () => {

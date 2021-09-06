@@ -5,7 +5,7 @@ import { Button } from '@amsterdam/asc-ui'
 import styled from 'styled-components'
 import { useMatomo } from '@datapunt/matomo-tracker-react'
 import Control from '../Control'
-import { useMapContext } from '../../../../app/contexts/map/MapContext'
+import { useMapContext } from '../../../../shared/contexts/map/MapContext'
 import { DrawerState } from '../DrawerOverlay'
 import { LEGEND_OPEN } from '../../matomo-events'
 

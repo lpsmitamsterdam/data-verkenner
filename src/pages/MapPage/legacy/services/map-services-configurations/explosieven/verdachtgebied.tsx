@@ -1,6 +1,6 @@
 import type { ServiceDefinition } from '../../map-services.config'
 import { DetailResultItemType } from '../../../types/details'
-import getFileName from '../../../../../../app/utils/getFileName'
+import getFileName from '../../../../../../shared/utils/getFileName'
 import { path } from '../../../../../../api/explosieven/verdachtgebied'
 import type { Explosievenverdachtgebied } from '../../../../../../api/explosieven/generated'
 

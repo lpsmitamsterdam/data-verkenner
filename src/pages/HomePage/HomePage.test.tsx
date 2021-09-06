@@ -2,7 +2,7 @@ import { render } from '@testing-library/react'
 import { createClient, Provider as GraphQLProvider } from 'urql'
 import HomePage from './HomePage'
 import environment from '../../environment'
-import withAppContext from '../../app/utils/withAppContext'
+import withAppContext from '../../shared/utils/withAppContext'
 
 describe('HomePage', () => {
   it('renders the home page', () => {

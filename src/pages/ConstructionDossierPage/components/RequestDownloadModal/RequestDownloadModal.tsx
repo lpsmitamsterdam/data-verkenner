@@ -6,8 +6,8 @@ import styled from 'styled-components'
 import type { FunctionComponent } from 'react'
 import type { Bestand } from '../../../../api/iiif-metadata/bouwdossier'
 import requestDownloadLink from '../../../../api/iiif/requestDownloadLink'
-import LoadingSpinner from '../../../../app/components/LoadingSpinner/LoadingSpinner'
-import { useAuthToken } from '../../../../app/contexts/AuthToken/AuthTokenContext'
+import LoadingSpinner from '../../../../shared/components/LoadingSpinner/LoadingSpinner'
+import { useAuthToken } from '../../../../shared/contexts/AuthToken/AuthTokenContext'
 import ButtonBar from '../ButtonBar'
 
 export interface RequestDownloadModalProps {

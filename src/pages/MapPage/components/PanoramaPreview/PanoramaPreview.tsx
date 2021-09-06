@@ -8,10 +8,10 @@ import type { LatLngLiteral } from 'leaflet'
 import { useMatomo } from '@datapunt/matomo-tracker-react'
 import type { FetchPanoramaOptions } from '../../../../api/panorama/thumbnail'
 import { getPanoramaThumbnail } from '../../../../api/panorama/thumbnail'
-import { ForbiddenError } from '../../../../app/utils/api/customError'
-import PanoAlert from '../../../../app/components/PanoAlert/PanoAlert'
-import useBuildQueryString from '../../../../app/hooks/useBuildQueryString'
-import useParam from '../../../../app/hooks/useParam'
+import { ForbiddenError } from '../../../../shared/utils/api/customError'
+import PanoAlert from '../../../../shared/components/PanoAlert/PanoAlert'
+import useBuildQueryString from '../../../../shared/hooks/useBuildQueryString'
+import useParam from '../../../../shared/hooks/useParam'
 import {
   locationParam,
   mapLayersParam,

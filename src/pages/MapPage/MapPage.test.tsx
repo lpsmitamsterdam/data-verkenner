@@ -1,12 +1,12 @@
 import { render, screen, fireEvent } from '@testing-library/react'
 import type { PropsWithChildren } from 'react'
 import MapPage from './MapPage'
-import MapContext from '../../app/contexts/map/MapContext'
-import { DataSelectionProvider } from '../../app/contexts/DataSelection/DataSelectionContext'
-import { UiProvider } from '../../app/contexts/ui'
-import MapProvider from '../../app/contexts/map/MapProvider'
-import withAppContext from '../../app/utils/withAppContext'
-import { initialState } from '../../app/utils/withMapContext'
+import MapContext from '../../shared/contexts/map/MapContext'
+import { DataSelectionProvider } from '../../shared/contexts/DataSelection/DataSelectionContext'
+import { UiProvider } from '../../shared/contexts/ui'
+import MapProvider from '../../shared/contexts/map/MapProvider'
+import withAppContext from '../../shared/utils/withAppContext'
+import { initialState } from '../../shared/utils/withMapContext'
 
 jest.mock('@amsterdam/react-maps')
 jest.mock('../../api/cms_search/mapCollections.graphql')

@@ -9,16 +9,16 @@ import type {
   BouwdossierAccess,
   Single as Bouwdossier,
 } from '../../../../api/iiif-metadata/bouwdossier'
-import { getScopes } from '../../../../app/utils/auth/auth'
-import { toDataDetail } from '../../../../app/links'
-import { useAuthToken } from '../../../../app/contexts/AuthToken/AuthTokenContext'
+import { getScopes } from '../../../../shared/utils/auth/auth'
+import { toDataDetail } from '../../../../links'
+import { useAuthToken } from '../../../../shared/contexts/AuthToken/AuthTokenContext'
 import formatAddresses from '../../utils/formatAddresses'
 import formatDossierAccessValue from '../../utils/formatDossierAccessValue'
 import hasUserRights from '../../utils/hasUserRights'
 import ContentBlock, { DefinitionList, DefinitionListItem, SubHeading } from '../ContentBlock'
 import DocumentDetails from '../DocumentDetails'
 import DossierDetailsModal from '../DossierDetailsModal'
-import AuthScope from '../../../../app/utils/api/authScope'
+import AuthScope from '../../../../shared/utils/api/authScope'
 
 const Header = styled.header`
   padding: ${themeSpacing(5)};

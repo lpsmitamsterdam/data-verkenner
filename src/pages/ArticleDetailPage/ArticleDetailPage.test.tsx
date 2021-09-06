@@ -1,7 +1,7 @@
 import usePromise from '@amsterdam/use-promise'
 import { render, screen } from '@testing-library/react'
 import { mocked } from 'ts-jest/utils'
-import withAppContext from '../../app/utils/withAppContext'
+import withAppContext from '../../shared/utils/withAppContext'
 import ArticleDetailPage from './ArticleDetailPage'
 
 jest.mock('@amsterdam/use-promise', () => {

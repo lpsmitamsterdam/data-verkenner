@@ -1,6 +1,6 @@
 import { fireEvent, render, screen } from '@testing-library/react'
 import LegendControl from './LegendControl'
-import withMapContext from '../../../../app/utils/withMapContext'
+import withMapContext from '../../../../shared/utils/withMapContext'
 import { DrawerState } from '../DrawerOverlay'
 
 describe('LegendControl', () => {

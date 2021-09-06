@@ -1,10 +1,10 @@
 import { fireEvent, render, screen } from '@testing-library/react'
 import { mocked } from 'ts-jest/utils'
-import socialItems from '../../../../app/components/ContextMenu/socialItems'
-import withAppContext from '../../../../app/utils/withAppContext'
+import socialItems from '../../../../shared/components/ContextMenu/socialItems'
+import withAppContext from '../../../../shared/utils/withAppContext'
 import ContextMenu from './ContextMenu'
 
-jest.mock('../../../../app/components/ContextMenu/socialItems')
+jest.mock('../../../../shared/components/ContextMenu/socialItems')
 
 const socialItemsMock = mocked(socialItems)
 

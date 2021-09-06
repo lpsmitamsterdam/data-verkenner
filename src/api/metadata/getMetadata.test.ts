@@ -1,10 +1,10 @@
 import { mocked } from 'ts-jest/utils'
-import joinUrl from '../../app/utils/joinUrl'
+import joinUrl from '../../shared/utils/joinUrl'
 import environment from '../../environment'
-import { fetchWithoutToken } from '../../app/utils/api/api'
+import { fetchWithoutToken } from '../../shared/utils/api/api'
 import { getMetadata } from './getMetadata'
 
-jest.mock('../../app/utils/api/api')
+jest.mock('../../shared/utils/api/api')
 
 const mockedFetchWithoutToken = mocked(fetchWithoutToken, true)
 
