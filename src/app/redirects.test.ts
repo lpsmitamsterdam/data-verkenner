@@ -7,7 +7,7 @@ import resolveRedirects, {
 } from './redirects'
 import matomoInstance from './matomo'
 import getVerblijfsobjectIdFromAddressQuery from './utils/getVerblijfsobjectIdFromAddressQuery'
-import * as panoramaApi from './pages/MapPage/components/PanoramaViewer/panorama-api/panorama-api'
+import * as panoramaApi from '../pages/MapPage/components/PanoramaViewer/panorama-api/panorama-api'
 import { MAIN_PATHS } from './routes'
 
 jest.useFakeTimers()

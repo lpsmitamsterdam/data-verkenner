@@ -1,4 +1,4 @@
-import { SearchType } from '../../../../pages/SearchPage/constants'
+import { SearchType } from '../../../../../pages/SearchPage/constants'
 import joinUrl from '../../../../utils/joinUrl'
 import environment from '../../../../../environment'
 import { CmsType } from '../../../../../shared/config/cms.config'

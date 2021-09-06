@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import { Link as RouterLink } from 'react-router-dom'
 import { useMatomo } from '@datapunt/matomo-tracker-react'
 import { useDataSelection } from '../../contexts/DataSelection/DataSelectionContext'
-import { DATASELECTION_REMOVE_FILTER } from '../../pages/MapPage/matomo-events'
+import { DATASELECTION_REMOVE_FILTER } from '../../../pages/MapPage/matomo-events'
 
 const List = styled.ul`
   display: flex;

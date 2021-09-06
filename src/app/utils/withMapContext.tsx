@@ -3,7 +3,7 @@ import type { ReactNode } from 'react'
 import type { MapContextProps } from '../contexts/map/MapContext'
 import MapContext from '../contexts/map/MapContext'
 import withAppContext from './withAppContext'
-import { DrawerState } from '../pages/MapPage/components/DrawerOverlay'
+import { DrawerState } from '../../pages/MapPage/components/DrawerOverlay'
 
 export const initialState: MapContextProps = {
   panelLayers: [],

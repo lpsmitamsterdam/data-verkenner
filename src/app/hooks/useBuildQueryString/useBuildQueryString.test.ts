@@ -6,7 +6,7 @@ import {
   panoHeadingParam,
   panoPitchParam,
   zoomParam,
-} from '../../pages/MapPage/query-params'
+} from '../../../pages/MapPage/query-params'
 
 jest.mock('react-router-dom', () => ({
   // @ts-ignore

@@ -2,11 +2,11 @@
 import type { Feature } from 'geojson'
 import type { TileLayerOptions, WMSOptions } from 'leaflet'
 import type { Dispatch, ReactElement, SetStateAction } from 'react'
-import type { ExtendedMapGroup } from '../../pages/MapPage/legacy/services'
-import type { DrawerState } from '../../pages/MapPage/components/DrawerOverlay'
+import type { ExtendedMapGroup } from '../../../pages/MapPage/legacy/services'
+import type { DrawerState } from '../../../pages/MapPage/components/DrawerOverlay'
 import createNamedContext from '../createNamedContext'
 import useRequiredContext from '../../hooks/useRequiredContext'
-import type { InfoBoxProps } from '../../pages/MapPage/legacy/types/details'
+import type { InfoBoxProps } from '../../../pages/MapPage/legacy/types/details'
 import type { MapCollection } from '../../../api/cms_search/graphql'
 
 export interface WmsOverlay {

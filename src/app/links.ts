@@ -6,8 +6,8 @@ import {
   documentCodeParam,
   fileNameParam,
   fileUrlParam,
-} from './pages/ConstructionDossierPage/query-params'
-import { ViewMode, viewParam } from './pages/MapPage/query-params'
+} from '../pages/ConstructionDossierPage/query-params'
+import { ViewMode, viewParam } from '../pages/MapPage/query-params'
 import { routing } from './routes'
 import toSearchParams from './utils/toSearchParams'
 

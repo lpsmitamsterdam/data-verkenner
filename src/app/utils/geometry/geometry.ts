@@ -1,7 +1,7 @@
 import type { Point } from 'geojson'
-import type { PotentialApiResult } from '../../pages/MapPage/legacy/types/details'
+import type { PotentialApiResult } from '../../../pages/MapPage/legacy/types/details'
 import isObject from '../isObject'
-import BOUNDING_BOX from '../../pages/MapPage/legacy/services/bounding-box.constant'
+import BOUNDING_BOX from '../../../pages/MapPage/legacy/services/bounding-box.constant'
 import * as crsConverter from '../coordinateReferenceSystem/crs-converter'
 
 const isVestigingAmsterdam = (geometrie: Point) => {

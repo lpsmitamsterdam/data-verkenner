@@ -6,7 +6,7 @@ import createNamedContext from '../createNamedContext'
 import useInterval from '../../hooks/useInterval'
 import useParam from '../../hooks/useParam'
 import useRequiredContext from '../../hooks/useRequiredContext'
-import { authTokenParam } from '../../pages/ConstructionDossierPage/query-params'
+import { authTokenParam } from '../../../pages/ConstructionDossierPage/query-params'
 
 export interface DecodedToken {
   /**

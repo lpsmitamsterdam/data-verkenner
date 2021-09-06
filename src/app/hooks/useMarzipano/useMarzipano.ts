@@ -3,8 +3,8 @@ import debounce from 'lodash.debounce'
 import Marzipano from 'marzipano'
 import type { RefObject } from 'react'
 import { useEffect, useState } from 'react'
-import { getOrientation } from '../../pages/MapPage/components/PanoramaViewer/marzipano/marzipano'
-import type { Pano } from '../../pages/MapPage/query-params'
+import { getOrientation } from '../../../pages/MapPage/components/PanoramaViewer/marzipano/marzipano'
+import type { Pano } from '../../../pages/MapPage/query-params'
 
 const useMarzipano = (
   ref: RefObject<HTMLElement>,

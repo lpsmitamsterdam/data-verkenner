@@ -16,7 +16,7 @@ import {
   toPublicationSearch,
   toSpecialSearch,
 } from '../../../links'
-import { defaultPanoramaUrl } from '../../../pages/MapPage/config'
+import { defaultPanoramaUrl } from '../../../../pages/MapPage/config'
 import { routing as routes } from '../../../routes'
 
 export interface NavigationLink {

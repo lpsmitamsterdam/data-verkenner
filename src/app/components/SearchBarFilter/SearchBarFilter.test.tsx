@@ -4,7 +4,7 @@ import useParam from '../../hooks/useParam'
 
 jest.mock('../../hooks/useParam')
 
-jest.mock('../../pages/SearchPage/config', () => ({
+jest.mock('../../../pages/SearchPage/config', () => ({
   article: {
     label: 'Article label',
     type: 'article',

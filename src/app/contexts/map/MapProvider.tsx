@@ -10,11 +10,11 @@ import {
   mapLayersParam,
   panoFullScreenParam,
   panoHeadingParam,
-} from '../../pages/MapPage/query-params'
-import buildLeafletLayers from '../../pages/MapPage/utils/buildLeafletLayers'
-import { DrawerState } from '../../pages/MapPage/components/DrawerOverlay'
+} from '../../../pages/MapPage/query-params'
+import buildLeafletLayers from '../../../pages/MapPage/utils/buildLeafletLayers'
+import { DrawerState } from '../../../pages/MapPage/components/DrawerOverlay'
 import useCompare from '../../hooks/useCompare'
-import type { InfoBoxProps } from '../../pages/MapPage/legacy/types/details'
+import type { InfoBoxProps } from '../../../pages/MapPage/legacy/types/details'
 import { useIsEmbedded } from '../ui'
 import type { MapCollection } from '../../../api/cms_search/graphql'
 // @ts-ignore

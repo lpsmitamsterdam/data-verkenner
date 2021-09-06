@@ -2,8 +2,12 @@ import type { LocationDescriptorObject } from 'history'
 import type { FunctionComponent } from 'react'
 import styled from 'styled-components'
 import { Link } from 'react-router-dom'
-import SEARCH_PAGE_CONFIG from '../../../pages/SearchPage/config'
-import { activeFiltersParam, pageParam, queryParam } from '../../../pages/SearchPage/query-params'
+import SEARCH_PAGE_CONFIG from '../../../../pages/SearchPage/config'
+import {
+  activeFiltersParam,
+  pageParam,
+  queryParam,
+} from '../../../../pages/SearchPage/query-params'
 import toSearchParams from '../../../utils/toSearchParams'
 import type { AutoSuggestSearchResult } from '../services/auto-suggest/auto-suggest'
 import AutoSuggestItem from './AutoSuggestItem'

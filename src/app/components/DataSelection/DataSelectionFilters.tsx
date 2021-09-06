@@ -9,7 +9,7 @@ import Metadata from '../../../shared/assets/icons/metadata.svg'
 import { useDataSelection } from '../../contexts/DataSelection/DataSelectionContext'
 import type { AvailableFilter } from './types'
 import useLegacyDataselectionConfig from './useLegacyDataselectionConfig'
-import { DATASELECTION_ADD_FILTER } from '../../pages/MapPage/matomo-events'
+import { DATASELECTION_ADD_FILTER } from '../../../pages/MapPage/matomo-events'
 import {
   DataSelectionFiltersCategory,
   DataSelectionFiltersContainer,

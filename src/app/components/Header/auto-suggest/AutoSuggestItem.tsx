@@ -22,9 +22,9 @@ import {
   ViewMode,
   viewParam,
   zoomParam,
-} from '../../../pages/MapPage/query-params'
-import { SearchType } from '../../../pages/SearchPage/constants'
-import { queryParam } from '../../../pages/SearchPage/query-params'
+} from '../../../../pages/MapPage/query-params'
+import { SearchType } from '../../../../pages/SearchPage/constants'
+import { queryParam } from '../../../../pages/SearchPage/query-params'
 import toSearchParams from '../../../utils/toSearchParams'
 import toSlug from '../../../utils/toSlug'
 import { CmsType } from '../../../../shared/config/cms.config'

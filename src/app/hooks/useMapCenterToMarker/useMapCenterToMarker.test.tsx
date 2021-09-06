@@ -6,7 +6,7 @@ import withAppContext from '../../utils/withAppContext'
 import {
   LAPTOP_WIDTH,
   TABLET_M_WIDTH,
-} from '../../pages/MapPage/components/DrawerPanel/LargeDrawerPanel'
+} from '../../../pages/MapPage/components/DrawerPanel/LargeDrawerPanel'
 
 const fitBoundsMock = jest.fn()
 const panToMock = jest.fn()

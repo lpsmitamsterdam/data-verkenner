@@ -1,6 +1,6 @@
 import { createPath } from 'history'
 import environment from '../environment'
-import { getImageDataById } from './pages/MapPage/components/PanoramaViewer/panorama-api/panorama-api'
+import { getImageDataById } from '../pages/MapPage/components/PanoramaViewer/panorama-api/panorama-api'
 import {
   ARTICLE_REDIRECT_FRAGMENTS,
   REDIRECTS_ARTICLES,
@@ -20,7 +20,7 @@ import {
   panoPitchParam,
   viewParam,
   zoomParam,
-} from './pages/MapPage/query-params'
+} from '../pages/MapPage/query-params'
 import { MAIN_PATHS, routing } from './routes'
 import getVerblijfsobjectIdFromAddressQuery from './utils/getVerblijfsobjectIdFromAddressQuery'
 import matchRule from './utils/matchRule'

@@ -9,34 +9,35 @@ import NotificationAlert from './components/NotificationAlert/NotificationAlert'
 import { mapSearchPagePaths, routing } from './routes'
 import { DataSelectionProvider } from './contexts/DataSelection/DataSelectionContext'
 
-const HomePage = lazy(() => import(/* webpackChunkName: "HomePage" */ './pages/HomePage'))
-const UpdatesPage = lazy(() => import(/* webpackChunkName: "UpdatesPage" */ './pages/UpdatesPage'))
+const HomePage = lazy(() => import(/* webpackChunkName: "HomePage" */ '../pages/HomePage'))
+const UpdatesPage = lazy(() => import(/* webpackChunkName: "UpdatesPage" */ '../pages/UpdatesPage'))
 const DatasetDetailPage = lazy(
-  () => import(/* webpackChunkName: "DatasetDetailPage" */ './pages/DatasetDetailPage'),
+  () => import(/* webpackChunkName: "DatasetDetailPage" */ '../pages/DatasetDetailPage'),
 )
 const ConstructionDossierPage = lazy(
-  () => import(/* webpackChunkName: "ConstructionDossierPage" */ './pages/ConstructionDossierPage'),
+  () =>
+    import(/* webpackChunkName: "ConstructionDossierPage" */ '../pages/ConstructionDossierPage'),
 )
 const ArticleDetailPage = lazy(
-  () => import(/* webpackChunkName: "ArticleDetailPage" */ './pages/ArticleDetailPage'),
+  () => import(/* webpackChunkName: "ArticleDetailPage" */ '../pages/ArticleDetailPage'),
 )
 const PublicationDetailPage = lazy(
-  () => import(/* webpackChunkName: "PublicationDetailPage" */ './pages/PublicationDetailPage'),
+  () => import(/* webpackChunkName: "PublicationDetailPage" */ '../pages/PublicationDetailPage'),
 )
 const SpecialDetailPage = lazy(
-  () => import(/* webpackChunkName: "SpecialDetailPage" */ './pages/SpecialDetailPage'),
+  () => import(/* webpackChunkName: "SpecialDetailPage" */ '../pages/SpecialDetailPage'),
 )
 const CollectionDetailPage = lazy(
-  () => import(/* webpackChunkName: "CollectionDetailPage" */ './pages/CollectionDetailPage'),
+  () => import(/* webpackChunkName: "CollectionDetailPage" */ '../pages/CollectionDetailPage'),
 )
 const MapContainer = lazy(
-  () => import(/* webpackChunkName: "MapContainer" */ './pages/MapPage/MapContainer'),
+  () => import(/* webpackChunkName: "MapContainer" */ '../pages/MapPage/MapContainer'),
 )
 const NotFoundPage = lazy(
-  () => import(/* webpackChunkName: "NotFoundPage" */ './pages/NotFoundPage'),
+  () => import(/* webpackChunkName: "NotFoundPage" */ '../pages/NotFoundPage'),
 )
 const SearchPage = lazy(
-  () => import(/* webpackChunkName: "SearchPage" */ './pages/SearchPage/index'),
+  () => import(/* webpackChunkName: "SearchPage" */ '../pages/SearchPage/index'),
 )
 
 // The Container from @amsterdam/asc-ui isnt used here as the margins added do not match the ones in the design

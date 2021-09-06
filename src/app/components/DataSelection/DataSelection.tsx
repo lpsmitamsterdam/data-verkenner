@@ -3,7 +3,7 @@ import usePromise, { isPending, isRejected } from '@amsterdam/use-promise'
 import styled, { css } from 'styled-components'
 import type { FunctionComponent } from 'react'
 import DataSelectionActiveFilters from './DataSelectionActiveFilters'
-import { ViewMode, viewParam } from '../../pages/MapPage/query-params'
+import { ViewMode, viewParam } from '../../../pages/MapPage/query-params'
 import useParam from '../../hooks/useParam'
 import LoginLink from '../Links/LoginLink/LoginLink'
 import LoadingSpinner from '../LoadingSpinner/LoadingSpinner'
@@ -16,7 +16,7 @@ import useFetchLegacyDataSelectionData from './useFetchLegacyDataSelectionData'
 import { useDataSelection } from '../../contexts/DataSelection/DataSelectionContext'
 import DataSelectionHeader from './DataSelectionHeader'
 import { AuthError } from '../../utils/api/customError'
-import { pageParam } from '../../pages/SearchPage/query-params'
+import { pageParam } from '../../../pages/SearchPage/query-params'
 
 const StyledAlert = styled(Alert)`
   margin-bottom: ${themeSpacing(5)};
