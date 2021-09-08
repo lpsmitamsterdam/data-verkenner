@@ -31,6 +31,7 @@ export enum DetailResultItemType {
   DefinitionList = 'definition-list',
   Table = 'table',
   LinkList = 'link-list',
+  SplitListData = 'split-list-data',
   PaginatedData = 'paginated-data',
   GroupedItems = 'grouped-items',
   Image = 'image',
@@ -50,6 +51,7 @@ export type DetailResultItem =
   | DetailResultItemDefinitionList
   | DetailResultItemLinkList
   | DetailResultItemTable
+  | DetailResultItemSplitListData
   | DetailResultItemPaginatedData
   | DetailResultItemGroupedItems
   | DetailResultItemBulletList
@@ -84,6 +86,13 @@ export interface PaginatedData<T> {
   previous: string | null
 }
 
+export interface SplitListData<T> {
+  data: T
+  count: number
+  next: string | null
+  previous: string | null
+}
+
 export interface DefaultDetailResultItem extends DetailAuthentication {
   infoBox?: InfoBoxProps
   // Todo: remove gridArea when legacy map is removed
@@ -101,10 +110,17 @@ export interface DetailResultItemGroupedItems extends DefaultDetailResultItem {
   entries: DetailResultItem[]
 }
 
+export interface DetailResultItemSplitListData extends DefaultDetailResultItem {
+  type: DetailResultItemType.SplitListData
+  getData: (url?: string, pageSize?: number) => Promise<SplitListData<any> | null>
+  pageSize: number
+  toView: (data?: any) => DetailResultItem
+}
 export interface DetailResultItemPaginatedData extends DefaultDetailResultItem {
   type: DetailResultItemType.PaginatedData
-  getData: (url?: string, pageSize?: number) => Promise<PaginatedData<any> | null>
+  getData: (url?: string, pageSize?: number, offset?: number) => Promise<PaginatedData<any> | null>
   pageSize: number
+  page: number
   toView: (data?: any) => DetailResultItem
 }
 
