@@ -1,10 +1,10 @@
 import { mocked } from 'ts-jest/utils'
 import { getBouwdossierById } from '.'
-import joinUrl from '../../../app/utils/joinUrl'
+import joinUrl from '../../../shared/utils/joinUrl'
 import environment from '../../../environment'
-import { fetchWithToken } from '../../../shared/services/api/api'
+import { fetchWithToken } from '../../../shared/utils/api/api'
 
-jest.mock('../../../shared/services/api/api')
+jest.mock('../../../shared/utils/api/api')
 
 const mockedFetchWithToken = mocked(fetchWithToken, true)
 

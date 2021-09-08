@@ -1,5 +1,5 @@
 import { getDatasetById } from './getDatasetById'
-import getDatasetFilters from '../../../shared/services/datasets-filters/datasets-filters'
+import getDatasetFilters from '../../../shared/utils/datasetsFilters'
 
 const getDatasetData = async (id: string) => {
   const [dataset, filters] = await Promise.all([getDatasetById(id), getDatasetFilters()])

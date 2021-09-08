@@ -1,5 +1,5 @@
 import { rest, server } from '../../../test/server'
-import joinUrl from '../../app/utils/joinUrl'
+import joinUrl from '../../shared/utils/joinUrl'
 import environment from '../../environment'
 import requestLoginLink from './requestLoginLink'
 

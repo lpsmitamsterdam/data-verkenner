@@ -1,9 +1,5 @@
-import {
-  legendOpenParam,
-  mapLayersParam,
-  viewParam,
-} from '../../src/app/pages/MapPage/query-params'
-import { routing } from '../../src/app/routes'
+import { legendOpenParam, mapLayersParam, viewParam } from '../../src/pages/MapPage/query-params'
+import { routing } from '../../src/routes'
 import { HEADER, MAP } from '../support/selectors'
 
 describe('embed module', () => {
