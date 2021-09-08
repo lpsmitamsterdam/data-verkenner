@@ -2,7 +2,7 @@ import { Alert, CustomHTMLBlock, Link, ShowMoreShowLess } from '@amsterdam/asc-u
 import { Link as RouterLink } from 'react-router-dom'
 import styled from 'styled-components'
 import type { FunctionComponent } from 'react'
-import type { LocationDescriptor } from 'history'
+import type { To } from 'history'
 import type { DetailResultItemDefinitionList } from '../../legacy/types/details'
 import DefinitionList, { DefinitionListItem } from '../../../../shared/components/DefinitionList'
 
@@ -32,7 +32,7 @@ const DetailDefinitionList: FunctionComponent<Pick<DetailResultItemDefinitionLis
 function renderDescription(
   description?: string | null,
   href?: string | null,
-  to?: LocationDescriptor,
+  to?: To,
   CustomComponent?: FunctionComponent<any>,
 ) {
   if (href) {

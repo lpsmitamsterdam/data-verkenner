@@ -1,6 +1,6 @@
 import { Api, Data, DocumentText, Map, Pano, Table } from '@amsterdam/asc-assets'
 import { Icon } from '@amsterdam/asc-ui'
-import type { LocationDescriptorObject } from 'history'
+import type { PartialLocation } from 'history'
 import environment from '../../../../environment'
 import {
   NAVIGATION_LINK_DATA_IN_TABLES,
@@ -21,7 +21,7 @@ import { routing as routes } from '../../../../routes'
 
 export interface NavigationLink {
   id: number
-  to: LocationDescriptorObject
+  to: PartialLocation
   CardIcon?: () => JSX.Element
   testId: string
   title: string

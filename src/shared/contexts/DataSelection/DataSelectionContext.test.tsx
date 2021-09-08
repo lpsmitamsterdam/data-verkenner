@@ -1,5 +1,5 @@
 import { renderHook } from '@testing-library/react-hooks'
-import type { LocationDescriptorObject } from 'history'
+import type { PartialLocation } from 'history'
 import { toEstablishments } from '../../../links'
 import { routing } from '../../../routes'
 import { DataSelectionProvider, useDataSelection } from './DataSelectionContext'
@@ -8,7 +8,7 @@ const mockSearchValue = ''
 
 const pushMock = jest.fn()
 const defaultPathname = routing.addresses.path
-let locationMockValue: LocationDescriptorObject = {
+let locationMockValue: PartialLocation = {
   pathname: defaultPathname,
   search: mockSearchValue,
 }

@@ -1,7 +1,7 @@
 import { Link, styles, svgFill, themeColor } from '@amsterdam/asc-ui'
 import styled from 'styled-components'
 import { Link as RouterLink } from 'react-router-dom'
-import type { LocationDescriptorObject } from 'history'
+import type { PartialLocation } from 'history'
 import type { FunctionComponent } from 'react'
 
 const StyledLink = styled(Link)`
@@ -14,7 +14,7 @@ const StyledLink = styled(Link)`
 `
 
 export interface SearchLinkProps {
-  to: LocationDescriptorObject
+  to: PartialLocation
   label: string
   title?: string
 }

@@ -1,4 +1,4 @@
-import type { LocationDescriptorObject } from 'history'
+import type { PartialLocation } from 'history'
 import type { FunctionComponent } from 'react'
 import styled from 'styled-components'
 import { Link } from 'react-router-dom'
@@ -82,7 +82,7 @@ function getMoreResultsLink(
   type: string,
   inputValue: string,
   subType?: string,
-): LocationDescriptorObject | null {
+): PartialLocation | null {
   const config = Object.values(SEARCH_PAGE_CONFIG).find(
     ({ type: configType }) => type === configType,
   )

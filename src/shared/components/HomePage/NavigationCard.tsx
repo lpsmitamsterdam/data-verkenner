@@ -16,7 +16,7 @@ import {
 } from '@amsterdam/asc-ui'
 import styled from 'styled-components'
 import { Link as RouterLink } from 'react-router-dom'
-import type { LocationDescriptorObject } from 'history'
+import type { To } from 'history'
 import type { FunctionComponent } from 'react'
 
 const StyledHeading = styled(Heading)`
@@ -90,7 +90,7 @@ export interface NavigationCardProps {
   CardIcon: () => JSX.Element
   title: string
   description: string
-  to: LocationDescriptorObject
+  to: To
 }
 
 const NavigationCard: FunctionComponent<NavigationCardProps> = ({

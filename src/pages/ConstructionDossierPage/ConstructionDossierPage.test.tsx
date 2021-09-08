@@ -68,6 +68,8 @@ describe('ConstructionDossierPage', () => {
 
     expect(mockedSetDocumentTitle).toHaveBeenCalledWith(false)
 
+    // TODO Currently history v5 history.push doesn't work with React-router so this will always fail
+    // @see https://github.com/remix-run/history/issues/804#issuecomment-899124838
     history.push(toConstructionDossier('foo', 'somefile.png'))
     rerender(renderWithHistory(history))
 

@@ -1,4 +1,4 @@
-import type { LocationDescriptorObject } from 'history'
+import type { PartialLocation } from 'history'
 import type { BaseIconOptions } from 'leaflet'
 import environment from '../../environment'
 import { toAddresses, toCadastralObjects, toEstablishments, toGeoSearch } from '../../links'
@@ -25,7 +25,7 @@ export enum DataSelectionMapVisualizationType {
   Markers,
 }
 
-export const defaultPanoramaUrl: LocationDescriptorObject = {
+export const defaultPanoramaUrl: PartialLocation = {
   ...toGeoSearch(),
   search: toSearchParams([
     [centerParam, { lat: 52.373308, lng: 4.8749081 }],

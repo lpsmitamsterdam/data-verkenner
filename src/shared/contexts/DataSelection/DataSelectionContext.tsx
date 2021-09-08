@@ -1,7 +1,7 @@
 import type { Dispatch, FunctionComponent, SetStateAction } from 'react'
 import { useMemo, useState } from 'react'
 import { useLocation } from 'react-router-dom'
-import type { LocationDescriptorObject } from 'history'
+import type { PartialLocation } from 'history'
 import type { DataSelectionFilters } from '../../../pages/MapPage/query-params'
 import { dataSelectionFiltersParam, polygonParam } from '../../../pages/MapPage/query-params'
 import createNamedContext from '../createNamedContext'
@@ -34,7 +34,7 @@ export interface DataSelectionContextProps {
   }: {
     filtersToAdd?: DataSelectionFilters
     filtersToRemove?: string[]
-  }) => LocationDescriptorObject
+  }) => PartialLocation
 }
 
 const DataSelectionContext = createNamedContext<DataSelectionContextProps | null>(

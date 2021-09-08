@@ -1,5 +1,5 @@
 import { generatePath } from 'react-router-dom'
-import type { LocationDescriptorObject } from 'history'
+import type { PartialLocation } from 'history'
 import environment from './environment'
 import { BEDIENING_PAGE, HEADER_LINK_HELP } from './shared/config/content-links'
 import {
@@ -11,29 +11,29 @@ import { ViewMode, viewParam } from './pages/MapPage/query-params'
 import { routing } from './routes'
 import toSearchParams from './shared/utils/toSearchParams'
 
-export const toAddresses = (): LocationDescriptorObject => ({
+export const toAddresses = (): PartialLocation => ({
   pathname: routing.addresses.path,
   search: toSearchParams([[viewParam, ViewMode.Full]]).toString(),
 })
 
-export const toArticleDetail = (id: string, slug: string): LocationDescriptorObject => ({
+export const toArticleDetail = (id: string, slug: string): PartialLocation => ({
   pathname: generatePath(routing.articleDetail.path, { id, slug }),
 })
 
-export const toArticleSearch = (): LocationDescriptorObject => ({
+export const toArticleSearch = (): PartialLocation => ({
   pathname: routing.articleSearch.path,
 })
 
-export const toCadastralObjects = (): LocationDescriptorObject => ({
+export const toCadastralObjects = (): PartialLocation => ({
   pathname: routing.cadastralObjects.path,
   search: toSearchParams([[viewParam, ViewMode.Full]]).toString(),
 })
 
-export const toCollectionDetail = (id: string, slug: string): LocationDescriptorObject => ({
+export const toCollectionDetail = (id: string, slug: string): PartialLocation => ({
   pathname: generatePath(routing.collectionDetail.path, { id, slug }),
 })
 
-export const toCollectionSearch = (): LocationDescriptorObject => ({
+export const toCollectionSearch = (): PartialLocation => ({
   pathname: routing.collectionSearch.path,
 })
 
@@ -42,7 +42,7 @@ export const toConstructionDossier = (
   fileName?: string,
   fileUrl?: string,
   documentCode?: string,
-): LocationDescriptorObject => {
+): PartialLocation => {
   const pathname = generatePath(routing.constructionDossier.path, { id })
   const searchParams = new URLSearchParams()
 
@@ -58,7 +58,7 @@ export const toConstructionDossier = (
     searchParams.set(documentCodeParam.name, documentCode)
   }
 
-  return { pathname, search: searchParams.toString() }
+  return { pathname, search: `?${searchParams.toString()}` }
 }
 
 export interface DataDetailParams {
@@ -67,16 +67,12 @@ export interface DataDetailParams {
   id: string
 }
 
-export const toDataDetail = ({
-  type,
-  subtype,
-  id,
-}: DataDetailParams): LocationDescriptorObject => ({
+export const toDataDetail = ({ type, subtype, id }: DataDetailParams): PartialLocation => ({
   pathname: generatePath(routing.dataDetail.path, { type, subtype, id }),
   search: window.location.search,
 })
 
-export const toDataSearch = (): LocationDescriptorObject => ({
+export const toDataSearch = (): PartialLocation => ({
   pathname: routing.dataSearch.path,
 })
 
@@ -85,21 +81,21 @@ export interface DatasetDetailParams {
   slug: string
 }
 
-export const toDatasetDetail = ({ id, slug }: DatasetDetailParams): LocationDescriptorObject => ({
+export const toDatasetDetail = ({ id, slug }: DatasetDetailParams): PartialLocation => ({
   pathname: generatePath(routing.datasetDetail.path, { id, slug }),
 })
 
-export const toDatasetSearch = (): LocationDescriptorObject => ({
+export const toDatasetSearch = (): PartialLocation => ({
   pathname: routing.datasetSearch.path,
 })
 
-export const toEstablishments = (): LocationDescriptorObject => ({
+export const toEstablishments = (): PartialLocation => ({
   pathname: routing.establishments.path,
   search: toSearchParams([[viewParam, ViewMode.Full]]).toString(),
 })
 
 // TODO: Rename this method to match the name of the route.
-export const toGeoSearch = (): LocationDescriptorObject => ({
+export const toGeoSearch = (): PartialLocation => ({
   pathname: routing.dataSearchGeo.path,
 })
 
@@ -109,38 +105,34 @@ export const toHelpPage = () =>
 export const toBedieningPage = () =>
   toArticleDetail(BEDIENING_PAGE.id[environment.DEPLOY_ENV], BEDIENING_PAGE.slug)
 
-export const toHome = (): LocationDescriptorObject => ({
+export const toHome = (): PartialLocation => ({
   pathname: routing.home.path,
 })
 
-export const toMapSearch = (): LocationDescriptorObject => ({
+export const toMapSearch = (): PartialLocation => ({
   pathname: routing.mapSearch.path,
 })
 
-export const toNotFound = (): LocationDescriptorObject => ({
+export const toNotFound = (): PartialLocation => ({
   pathname: routing.notFound.path,
 })
 
-export const toPublicationDetail = (id: string, slug: string): LocationDescriptorObject => ({
+export const toPublicationDetail = (id: string, slug: string): PartialLocation => ({
   pathname: generatePath(routing.publicationDetail.path, { id, slug }),
 })
 
-export const toPublicationSearch = (): LocationDescriptorObject => ({
+export const toPublicationSearch = (): PartialLocation => ({
   pathname: routing.publicationSearch.path,
 })
 
-export const toSearch = (): LocationDescriptorObject => ({
+export const toSearch = (): PartialLocation => ({
   pathname: routing.search.path,
 })
 
-export const toSpecialDetail = (
-  id: string,
-  type: string,
-  slug: string,
-): LocationDescriptorObject => ({
+export const toSpecialDetail = (id: string, type: string, slug: string): PartialLocation => ({
   pathname: generatePath(routing.specialDetail.path, { id, type, slug }),
 })
 
-export const toSpecialSearch = (): LocationDescriptorObject => ({
+export const toSpecialSearch = (): PartialLocation => ({
   pathname: routing.specialSearch.path,
 })

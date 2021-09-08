@@ -1,4 +1,4 @@
-import type { LocationDescriptorObject } from 'history'
+import type { PartialLocation } from 'history'
 import { CmsType } from '../../shared/config/cms.config'
 import EditorialResults from '../../shared/components/EditorialResults'
 import {
@@ -33,7 +33,7 @@ export const DEFAULT_LIMIT = 10
 export interface SearchConfig {
   resolver: any
   query: string
-  to: LocationDescriptorObject
+  to: PartialLocation
   path: string
   label: string
   type: CmsType | SearchType

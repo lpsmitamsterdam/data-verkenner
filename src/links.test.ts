@@ -89,7 +89,7 @@ describe('toConstructionDossier', () => {
 
     expect(toConstructionDossier(id, 'file.ext', 'http://foo.bar', 'ABC1234')).toEqual({
       pathname: generatePath(routing.constructionDossier.path, { id }),
-      search: 'bestand=file.ext&bestandUrl=http%3A%2F%2Ffoo.bar&documentCode=ABC1234',
+      search: '?bestand=file.ext&bestandUrl=http%3A%2F%2Ffoo.bar&documentCode=ABC1234',
     })
   })
 })

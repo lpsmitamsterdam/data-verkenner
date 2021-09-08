@@ -1,7 +1,7 @@
 import { Heading, Link, List, Paragraph, themeSpacing, Typography } from '@amsterdam/asc-ui'
 import { Link as RouterLink } from 'react-router-dom'
 import styled from 'styled-components'
-import type { LocationDescriptorObject } from 'history'
+import type { PartialLocation } from 'history'
 import type { FunctionComponent } from 'react'
 import { formatNoResultsMessage } from './utils'
 
@@ -22,7 +22,7 @@ const StyledListItem: FunctionComponent = ({ children }) => (
 export interface NoSearchResultsProps {
   query: string
   label?: string
-  to?: LocationDescriptorObject
+  to?: PartialLocation
 }
 
 const NoSearchResults: FunctionComponent<NoSearchResultsProps> = ({ query, label = '', to }) => (

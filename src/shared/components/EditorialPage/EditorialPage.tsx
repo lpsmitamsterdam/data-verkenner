@@ -5,7 +5,7 @@ import { Helmet } from 'react-helmet'
 import { useHistory } from 'react-router-dom'
 import styled from 'styled-components'
 import type { FunctionComponent } from 'react'
-import type { LocationDescriptorObject } from 'history'
+import type { PartialLocation } from 'history'
 import environment from '../../../environment'
 import { toNotFound } from '../../../links'
 import getImageFromCms from '../../utils/getImageFromCms'
@@ -21,7 +21,7 @@ const BodyStyle = styled.div`
 export interface EditorialPageProps {
   documentTitle?: string
   loading: boolean
-  link?: LocationDescriptorObject | null
+  link?: PartialLocation | null
   description?: string
   image?: string
   title?: string

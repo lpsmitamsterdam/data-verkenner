@@ -1,6 +1,6 @@
 import type { AlertLevel } from '@amsterdam/asc-ui'
 import type { Geometry, Point } from 'geojson'
-import type { LocationDescriptor, LocationDescriptorObject } from 'history'
+import type { To, PartialLocation } from 'history'
 import type { FunctionComponent, ReactNode } from 'react'
 import type AuthScope from '../../../../shared/utils/api/authScope'
 import type { Definition } from '../glossary.constant'
@@ -74,7 +74,7 @@ export interface DetailInfo {
 export interface InternalLink {
   title?: string | null
   // TODO: when types are fixed in @types/react-router-dom, use Pick<LinkProps> instead
-  to: LocationDescriptorObject
+  to: PartialLocation
 }
 
 export type Link = ExternalLink | InternalLink
@@ -145,7 +145,7 @@ export interface DetailResultItemDefinitionListEntry {
   description?: string | null
   href?: string | null
   external?: boolean
-  to?: LocationDescriptor
+  to?: To
   alert?: string
   CustomComponent?: FunctionComponent<any>
 }

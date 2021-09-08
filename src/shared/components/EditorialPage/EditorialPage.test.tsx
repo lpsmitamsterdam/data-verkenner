@@ -2,7 +2,8 @@ import { render, screen } from '@testing-library/react'
 import { useMatomo } from '@datapunt/matomo-tracker-react'
 import { useHistory } from 'react-router-dom'
 import { mocked } from 'ts-jest/utils'
-import type { History } from 'history'
+import type { History, To } from 'history'
+import { createPath } from 'history'
 import type { PropsWithChildren } from 'react'
 import environment from '../../../environment'
 import useDocumentTitle from '../../hooks/useDocumentTitle'
@@ -27,7 +28,7 @@ describe('EditorialPage', () => {
     >)
 
     useHistoryMock.mockReturnValue({
-      createHref: ({ pathname }) => pathname,
+      createHref: (to: To) => (typeof to === 'string' ? to : createPath(to)),
     } as History)
 
     useDocumentTitleMock.mockReturnValue({

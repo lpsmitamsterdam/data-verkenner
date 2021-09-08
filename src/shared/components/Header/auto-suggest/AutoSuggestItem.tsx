@@ -5,7 +5,7 @@ import type { FunctionComponent } from 'react'
 import { useMemo } from 'react'
 import { Link as RouterLink, matchPath, useLocation } from 'react-router-dom'
 import styled from 'styled-components'
-import type { LocationDescriptorObject } from 'history'
+import type { PartialLocation } from 'history'
 import {
   toArticleDetail,
   toCollectionDetail,
@@ -103,7 +103,7 @@ const AutoSuggestItem: FunctionComponent<AutoSuggestItemProps> = ({
     }
   }
 
-  const to: LocationDescriptorObject = useMemo(() => {
+  const to: PartialLocation = useMemo(() => {
     if (suggestion.type === SearchType.Dataset) {
       const [, , id] = getIdEndpoint(suggestion.uri)
       const slug = toSlug(suggestion.label)
