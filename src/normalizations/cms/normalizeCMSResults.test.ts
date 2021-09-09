@@ -1,4 +1,4 @@
-import { toArticleDetail, toSpecialDetail } from '../../app/links'
+import { toArticleDetail, toSpecialDetail } from '../../links'
 import { CmsType } from '../../shared/config/cms.config'
 import normalizeCMSResults, {
   getLinkProps,
@@ -6,7 +6,7 @@ import normalizeCMSResults, {
   normalizeObject,
 } from './normalizeCMSResults'
 
-jest.mock('../../app/links')
+jest.mock('../../links')
 
 // @ts-ignore
 // eslint-disable-next-line @typescript-eslint/restrict-template-expressions

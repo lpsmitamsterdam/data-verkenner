@@ -1,4 +1,4 @@
-import joinUrl from '../../app/utils/joinUrl'
+import joinUrl from '../utils/joinUrl'
 import environment from '../../environment'
 
 const BACKDROP_OPACITY = 0.5

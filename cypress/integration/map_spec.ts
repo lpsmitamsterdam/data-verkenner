@@ -1,5 +1,5 @@
-import { centerParam, viewParam } from '../../src/app/pages/MapPage/query-params'
-import { routing } from '../../src/app/routes'
+import { centerParam, viewParam } from '../../src/pages/MapPage/query-params'
+import { routing } from '../../src/routes'
 import {
   ADDRESS_PAGE,
   COMPONENTS,
