@@ -86,7 +86,11 @@ const MapMarker: FunctionComponent<MarkerProps> = ({ panoActive }) => {
   useCustomEvent(window, 'afterprint', onHandleAfterPrint)
 
   useEffect(() => {
-    if (position && matchPath(location.pathname, routing.dataSearchGeo.path)) {
+    const isMapRoute =
+      matchPath(location.pathname, routing.dataDetail.path) ||
+      matchPath(location.pathname, routing.dataSearchGeo.path)
+
+    if (position && isMapRoute) {
       // This is necessary to call, because we resize the map dynamically
       // We call this again to make sure it's called before re-centre the map to the marker
       // https://leafletjs.com/reference-1.7.1.html#map-invalidatesize
