@@ -5,4 +5,7 @@ export const HOMEPAGE = {
 
 export const MAPPAGE = {
   legendaButton: '[data-testid=legenda]',
+  mapContainer: '[data-testid=mapContainer]',
+  baseLayerToggle: '[data-testid=baseLayerToggle]',
+  drawerContent: '[data-testid=drawerContent]',
 }
