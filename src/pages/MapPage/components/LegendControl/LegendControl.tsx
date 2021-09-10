@@ -40,6 +40,7 @@ const LegendControl: FunctionComponent<LegendControlProps> = ({ showDesktopVaria
         type="button"
         variant="blank"
         title="Legenda"
+        data-testid="legenda"
         iconSize={20}
         onClick={onOpenLegend}
         {...iconProps}
