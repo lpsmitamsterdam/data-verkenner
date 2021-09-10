@@ -9,3 +9,7 @@ export const MAPPAGE = {
   baseLayerToggle: '[data-testid=baseLayerToggle]',
   drawerContent: '[data-testid=drawerContent]',
 }
+
+export const SEARCH = {
+  searchInput: '[data-testid=searchInput]',
+}
