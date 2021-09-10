@@ -99,7 +99,12 @@ const NavigationCard: FunctionComponent<NavigationCardProps> = ({
   title,
   description,
 }) => (
-  <StyledLink forwardedAs={RouterLink} variant="blank" to={to}>
+  <StyledLink
+    forwardedAs={RouterLink}
+    variant="blank"
+    to={to}
+    data-testid={`navigationCard${title}`}
+  >
     <StyledCard horizontal>
       <StyledCardMedia backgroundColor="level2">
         <CardIcon />
