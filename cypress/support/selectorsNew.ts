@@ -15,6 +15,11 @@ export const SEARCH = {
   searchBarFilter: '[data-testid="searchBarFilter"]',
   autoSuggestDropDownItem: '[data-testid=autoSuggestDropdownItem]',
   autoSuggestCategory: '[data-testid=autoSuggestCategory]',
+  searchResultsEditorialCard: '[data-testid=editorialCard] h3',
+  searchResultsDatasetCard: '[data-testid=datasetCard] h3',
+  buttonFilteren: '[data-testid=buttonFilteren]',
+  searchResultsCategory: '[data-testid=searchHeading]',
+  // searchResultsLink: '[class*=LinkStyle__LinkContent]',
 }
 
 // export const DATA_SEARCH = {

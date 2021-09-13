@@ -98,7 +98,7 @@ const DatasetCard: FunctionComponent<DatasetCardProps & Partial<HTMLAnchorElemen
       ...otherProps,
     }}
   >
-    <StyledCard horizontal>
+    <StyledCard horizontal data-testid="datasetCard">
       <StyledCardContent>
         <div>
           <StyledHeading styleAs="h4" forwardedAs="h3">

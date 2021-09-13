@@ -64,7 +64,7 @@ Cypress.Commands.add(
 Cypress.Commands.add(
   'checkFirstInSearchResults',
   (category: string, result: string, selector: string) => {
-    cy.get(DATA_SEARCH.buttonFilteren).should('be.visible')
+    cy.get(SEARCH.buttonFilteren).should('be.visible')
     cy.contains('resultaten)').should('be.visible')
     cy.get(DATA_SEARCH.searchResultsCategory).first().should('contain', category)
     cy.get(selector).first().should('have.text', result)
