@@ -25,7 +25,7 @@ const config: Config.InitialOptions = {
   setupFilesAfterEnv: ['./test/mocks.ts', './test/setup-env.ts'],
   testURL: 'http://localhost:3000/',
   testEnvironment: 'jsdom',
-  testPathIgnorePatterns: ['/node_modules/', '/test/'],
+  testPathIgnorePatterns: ['/node_modules/', '/test/', '/cypress/'],
   transformIgnorePatterns: ['node_modules/(?!escape-string-regexp)'],
   transform: {
     '\\.(gql|graphql)$': '@jagi/jest-transform-graphql',
