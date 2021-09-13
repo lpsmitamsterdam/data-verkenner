@@ -202,7 +202,7 @@ const AutoSuggestItem: FunctionComponent<AutoSuggestItemProps> = ({
   }
 
   return (
-    <li>
+    <li data-testid="autoSuggestDropdownItem">
       <StyledLink forwardedAs={RouterLink} inList onClick={handleLinkClick} to={to}>
         <div
           // eslint-disable-next-line react/no-danger

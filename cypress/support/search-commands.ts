@@ -1,4 +1,5 @@
 import { DATA_SEARCH, HOMEPAGE } from './selectors'
+import { SEARCH } from './selectorsNew'
 
 declare global {
   // eslint-disable-next-line @typescript-eslint/no-namespace
@@ -26,12 +27,13 @@ Cypress.Commands.add('checkAutoSuggestFirstOfAll', (searchTerm: string, result: 
   cy.intercept(`**/typeahead?q=${searchTerm.replace(/\s+/g, '+').toLowerCase()}*`).as(
     'getTypeAhead',
   )
-  cy.get(DATA_SEARCH.searchBarFilter).select('Alle zoekresultaten')
-  cy.get(DATA_SEARCH.autoSuggest).type(searchTerm, { delay: 80 })
+  cy.get(SEARCH.searchBarFilter).select('Alle zoekresultaten')
+  cy.get(SEARCH.searchInput).type(searchTerm, { delay: 80 })
+
   cy.wait('@getTypeAhead')
   // eslint-disable-next-line cypress/no-unnecessary-waiting
   cy.wait(500)
-  cy.get(DATA_SEARCH.autoSuggestDropDownItem).first().should('have.text', result)
+  cy.get(SEARCH.autoSuggestDropDownItem).first().should('have.text', result)
   cy.get(HOMEPAGE.buttonSearch).click()
   cy.wait('@postGraphql')
 })

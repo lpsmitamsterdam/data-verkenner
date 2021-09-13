@@ -154,7 +154,7 @@ const HeaderSearch: FunctionComponent = () => {
         setSearchBarFilterValue={setSearchBarFilterValue}
         searchBarFilterValue={searchBarFilterValue}
       >
-        {showSuggestions && (
+        {true && (
           <AutoSuggest
             searchBarFilterValue={searchBarFilterValue}
             setSearchBarFilterValue={setSearchBarFilterValue}
