@@ -45,13 +45,12 @@ Cypress.Commands.add(
     cy.intercept(`**/typeahead?q=${searchTerm.replace(/\s+/g, '+').toLowerCase()}*`).as(
       'getTypeAhead',
     )
-    cy.get(DATA_SEARCH.searchBarFilter).select('Alle zoekresultaten')
-    cy.get(DATA_SEARCH.autoSuggest).type(searchTerm, { delay: 80 })
+    cy.get(SEARCH.searchBarFilter).select('Alle zoekresultaten')
+    cy.get(SEARCH.searchInput).type(searchTerm, { delay: 80 })
     cy.wait('@getTypeAhead')
     // eslint-disable-next-line cypress/no-unnecessary-waiting
     cy.wait(500)
-    cy.get(DATA_SEARCH.autoSuggest).click()
-    cy.get(DATA_SEARCH.autoSuggestCategory)
+    cy.get(SEARCH.autoSuggestCategory)
       .contains(category)
       .siblings('ul')
       .children('li')

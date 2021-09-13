@@ -70,4 +70,59 @@ describe('search', () => {
       cy.searchAndCheck('Rijksmuseum', 'Het Rijksmuseum')
     })
   })
+
+  describe('Search results specific category, not authenticated', () => {
+    beforeEach(() => {
+      cy.visit('/')
+    })
+    it("Should search: 'Heijden' in category 'Straatnamen' and check if first autosuggest item and searchresult are: 'Eerste Jan van der Heijdenstraat'", () => {
+      cy.searchInCategoryAndCheckFirst('Heijden', 'Straatnamen', 'Eerste Jan van der Heijdenstraat')
+    })
+    it("Should search: 'Eerste Jan van der Heijdenstraat 2' in category 'Adressen' and check if first autosuggestitem and searchresult are: 'Eerste Jan van der Heijdenstraat 2'", () => {
+      cy.searchInCategoryAndCheckFirst(
+        'Eerste Jan van der Heijdenstraat 2',
+        'Adressen',
+        'Eerste Jan van der Heijdenstraat 2',
+      )
+    })
+    it("Should search: 'Westerdok' in category 'Openbare ruimtes' and check autosuggest: 'Westerdoksdijkspoorbrug (kunstwerk)' and search result: 'Westerdok'", () => {
+      cy.searchInCategoryAndCheckFirst(
+        'Westerdok',
+        'Openbare ruimtes',
+        'Westerdoksdijkspoorbrug (kunstwerk)',
+        'Westerdok',
+      )
+    })
+    it("Should search: 'Bijenkorf' in category 'Pand' and check if first autosuggestitem and searchresult are: 'De Bijenkorf'", () => {
+      cy.searchInCategoryAndCheckFirst('Bijenkorf', 'Pand', 'De Bijenkorf')
+    })
+    it("Should search: 'ASD23 AB 02208 A 0001' in category 'Kadastraal object' and check if first autosuggestitem and searchresult are: 'ASD23 AB 02208 A 0001'", () => {
+      cy.searchInCategoryAndCheckFirst('ASD23 AB 02208 A 0001', 'Kadastra', 'ASD23 AB 02208 A 0001')
+    })
+    it("Should search: 'Buitenveldert' in category 'Gebieden' and check autosuggest: 'Buitenveldert Midden Zuid (buurt)' and search result: 'Buitenveldertselaan", () => {
+      cy.searchInCategoryAndCheckFirst(
+        'Buitenveldert',
+        'Gebieden',
+        'Buitenveldert Midden Zuid (buurt)',
+        'Buitenveldertselaan',
+      )
+    })
+    it("Should search: 'Jordaan' in category 'Gebieden' and check if first autosuggestitem and searchresult are: 'Jordaan (wijk)'", () => {
+      cy.searchInCategoryAndCheckFirst('Jordaan', 'Gebied', 'Jordaan (wijk)')
+    })
+    it("Should search: 'Kernzone' in category 'Gebieden' and check if first autosuggestitem and searchresult are: 'Kernzone (unesco)'", () => {
+      cy.searchInCategoryAndCheckFirst('Kernzone', 'Gebied', 'Kernzone (unesco)')
+    })
+    it("Should search: '10381' in category 'Meetbouten' and check if first autosuggestitem and searchresult are: '10381000'", () => {
+      cy.searchInCategoryAndCheckFirst('10381', 'Meetbouten', '10381000')
+    })
+    it("Should search: 'Rijksmuseum' in category 'Monumenten' and check autosuggest: 'Rijksmuseumcomplex (complex)' and search result: 'Het Rijksmuseum'", () => {
+      cy.searchInCategoryAndCheckFirst(
+        'Rijksmuseum',
+        'Monumenten',
+        'Rijksmuseumcomplex (complex)',
+        'Het Rijksmuseum',
+      )
+    })
+  })
 })

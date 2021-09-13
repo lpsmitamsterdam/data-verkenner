@@ -52,7 +52,7 @@ const AutoSuggestCategory: FunctionComponent<AutoSuggestCategoryProps> = ({
 
   return (
     <AutoSuggestDropDownCategory>
-      <AutoSuggestDropdownCategoryHeading data-testid="qa-auto-suggest-header">
+      <AutoSuggestDropdownCategoryHeading data-testid="autoSuggestCategory">
         {label}
       </AutoSuggestDropdownCategoryHeading>
       <ul>

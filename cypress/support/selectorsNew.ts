@@ -14,6 +14,7 @@ export const SEARCH = {
   searchInput: '[data-testid=searchInput]',
   searchBarFilter: '[data-testid="searchBarFilter"]',
   autoSuggestDropDownItem: '[data-testid=autoSuggestDropdownItem]',
+  autoSuggestCategory: '[data-testid=autoSuggestCategory]',
 }
 
 // export const DATA_SEARCH = {
