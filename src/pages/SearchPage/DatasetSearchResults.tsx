@@ -77,7 +77,7 @@ const DatasetSearchResults: FunctionComponent<DatasetSearchResultsProps> = ({
 
         {results.map(({ header, id, teaser, modified, distributionTypes }) => (
           <StyledDatasetCard
-            data-testid="datasetCard"
+            data-testid="datasetCardResults"
             key={id}
             to={toDatasetDetail({ id, slug: toSlug(header) || 'dataset' })}
             shortTitle={header}

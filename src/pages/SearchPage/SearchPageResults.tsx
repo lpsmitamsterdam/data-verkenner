@@ -154,7 +154,12 @@ const SearchPageResults: FunctionComponent<SearchPageResultsProps> = ({
         {formatTitle(pageConfig.label, !loading ? totalCount : null)}
       </StyledHeading>
       <FilterWrapper>
-        <FilterButton variant="primary" onClick={() => setShowFilter(true)} disabled={loading}>
+        <FilterButton
+          variant="primary"
+          onClick={() => setShowFilter(true)}
+          disabled={loading}
+          data-testid="buttonFilteren"
+        >
           Filteren
         </FilterButton>
         {EDITORIAL_SEARCH_PAGES.includes(currentPage) && (

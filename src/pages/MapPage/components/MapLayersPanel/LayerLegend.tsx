@@ -119,6 +119,7 @@ const LayerLegend: FunctionComponent<MapLayerWithLegendItemProps & Partial<HTMLL
         notSelectable={legendItem.notSelectable}
         className={className}
         disabled
+        data-testid={`mapLayerLegend${legendItem.title}`}
       >
         <LegendLabel htmlFor={legendItem.id} label={legendItem.title} disabled>
           {!legendItem.notSelectable ? (
@@ -143,7 +144,11 @@ const LayerLegend: FunctionComponent<MapLayerWithLegendItemProps & Partial<HTMLL
   }
 
   return (
-    <MapLayerWithLegendStyle notSelectable={legendItem.notSelectable} className={className}>
+    <MapLayerWithLegendStyle
+      notSelectable={legendItem.notSelectable}
+      className={className}
+      data-testid={`mapLayerLegend${legendItem.title}`}
+    >
       <LegendLabel htmlFor={legendItem.id} label={legendItem.title}>
         {!legendItem.notSelectable ? (
           <StyledCheckbox

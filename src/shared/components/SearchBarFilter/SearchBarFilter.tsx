@@ -48,7 +48,7 @@ const SearchBarFilter: FunctionComponent<SearchBarFilterProps> = ({ value, setVa
     <>
       <StyledLabel htmlFor="category" label="Zoek op categorie" />
       <StyledSelect
-        data-testid="SearchBarFilter"
+        data-testid="searchBarFilter"
         id="category"
         value={value}
         onChange={onSetSearchCategory}

@@ -96,7 +96,7 @@ const SearchBar: FunctionComponent<SearchBarProps> = ({
     autoComplete: 'off',
     autoCorrect: 'off',
     id: SEARCH_BAR_INPUT_ID,
-    'data-test': 'search-input',
+    'data-testid': 'searchInput',
     placeholder: placeHolder,
   }
 

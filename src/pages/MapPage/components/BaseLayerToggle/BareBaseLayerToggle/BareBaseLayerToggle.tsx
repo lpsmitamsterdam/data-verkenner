@@ -182,6 +182,7 @@ const BareBaseLayerToggle: React.FC<Props> = ({
         title="Wissel tussen luchtfoto's of een topografische kaarten"
         onClick={handleToggle}
         layerType={layerTypeForButton}
+        data-testid="baseLayerToggle"
       />
       {baseLayers[toggleBaseLayerType].length > 1 && (
         <Menu

@@ -1,9 +1,18 @@
-import { DATA_SEARCH } from '../support/selectors'
+import { SEARCH } from '../support/selectorsNew'
 
-describe('Search results', () => {
+describe('search', () => {
+  describe('user should be able to use the searchbar', () => {
+    beforeEach(() => {
+      cy.visit('/')
+    })
+
+    it('should render the search form', () => {
+      cy.get(SEARCH.searchInput).should('be.visible')
+    })
+  })
+
   describe('Search results all categories, not authenticated', () => {
     beforeEach(() => {
-      cy.hidePopup()
       cy.visit('/')
     })
     it("Should search: '363010000546374' and first autosuggestitem and searchresult are: 'Eerste Jan van der Heijdenstraat 2'", () => {
@@ -61,33 +70,9 @@ describe('Search results', () => {
       cy.searchAndCheck('Rijksmuseum', 'Het Rijksmuseum')
     })
   })
-  describe('Search results all categories, authenticated as employee', () => {
-    beforeEach(() => {
-      cy.hidePopup()
-      cy.visit('/')
-    })
 
-    before(() => {
-      cy.login('EMPLOYEE')
-    })
-
-    after(() => {
-      cy.logout()
-    })
-
-    it("Should search: '34712526' and first autosuggestitem and searchresult are: 'Café Ouwe Garde - Buitenveldertselaan 28'", () => {
-      cy.searchAndCheck('34712526', 'Café Ouwe Garde - Buitenveldertselaan 28\n1081AA Amsterdam')
-    })
-    it("Should search: 'Centraal stomerij' and first autosuggestitem and searchresult are: 'Centraal Stomerij - Overtoom 79 H'", () => {
-      cy.searchAndCheck('Centraal stomerij', 'Centraal Stomerij - Overtoom 79 H')
-    })
-    it("Should search: '67743293' and first autosuggestitem and searchresult are: 'Vlaamsche Friethuis'", () => {
-      cy.searchAndCheck('67743293', 'Vlaamsche Friethuis')
-    })
-  })
   describe('Search results specific category, not authenticated', () => {
     beforeEach(() => {
-      cy.hidePopup()
       cy.visit('/')
     })
     it("Should search: 'Heijden' in category 'Straatnamen' and check if first autosuggest item and searchresult are: 'Eerste Jan van der Heijdenstraat'", () => {
@@ -140,36 +125,14 @@ describe('Search results', () => {
       )
     })
   })
-  describe('Search results specific category, authenticated', () => {
-    beforeEach(() => {
-      cy.hidePopup()
-      cy.visit('/')
-    })
 
-    before(() => {
-      cy.login('EMPLOYEE')
-    })
-
-    after(() => {
-      cy.logout()
-    })
-    it("Should search: 'Centraal stomerij' in category 'Maatschappelijke activiteit' and check autosuggest: 'Centraal Stomerij' and search result: 'Centraal Stomerij - Overtoom 79 H'", () => {
-      cy.searchInCategoryAndCheckFirst(
-        'Centraal stomerij',
-        'Maatschappelijke activiteit',
-        'Centraal Stomerij',
-        'Centraal Stomerij - Overtoom 79 H',
-      )
-    })
-  })
   describe('Search results multiple', () => {
     beforeEach(() => {
-      cy.hidePopup()
       cy.visit('/')
     })
     it("Should search: 'Toerisme' in category 'Datasets' and check autosuggest: 'Toerisme in Amsterdam' and search result: 'Toerisme'", () => {
       cy.checkAutoSuggestFirstofCategory('Toerisme', 'Datasets', 'Toerisme in Amsterdam')
-      cy.checkFirstInSearchResults('Dossiers', 'Toerisme', DATA_SEARCH.searchResultsEditorialCard)
+      cy.checkFirstInSearchResults('Dossiers', 'Toerisme', SEARCH.searchResultsEditorialCard)
     })
     // Skipped becasue we need to improve autosuggest and search options first.
     it.skip("Should search: 'Factsheet' and check if first autosuggestitem and searchresult are: 'Factsheet: Amsterdam fietsstad'", () => {
@@ -177,19 +140,19 @@ describe('Search results', () => {
       cy.checkFirstInSearchResults(
         'Publicaties',
         'Factsheet: Amsterdam fietsstad',
-        DATA_SEARCH.searchResultsEditorialCard,
+        SEARCH.searchResultsEditorialCard,
       )
     })
     it("Should search: 'Toerisme' in category 'Artikel' and check if first autosuggestitem and searchresult are: 'Dossier: Toerisme'", () => {
       cy.checkAutoSuggestFirstofCategory('Toerisme', 'Artikelen', 'Toerisme onder druk?')
-      cy.checkFirstInSearchResults('Dossiers', 'Toerisme', DATA_SEARCH.searchResultsEditorialCard)
+      cy.checkFirstInSearchResults('Dossiers', 'Toerisme', SEARCH.searchResultsEditorialCard)
     })
     it("Should search: 'Drugs' in category 'Artikelen' and check autosuggest: 'Drugsoverlast Zuidoost daalt' and search result: 'Gezondheid Amsterdam' ", () => {
       cy.checkAutoSuggestFirstofCategory('Drugs', 'Artikelen', 'Drugsoverlast Zuidoost daalt')
       cy.checkFirstInSearchResults(
         'Datasets',
         'Gezondheid Amsterdam',
-        DATA_SEARCH.searchResultsDatasetCard,
+        SEARCH.searchResultsDatasetCard,
       )
     })
     it("Should search: 'Staat van de stad' in category 'Artikelen' and check autosuggest: 'Staat van de Stad' and search result: 'Dossier: corona en de economie'", () => {
@@ -201,12 +164,12 @@ describe('Search results', () => {
       cy.checkFirstInSearchResults(
         'Dossiers',
         'Corona en de economie',
-        DATA_SEARCH.searchResultsEditorialCard,
+        SEARCH.searchResultsEditorialCard,
       )
     })
     it("Should search: 'Toerisme' in category 'Dossiers' and check if first autosuggestitem and searchresult are: 'Dossier: Toerisme'", () => {
       cy.checkAutoSuggestFirstofCategory('Toerisme', 'Dossiers', 'Toerisme')
-      cy.checkFirstInSearchResults('Dossiers', 'Toerisme', DATA_SEARCH.searchResultsEditorialCard)
+      cy.checkFirstInSearchResults('Dossiers', 'Toerisme', SEARCH.searchResultsEditorialCard)
     })
     it("Should search: 'Veiligheidsindex' in category 'Specials' and check if first autosuggestitem and searchresult are: 'Dashboard veiligheid'", () => {
       cy.checkAutoSuggestFirstofCategory(
@@ -217,12 +180,12 @@ describe('Search results', () => {
       cy.checkFirstInSearchResults(
         'Specials',
         'Dashboard Veiligheid',
-        DATA_SEARCH.searchResultsEditorialCard,
+        SEARCH.searchResultsEditorialCard,
       )
     })
-    it("Should search: 'Verzinkbare palen' in category 'Kaartlagen' and check if first autosuggestitem and searchresult are: 'Kaartlaag: Verzinkbare palen'", () => {
-      cy.checkAutoSuggestFirstofCategory('Verzinkbare palen', 'Kaartlagen', 'Verzinkbare palen')
-      cy.checkFirstInSearchResults('Kaartlagen', 'Verzinkbare palen', DATA_SEARCH.searchResultsLink)
-    })
+    // it("Should search: 'Verzinkbare palen' in category 'Kaartlagen' and check if first autosuggestitem and searchresult are: 'Kaartlaag: Verzinkbare palen'", () => {
+    //   cy.checkAutoSuggestFirstofCategory('Verzinkbare palen', 'Kaartlagen', 'Verzinkbare palen')
+    //   cy.checkFirstInSearchResults('Kaartlagen', 'Verzinkbare palen', SEARCH.searchResultsLink)
+    // })
   })
 })

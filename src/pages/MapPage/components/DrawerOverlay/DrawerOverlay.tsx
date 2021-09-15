@@ -494,7 +494,11 @@ const DrawerOverlay: FunctionComponent<DrawerOverlayProps> = ({
             ) : null}
           </DrawerHandle>
 
-          <DrawerContent ref={drawerContentRef} style={drawerContentStyle}>
+          <DrawerContent
+            ref={drawerContentRef}
+            style={drawerContentStyle}
+            data-testid="drawerContent"
+          >
             {Children.toArray(children)
               .filter((child): child is ReactElement => isValidElement(child))
               .map((child, index) => {
