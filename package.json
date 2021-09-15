@@ -159,7 +159,7 @@
     "lint-staged": "11.1.1",
     "lodash.clonedeep": "^4.5.0",
     "mini-css-extract-plugin": "^2.1.0",
-    "msw": "^0.33.3",
+    "msw": "^0.35.0",
     "oazapfts": "^3.5.0",
     "prettier": "2.3.2",
     "react-refresh": "^0.10.0",
