@@ -1,6 +1,7 @@
 import path from 'path'
 // eslint-disable-next-line import/no-extraneous-dependencies
 import TerserPlugin from 'terser-webpack-plugin'
+import CssMinimizerPlugin from 'css-minimizer-webpack-plugin'
 import { merge } from 'webpack-merge'
 import { createConfig, srcPath } from './webpack.common'
 
@@ -27,6 +28,8 @@ export default merge(createConfig({ mode: 'production' }), {
           },
         },
       }),
+      // Ensure Leaflet CSS output is minified
+      new CssMinimizerPlugin(),
     ],
   },
 })
