@@ -1,4 +1,5 @@
 import { MAP } from './selectors'
+import { MAPPAGE } from './selectorsNew'
 
 declare global {
   // eslint-disable-next-line @typescript-eslint/no-namespace
@@ -53,28 +54,25 @@ Cypress.Commands.add('checkTopography', () => {
 })
 
 Cypress.Commands.add('checkMapLayerCategory', (category: string, categoryTestId?: string) => {
-  cy.get(MAP.mapContainer).should('be.visible')
-  cy.get(MAP.mapLegend).should('not.exist')
+  cy.get(MAPPAGE.drawerContent).should('exist')
 
   cy.get(`[data-testid="mapLegendLayerButton${categoryTestId || category}"]`)
     .contains(category)
-    .parents(MAP.mapLegendItemButton)
+    // .parents(MAP.mapLegendItemButton)
     .click('right')
-
-  cy.get(MAP.mapZoomIn).click()
-  cy.get(MAP.imageLayer).should('not.exist')
+  // cy.get(MAPPAGE.mapZoomIn).click()
+  cy.get(MAPPAGE.imageLayer).should('not.exist')
 })
 
 Cypress.Commands.add('checkMapLayer', (layerName, checkboxId, amountOfLayers) => {
-  cy.get(MAP.mapLegendLayer)
-    .find(MAP.mapLegendLabel)
+  cy.get(MAPPAGE.drawerContent)
+    .find(MAPPAGE.mapPanelHandle)
     .contains(layerName)
     .scrollIntoView()
     .should('be.visible')
-    .siblings(MAP.mapLegendCheckbox)
-    .find(checkboxId)
-    .check()
-    .should('be.checked')
 
-  cy.get(MAP.imageLayer).should('exist').and('have.length', amountOfLayers)
+    .get(checkboxId)
+    .click()
+
+  cy.get(MAPPAGE.imageLayer).should('exist').and('have.length', amountOfLayers)
 })

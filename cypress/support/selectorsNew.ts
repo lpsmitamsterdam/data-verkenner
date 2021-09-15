@@ -11,6 +11,12 @@ export const MAPPAGE = {
   mapPanelHandle: '[data-testid=mapPanel]',
   mapLegendLayerButtonAfvalcontainers: '[data-testid=mapLegendLayerButtonAfvalcontainers]',
   mapLayerLegendRestafval: '[data-testid=mapLayerLegendRestafval]',
+  imageLayer: '.leaflet-overlay-pane > .leaflet-image-layer',
+  mapZoomIn: '.leaflet-control-zoom-in',
+}
+
+export const MAP_LAYERS = {
+  checkboxAfvalRestafval: '[data-testid="mapLayerLegendRestafval"]',
 }
 
 export const SEARCH = {
