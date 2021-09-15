@@ -14,6 +14,7 @@ declare global {
 
 const USER_TOKENS = {}
 
+
 Cypress.Commands.add('login', ({ realm, username, password, client_id, redirect_uri }) =>
   cy
     .request({
@@ -26,6 +27,8 @@ Cypress.Commands.add('login', ({ realm, username, password, client_id, redirect_
         nonce: uuidv4(),
         response_type: 'code',
         response_mode: 'fragment',
+        code_challenge: 'yourcodechallengestring',
+        code_challenge_method: 'S256',
       },
     })
     .then((response) => {

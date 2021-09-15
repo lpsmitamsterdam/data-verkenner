@@ -42,13 +42,18 @@ describe('map page', () => {
       cy.login({
         root: 'https://iam.amsterdam.nl',
         realm: environment.KEYCLOAK_REALM,
-        username: environment.KEYCLOAK_USERNAME,
-        password: environment.KEYCLOAK_PASSWORD,
+        username: 'username',
+        password: 'password',
         client_id: environment.KEYCLOAK_CLIENT,
         redirect_uri: environment.ROOT,
       })
 
       cy.visit('/data/geozoek')
+
+      it('now lets do something for loggedin users', () => {
+        cy.visit(`/${routing.data.path}?$center=52.3731081%2C4.8932945&modus=kaart`)
+        cy.get(MAPPAGE.legendaButton).click()
+      })
 
       cy.wait(5000)
     })
