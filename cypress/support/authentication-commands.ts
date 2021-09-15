@@ -1,4 +1,4 @@
-import { v4 as uuid } from 'uuid'
+import { v4 as uuidv4 } from 'uuid'
 import { HEADER_MENU } from './selectors'
 
 declare global {
@@ -14,7 +14,42 @@ declare global {
 
 const USER_TOKENS = {}
 
-Cypress.Commands.add('login', (type = 'EMPLOYEE_PLUS') => {
+Cypress.Commands.add('login', ({ realm, username, password, client_id, redirect_uri }) =>
+  cy
+    .request({
+      url: `https://iam.amsterdam.nl/auth/realms/${realm}/protocol/openid-connect/auth`,
+      qs: {
+        client_id,
+        redirect_uri,
+        scope: 'openid',
+        state: uuidv4(),
+        nonce: uuidv4(),
+        response_type: 'code',
+        response_mode: 'fragment',
+      },
+    })
+    .then((response) => {
+      const html = document.createElement('html')
+      html.innerHTML = response.body
+
+      const form = html.getElementsByTagName('form')
+      const isAuthorized = !form.length
+
+      if (!isAuthorized)
+        return cy.request({
+          form: true,
+          method: 'POST',
+          url: form[0].action,
+          followRedirect: false,
+          body: {
+            username,
+            password,
+          },
+        })
+    }),
+)
+
+Cypress.Commands.add('loginOLD', (type = 'EMPLOYEE_PLUS') => {
   const baseUrl = Cypress.config('baseUrl') as string
 
   if (USER_TOKENS[type]) {
@@ -109,7 +144,7 @@ Cypress.Commands.add('login', (type = 'EMPLOYEE_PLUS') => {
   )
 })
 
-Cypress.Commands.add('logout', () => {
+Cypress.Commands.add('logoutOLD', () => {
   const loginMenuItem = `${HEADER_MENU.rootMobile} ${HEADER_MENU.login}`
   cy.get(loginMenuItem)
     .then((element) => {

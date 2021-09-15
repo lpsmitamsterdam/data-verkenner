@@ -10,6 +10,8 @@ const environment = {
   KEYCLOAK_URL: process.env.KEYCLOAK_URL || 'https://iam.amsterdam.nl/auth',
   KEYCLOAK_REALM: process.env.KEYCLOAK_REALM || 'datapunt-ad-acc',
   KEYCLOAK_CLIENT: process.env.KEYCLOAK_CLIENT || 'data-verkenner',
+  KEYCLOAK_USERNAME: process.env.KEYCLOAK_USERNAME,
+  KEYCLOAK_PASSWORD: process.env.KEYCLOAK_PASSWORD,
 }
 
 export default environment

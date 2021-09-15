@@ -1,5 +1,6 @@
 import { MAPPAGE } from '../support/selectorsNew'
 import { routing } from '../../src/routes'
+import environment from '../../src/environment'
 
 describe('map page', () => {
   describe('user should be able to use the map', () => {
@@ -33,6 +34,23 @@ describe('map page', () => {
       cy.url().should('not.include', 'lagen=afvlc-wlorst')
       cy.get(MAPPAGE.mapLayerLegendRestafval).click()
       cy.url().should('include', 'lagen=afvlc-wlorst')
+    })
+  })
+
+  describe('as loggedin', () => {
+    it('should see more logged in', () => {
+      cy.login({
+        root: 'https://iam.amsterdam.nl',
+        realm: environment.KEYCLOAK_REALM,
+        username: environment.KEYCLOAK_USERNAME,
+        password: environment.KEYCLOAK_PASSWORD,
+        client_id: environment.KEYCLOAK_CLIENT,
+        redirect_uri: environment.ROOT,
+      })
+
+      cy.visit('/data/geozoek')
+
+      cy.wait(5000)
     })
   })
 })
