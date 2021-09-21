@@ -22,6 +22,7 @@ const StyledAuthAlert = styled(AuthAlert)`
 const ItemWrapper = styled.div<{ gridArea?: string }>`
   display: flex;
   flex-direction: column;
+  margin-bottom: ${themeSpacing(3)};
   ${({ gridArea }) =>
     gridArea &&
     css`
@@ -84,7 +85,6 @@ const RenderDetails: FunctionComponent<RenderDetailsProps> = ({
             gridArea={item.gridArea}
           >
             <DetailItem item={item} />
-            <Spacer />
           </ItemWrapper>
         )
       })}

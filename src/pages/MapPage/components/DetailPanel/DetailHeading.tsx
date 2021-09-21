@@ -4,7 +4,7 @@ import type { ComponentProps, FunctionComponent } from 'react'
 
 const StyledHeading = styled(Heading)`
   color: ${themeColor('secondary')};
-  margin-bottom: 0.2em;
+  margin-bottom: 0;
   max-width: calc(100% - 50px); // In case there's a infobox button
 `
 

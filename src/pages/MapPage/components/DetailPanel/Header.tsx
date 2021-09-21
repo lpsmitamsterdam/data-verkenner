@@ -1,4 +1,5 @@
 import type { FunctionComponent } from 'react'
+import { themeSpacing } from '@amsterdam/asc-ui'
 import styled from 'styled-components'
 import type { InfoBoxProps } from '../../legacy/types/details'
 import DetailHeading from './DetailHeading'
@@ -9,6 +10,7 @@ const HeadingWrapper = styled.div`
   flex-wrap: wrap;
   justify-content: space-between;
   align-items: center;
+  margin-bottom: ${themeSpacing(2)};
 `
 
 interface HeaderProps {

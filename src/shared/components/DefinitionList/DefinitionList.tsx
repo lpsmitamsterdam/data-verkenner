@@ -3,6 +3,7 @@ import type { FunctionComponent } from 'react'
 
 const DefinitionListWrapper = styled.dl`
   width: 100%;
+  margin-top: 0;
 `
 
 const DefinitionList: FunctionComponent = ({ children, ...otherProps }) => (

@@ -1,10 +1,12 @@
 import { breakpoint, themeColor, themeSpacing } from '@amsterdam/asc-ui'
 import styled from 'styled-components'
+import { useMemo } from 'react'
 import type { FunctionComponent } from 'react'
 
 const DefinitionListItemWrapper = styled.div`
   display: flex;
-  padding: ${themeSpacing(2)} 0;
+  // make sure the height is 40px
+  padding: 10.5px 0;
   &:not(:last-of-type) {
     border-bottom: 1px solid ${themeColor('tint', 'level4')};
   }
@@ -39,11 +41,24 @@ const DefinitionListItem: FunctionComponent<DefinitionListItemProps> = ({
   term,
   children,
   ...otherProps
-}) => (
-  <DefinitionListItemWrapper {...otherProps}>
-    <DefinitionListTerm>{term}</DefinitionListTerm>
-    <DefinitionListDescription>{children}</DefinitionListDescription>
-  </DefinitionListItemWrapper>
-)
+}) => {
+  const description = useMemo(
+    () =>
+      /* eslint-disable-next-line no-nested-ternary */
+      Array.isArray(children)
+        ? children.filter((value: any) => !!value).length
+          ? children
+          : '-'
+        : children || '-',
+    [children],
+  )
+
+  return (
+    <DefinitionListItemWrapper {...otherProps}>
+      <DefinitionListTerm>{term}</DefinitionListTerm>
+      <DefinitionListDescription>{description}</DefinitionListDescription>
+    </DefinitionListItemWrapper>
+  )
+}
 
 export default DefinitionListItem
