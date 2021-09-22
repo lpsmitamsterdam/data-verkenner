@@ -37,7 +37,7 @@ const detailGeometryOptions: GeoJSONOptions = {
 const LeafletLayers: FunctionComponent = () => {
   const [geoJSONLayer, setGeoJSONLayer] = useState<GeoJSONType<any>>()
   const [customMapLayers] = useParam(customMapLayer)
-  const { legendLeafletLayers, detailFeature } = useMapContext()
+  const { legendLeafletLayers, detailFeature, panoActive } = useMapContext()
   const [activeLayers] = useParam(mapLayersParam)
   const activeCustomMapLayer = customMapLayers?.filter(({ id }) => activeLayers.includes(id))
   const { panToWithPanelOffset, panToFitPrintMode } = useMapCenterToMarker()
@@ -52,16 +52,16 @@ const LeafletLayers: FunctionComponent = () => {
   )
 
   const onHandleBeforePrint = useCallback(() => {
-    if (geoJSONLayer) {
+    if (geoJSONLayer && !panoActive) {
       panToFitPrintMode(geoJSONLayer.getBounds())
     }
-  }, [geoJSONLayer])
+  }, [geoJSONLayer, panoActive])
 
   const onHandleAfterPrint = useCallback(() => {
-    if (geoJSONLayer) {
+    if (geoJSONLayer && !panoActive) {
       panToWithPanelOffset(geoJSONLayer.getBounds())
     }
-  }, [geoJSONLayer])
+  }, [geoJSONLayer, panoActive])
 
   useCustomEvent(window, 'beforeprint', onHandleBeforePrint)
   useCustomEvent(window, 'afterprint', onHandleAfterPrint)

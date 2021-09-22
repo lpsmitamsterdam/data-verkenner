@@ -71,16 +71,16 @@ const MapMarker: FunctionComponent<MarkerProps> = ({ panoActive }) => {
   }
 
   const onHandleBeforePrint = useCallback(() => {
-    if (position) {
+    if (position && !panoActive) {
       panToFitPrintMode(position)
     }
-  }, [position])
+  }, [position, panoActive])
 
   const onHandleAfterPrint = useCallback(() => {
-    if (position) {
+    if (position && !panoActive) {
       panToWithPanelOffset(position)
     }
-  }, [position])
+  }, [position, panoActive])
 
   useCustomEvent(window, 'beforeprint', onHandleBeforePrint)
   useCustomEvent(window, 'afterprint', onHandleAfterPrint)
