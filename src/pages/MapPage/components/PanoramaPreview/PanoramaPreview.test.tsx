@@ -1,18 +1,18 @@
 import { rest } from 'msw'
-import { screen, render, waitFor } from '@testing-library/react'
+import { render, screen, waitFor } from '@testing-library/react'
 import PanoramaPreview from './PanoramaPreview'
-import withAppContext from '../../../../shared/utils/withAppContext'
 import joinUrl from '../../../../shared/utils/joinUrl'
 import environment from '../../../../environment'
 import { server } from '../../../../../test/server'
 import { mapLayersParam, panoHeadingParam, panoPitchParam } from '../../query-params'
 import { singleFixture } from '../../../../api/panorama/thumbnail'
+import withMapContext from '../../../../shared/utils/withMapContext'
 
 jest.mock('react-router-dom', () => ({
   // @ts-ignore
   ...jest.requireActual('react-router-dom'),
   useLocation: () => ({
-    pathname: '/kaart',
+    pathname: '/data',
     search: '?someOtherParam=1&lagen=random-layer',
   }),
 }))
@@ -23,10 +23,9 @@ describe('PanoramaPreview', () => {
     server.use(
       rest.get(panoramaThumbnailUrl, async (req, res, ctx) => res(ctx.json(singleFixture))),
     )
-    const { container } = render(withAppContext(<PanoramaPreview location={{ lat: 1, lng: 2 }} />))
+    render(withMapContext(<PanoramaPreview location={{ lat: 1, lng: 2 }} />))
     await waitFor(() => {
-      // eslint-disable-next-line testing-library/no-container
-      const link = container.querySelector('a')
+      const link = screen.queryByTestId('panoramaPreview')?.querySelector('a')
       const params = new URLSearchParams(link?.search)
       expect(params.get('someOtherParam')).toContain('1')
       expect(params.get(mapLayersParam.name)).toContain('random-layer')
@@ -42,9 +41,14 @@ describe('PanoramaPreview', () => {
         return res(ctx.status(403))
       }),
     )
-    render(withAppContext(<PanoramaPreview location={{ lat: 1, lng: 2 }} />))
+    render(withMapContext(<PanoramaPreview location={{ lat: 1, lng: 2 }} />))
 
     const panoAlert = await screen.findByTestId('panoAlert')
     expect(panoAlert).toBeInTheDocument()
+  })
+
+  it('should not render the panorama preview if panoramaviewer is active', () => {
+    render(withMapContext(<PanoramaPreview location={{ lat: 1, lng: 2 }} />, { panoActive: true }))
+    expect(screen.queryByTestId('panoramaPreview')).not.toBeInTheDocument()
   })
 })

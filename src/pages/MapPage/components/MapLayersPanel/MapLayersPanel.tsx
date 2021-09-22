@@ -12,11 +12,6 @@ import CustomMapLayerModal from '../CustomMapLayer/CustomMapLayerModal'
 import CustomLayerCollection from './CustomLayerCollection'
 import { CUSTOM_MAP_LAYERS, isFeatureEnabled } from '../../../../features'
 
-const MapPanelContent = styled.div`
-  margin: ${themeSpacing(3, 0)};
-  padding: ${themeSpacing(0, 3)};
-`
-
 const MapPanelWrapper = styled.div`
   margin-top: ${themeSpacing(4)};
 `
@@ -51,7 +46,7 @@ const MapLayersPanel: FunctionComponent = () => {
   }
 
   return (
-    <MapPanelContent data-testid="legendPanel">
+    <div data-testid="legendPanel">
       <TextField
         type="text"
         id="mapLegendSearchBar"
@@ -100,7 +95,7 @@ const MapLayersPanel: FunctionComponent = () => {
           />
         ))}
       </MapPanelWrapper>
-    </MapPanelContent>
+    </div>
   )
 }
 

@@ -1,13 +1,12 @@
-import { Alert, Heading, Link, Paragraph, themeColor, themeSpacing } from '@amsterdam/asc-ui'
+import { Alert, Paragraph, themeColor, themeSpacing } from '@amsterdam/asc-ui'
 import usePromise, { isPending, isRejected } from '@amsterdam/use-promise'
 import type { FunctionComponent } from 'react'
-import { useMemo } from 'react'
+import { Fragment, useMemo } from 'react'
 import { Link as RouterLink } from 'react-router-dom'
 import styled from 'styled-components'
 import { getScopes } from '../../../../shared/utils/auth/auth'
 import getDetailPageData from '../../../../shared/utils/getDetailPageData'
 import AuthAlert from '../../../../shared/components/Alerts/AuthAlert'
-import LoadingSpinner from '../../../../shared/components/LoadingSpinner/LoadingSpinner'
 import ShowMore from '../../../../shared/components/ShowMore'
 import { toDataDetail } from '../../../../links'
 import useParam from '../../../../shared/hooks/useParam'
@@ -21,31 +20,17 @@ import useAsyncMapPanelHeader from '../../utils/useAsyncMapPanelHeader'
 import PanoramaPreview from '../PanoramaPreview/PanoramaPreview'
 import { wgs84ToRd } from '../../../../shared/utils/coordinateReferenceSystem'
 import AuthScope from '../../../../shared/utils/api/authScope'
+import MapPanelContent from '../MapPanel/MapPanelContent'
+import { DrawerPanelHeader } from '../DrawerPanel'
+import MapPanelContentHeading from '../MapPanel/MapPanelContentHeading'
+import ListLink from '../../../../shared/components/ListLink/ListLink'
+import { MultipleComponentsSkeleton } from '../../../../shared/components/Skeleton/Skeleton'
 
 const RESULT_LIMIT = 10
-
-const CategoryHeading = styled(Heading)`
-  margin-bottom: ${themeSpacing(2)};
-  color: ${themeColor('secondary')};
-`
-
-const ResultLink = styled(Link)`
-  width: 100%;
-  padding: ${themeSpacing(1)} 0;
-  /* TODO: Remove this once this issue has been resolved: https://github.com/Amsterdam/amsterdam-styled-components/issues/727 */
-  font-size: 16px;
-  line-height: 20px;
-`
-
-const CategoryBlock = styled.div`
-  margin-bottom: ${themeSpacing(6)};
-`
+const EXCLUDED_RESULTS = 'vestigingen'
 
 const SubCategoryBlock = styled.div`
-  padding: ${themeSpacing(4, 0, 2, 4)};
-  margin-bottom: ${themeSpacing(1)};
-  border-left: 2px solid ${themeColor('tint', 'level4')};
-  border-bottom: 1px solid ${themeColor('tint', 'level4')};
+  padding-left: ${themeSpacing(4)};
 `
 
 const Message = styled(Paragraph)`
@@ -61,18 +46,36 @@ const CoordinatesLabel = styled.span`
 `
 
 const Coordinates = styled.p`
-  margin-bottom: 0;
+  margin: ${themeSpacing(1, 0, 0)};
 `
 
 const StyledAuthAlert = styled(AuthAlert)`
   margin-top: ${themeSpacing(4)};
 `
 
-const StyledPanoramaPreview = styled(PanoramaPreview)`
-  margin-bottom: ${themeSpacing(6)};
-`
-
-const EXCLUDED_RESULTS = 'vestigingen'
+const LinkList: FunctionComponent<{ results: MapSearchResult[] }> = ({ results }) => (
+  <ul>
+    <ShowMore limit={RESULT_LIMIT}>
+      {results.map((result) => (
+        <li>
+          <ListLink
+            key={result.type + result.label}
+            forwardedAs={RouterLink}
+            to={toDataDetail(getDetailPageData(result.uri as string))}
+            inList
+          >
+            {result.label}
+            {result.statusLabel && (
+              <>
+                &nbsp;<StatusLabel>({result.statusLabel})</StatusLabel>
+              </>
+            )}
+          </ListLink>
+        </li>
+      ))}
+    </ShowMore>
+  </ul>
+)
 
 const MapSearchResults: FunctionComponent = () => {
   const [location] = useParam(locationParam)
@@ -110,56 +113,46 @@ const MapSearchResults: FunctionComponent = () => {
       </Alert>
     )
   }
+
   if (isPending(result)) {
-    return <LoadingSpinner />
+    return (
+      <MapPanelContent>
+        <DrawerPanelHeader />
+        <MultipleComponentsSkeleton />
+      </MapPanelContent>
+    )
   }
 
   return (
     <>
-      <StyledPanoramaPreview location={result.value.location} radius={180} aspect={2.5} />
-      {result.value.results.length === 0 ? (
-        <Message>Geen resultaten gevonden.</Message>
-      ) : (
-        result.value.results.map((category) => (
-          <CategoryBlock key={category.type}>
-            <CategoryHeading as="h2">{formatCategoryTitle(category)}</CategoryHeading>
-            {renderResultItems(category.results)}
-            {category.subCategories.map((subCategory) => (
-              <SubCategoryBlock key={category.type + subCategory.type}>
-                <CategoryHeading as="h3">{formatCategoryTitle(subCategory)}</CategoryHeading>
-                {renderResultItems(subCategory.results)}
-              </SubCategoryBlock>
-            ))}
-          </CategoryBlock>
-        ))
-      )}
-      {(!getScopes().includes(AuthScope.HrR) || !getScopes().includes(AuthScope.BrkRs)) && (
-        <StyledAuthAlert excludedResults={EXCLUDED_RESULTS} />
-      )}
+      <PanoramaPreview location={result.value.location} radius={180} aspect={3} />
+      <MapPanelContent>
+        <DrawerPanelHeader />
+        {result.value.results.length === 0 ? (
+          <Message>Geen resultaten gevonden.</Message>
+        ) : (
+          result.value.results.map((category) => (
+            <Fragment key={category.type}>
+              <MapPanelContentHeading forwardedAs="h3">
+                {formatCategoryTitle(category)}
+              </MapPanelContentHeading>
+              <LinkList results={category.results} />
+              {category.subCategories.map((subCategory) => (
+                <SubCategoryBlock key={category.type + subCategory.type}>
+                  <MapPanelContentHeading forwardedAs="h4">
+                    {formatCategoryTitle(subCategory)}
+                  </MapPanelContentHeading>
+                  <LinkList results={subCategory.results} />
+                </SubCategoryBlock>
+              ))}
+            </Fragment>
+          ))
+        )}
+        {(!getScopes().includes(AuthScope.HrR) || !getScopes().includes(AuthScope.BrkRs)) && (
+          <StyledAuthAlert excludedResults={EXCLUDED_RESULTS} />
+        )}
+      </MapPanelContent>
     </>
-  )
-}
-
-function renderResultItems(results: MapSearchResult[]) {
-  return (
-    <ShowMore limit={RESULT_LIMIT}>
-      {results.map((result) => (
-        // @ts-ignore
-        <ResultLink
-          key={result.type + result.label}
-          forwardedAs={RouterLink}
-          to={toDataDetail(getDetailPageData(result.uri as string))}
-          inList
-        >
-          {result.label}
-          {result.statusLabel && (
-            <>
-              &nbsp;<StatusLabel>({result.statusLabel})</StatusLabel>
-            </>
-          )}
-        </ResultLink>
-      ))}
-    </ShowMore>
   )
 }
 

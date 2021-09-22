@@ -14,7 +14,6 @@ import type { FunctionComponent } from 'react'
 import { useState } from 'react'
 import styled from 'styled-components'
 import { useMatomo } from '@datapunt/matomo-tracker-react'
-import LoadingSpinner from '../../../../shared/components/LoadingSpinner/LoadingSpinner'
 import type { DataSelectionType } from '../../config'
 import config from '../../config'
 import useBuildQueryString from '../../../../shared/hooks/useBuildQueryString'
@@ -35,6 +34,9 @@ import formatCount from '../../../../shared/utils/formatCount'
 import AuthScope from '../../../../shared/utils/api/authScope'
 import { useMapContext } from '../../../../shared/contexts/map/MapContext'
 import { DATASELECTION_TABLE_BUTTON } from '../../matomo-events'
+import MapPanelContent from '../MapPanel/MapPanelContent'
+import { DrawerPanelHeader } from '../DrawerPanel'
+import { LinkListSkeleton } from '../../../../shared/components/Skeleton/Skeleton'
 
 const ResultLink = styled(RouterLink)`
   width: 100%;
@@ -93,7 +95,7 @@ const Results: FunctionComponent = () => {
   )
 
   if (isPending(result)) {
-    return <LoadingSpinner size={30} />
+    return <LinkListSkeleton />
   }
 
   if (isRejected(result)) {
@@ -169,7 +171,8 @@ const DrawResults: FunctionComponent = () => {
   const { trackEvent } = useMatomo()
 
   return (
-    <>
+    <MapPanelContent>
+      <DrawerPanelHeader />
       <Wrapper>
         <DataSelectionSelectBox />
 
@@ -196,7 +199,7 @@ const DrawResults: FunctionComponent = () => {
 
       <DataSelectionActiveFilters />
       <Results />
-    </>
+    </MapPanelContent>
   )
 }
 

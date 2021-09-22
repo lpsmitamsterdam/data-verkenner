@@ -1,4 +1,4 @@
-import { Link, perceivedLoading, themeColor, themeSpacing } from '@amsterdam/asc-ui'
+import { Button, perceivedLoading, themeColor, themeSpacing } from '@amsterdam/asc-ui'
 import usePromise, { isPending, isRejected } from '@amsterdam/use-promise'
 import { Link as RouterLink, useLocation } from 'react-router-dom'
 import styled from 'styled-components'
@@ -12,6 +12,7 @@ import { ForbiddenError } from '../../../../shared/utils/api/customError'
 import PanoAlert from '../../../../shared/components/PanoAlert/PanoAlert'
 import useBuildQueryString from '../../../../shared/hooks/useBuildQueryString'
 import useParam from '../../../../shared/hooks/useParam'
+import Maximize from '../../../../shared/assets/icons/icon-maximize.svg'
 import {
   locationParam,
   mapLayersParam,
@@ -22,6 +23,7 @@ import {
 } from '../../query-params'
 import { PANORAMA_THUMBNAIL } from '../../matomo-events'
 import { PANO_LAYERS } from '../PanoramaViewer/PanoramaViewer'
+import { useMapContext } from '../../../../shared/contexts/map/MapContext'
 
 export interface PanoramaPreviewProps extends FetchPanoramaOptions {
   location: LatLngLiteral
@@ -30,8 +32,6 @@ export interface PanoramaPreviewProps extends FetchPanoramaOptions {
 const PreviewContainer = styled.div`
   position: relative;
   width: 100%;
-  max-width: 400px; /* Preview images have an aspect ratio of 5 : 2 */
-  height: 160px;
 
   @media print {
     display: none;
@@ -43,20 +43,11 @@ const PreviewImage = styled.img`
   width: 100%;
   height: 100%;
   object-fit: cover;
-`
-
-const PreviewText = styled.span`
-  padding: ${themeSpacing(2, 2)};
-  position: absolute;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  background-color: rgba(255, 255, 255, 0.6);
+  aspect-ratio: 3;
 `
 
 const PreviewSkeleton = styled.div`
-  height: 160px;
-  max-width: 400px;
+  aspect-ratio: 3;
   ${perceivedLoading()}
 `
 
@@ -66,6 +57,11 @@ const PreviewMessage = styled.div`
   align-items: center;
   height: 100%;
   background-color: ${themeColor('tint', 'level3')};
+`
+const StyledButton = styled(Button)`
+  position: absolute;
+  bottom: ${themeSpacing(5)};
+  right: ${themeSpacing(5)};
 `
 
 const MIN_ZOOM_LEVEL_PANO_LAYERS = 11
@@ -84,6 +80,7 @@ const PanoramaPreview: FunctionComponent<PanoramaPreviewProps> = ({
 }) => {
   const [activeLayers] = useParam(mapLayersParam)
   const [zoom] = useParam(zoomParam)
+  const { panoActive } = useMapContext()
   const browserLocation = useLocation()
   const { trackEvent } = useMatomo()
 
@@ -106,19 +103,23 @@ const PanoramaPreview: FunctionComponent<PanoramaPreviewProps> = ({
 
   const { buildQueryString } = useBuildQueryString()
 
+  if (panoActive) {
+    return null
+  }
+
   if (isPending(result)) {
-    return <PreviewSkeleton />
+    return <PreviewSkeleton {...otherProps} />
   }
 
   if (isRejected(result)) {
     if (result.reason instanceof ForbiddenError) {
-      return <PanoAlert />
+      return <PanoAlert {...otherProps} />
     }
-    return <PreviewMessage>Kan panoramabeeld niet laden.</PreviewMessage>
+    return <PreviewMessage {...otherProps}>Kan panoramabeeld niet laden.</PreviewMessage>
   }
 
   if (!result.value) {
-    return <PreviewMessage>Geen panoramabeeld beschikbaar.</PreviewMessage>
+    return <PreviewMessage {...otherProps}>Geen panoramabeeld beschikbaar.</PreviewMessage>
   }
 
   const to = {
@@ -132,18 +133,24 @@ const PanoramaPreview: FunctionComponent<PanoramaPreviewProps> = ({
       [zoomParam, zoom < MIN_ZOOM_LEVEL_PANO_LAYERS ? MIN_ZOOM_LEVEL_PANO_LAYERS : zoom],
     ]),
   }
+
   return (
     <PreviewContainer {...otherProps} data-testid="panoramaPreview">
-      <Link
-        as={RouterLink}
+      <StyledButton
+        forwardedAs={RouterLink}
+        // @ts-ignore
         to={to}
         onClick={() => {
           trackEvent(PANORAMA_THUMBNAIL)
         }}
+        variant="primaryInverted"
+        iconSize={24}
+        iconLeft={<Maximize />}
       >
-        <PreviewImage src={result.value.url} alt="Voorvertoning van panoramabeeld" />
-        <PreviewText>Bekijk panoramabeeld</PreviewText>
-      </Link>
+        Bekijk panoramabeeld
+      </StyledButton>
+
+      <PreviewImage src={result.value.url} alt="Voorvertoning van panoramabeeld" />
     </PreviewContainer>
   )
 }

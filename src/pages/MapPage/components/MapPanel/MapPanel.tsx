@@ -1,4 +1,4 @@
-import { Heading, themeColor, themeSpacing } from '@amsterdam/asc-ui'
+import { Heading, themeColor } from '@amsterdam/asc-ui'
 import type { FunctionComponent } from 'react'
 import { useEffect, useMemo } from 'react'
 import { matchPath, Route, Switch, useLocation } from 'react-router-dom'
@@ -17,26 +17,10 @@ import DrawResults from '../DrawTool/DrawResults'
 import MapLayersPanel from '../MapLayersPanel'
 import useMapControls from './useMapControls'
 import { LEGEND_CLOSE } from '../../matomo-events'
-import DetailInfoBox from '../DetailPanel/DetailInfoBox'
+import MapPanelContent from './MapPanelContent'
 
 const TitleHeading = styled(Heading)`
   margin: 0;
-`
-
-const SubtitleHeading = styled(Heading)`
-  color: ${themeColor('secondary')};
-  margin: 0;
-`
-
-const DrawerContainer = styled.div`
-  padding: ${themeSpacing(0, 4)};
-
-  @media print {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    grid-column-gap: ${themeSpacing(1)};
-    grid-row-gap: ${themeSpacing(1)};
-  }
 `
 
 const StyledLargeDrawerPanel = styled(LargeDrawerPanel)<{ show: boolean }>`
@@ -47,19 +31,15 @@ const LegendDrawerPanelHeader = styled(DrawerPanelHeader)`
   position: sticky;
   top: 0;
   z-index: 10000;
-  box-shadow: 0 1px 4px ${themeColor('tint', 'level4')};
+  box-shadow: 0 3px 2px -2px ${themeColor('tint', 'level4')};
   background-color: ${themeColor('tint', 'level1')};
-`
-
-const StyledDetailInfoBox = styled(DetailInfoBox)`
-  position: absolute;
-  right: 0;
-  top: 0;
+  display: flex;
+  align-items: center;
+  min-height: 50px;
 `
 
 const MapPanel: FunctionComponent = () => {
-  const { setDrawerState, panelHeader, legendActive, drawerState, setLegendActive, infoBox } =
-    useMapContext()
+  const { setDrawerState, legendActive, drawerState, setLegendActive } = useMapContext()
   const [activeMapLayers] = useParam(mapLayersParam)
   const [locationParameter] = useParam(locationParam)
   const location = useLocation()
@@ -131,42 +111,34 @@ const MapPanel: FunctionComponent = () => {
       >
         {showContentPanel && (
           <StyledLargeDrawerPanel data-testid="drawerPanel" show={!legendActive}>
-            <DrawerPanelHeader>
-              {panelHeader.type && (
-                <SubtitleHeading forwardedAs="h5">{panelHeader.type}</SubtitleHeading>
-              )}
-              <TitleHeading styleAs="h2">{panelHeader.title}</TitleHeading>
-              {panelHeader.customElement && panelHeader.customElement}
-              {infoBox && <StyledDetailInfoBox {...infoBox} />}
-            </DrawerPanelHeader>
-            <DrawerContainer>
-              <Switch>
-                <Route path={routing.dataSearchGeo.path}>
-                  <MapSearchResults />
-                </Route>
-                <Route path={[routing.dataDetail.path]}>
-                  <DetailPanel />
-                </Route>
-                <Route
-                  path={[
-                    routing.addresses.path,
-                    routing.establishments.path,
-                    routing.cadastralObjects.path,
-                  ]}
-                  exact
-                >
-                  <DrawResults />
-                </Route>
-              </Switch>
-            </DrawerContainer>
+            <Switch>
+              <Route path={routing.dataSearchGeo.path}>
+                <MapSearchResults />
+              </Route>
+              <Route path={[routing.dataDetail.path]}>
+                <DetailPanel />
+              </Route>
+              <Route
+                path={[
+                  routing.addresses.path,
+                  routing.establishments.path,
+                  routing.cadastralObjects.path,
+                ]}
+                exact
+              >
+                <DrawResults />
+              </Route>
+            </Switch>
           </StyledLargeDrawerPanel>
         )}
         {legendActive && (
           <SmallDrawerPanel data-testid="drawerPanel">
-            <LegendDrawerPanelHeader onClose={onCloseLegend}>
-              <TitleHeading styleAs="h2">Legenda</TitleHeading>
-            </LegendDrawerPanelHeader>
-            <MapLayersPanel />
+            <MapPanelContent>
+              <LegendDrawerPanelHeader onClose={onCloseLegend}>
+                <TitleHeading>Legenda</TitleHeading>
+              </LegendDrawerPanelHeader>
+              <MapLayersPanel />
+            </MapPanelContent>
           </SmallDrawerPanel>
         )}
       </DrawerOverlay>

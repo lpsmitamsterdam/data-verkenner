@@ -1,9 +1,9 @@
-import { Link, perceivedLoading, themeSpacing } from '@amsterdam/asc-ui'
+import { perceivedLoading } from '@amsterdam/asc-ui'
+import type { FunctionComponent } from 'react'
 import { useState } from 'react'
 import { Link as RouterLink } from 'react-router-dom'
 import styled from 'styled-components'
 import { useQuery } from 'urql'
-import type { FunctionComponent } from 'react'
 import { toSearch } from '../../../links'
 import type { Filter, FilterOption } from '../../models/filter'
 import type { ActiveFilter } from '../../../pages/SearchPage/query-params'
@@ -12,6 +12,7 @@ import toSearchParams from '../../utils/toSearchParams'
 import useUniqueId from '../../hooks/useUniqueId'
 import ErrorMessage from '../ErrorMessage/ErrorMessage'
 import BlockHeading from './BlockHeading'
+import ListLink from '../ListLink/ListLink'
 
 // TODO: Generate types for this GQL query.
 const getFiltersQuery = `
@@ -24,10 +25,6 @@ const getFiltersQuery = `
       }
     }
   }
-`
-
-const StyledLink = styled(Link)`
-  margin-bottom: ${themeSpacing(4)};
 `
 
 const StyledErrorMessage = styled(ErrorMessage)`
@@ -130,7 +127,7 @@ const ThemesBlock: FunctionComponent = () => {
 
           return (
             <li key={option.label}>
-              <StyledLink
+              <ListLink
                 forwardedAs={RouterLink}
                 inList
                 to={{
@@ -139,7 +136,7 @@ const ThemesBlock: FunctionComponent = () => {
                 }}
               >
                 {option.label}
-              </StyledLink>
+              </ListLink>
             </li>
           )
         })}

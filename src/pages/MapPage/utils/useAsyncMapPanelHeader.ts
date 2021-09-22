@@ -4,6 +4,7 @@ import { isFulfilled, isPending, isRejected } from '@amsterdam/use-promise'
 import { useMapContext } from '../../../shared/contexts/map/MapContext'
 import { AuthError, ForbiddenError } from '../../../shared/utils/api/customError'
 
+// Todo: remove this hook and move logic to DrawerPanelHeader component
 const useAsyncMapPanelHeader = <T = any>(
   results: PromiseResult<T>,
   title?: string | null,

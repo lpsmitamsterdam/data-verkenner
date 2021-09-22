@@ -20,7 +20,11 @@ const StyledAlert = styled(Alert)`
 `
 
 const StyledButton = styled(Button)`
-  border: 1px solid ${themeColor('tint', 'level3')};
+  border: 1px solid ${themeColor('tint', 'level4')};
+
+  svg path {
+    fill: ${themeColor('tint', 'level5')};
+  }
 `
 
 const DetailInfoBox: FunctionComponent<InfoBoxProps & HTMLAttributes<HTMLButtonElement>> = ({
@@ -39,8 +43,8 @@ const DetailInfoBox: FunctionComponent<InfoBoxProps & HTMLAttributes<HTMLButtonE
         variant="blank"
         data-testid="detail-infobox"
         title="Meer info"
-        size={32}
-        iconSize={26}
+        size={24}
+        iconSize={20}
         onClick={() => setOpen(!open)}
         icon={<Metadata />}
       />

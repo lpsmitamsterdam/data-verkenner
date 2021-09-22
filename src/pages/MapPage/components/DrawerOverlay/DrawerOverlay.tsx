@@ -17,7 +17,7 @@ import MapOverlay from '../MapOverlay'
 import { DRAWER_HANDLE } from '../../matomo-events'
 
 const HANDLE_SIZE_MOBILE = 70
-const HANDLE_SIZE_DESKTOP = 40
+const HANDLE_SIZE_DESKTOP = 20
 // The height of the preview area in pixels, handle and controls excluded.
 const PREVIEW_SIZE = 200
 const SNAP_OFFSET = 0.5 // 0 - 1, increase this to snap quicker to bottom or top, instead of middle
@@ -120,7 +120,7 @@ const DrawerHandleMiniDesktop = styled.div`
 const DrawerHandleDesktop = styled(Button)`
   box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.1);
   flex-shrink: 0;
-  width: ${HANDLE_SIZE_DESKTOP - 20}px;
+  width: 0;
   height: 100%;
   position: relative;
   margin-right: ${themeSpacing(5)};

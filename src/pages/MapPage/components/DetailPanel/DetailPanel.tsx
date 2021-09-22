@@ -8,13 +8,15 @@ import { AuthError, ForbiddenError } from '../../../../shared/utils/api/customEr
 import type { DataDetailParams } from '../../../../links'
 import useAuthScope from '../../../../shared/hooks/useAuthScope'
 import { useMapContext } from '../../../../shared/contexts/map/MapContext'
-import LoadingSpinner from '../../../../shared/components/LoadingSpinner/LoadingSpinner'
 import useAsyncMapPanelHeader from '../../utils/useAsyncMapPanelHeader'
 import GeneralErrorAlert from '../../../../shared/components/Alerts/GeneralErrorAlert'
 import AuthScope from '../../../../shared/utils/api/authScope'
 import LoginLink from '../../../../shared/components/Links/LoginLink/LoginLink'
 import useLegacyDataselectionConfig from '../../../../shared/components/DataSelection/useLegacyDataselectionConfig'
 import RenderDetails from './RenderDetails'
+import MapPanelContent from '../MapPanel/MapPanelContent'
+import { DrawerPanelHeader } from '../DrawerPanel'
+import { MultipleComponentsSkeleton } from '../../../../shared/components/Skeleton/Skeleton'
 
 const DetailPanel: FunctionComponent = () => {
   const { setDetailFeature, detailFeature } = useMapContext()
@@ -92,7 +94,12 @@ const DetailPanel: FunctionComponent = () => {
   }
 
   if (isPending(results)) {
-    return <LoadingSpinner />
+    return (
+      <MapPanelContent>
+        <DrawerPanelHeader />
+        <MultipleComponentsSkeleton />
+      </MapPanelContent>
+    )
   }
 
   return <RenderDetails showNoMapObjectsAlert={!detailFeature} details={results.value} />

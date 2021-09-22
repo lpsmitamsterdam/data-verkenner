@@ -1,6 +1,6 @@
 import { Alert, Paragraph, themeSpacing } from '@amsterdam/asc-ui'
-import { Fragment, useEffect } from 'react'
 import type { FunctionComponent } from 'react'
+import { Fragment, useEffect } from 'react'
 import styled, { css } from 'styled-components'
 import { v4 as uuid } from 'uuid'
 import type { MapDetails } from '../../legacy/services/map'
@@ -9,6 +9,8 @@ import { useMapContext } from '../../../../shared/contexts/map/MapContext'
 import Spacer from '../../../../shared/components/Spacer/Spacer'
 import PanoramaPreview from '../PanoramaPreview/PanoramaPreview'
 import DetailItem from './DetailItem'
+import { DrawerPanelHeader } from '../DrawerPanel'
+import MapPanelContent from '../MapPanel/MapPanelContent'
 
 const Message = styled(Paragraph)`
   margin: ${themeSpacing(4)} 0;
@@ -22,7 +24,7 @@ const StyledAuthAlert = styled(AuthAlert)`
 const ItemWrapper = styled.div<{ gridArea?: string }>`
   display: flex;
   flex-direction: column;
-  margin-bottom: ${themeSpacing(3)};
+  position: relative;
   ${({ gridArea }) =>
     gridArea &&
     css`
@@ -64,30 +66,33 @@ const RenderDetails: FunctionComponent<RenderDetailsProps> = ({
       {details.location && !details.data.noPanorama ? (
         <PanoramaPreview location={details.location} radius={180} aspect={2.5} />
       ) : null}
-      <Spacer />
-      {details.data.notifications?.map((notification) => (
-        <Fragment key={notification.id}>
-          <Alert level={notification.level} dismissible={notification.canClose}>
-            {notification.value}
-          </Alert>
-          <Spacer />
-        </Fragment>
-      ))}
-      {details.data.items.map((item) => {
-        if (!item) {
-          return null
-        }
+      <MapPanelContent>
+        <DrawerPanelHeader />
+        <Spacer />
+        {details.data.notifications?.map((notification) => (
+          <Fragment key={notification.id}>
+            <Alert level={notification.level} dismissible={notification.canClose}>
+              {notification.value}
+            </Alert>
+            <Spacer />
+          </Fragment>
+        ))}
+        {details.data.items.map((item) => {
+          if (!item) {
+            return null
+          }
 
-        return (
-          <ItemWrapper
-            key={`${item.title as string}_${uuid()}`}
-            className={item.type}
-            gridArea={item.gridArea}
-          >
-            <DetailItem item={item} />
-          </ItemWrapper>
-        )
-      })}
+          return (
+            <ItemWrapper
+              key={`${item.title as string}_${uuid()}`}
+              className={item.type}
+              gridArea={item.gridArea}
+            >
+              <DetailItem item={item} />
+            </ItemWrapper>
+          )
+        })}
+      </MapPanelContent>
     </>
   )
 }

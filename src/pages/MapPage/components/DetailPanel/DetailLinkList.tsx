@@ -1,17 +1,14 @@
-import { Link as AscLink, Paragraph, themeSpacing } from '@amsterdam/asc-ui'
+import { Paragraph } from '@amsterdam/asc-ui'
 import { useMatomo } from '@datapunt/matomo-tracker-react'
 import { Link as RouterLink } from 'react-router-dom'
 import styled from 'styled-components'
 import type { FunctionComponent, HTMLAttributes } from 'react'
 import type { DetailResultItemLinkList, Link } from '../../legacy/types/details'
+import ListLink from '../../../../shared/components/ListLink/ListLink'
 
 const LinkList = styled.div`
   display: flex;
   flex-direction: column;
-`
-
-const StyledLink = styled(AscLink)`
-  margin-bottom: ${themeSpacing(2)};
 `
 
 export interface DetailLinkListProps extends HTMLAttributes<HTMLDivElement> {
@@ -34,7 +31,7 @@ const DetailLinkList: FunctionComponent<DetailLinkListProps> = ({ item, ...other
       {item.links.map((link) => {
         if ('url' in link) {
           return (
-            <StyledLink
+            <ListLink
               key={link.id ?? link.url}
               inList
               onClick={() => trackClick(link)}
@@ -42,13 +39,12 @@ const DetailLinkList: FunctionComponent<DetailLinkListProps> = ({ item, ...other
               href={link.url}
             >
               {link.title}
-            </StyledLink>
+            </ListLink>
           )
         }
 
         return (
-          // @ts-ignore
-          <StyledLink
+          <ListLink
             inList
             onClick={() => {
               trackClick(link)
@@ -58,7 +54,7 @@ const DetailLinkList: FunctionComponent<DetailLinkListProps> = ({ item, ...other
             key={link.id ?? link.title}
           >
             {link.title}
-          </StyledLink>
+          </ListLink>
         )
       })}
     </LinkList>
