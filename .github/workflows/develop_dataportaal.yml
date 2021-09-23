@@ -52,5 +52,5 @@ jobs:
         with:
           app-name: 'dataportaal'
           slot-name: 'Production'
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_F04F68AF5A434F12B2030DAF342B6C72 }}
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_94139421FD3A4792B7B96073493DA00C }}
           package: .
